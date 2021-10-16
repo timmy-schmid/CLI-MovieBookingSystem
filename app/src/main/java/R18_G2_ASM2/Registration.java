@@ -8,6 +8,7 @@ import java.io.FileNotFoundException;
 import java.io.FileWriter;
 
 import java.util.Scanner;
+import java.util.regex.Pattern;
 
 public class Registration {
   
@@ -23,8 +24,6 @@ public class Registration {
 
   --> user.csv file (contains card details, remembers those who have booked tickets before - details saved in system)
   */
-
-  private User customerA;
   private File userCsvFile;
 
   public Registration(){
@@ -33,31 +32,37 @@ public class Registration {
 
   public void retrieveUserInputDetails(){
     this.printWelcome();
+
     Scanner scan = new Scanner(System.in);
-
     //validate user details after retrieving input!!!
-    System.out.printf("Please enter your username/email: ");
-    String email = scan.nextLine();
-    System.out.printf("\nPlease enter your password: ");
-    String password = scan.nextLine();
+    String email = null;
+    String password = null;
+    while (true) { 
 
-    System.out.printf("\nThe details you have entered above are:\nEMAIL:[%s], \nPASSWORD:[%s]\n", email, password);
+      System.out.printf("Please enter your username/email: "); //[re-enter]
+      email = scan.nextLine();
+      System.out.printf("\nPlease enter your password: ");
+      password = scan.nextLine();
 
-    // System.out.println("\nLINE 46: NOW CHECKING IF EMAIL ALREADY EXISTS");
-    int result = this.checkIfUserExists(email, password);
-    if (result == -1){
-      System.out.println("Email already exists in system//already used. Please enter another.");
-    } else if (result == -2){
-      System.out.println("Password is already taken, please enter another one.");
-    
-    } else { //user doesn't exist in system and creates a new acc
-      this.validateUserName(); //check if valid --> NEEDS EDIT!!
-      this.validatePassword(); //check if valid --> NEEDS EDIT!!
-      this.createAccount(email, password); //if 51-52 is satisfied
+      int result = this.checkIfUserExists(email, password);
+      if (result == -1){
+        System.out.println("Email already exists in system//already used. Please enter another.");
+      } else if (result == -2){
+        System.out.println("Password is already taken, please enter another one.");
       
-      String result1 = this.nextOption();
-      // if (result== null){}
-      System.out.printf("USER PREFERENCE: [%s]\n", result1);
+      } else { //user doesn't exist in system and creates a new acc
+        boolean isValidEmail = this.validateUser(email);
+        boolean isValidPwd = this.isValidPassword(password);
+        if (isValidPwd == true && isValidEmail == true){
+          this.createAccount(email, password); //if 51-52 is satisfied    
+          String result1 = this.nextOption();
+          // if (result== null){}
+          System.out.printf("USER PREFERENCE: [%s]\n", result1);
+          break;
+        } 
+        //else: keep entering a new password
+        System.out.println();
+      }
     }
   }
 
@@ -87,7 +92,7 @@ public class Registration {
         email = detailsArray[1];
         // name = detailsArray[1];
         // email = detailsArray[2];
-        if (userEmail == email){
+        if (userEmail == email){ //basically validateUserName()
           // System.out.println("Email already exists in system//already used.");
           result = -1;
           break;
@@ -103,7 +108,7 @@ public class Registration {
         // password = detailsArray[6];
 
         password = detailsArray[2];
-        if (userPassword == password){
+        if (userPassword == password){ 
           // System.out.println("Password is already taken, please enter another one.");
           result = -2;
           break;
@@ -116,25 +121,51 @@ public class Registration {
   }
 
   public void printWelcome(){
-    System.out.println("\n*****************************************************");
-    System.out.println("                Welcome to the login page                ");
-    System.out.println("         Not a member with us yet? Sign up now!         ");
-    System.out.println("*****************************************************\n");
+    System.out.println("\n*******************************************************");
+    System.out.println("            Welcome to the registration page :)            ");
+    System.out.println("       Not a member with us yet? Sign up now FOR FREE!       ");
+    System.out.println("*******************************************************\n");
 
   }
-  //for email checking
-  public void validateUserName(){
 
+  //alphanumeric only 
+  public boolean validateUser(String email){ //or email
+    //should contain: @ + .com
+    String usernameRegex = "^.*\\w@.*.com$";
+    Pattern pattern = Pattern.compile(usernameRegex);
+    if (pattern.matcher(email).matches()){
+      return true;
+    } else {
+      System.out.println("Your email/username did not satisfy acceptance criteria.");
+      return false;
+    }
   }
   //Valid Password password [at least > n characters, mixture of letters, numbers, min 10 chars, at least 1 capital]
-  public void validatePassword(){
-
+  public boolean isValidPassword(String password){
+    // boolean found = false;
+    // for(int i = 0;i < password.length(); i++){
+    //   if (Character.isUpperCase(password.charAt(i))){
+    //     found = true;
+    //     break;
+    //   }
+    // }
+    //now, use regex to ensure it contains a mixture of letters + numbers + symbols (--> optional?, allow whitespace or NAH?)    
+    //  String passwordRegex = "^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=.*[!@#$%^&+-=]).{10,}$";
+    
+    //\\w === [a-zA-Z_0-9]
+    String passwordRegex = "^(?=.*\\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[!@#$%^&+=]).{10,}$";
+    Pattern pattern = Pattern.compile(passwordRegex);
+    if (pattern.matcher(password).matches()){
+      return true;
+    } else {
+      System.out.println("Your password did not satisfy acceptance criteria.");
+      return false;
+    }
   }
 
-  //An option to remember my login details for next time
-  public void saveDetailsForNextTime(){
-
-  }
+  //An option to remember my login details for next time [gui maybe]
+  // public void saveDetailsForNextTime(){
+  // }
 
   public int writeUserDetailsToFile(String email, String password){
     int id = -1;
@@ -152,7 +183,7 @@ public class Registration {
       myReader.close();
       try{
         id = Integer.parseInt(lastLine.split(",")[0]);
-        myWriter.write("\n"+String.valueOf(id+1)+","+email+","+password+"\n");
+        myWriter.write("\n"+String.valueOf(id+1)+","+email+","+password);
         id+=1;
 
       } catch(NumberFormatException e){
@@ -183,10 +214,20 @@ public class Registration {
     Scanner scan = new Scanner(System.in);
     int result = scan.nextInt();
 
-    if (result == 1){
-      return "CONTINUE and don't save my details for next time";
-    } else if (result == 2){
-      return "CONTINUE and save my details for next time";
+    if (result == 1 || result == 2){
+      
+      System.out.println("~~~~~~~~~~~THANK YOU FOR SIGNING IN~~~~~~~~~~~~~~~");
+      System.out.printf("\nPlease select from the following: \n");
+      System.out.println("1. TOUR BUTTON for navigating the page");
+      System.out.println("2. HELP BUTTON for contacting staff");
+      System.out.println("3. DEFAULT HOME PAGE for filtering movies");
+
+      return "CONTINUE";
+      // Scanner scan2 = new Scanner(System.in);
+      // int option = scan2.nextInt();
+      // if (option == 3){ //go to default page??
+      // }
+      // return "CONTINUE and save my details for next time";
     } else if (result == 3){
       return "CANCEL"; //go back to home page
     } else {

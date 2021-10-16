@@ -25,4 +25,6 @@ public class User {
   public String getPassword(){
     return this.password;
   }
+
+  //setter methods: e.g. for changing login details ...
 }
