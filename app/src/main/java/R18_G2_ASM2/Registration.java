@@ -16,7 +16,7 @@ public class Registration {
   /*
   This class: prints screen for when user clicks: 'To Register'
   and creates a new user account for them
-  - a validation of username/password is done
+  - a validation of email/password is done
 
   This class registers a new user to become a customer by creating a new account for them.
 
@@ -39,7 +39,7 @@ public class Registration {
     String password = null;
     while (true) { 
 
-      System.out.printf("Please enter your username/email: "); //[re-enter]
+      System.out.printf("Please enter your email: "); //[re-enter]
       email = scan.nextLine();
       System.out.printf("\nPlease enter your password: ");
       password = scan.nextLine();
@@ -92,7 +92,7 @@ public class Registration {
         email = detailsArray[1];
         // name = detailsArray[1];
         // email = detailsArray[2];
-        if (userEmail == email){ //basically validateUserName()
+        if (userEmail == email){ //basically validateEmail()
           // System.out.println("Email already exists in system//already used.");
           result = -1;
           break;
@@ -131,12 +131,12 @@ public class Registration {
   //alphanumeric only 
   public boolean validateUser(String email){ //or email
     //should contain: @ + .com
-    String usernameRegex = "^.*\\w@.*.com$";
-    Pattern pattern = Pattern.compile(usernameRegex);
+    String emailRegex = "^.*\\w@.*.com$";
+    Pattern pattern = Pattern.compile(emailRegex);
     if (pattern.matcher(email).matches()){
       return true;
     } else {
-      System.out.println("Your email/username did not satisfy acceptance criteria.");
+      System.out.println("Your email did not satisfy acceptance criteria.");
       return false;
     }
   }
