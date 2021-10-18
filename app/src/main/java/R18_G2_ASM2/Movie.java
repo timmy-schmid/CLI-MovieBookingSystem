@@ -53,6 +53,6 @@ public class Movie {
 
   @Override
   public String toString() {
-    return id + " - " + name + ": " + synopsis;
+    return id + " - " + name + ": " + releaseDate.getTime();
   }
 }

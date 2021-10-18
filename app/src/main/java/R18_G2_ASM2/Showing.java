@@ -43,6 +43,7 @@ public class Showing {
 
   public String getShowingTimeFormatted() {
     SimpleDateFormat formatter = new SimpleDateFormat("EEE K:mma",Locale.ENGLISH);
+
     return formatter.format(showingTime.getTime()).toUpperCase();
   }
   
@@ -60,6 +61,11 @@ public class Showing {
 
   public int getTotalSeatsLeft() {
     return 0;
+  }
+
+  @Override
+  public String toString() {
+    return cinema.getCinemaId() + ":" + getShowingTimeFormatted() + ":" + movie.getName();
   }
 }
 
