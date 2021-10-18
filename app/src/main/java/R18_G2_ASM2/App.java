@@ -45,13 +45,23 @@ public class App {
             System.out.println("  " + entry.getKey() + ":" + entry.getValue());
         }
 
-        System.out.println("\n---MOVIES-----\n");
+        //System.out.println("\n---MOVIES-----\n");
+        System.out.println("\n--------\n");
+        StringBuilder s = new StringBuilder();
+        movies.get(4).toString(s);
+        s.append("\n");
+        Showing.getMovieShowings(showings,s,movies.get(4));
+        System.out.println(s);
+    
+
+        /*
         for (HashMap.Entry<Integer, Movie> entry : movies.entrySet()) {
             System.out.println(entry.getValue().toString());
         }
+
         System.out.println("\n---SHOWINGS-----\n");
         for (HashMap.Entry<Integer, Showing> entry : showings.entrySet()) {
             System.out.println(entry.getValue().toString());
-        }
+        }*/
     }
 }
