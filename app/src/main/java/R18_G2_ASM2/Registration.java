@@ -11,8 +11,6 @@ import java.util.Scanner;
 import java.util.regex.Pattern;
 
 public class Registration {
-  
-
   /*
   This class: prints screen for when user clicks: 'To Register'
   and creates a new user account for them
@@ -30,50 +28,83 @@ public class Registration {
     this.userCsvFile = new File("src/main/datasets/user1.csv");
   }
 
+  public File getUserFile(){
+    return this.userCsvFile;
+  }
+
+  public void setUserFile(File name){
+    this.userCsvFile = name;
+  }
+
   public void retrieveUserInputDetails(){
     this.printWelcome();
-
     Scanner scan = new Scanner(System.in);
-    //validate user details after retrieving input!!!
-    String email = null;
-    String password = null;
-    while (true) { 
 
-      System.out.printf("Please enter your email: "); //[re-enter]
-      email = scan.nextLine();
-      System.out.printf("\nPlease enter your password: ");
-      password = scan.nextLine();
+    System.out.println("PRESS Y TO CONTINUE REGISTERING"+
+    " OR PRESS N TO CANCEL AND GO BACK TO HOME PAGE~");
+    System.out.printf("Enter Y/N: ");
+    String option = scan.nextLine();
+    // System.out.println("OPTION LINE 39 -------------> " + option);
+    if (option.toUpperCase().startsWith("N") == true){
+      System.out.println("\n*******************************************************");
+      System.out.println("REDIRECTING YOU BACK TO HOME PAGE~ in 3..2..1..");
+      System.out.println("*******************************************************");
+      return;
+    } else if (option.toUpperCase().startsWith("Y")) {
+      // validate user details after retrieving input!!!
+      System.out.println();
+      String email = null;
+      String password = null;
 
-      int result = this.checkIfUserExists(email, password);
-      if (result == -1){
-        System.out.println("Email already exists in system//already used. Please enter another.");
-      } else if (result == -2){
-        System.out.println("Password is already taken, please enter another one.");
-      
-      } else { //user doesn't exist in system and creates a new acc
-        boolean isValidEmail = this.validateUser(email);
-        boolean isValidPwd = this.isValidPassword(password);
-        if (isValidPwd == true && isValidEmail == true){
-          this.createAccount(email, password); //if 51-52 is satisfied    
-          String result1 = this.nextOption();
-          // if (result== null){}
-          System.out.printf("USER PREFERENCE: [%s]\n", result1);
-          break;
-        } 
-        //else: keep entering a new password
+      boolean returnResult = false;
+      boolean returnResult2 = false;
+    
+      while (true) { 
+        System.out.printf("Please enter your email: "); //[re-enter]
+        email = scan.nextLine();
+        int result = this.checkIfUserExists(email);
+        if (result == -1){
+          System.out.println("Email is taken already/exists in system. Please enter another.");
+        } else {
+          boolean isValidEmail = this.validateUser(email);
+          if (isValidEmail == true){
+            returnResult = true;
+            break;
+          } 
+        }
         System.out.println();
+      }
+
+      while (true){
+        System.out.printf("\nPlease enter your password: ");
+        password = scan.nextLine();
+        boolean isValidPwd = this.isValidPassword(password);
+        if (isValidPwd == true){
+          returnResult2 = true;
+          break;
+        } //else, continue to enter a valid pwd
+      }
+
+      //user doesn't exist in system and creates a new acc
+      if (returnResult == true && returnResult2 == true) {
+        this.createAccount(email, password); //if 51-52 is satisfied    
+        String resultOption = this.nextOption();
+        if (resultOption == null){
+          System.out.println("\nINVALID OPTION SELECTED~");
+        }
+        System.out.printf("\nUSER PREFERENCE: [%s]\n", resultOption);
+      //else: keep entering a new password
+      } else { //user input not y/n
+        System.out.printf("Invalid input [%s], please select Y/N\n", option);
+        return;
       }
     }
   }
 
   //compare against existing emails in database
-  public int checkIfUserExists(String userEmail, String userPassword){
+  public int checkIfUserExists(String userEmail){
     int userID = 1;
-    // String name = null;
     String email = null;
-    // String phoneNumber = null;
-    // int creditCardNum = -1;
-    // String type = null;
     String password = null;
     int result = 1;
 
@@ -82,7 +113,6 @@ public class Registration {
       while (myReader.hasNextLine()) { //as long as you can keep reading the file, grab the details
         String line = myReader.nextLine();
         String[] detailsArray = line.split(",");
-        //go through all column data in file
         try{
           userID = Integer.parseInt(detailsArray[0]);
         } catch(NumberFormatException e){
@@ -90,32 +120,13 @@ public class Registration {
           break;
         }
         email = detailsArray[1];
-        // name = detailsArray[1];
-        // email = detailsArray[2];
-        if (userEmail == email){ //basically validateEmail()
-          // System.out.println("Email already exists in system//already used.");
+        if(userEmail.equals(email)){
           result = -1;
           break;
         } 
-        // phoneNumber = detailsArray[3];
-        // try {  
-        //   creditCardNum = Integer.parseInt(detailsArray[4]);
-        // } catch(NumberFormatException e){
-        //   e.printStackTrace();
-        //   break;
-        // }
-        // type = detailsArray[5];
-        // password = detailsArray[6];
-
-        password = detailsArray[2];
-        if (userPassword == password){ 
-          // System.out.println("Password is already taken, please enter another one.");
-          result = -2;
-          break;
-        }
       }
     } catch (FileNotFoundException e) {
-      System.out.println("LINE 103: USER1.CSV FILE NOT FOUND!!!");
+      System.out.printf("FILE NOT FOUND ERROR: %s FILE NOT FOUND!", this.userCsvFile);
     }
     return result;
   }
@@ -131,7 +142,8 @@ public class Registration {
   //alphanumeric only 
   public boolean validateUser(String email){ //or email
     //should contain: @ + .com
-    String emailRegex = "^.*\\w@.*.com$";
+    // String emailRegex = "^.*\\w@(.*)\\.com$";
+    String emailRegex = "^.*\\w@(gmail|hotmail|yahoo)\\.com$";
     Pattern pattern = Pattern.compile(emailRegex);
     if (pattern.matcher(email).matches()){
       return true;
@@ -142,18 +154,11 @@ public class Registration {
   }
   //Valid Password password [at least > n characters, mixture of letters, numbers, min 10 chars, at least 1 capital]
   public boolean isValidPassword(String password){
-    // boolean found = false;
-    // for(int i = 0;i < password.length(); i++){
-    //   if (Character.isUpperCase(password.charAt(i))){
-    //     found = true;
-    //     break;
-    //   }
-    // }
     //now, use regex to ensure it contains a mixture of letters + numbers + symbols (--> optional?, allow whitespace or NAH?)    
-    //  String passwordRegex = "^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=.*[!@#$%^&+-=]).{10,}$";
     
     //\\w === [a-zA-Z_0-9]
-    String passwordRegex = "^(?=.*\\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[!@#$%^&+=]).{10,}$";
+    // String passwordRegex = "^(?=.*\\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[!@#$%^&+=]).{10,}$";
+    String passwordRegex = "^(?=.*\\d)(?=.*[a-z])(?=.*[A-Z]).{10,}$";
     Pattern pattern = Pattern.compile(passwordRegex);
     if (pattern.matcher(password).matches()){
       return true;
@@ -163,7 +168,7 @@ public class Registration {
     }
   }
 
-  //An option to remember my login details for next time [gui maybe]
+  //An option to remember my login details for next time
   // public void saveDetailsForNextTime(){
   // }
 
@@ -191,7 +196,7 @@ public class Registration {
       }
       myWriter.close();
     } catch (FileNotFoundException e){
-      System.out.println("INE 158: USER1.CSV FILE NOT FOUND!!!");
+      System.out.printf("FILE NOT FOUND ERROR: %s FILE NOT FOUND!", this.userCsvFile);
     } catch (IOException e) {
       e.printStackTrace();
     }
@@ -218,7 +223,7 @@ public class Registration {
       
       System.out.println("~~~~~~~~~~~THANK YOU FOR SIGNING IN~~~~~~~~~~~~~~~");
       System.out.printf("\nPlease select from the following: \n");
-      System.out.println("1. TOUR BUTTON for navigating the page");
+      System.out.println("1. TOUR BUTTON for navigating the page"); //probs not necesssary for text based interface
       System.out.println("2. HELP BUTTON for contacting staff");
       System.out.println("3. DEFAULT HOME PAGE for filtering movies");
 
