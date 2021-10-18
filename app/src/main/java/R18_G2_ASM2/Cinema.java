@@ -16,5 +16,8 @@ public class Cinema {
     return cinemaId;
   }
 
+  public Screen getScreen() {
+    return cinemaScreen;
 
+  }
 }

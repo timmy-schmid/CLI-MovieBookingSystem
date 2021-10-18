@@ -1,22 +1,21 @@
 package R18_G2_ASM2;
 
 import java.text.SimpleDateFormat;
-import java.time.DayOfWeek;
 import java.util.Calendar;
-import java.util.Date;
 import java.util.Map;
+import java.util.HashMap;
+import java.util.Locale;
 
 public class Showing {
   private int showingId;
   private Movie movie;
   private Cinema cinema;
+  private Calendar showingTime;
 
-  private Date showingTime;
-
-  private  Map<String, Boolean> seatMap;
+  //private  Map<String, Boolean> seatMap;
   private  Map<SeatLocation, Integer> seatsBooked; 
 
-  public Showing (int showingId, Movie movie, Cinema cinema, Date showingTime) {
+  public Showing (int showingId, Movie movie, Cinema cinema, Calendar showingTime) {
     this.showingId = showingId;
     this.movie = movie;
     this.cinema = cinema;
@@ -24,6 +23,7 @@ public class Showing {
 
     // initialise seatMap based on cinema type
     
+    seatsBooked = new HashMap<SeatLocation, Integer>();
     seatsBooked.put(SeatLocation.REAR,0);
     seatsBooked.put(SeatLocation.MIDDLE,0);
     seatsBooked.put(SeatLocation.FRONT,0);
@@ -41,20 +41,11 @@ public class Showing {
     return cinema;
   }
 
-  public int getShowingDay() {
-    Calendar calendar = Calendar.getInstance(); //local timezone
-    calendar.setTime(showingTime);
-    return calendar.get(Calendar.DAY_OF_WEEK);
+  public String getShowingTimeFormatted() {
+    SimpleDateFormat formatter = new SimpleDateFormat("EEE K:mma",Locale.ENGLISH);
+    return formatter.format(showingTime.getTime()).toUpperCase();
   }
-
-  public String getShowingTime() {
-    Calendar calendar = Calendar.getInstance(); //local timezone
-    calendar.setTime(showingTime);
-
-    SimpleDateFormat formatter = new SimpleDateFormat("KK:mm a");
-    return formatter.format(showingTime);
-  }
-
+  
   public boolean isSeatEmpty(String seat) {
     return false;
   }

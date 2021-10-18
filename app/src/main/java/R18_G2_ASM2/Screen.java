@@ -1,22 +1,23 @@
 package R18_G2_ASM2;
-public class Screen {
 
-  public static void printBar(StringBuilder s) {
-    s.append("-------------------------------------------------------\n");
+public enum Screen {
+  GOLD(2,35),
+  SILVER(1.5,80),
+  BRONZE(1,150);
+
+  private final double multiplier;
+  private final int capacity;
+
+  private Screen(double multiplier, int capacity) {
+    this.multiplier = multiplier;
+    this.capacity = capacity;
   }
 
-  public static void printHeader(StringBuilder s) {
-    s.append("-------------------------------------------------------\n");
-    s.append("ID   MOVIE                             TIME     CINEMA\n");
-    s.append("-------------------------------------------------------\n");
+  public double getMultiplier () {
+    return multiplier;
   }
 
-  //public static void printMovieRow(StringBuilder s, Movie m) {
-    //printBar(s);
-    //s.append(String.format("%4d",f.id));
-    //s.append(String.format("%10s",f.departureTime.toString(TextStyle.SHORT)));
-    //printBar(s);
-  //}
-
-
+  public int getCapacity() {
+    return capacity;
+  }
 }

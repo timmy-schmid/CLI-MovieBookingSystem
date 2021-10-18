@@ -3,12 +3,28 @@
  */
 package R18_G2_ASM2;
 
+import java.util.HashMap;
+
 public class App {
     public String getGreeting() {
         return "Hello World!";
     }
 
     public static void main(String[] args) {
-        System.out.println(new App().getGreeting());
+        HashMap<Integer,Movie> movies = new HashMap<>();
+        HashMap<Integer,String> errors;
+        DataController d = new DataController();
+
+        errors = d.importMovies(movies);
+
+        for (HashMap.Entry<Integer, String> entry : errors.entrySet()) {
+            System.out.println(entry.getKey() + "/" + entry.getValue());
+        }
+
+        System.out.println("\n--------\n");
+
+        for (HashMap.Entry<Integer, Movie> entry : movies.entrySet()) {
+            System.out.println(entry.getValue().toString());
+        }
     }
 }

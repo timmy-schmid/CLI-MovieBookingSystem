@@ -1,22 +1,26 @@
 package R18_G2_ASM2;
 
+import java.util.Calendar;
 import java.util.List;
 
 public class Movie {
   
   private int id;
   private String name;
-  private String synposis;
-  private ClassificationType classification;
+  private String synopsis;
+  private Calendar releaseDate;
+  private Classification classification;
   private List<String> directors;
   private List<String> cast;
 
-  public Movie (int id, String name, String synposis, ClassificationType classification, List<String> directors, List<String> cast) {
+  public Movie (int id, String name, List<String> cast, Classification classification, List<String> directors, String synopsis,Calendar releaseDate) {
     this.id = id;
-    this.synposis = synposis;
+    this.name = name;
+    this.cast = cast;
     this.classification = classification;
     this.directors = directors;
-    this.cast = cast;
+    this.synopsis = synopsis;
+    this.releaseDate = releaseDate;
   }
 
   public int getId() {
@@ -28,10 +32,10 @@ public class Movie {
   }
 
   public String getSynopsis() {
-    return synposis;
+    return synopsis;
   }
 
-  public ClassificationType getClassification() {
+  public Classification getClassification() {
     return classification;
   }
 
@@ -41,5 +45,14 @@ public class Movie {
 
   public List<String> getCast() {
     return cast;
+  }
+
+  public Calendar getreleaseDate() {
+    return releaseDate;
+  }
+
+  @Override
+  public String toString() {
+    return id + " - " + name + ": " + synopsis;
   }
 }
