@@ -9,11 +9,11 @@ import R18_G2_ASM2.SeatDataTools.DataFrame;
 import R18_G2_ASM2.SeatDataTools.FileTools;
 import R18_G2_ASM2.SeatDataTools.MovieDataFrame;
 
-public class SeatMap{
+public class movieSeat{
     private Showing showing;
     private DataFrame<String> seatMap;
     private File movieSeat;
-    public SeatMap(Showing showing) throws IOException{
+    public movieSeat(Showing showing) throws IOException{
         this.showing = showing;
 
         movieSeat = new File("app/src/main/datasets/movieSeats/"+ String.valueOf(showing.getMovie().getId())+"-"+ String.valueOf(showing.getCinema().getCinemaId())+"-"+String.valueOf(showing.getShowingId())+".csv");
