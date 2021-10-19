@@ -1,11 +1,16 @@
 
 package R18_G2_ASM2;
 
+import java.util.LinkedHashMap;
+import java.util.List;
+
 public class User {
 
   private int ID;
   private String email; //used to represent the unique username
   private String password;
+  private LinkedHashMap<Movie,String> filterMovie;
+
 
   //add card details later? Subclass for customer or use current one?
 
@@ -27,4 +32,9 @@ public class User {
   }
 
   //setter methods: e.g. for changing login details ...
+  public void setID(int ID){
+    this.ID = ID;
+  }
+  public void setEmail(String email){this.email = email;}
+  public void setPassword(String Password){this.password = password;}
 }
