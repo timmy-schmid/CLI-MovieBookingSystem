@@ -4,9 +4,6 @@ import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.List;
 import java.util.Locale;
-
-import jdk.dynalink.CallSiteDescriptor;
-
 public class Movie {
   
   private int id;
@@ -57,11 +54,7 @@ public class Movie {
 
   public void toString(StringBuilder s) {
 
-
     SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/YY",Locale.ENGLISH);
-
-    s.append(String.format("Here are the specific details for %s.\nEnter B to go back to view all movies or ",name));
-    s.append(String.format("enter the session ID if you would like to make a booking.\n\n"));
 
     s.append(String.format("TITLE: %s\n\n",name));
     s.append(String.format("SYNOPSIS: %s\n\n",synopsis));

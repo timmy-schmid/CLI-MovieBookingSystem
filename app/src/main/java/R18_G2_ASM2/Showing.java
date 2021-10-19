@@ -82,7 +82,7 @@ public class Showing {
     }
   }
 
-  public static void getMovieShowings(HashMap<Integer,Showing> showings, StringBuilder s, Movie m) {
+  public static int getMovieShowings(HashMap<Integer,Showing> showings, StringBuilder s, Movie m) {
 
     s.append("UPCOMING SESSIONS:\n");
     s.append("-----------------------------------------\n");
@@ -92,19 +92,17 @@ public class Showing {
     List<Showing> showingsByTime = new ArrayList<>(showings.values());
     Collections.sort(showingsByTime, new SortByShowingTime());
 
-    int count = 1;
+    int count = 0;
     for (Showing currShowing : showingsByTime) {
         if(currShowing.getMovie().getId() == m.getId() &&
            currShowing.showingTime.after(Calendar.getInstance(AEST,Locale.ENGLISH))) {
-          s.append(String.format("%-4s",count));
+          s.append(String.format("%-4s",count+1));
           s.append(String.format("%-21s",currShowing.getShowingTimeFormatted()));
           s.append(String.format("%s - %s CLASS\n",currShowing.getCinema().getId(),currShowing.getCinema().getScreen().name()));
           count++;
         }
     }
+    return count;
   }
-
-
-
 }
 

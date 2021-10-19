@@ -1,7 +1,5 @@
 package R18_G2_ASM2;
 
-import java.text.ParseException;
-
 public enum Screen {
   GOLD(2,35),
   SILVER(1.5,80),
