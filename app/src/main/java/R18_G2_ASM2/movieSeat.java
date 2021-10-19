@@ -9,15 +9,16 @@ import R18_G2_ASM2.SeatDataTools.DataFrame;
 import R18_G2_ASM2.SeatDataTools.FileTools;
 import R18_G2_ASM2.SeatDataTools.MovieDataFrame;
 
-public class movieSeat{
+public class MovieSeat{
     private Showing showing;
     private DataFrame<String> seatMap;
     private File movieSeat;
-    public movieSeat(Showing showing) throws IOException{
+    public MovieSeat(Showing showing) throws IOException{
         this.showing = showing;
 
-        movieSeat = new File("app/src/main/datasets/movieSeats/"+ String.valueOf(showing.getMovie().getId())+"-"+ String.valueOf(showing.getCinema().getCinemaId())+"-"+String.valueOf(showing.getShowingId())+".csv");
-        
+        movieSeat = new File("app/src/main/datasets/movieSeatsMap/"+ String.valueOf(showing.getMovie().getId())+"-"+ String.valueOf(showing.getCinema().getCinemaId())+"-"+String.valueOf(showing.getShowingId())+".csv");
+        // movieSeat = new File("/Users/weizhang/Desktop/SOFT2412/R18_G2_ASM2/app/src/main/datasets/movieSeatsMap/1-1-1.csv");
+
         // List<String> colNames = Arrays.asList("1", "2", "3", "4", "5", "6", "7");
         // String[][] data = { { "Available", "Available",  "Available", "Available", "Available", "Available", "Available" },
         //         { "Reserved", "Available", "Available", "Available", "Available", "Available", "Available"},
