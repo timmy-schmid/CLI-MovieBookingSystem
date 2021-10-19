@@ -40,6 +40,9 @@ public class Showing {
     return showingId;
   }
 
+  public MovieSeat getMovieSet(){
+          return this.movieSeat;}
+
   public Movie getMovie() {
     return movie;
   }
@@ -47,7 +50,6 @@ public class Showing {
   public Cinema getCinema() {
     return cinema;
   }
-
   public int getShowingDay() {
     Calendar calendar = Calendar.getInstance(); //local timezone
     calendar.setTime(showingTime);
