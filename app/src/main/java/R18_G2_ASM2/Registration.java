@@ -12,7 +12,6 @@ import java.util.regex.Pattern;
 
 import R18_G2_ASM2.Login.PasswordField;
 
-
 public class Registration {
   /*
   This class: prints screen for when user clicks: 'To Register'
@@ -52,6 +51,7 @@ public class Registration {
       System.out.println("\n*******************************************************");
       System.out.println("REDIRECTING YOU BACK TO HOME PAGE~ in 3..2..1..");
       System.out.println("*******************************************************");
+      //call function from defaultScreen?
       return;
     } else if (option.toUpperCase().startsWith("Y")) {
       // validate user details after retrieving input!!!
@@ -78,11 +78,13 @@ public class Registration {
         System.out.println();
       }
       
-      Login log = new Login();
-      PasswordField pwdField =  log.new PasswordField();
+      // TODO: update password with Robin's login hidePassword functions
+
+      // Login log = new Login();
+      // PasswordField pwdField =  log.new PasswordField();
       while (true){
-        pwdField.readPassword("\nPlease enter your password: ");
-        // System.out.printf("\nPlease enter your password: ");
+        // pwdField.readPassword("\nPlease enter your password: ");
+        System.out.printf("\nPlease enter your password: ");
         password = scan.nextLine();
         boolean isValidPwd = this.isValidPassword(password);
         if (isValidPwd == true){
@@ -107,7 +109,7 @@ public class Registration {
     }
   }
 
-  //compare against existing emails in database
+  //compare against existing emails in database to see if email for registering is taken already or not
   public int checkIfUserExists(String userEmail){
     int userID = 1;
     String email = null;
@@ -148,7 +150,6 @@ public class Registration {
   //alphanumeric only 
   public boolean validateUser(String email){ //or email
     //should contain: @ + .com
-    // String emailRegex = "^.*\\w@(.*)\\.com$";
     String emailRegex = "^.*\\w@(gmail|hotmail|yahoo)\\.com$";
     Pattern pattern = Pattern.compile(emailRegex);
     if (pattern.matcher(email).matches()){
@@ -174,14 +175,9 @@ public class Registration {
     }
   }
 
-  //An option to remember my login details for next time
-  // public void saveDetailsForNextTime(){
-  // }
-
   public int writeUserDetailsToFile(String email, String password){
     int id = -1;
     try {
-      // Scanner myReader = new Scanner(this.userCsvFile);
       BufferedReader myReader = new BufferedReader(new FileReader(this.userCsvFile));
       FileWriter myWriter = new FileWriter(this.userCsvFile, true); //for appending to existing file
       
@@ -209,38 +205,37 @@ public class Registration {
     return id;
   }
 
-  //after all validations are done, create a new customer/user obj account + save details to user.csv
-  //--> Once an account is created the [new] details must be written in a file/db.
+  //after all validations are done, create a new user obj that is a customer account + save/write details to user.csv
   public void createAccount(String email, String password){
     int ID = this.writeUserDetailsToFile(email, password);
     User newCustomer = new User(ID, email, password);  //creates a new user object
-    //now write to file
   }
 
+  //remove option of saving details...
+  // edit: consider representing options with colour in terminal?
   public String nextOption(){
     System.out.printf("\nPlease select from the following: \n");
-    System.out.println("1. CONTINUE LOGGING IN but don't save my details for next time");
-    System.out.println("2. CONTINUE LOGGING IN and save my details for next time");
-    System.out.println("3. CANCEL");
+    System.out.println("1. CONTINUE LOGGING IN");
+    System.out.println("2. CANCEL");
     Scanner scan = new Scanner(System.in);
     int result = scan.nextInt();
 
-    if (result == 1 || result == 2){
+    if (result == 1){
       
       System.out.println("\n~~~~~~~~~~~THANK YOU FOR SIGNING IN :) ~~~~~~~~~~~~~~~");
       System.out.printf("\nPlease select from the following: \n");
-      System.out.println("1. TOUR BUTTON for navigating the page"); //probs not necesssary for text based interface
-      System.out.println("2. HELP BUTTON for contacting staff");
-      System.out.println("3. DEFAULT HOME PAGE for filtering movies");
+      // System.out.println("1. TOUR BUTTON for navigating the page"); //probs not necesssary for text based interface
+      // System.out.println("2. HELP BUTTON for contacting staff");
+      
+      //acts like what happens after you login successfully~
+      System.out.println("1. SETTINGS BUTTON for updating your details"); //what amber is working on
+      System.out.println("2. DEFAULT HOME PAGE for filtering movies");
+      System.out.println("3. SIGN OUT BUTTON");
 
       return "CONTINUE";
-      // Scanner scan2 = new Scanner(System.in);
-      // int option = scan2.nextInt();
-      // if (option == 3){ //go to default page??
-      // }
-      // return "CONTINUE and save my details for next time";
-    } else if (result == 3){
-      return "CANCEL"; //go back to home page
+      
+    } else if (result == 2){
+      return "CANCEL"; //go back to home/default page
     } else {
       return null;
     }
