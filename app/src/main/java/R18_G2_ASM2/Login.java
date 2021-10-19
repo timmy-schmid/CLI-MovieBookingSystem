@@ -16,6 +16,7 @@ public class Login {
   }
 
   public void retrieveUserInputDetails(){
+    PasswordField pwdField = new PasswordField();
     this.printScreen();
     Scanner scan = new Scanner(System.in);
     //validate user details after retrieving input!!!
@@ -24,7 +25,7 @@ public class Login {
     while (true) {
       System.out.printf("Please enter your username: ");
       username = scan.nextLine();
-      password = PasswordField.readPassword("Please enter your password: ");
+      password = pwdField.readPassword("\nPlease enter your password: ");
 
       int result = this.checkIfUserExists(username, password);
       if (result == 1){
@@ -89,58 +90,60 @@ public class Login {
     Scanner scan = new Scanner(System.in);
     int result = scan.nextInt();
   }
-}
-
-class PasswordField {
-  /**
-   *@param prompt The prompt to display to the user
-   *@return The password as entered by the user
-   */
-  public static String readPassword (String prompt) {
-    EraserThread et = new EraserThread(prompt);
-    Thread mask = new Thread(et);
-    mask.start();
-    BufferedReader in = new BufferedReader(new InputStreamReader(System.in));
-    String password = "";
-    try {
-      password = in.readLine();
-    } catch (IOException ioe) {
-      ioe.printStackTrace();
-    }
-    // stop masking
-    et.stopMasking();
-    // return the password entered by the user
-    return password;
-  }
-}
 
 
-class EraserThread implements Runnable {
-  private boolean stop;
-  /**
-   *@param The prompt displayed to the user
-   */
-  public EraserThread(String prompt) {
-    System.out.print(prompt);
-  }
-  /**
-   * Begin masking...display asterisks (*)
-   */
-  public void run () {
-    stop = true;
-    while (stop) {
-      System.out.print("\010*");
+  class PasswordField {
+    /**
+     *@param prompt The prompt to display to the user
+    *@return The password as entered by the user
+    */
+    public String readPassword (String prompt) {
+    // public static String readPassword (String prompt) {
+      EraserThread et = new EraserThread(prompt);
+      Thread mask = new Thread(et);
+      mask.start();
+      BufferedReader in = new BufferedReader(new InputStreamReader(System.in));
+      String password = "";
       try {
-        Thread.currentThread().sleep(1);
-      } catch(InterruptedException ie) {
-        ie.printStackTrace();
+        password = in.readLine();
+      } catch (IOException ioe) {
+        ioe.printStackTrace();
+      }
+      // stop masking
+      et.stopMasking();
+      // return the password entered by the user
+      return password;
+    }
+  }
+
+
+  class EraserThread implements Runnable {
+    private boolean stop;
+    /**
+     *@param The prompt displayed to the user
+    */
+    public EraserThread(String prompt) {
+      System.out.print(prompt);
+    }
+    /**
+     * Begin masking...display asterisks (*)
+     */
+    public void run () {
+      stop = true;
+      while (stop) {
+        System.out.print("\010*");
+        try {
+          Thread.currentThread().sleep(1);
+        } catch(InterruptedException ie) {
+          ie.printStackTrace();
+        }
       }
     }
-  }
-  /**
-   * Instruct the thread to stop masking
-   */
-  public void stopMasking() {
-    this.stop = false;
+    /**
+     * Instruct the thread to stop masking
+     */
+    public void stopMasking() {
+      this.stop = false;
+    }
   }
 }

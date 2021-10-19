@@ -10,6 +10,9 @@ import java.io.FileWriter;
 import java.util.Scanner;
 import java.util.regex.Pattern;
 
+import R18_G2_ASM2.Login.PasswordField;
+
+
 public class Registration {
   /*
   This class: prints screen for when user clicks: 'To Register'
@@ -74,9 +77,12 @@ public class Registration {
         }
         System.out.println();
       }
-
+      
+      Login log = new Login();
+      PasswordField pwdField =  log.new PasswordField();
       while (true){
-        System.out.printf("\nPlease enter your password: ");
+        pwdField.readPassword("\nPlease enter your password: ");
+        // System.out.printf("\nPlease enter your password: ");
         password = scan.nextLine();
         boolean isValidPwd = this.isValidPassword(password);
         if (isValidPwd == true){
@@ -221,7 +227,7 @@ public class Registration {
 
     if (result == 1 || result == 2){
       
-      System.out.println("~~~~~~~~~~~THANK YOU FOR SIGNING IN~~~~~~~~~~~~~~~");
+      System.out.println("\n~~~~~~~~~~~THANK YOU FOR SIGNING IN :) ~~~~~~~~~~~~~~~");
       System.out.printf("\nPlease select from the following: \n");
       System.out.println("1. TOUR BUTTON for navigating the page"); //probs not necesssary for text based interface
       System.out.println("2. HELP BUTTON for contacting staff");
