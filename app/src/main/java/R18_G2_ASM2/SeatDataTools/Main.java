@@ -8,7 +8,7 @@ import java.util.List;
 import R18_G2_ASM2.Cinema;
 import R18_G2_ASM2.Movie;
 import R18_G2_ASM2.Screen;
-import R18_G2_ASM2.SeatMap;
+import R18_G2_ASM2.movieSeat;
 import R18_G2_ASM2.Showing;
 
 public class Main {
@@ -38,7 +38,7 @@ public class Main {
 
         // mdf.print();
 
-        SeatMap seatMap = new SeatMap(new Showing(1, new Movie(1,"77", null, null, null, null ), new Cinema(1, Screen.GOLD), null));
+        movieSeat seatMap = new movieSeat(new Showing(1, new Movie(1,"77", null, null, null, null ), new Cinema(1, Screen.GOLD), null));
         DataFrame<String> newFrame = seatMap.readFromDatabase();
         newFrame.print();
         seatMap.getSeatMap().setValue(3, "2", "Reserved");
