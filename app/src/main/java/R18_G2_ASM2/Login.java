@@ -122,78 +122,75 @@ public class Login {
   }
 }
 
-//class PasswordField {
-//  /**
-//   *@param prompt The prompt to display to the user
-//   *@return The password as entered by the user
-//   */
-//  public static String readPassword (String prompt) {
-//    EraserThread et = new EraserThread(prompt);
-//    Thread mask = new Thread(et);
-//    mask.start();
-//    BufferedReader in = new BufferedReader(new InputStreamReader(System.in));
-//    String password = "";
-//    try {
-//      password = in.readLine();
-//    } catch (IOException ioe) {
-//      ioe.printStackTrace();
-//    }
-//    // stop masking
-//    et.stopMasking();
-//    // return the password entered by the user
-//    return password;
-//  }
-//}
+class PasswordField {
+  /**
+   *@param prompt The prompt to display to the user
+   *@return The password as entered by the user
+   */
+  public static String readPassword (String prompt) {
+    EraserThread et = new EraserThread(prompt);
+    Thread mask = new Thread(et);
+    mask.start();
+    BufferedReader in = new BufferedReader(new InputStreamReader(System.in));
+    String password = "";
+    try {
+      password = in.readLine();
+    } catch (IOException ioe) {
+      ioe.printStackTrace();
+    }
+    // stop masking
+    et.stopMasking();
+    // return the password entered by the user
+    return password;
+  }
+}
 
 
-//class EraserThread implements Runnable {
-//  private boolean stop;
-//  /**
-//   *@param The prompt displayed to the user
-//   */
-//  public EraserThread(String prompt) {
-//    System.out.print(prompt);
-//  }
-//  /**
-//   * Begin masking...display asterisks (*)
-//   */
-//  public void run () {
-//    stop = true;
-//    while (stop) {
-//      System.out.print("\010*");
-//      try {
-//        Thread.currentThread().sleep(1);
-//      } catch(InterruptedException ie) {
-//        ie.printStackTrace();
-//      }
-//    }
-//  }
-//  /**
-//   * Instruct the thread to stop masking
-//   */
-//  public void stopMasking() {
-//    this.stop = false;
-//  }
-//}
+class EraserThread implements Runnable {
+  private boolean stop;
+  /**
+   *@param The prompt displayed to the user
+   */
+  public EraserThread(String prompt) {
+    System.out.print(prompt);
+  }
+  /**
+   * Begin masking...display asterisks (*)
+   */
+  public void run () {
+    stop = true;
+    while (stop) {
+      System.out.print("\010*");
+      try {
+        Thread.currentThread().sleep(1);
+      } catch(InterruptedException ie) {
+        ie.printStackTrace();
+      }
+    }
+  }
+  /**
+   * Instruct the thread to stop masking
+   */
+  public void stopMasking() {
+    this.stop = false;
+  }
+}
 
-//class PasswordMasking {
-//  public static String PasswordHide() {
-//    Console con = System.console();
-//    if (con != null) {
-//      char[] pwd = con.readPassword("Please enter your password: ");
-//      return new String(pwd);
-//    }
-//    return "Couldn't get Console instance, maybe you're running this from within an IDE?";
-//  }
-//}
+class PasswordMasking {
+  public static String PasswordHide() {
+    Console con = System.console();
+    if (con != null) {
+      char[] pwd = con.readPassword("Please enter your password: ");
+      return new String(pwd);
+    }
+    return "Couldn't get Console instance, maybe you're running this from within an IDE?";
+  }
+}
 
-//class PasswordMasking {
-//  public static String PasswordHide() throws Exception{
-////    String password = new jline.ConsoleReader().readLine(new Character('*'));
-////    password.close();
-////    return password;
-//    ConsoleReader console = new ConsoleReader();
-//    String password = console.readLine(new Character('*'));
-//    return password;
-//  }
-//}
+class PasswordMasking {
+  public static String PasswordHide() throws Exception{
+    ConsoleReader console = new ConsoleReader();
+    String password = console.readLine(new Character('*'));
+    return password;
+  }
+}
