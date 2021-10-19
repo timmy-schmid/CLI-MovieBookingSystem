@@ -3,6 +3,7 @@ package R18_G2_ASM2;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileWriter;
+import java.io.IOException;
 import java.util.Scanner;
 import java.util.regex.Pattern;
 
@@ -14,6 +15,7 @@ public class EditInformation {
      */
     private File userCsvFile = new File("src/main/datasets/user1.csv");
     private User userChanged;
+    private File tempFile;
 
     // call from the default screen
     public EditInformation(User aUser){
@@ -119,21 +121,14 @@ public class EditInformation {
 
 
     public void setUserEmail(String email){
-        try {
-            //create the scanner to look throught CSV files
-            Scanner scan = new Scanner(this.userCsvFile);
-            //create the new file after?
-        }
-        catch (FileNotFoundException e){
-            System.out.printf("FILE NOT FOUND ERROR: %s FILE NOT FOUND!", this.userCsvFile);
-
-        }
         this.userChanged.setEmail(email);
+        this.writeUsertoFile(this.userChanged,this.userCsvFile);
 
     }
 
     public void setUserPassword(String password) {
         this.userChanged.setPassword(password);
+        this.writeUsertoFile(this.userChanged,this.userCsvFile);
     }
 
     // same as the Registration method check the username whether matches format or not
@@ -206,20 +201,27 @@ public class EditInformation {
         this.giveChoice();
     }
 
-    //clean the file
-    public void Clean(){
-        try{
-            FileWriter fileWriter = new FileWriter(this.userCsvFile);
-            fileWriter.write("");
-            fileWriter.flush();
-            fileWriter.close();
-        }catch (Exception e){
+    public void writeUsertoFile(User user,File file) {
+        try {
+            Scanner myReader = new Scanner(file);
+            FileWriter myWriter = new FileWriter(tempFile);
+            while ((myReader.hasNextLine())){
+                String str = myReader.nextLine();
+                if (str.split(",")[0].equals(Integer.toString(user.getID()))){
+                    String[] arr = str.split(",");
+                    myWriter.write(arr[0]+","+user.getEmail()+","+user.getPassword());
+                }else{
+                    myWriter.write(str+"\n");
+                }
+                }
+            myWriter.close();
+            myReader.close();
+            } catch (FileNotFoundException e) {
+            System.out.printf("FILE NOT FOUND ERROR: %s FILE NOT FOUND!", this.userCsvFile);
+        } catch (IOException e) {
             e.printStackTrace();
         }
-    }
 
-    //rewrite the file
-    public void ReWrite(File tempOne, File Written){
-
+        boolean success = tempFile.renameTo(file);
     }
 }
