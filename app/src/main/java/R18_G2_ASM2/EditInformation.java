@@ -59,18 +59,21 @@ public class EditInformation {
         Scanner scan = new Scanner(System.in);
         System.out.println("The new username: ");
         while(!Success && wanttoContinue){
+            //not sure about where the code comes from and how to verify the code is correct one
+            System.out.println("Please enter a code to verify: ");
             String option = scan.nextLine();
             if(option.equals(this.userChanged.getEmail())){
                 System.out.println("Please enter a new username");
             }
-            if(this.validateUser(option)){
+            else if(this.validateUser(option)){
                 if (this.checkIfUserExists(option) == 1){
-                    this.userChanged.setEmail(option);
+                    this.setUserEmail(option);
                     Success = true;
                 }else{
                     System.out.println("The username already exists\n");
                 }
-            }else {
+            }
+            else {
                 System.out.println("Invalid Username :( Please use gmail, hotmail or yahoo email address.");
                 System.out.println("Do you wanna try again? (Y/N)\n");
                 if(option.equals("Y")){}else if(option.equals("N")){
@@ -95,7 +98,7 @@ public class EditInformation {
             if (pw.equals(this.userChanged.getPassword())) {
                 System.out.println("New password: ");
                 if(this.isValidPassword(pw)){
-                    this.userChanged.setPassword(pw);
+                    this.setUserPassword(pw);
                     Success = true;
                 }
             } else {
@@ -114,13 +117,13 @@ public class EditInformation {
     }
 
 
-//    public void setUserEmail(String email){
-//        this.userChanged.setEmail(email);
-//    }
-//
-//    public void setUserPassword(String password) {
-//        this.userChanged.setPassword(password);
-//    }
+    public void setUserEmail(String email){
+        this.userChanged.setEmail(email);
+    }
+
+    public void setUserPassword(String password) {
+        this.userChanged.setPassword(password);
+    }
 
     // same as the Registration method check the username whether matches format or not
     public boolean validateUser(String email){ //or email
