@@ -155,139 +155,13 @@ public class MovieDataFrame implements DataFrame <String> {
         return columns;
     }
 
-    /**
-     * Copies the values stored in this data frame into a larger data frame, and
-     * returns the result.
-     *
-     * @param additionalRows the number of rows to add to the new data frame
-     * @param newCols        the names of the column to add to the new data frame.
-     * @return the expanded resulting data frame
-     * @throws IllegalArgumentException the number of additional rows in negative or
-     *                                  column names are duplicated
-     */
-    @Override
-    public DataFrame<String> expand(int additionalRows, List<String> newCols) throws IllegalArgumentException {
-        String[][] newData = new String[getRowCount()+additionalRows][getColumnCount()+newCols.size()];
-        List<String> newNames = new ArrayList<>(columnNames);
-        newNames.addAll(newCols);
-        for (int i = 0; i< getRowCount(); i++){
-            for (int j = 0; j < getColumnCount(); j++){
-                newData[i][j] = data[i][j];
-            }
-        }
-        return new MovieDataFrame(newNames ,newData);
-    }
 
-    /**
-     * Produces a smaller data frame that only contains the columns with names that
-     * occur in the provided set of column names
-     *
-     * @param retainColumns the names of column that should be retained
-     * @return a smaller data frame
-     * @throws IllegalArgumentException if one of the column names is illegal
-     */
-    @Override
-    public DataFrame<String> project(Collection<String> retainColumns) throws IllegalArgumentException {
-        String[][] newData = new String[getRowCount()][retainColumns.size()];
-        List<String> newNames = new ArrayList<>();
-        for (String name : columnNames){
-            if(retainColumns.contains(name)){
-                newNames.add(name);
-                for (int i = 0; i< getRowCount(); i++){
-                    newData[i][newNames.size()-1] = getColumn(name).getValue("row_"+String.valueOf(i));
-                }
-            }
-        }
-        return new MovieDataFrame(newNames, newData);
-    }
 
-    /**
-     * Produces a smaller data frame the only keeps the rows that are accepted by
-     * the predicate
-     *
-     * @param rowFilter a predicate that can indicate whether or not a row should be
-     *                  maintained
-     * @return a smaller data frame
-     */
-    @Override
-    public DataFrame<String> select(Predicate<DataVector<String>> rowFilter) {
-        List<List<String>> dataList = new ArrayList<>();
-        for (int i =0; i< getRowCount(); i++){
-            if (rowFilter.test(getRow(i))){
-                dataList.add(getRow(i).getValues());
-            }
-        }
-        String[][] newData = new String[dataList.size()][getColumnCount()];
-        for (int i = 0; i < dataList.size(); i++){
-            for (int j = 0; j < getColumnCount(); j++){
-                newData[i][j] = dataList.get(i).get(j);
-            }
-        }
 
-        return new MovieDataFrame(columnNames, newData);
-    }
-
-    // @Override
-    // public DataVector<String> getRow(int rowIndex) throws IndexOutOfBoundsException {
-    //     // TODO Auto-generated method stub
-    //     return null;
-    // }
-
-    @Override
-    public DataFrame<String> computeColumn(String columnName, Function<DataVector<String>, Double> function) {
-        // TODO Auto-generated method stub
-        return null;
-    }
-
-    @Override
-    public DataVector<String> summarize(String name, BinaryOperator<String> summaryFunction) {
-        // TODO Auto-generated method stub
-        return null;
-    }
 
     @Override
     public String[][] getData() {
         // TODO Auto-generated method stub
         return data;
     }
-
-    // /**
-    //  * Produces a larger data frame with one additional column. The values stored in
-    //  * this column are computed using a give function that is applied to each row
-    //  * currently in the data frame
-    //  *
-    //  * @param columnName the name of the new column
-    //  * @param function   the function to apply to each row
-    //  * @return the resulting data frame
-    //  */
-    // @Override
-    // public DataFrame<String> computeColumn(String columnName, Function<DataVector<String>, Double> function) {
-    //     DataFrame<String> newData = this.expand(0, columnName);
-    //     for (int i = 0; i < getRowCount(); i++){
-    //         newData.setValue(i, columnName, function.apply(getRow(i)));
-    //     }
-    //     return newData;
-    // }
-
-    // /**
-    //  * Summarize each column using a given BinaryOperator using a reduce action. The
-    //  * result is produces as a data vector.
-    //  *
-    //  * @param name            the name of the resulting data vector
-    //  * @param summaryFunction the binary operator that should be used to reduce the
-    //  *                        values in each column
-    //  * @return a data vector with the result for each column
-    //  */
-    // @Override
-    // public DataVector<String> summarize(String name, BinaryOperator<String> summaryFunction) {
-    //     List<Double> entry = new ArrayList<>();
-    //     //use reduce method in stream
-    //     for (DataVector<Double> column: getColumns()){
-    //         Optional<Double> result = column.getValues().stream()
-    //                 .reduce((obj1, obj2)
-    //                         -> summaryFunction.apply(obj1, obj2));
-    //         entry.add(result.get());
-    //     }
-    //     return new MovieDataVector(name, columnNames, entry);
-    // }
 }

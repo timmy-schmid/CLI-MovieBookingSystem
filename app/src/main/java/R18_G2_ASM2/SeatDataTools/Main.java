@@ -5,6 +5,12 @@ import java.io.IOException;
 import java.util.Arrays;
 import java.util.List;
 
+import R18_G2_ASM2.Cinema;
+import R18_G2_ASM2.Movie;
+import R18_G2_ASM2.Screen;
+import R18_G2_ASM2.SeatMap;
+import R18_G2_ASM2.Showing;
+
 public class Main {
     public static void main(String[] args) throws IOException{
         List<String> colNames;
@@ -20,15 +26,23 @@ public class Main {
 
         // System.out.println(filmAvailable.getRow(1).getValues());
 
+
         System.out.println("\033[1;93;45m"+ "hello"+"\033[m");
-        File f = new File("mydata.csv");
-        // FileTools ft= new FileTools();
-        FileTools.writeToCsv(filmAvailable, f);
         
-        DataFrame mdf =  FileTools.readFromCsv(f);
-        // DataFrame<Double> smaller2 = df.select(row -> !row.getValue("year").equals(2017d));
-        // DataFrame<String> smaller1 = mdf.project("1");
-        mdf.print();
-        // smaller1.print();
+        // File f = new File("mydata.csv");
+
+
+        // FileTools.writeToCsv(filmAvailable, f);
+        
+        // DataFrame mdf =  FileTools.readFromCsv(f);
+
+        // mdf.print();
+
+        SeatMap seatMap = new SeatMap(new Showing(1, new Movie(1,"77", null, null, null, null ), new Cinema(1, Screen.GOLD), null));
+        DataFrame<String> newFrame = seatMap.readFromDatabase();
+        newFrame.print();
+        seatMap.getSeatMap().setValue(3, "2", "Reserved");
+        seatMap.writeToDatabase();
+        seatMap.readFromDatabase().print();
     }
 }

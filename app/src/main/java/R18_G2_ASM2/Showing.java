@@ -4,7 +4,10 @@ import java.text.SimpleDateFormat;
 import java.time.DayOfWeek;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.Map;
+
+import R18_G2_ASM2.SeatDataTools.MovieDataFrame;
 
 public class Showing {
   private int showingId;
@@ -24,6 +27,7 @@ public class Showing {
 
     // initialise seatMap based on cinema type
     
+    seatsBooked = new HashMap<>();
     seatsBooked.put(SeatLocation.REAR,0);
     seatsBooked.put(SeatLocation.MIDDLE,0);
     seatsBooked.put(SeatLocation.FRONT,0);
@@ -70,5 +74,7 @@ public class Showing {
   public int getTotalSeatsLeft() {
     return 0;
   }
+
+  
 }
 
