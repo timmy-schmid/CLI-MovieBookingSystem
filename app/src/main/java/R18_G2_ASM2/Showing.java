@@ -1,5 +1,6 @@
 package R18_G2_ASM2;
 
+import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.time.DayOfWeek;
 import java.util.Calendar;
@@ -18,12 +19,14 @@ public class Showing {
 
   private  Map<String, Boolean> seatMap;
   private  Map<SeatLocation, Integer> seatsBooked; 
+  private MovieSeat movieSeat;
 
-  public Showing (int showingId, Movie movie, Cinema cinema, Date showingTime) {
+  public Showing (int showingId, Movie movie, Cinema cinema, Date showingTime) throws IOException {
     this.showingId = showingId;
     this.movie = movie;
     this.cinema = cinema;
     this.showingTime = showingTime;
+    this.movieSeat = new MovieSeat(this);
 
     // initialise seatMap based on cinema type
     
@@ -73,6 +76,10 @@ public class Showing {
 
   public int getTotalSeatsLeft() {
     return 0;
+  }
+
+  public MovieSeat getMovieSeat(){
+    return movieSeat;
   }
 
   

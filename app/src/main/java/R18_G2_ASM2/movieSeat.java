@@ -41,4 +41,28 @@ public class MovieSeat{
     public DataFrame<String> getSeatMap(){
         return seatMap;
     }
+
+    public boolean bookSeat(char rowLetter, int colNum) throws IOException{
+        if (Character.getNumericValue(rowLetter)-10 >25 || Character.getNumericValue(rowLetter)-10 < 0){
+            throw new IllegalArgumentException();
+        }
+        else if (seatMap.getValue(Character.getNumericValue(rowLetter)-10, String.valueOf(colNum+1)).equals("Reserved")){
+            return false;
+        }
+        seatMap.setValue(Character.getNumericValue(rowLetter)-10, String.valueOf(colNum+1), "Reserved");
+        writeToDatabase();
+        return true;
+    }
+
+    public boolean cancelReservation(char rowLetter, int colNum) throws IOException{
+        if (Character.getNumericValue(rowLetter)-10 >25 || Character.getNumericValue(rowLetter)-10 < 0){
+            throw new IllegalArgumentException();
+        }
+        else if (seatMap.getValue(Character.getNumericValue(rowLetter)-10, String.valueOf(colNum+1)).equals("Available")){
+            return false;
+        }
+        seatMap.setValue(Character.getNumericValue(rowLetter)-10, String.valueOf(colNum+1), "Available");
+        writeToDatabase();
+        return true;
+    }
 }

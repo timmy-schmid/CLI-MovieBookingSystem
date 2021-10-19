@@ -44,5 +44,9 @@ public class Main {
         seatMap.getSeatMap().setValue(3, "2", "Reserved");
         seatMap.writeToDatabase();
         seatMap.readFromDatabase().print();
+        seatMap.bookSeat('A', 0);
+        seatMap.getSeatMap().print();
+        seatMap.cancelReservation('A', 0);
+        seatMap.getSeatMap().print();
     }
 }
