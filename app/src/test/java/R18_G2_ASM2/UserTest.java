@@ -26,4 +26,33 @@ class UserTest {
     String res = "oHxd124!xh";
     assertEquals(res, userB.getPassword());
   }
+
+  //testing setting methods work
+  @Test void testCanSetEmail(){
+    User userB = new User(5, "hello@gmail.com", "oHxd124!xh");
+    String newEmail = "hollo@gmail.com";
+    userB.setEmail(newEmail);
+    assertEquals(userB.getEmail(), newEmail);
+  }
+
+  @Test void testCantSetEmail(){
+    User userB = new User(5, "hello@gmail.com", "oHxd124!xh");
+    String newEmail = "holaAmigos";
+    userB.setEmail(newEmail);
+    assertNotEquals(userB.getEmail(), newEmail);
+  }
+
+  @Test void testCanSetPassword(){
+    User userB = new User(5, "hello@gmail.com", "oHxd124!xh");
+    String newPassword = "BobTheBuilder1";
+    userB.setPassword(newPassword);
+    assertEquals(userB.getPassword(), newPassword);
+  }
+
+  @Test void testCantSetPassword(){
+    User userB = new User(5, "hello@gmail.com", "oHxd124!xh");
+    String newPassword = "holaAmigos";
+    userB.setPassword(newPassword);
+    assertNotEquals(userB.getPassword(), newPassword);
+  }
 }
