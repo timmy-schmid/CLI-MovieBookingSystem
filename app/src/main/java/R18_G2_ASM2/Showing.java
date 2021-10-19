@@ -53,6 +53,12 @@ public class Showing {
 
     return formatter.format(showingTime.getTime()).toUpperCase();
   }
+
+  public String getShowingTimeShort() {
+    SimpleDateFormat formatter = new SimpleDateFormat("EEE K:mma",Locale.ENGLISH);
+
+    return formatter.format(showingTime.getTime()).toUpperCase();
+  }
   
   public boolean isSeatEmpty(String seat) {
     return false;
@@ -75,14 +81,25 @@ public class Showing {
     return cinema.getId() + ":" + getShowingTimeFormatted() + ":" + movie.getName();
   }
 
-  static class SortByShowingTime implements Comparator<Showing> {
+  static class SortMovieByShowingTime implements Comparator<Showing> {
     @Override
     public int compare(Showing a, Showing b) {
         return Long.compare(a.showingTime.getTimeInMillis(), b.showingTime.getTimeInMillis());
     }
   }
+  static class SortMoviesByTitleThenShowingTime implements Comparator<Showing> {
+    @Override
+    public int compare(Showing a, Showing b) {
 
-  public static int getMovieShowings(HashMap<Integer,Showing> showings, StringBuilder s, Movie m) {
+        int comp = a.getMovie().getName().compareTo(b.getMovie().getName());
+        if(comp == 0) {
+          return new SortMovieByShowingTime().compare(a,b);  
+        }
+        return comp;
+    }
+  }
+
+  public static int getSingleMovieShowings(HashMap<Integer,Showing> showings, StringBuilder s, Movie m) {
 
     s.append("UPCOMING SESSIONS:\n");
     s.append("-----------------------------------------\n");
@@ -90,7 +107,7 @@ public class Showing {
     s.append("-----------------------------------------\n");
   
     List<Showing> showingsByTime = new ArrayList<>(showings.values());
-    Collections.sort(showingsByTime, new SortByShowingTime());
+    Collections.sort(showingsByTime, new SortMovieByShowingTime());
 
     int count = 0;
     for (Showing currShowing : showingsByTime) {
@@ -104,5 +121,66 @@ public class Showing {
     }
     return count;
   }
+
+  public static int getAllMovieShowings(HashMap<Integer,Showing> showings, StringBuilder s) {
+    s.append("UPCOMING SESSIONS:\n");
+
+    
+    s.append("------------------------------------------------------------------------------------------\n");
+    s.append("ID  MOVIE                                             SHOWINGS\n");
+    s.append("------------------------------------------------------------------------------------------");
+    
+    
+    List<Showing> sortedShowings = new ArrayList<>(showings.values());
+    Collections.sort(sortedShowings, new SortMoviesByTitleThenShowingTime());
+
+    int count = 0;
+    int currTitle = 0;
+    int lastTitle = -1;
+    int padding = 55;
+    int sessionCounter = 0;
+
+    for (Showing currShowing : sortedShowings) {
+      currTitle = currShowing.movie.getId();
+      if (currShowing.showingTime.after(Calendar.getInstance(AEST,Locale.ENGLISH)) &&
+          currShowing.showingTime.before(getNextMonday(currShowing.showingTime))) {
+        
+        if (lastTitle != currTitle) {
+          s.append(String.format("\n%-4s",currShowing.getMovie().getId()));
+
+          String currName = currShowing.getMovie().getName();
+
+          if (currName.length() > 47) {
+            currName = currName.substring(0,47) + "...";
+          }
+          s.append(String.format("%-51s", currName));
+          s.append(String.format("%s",currShowing.getShowingTimeShort()));
+          sessionCounter = 1;
+          count++;
+        } else {
+          if (Math.floorMod(sessionCounter,3) == 0) {
+            s.append(String.format(",\n%" + padding + "s", " "));
+            s.append(String.format("%s",currShowing.getShowingTimeShort()));
+          } else {
+            s.append(String.format(", %s",currShowing.getShowingTimeShort()));
+          }
+          sessionCounter++;
+        }
+        lastTitle = currTitle;
+
+      }
+    }
+    return count;
+  }
+
+  public static Calendar getNextMonday (Calendar c) {
+    Calendar nextMon = Calendar.getInstance(AEST, Locale.ENGLISH);
+    nextMon.setTime(c.getTime());
+    nextMon.set(Calendar.DAY_OF_WEEK, Calendar.MONDAY);
+    nextMon.add(Calendar.DATE,7);
+    return nextMon;
+  }
+
+
 }
 
