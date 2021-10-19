@@ -11,8 +11,7 @@ public class User {
   private String password;
   private LinkedHashMap<Movie,String> filterMovie;
 
-
-  //add card details later? Subclass for customer or use current one?
+  //acts as a user settings? --> modify existing details of a customer
 
   public User(int ID, String email, String password){
     this.ID = ID;
@@ -35,6 +34,10 @@ public class User {
   public void setID(int ID){
     this.ID = ID;
   }
-  public void setEmail(String email){this.email = email;}
-  public void setPassword(String Password){this.password = password;}
+  public void setEmail(String email){
+    this.email = email;
+  }
+  public void setPassword(String Password){
+    this.password = password;
+  }
 }
