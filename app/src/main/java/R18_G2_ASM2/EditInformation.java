@@ -30,13 +30,15 @@ public class EditInformation {
         this.Welcome();
         Scanner scan = new Scanner(System.in);
         System.out.println("1 - Edit Email\n" +
-                "2 - Edit Password\n");
+                "2 - Edit Password\n" +
+                "3- return to the user page\n");
         System.out.println("User input: ");
         String option = scan.nextLine();
         if(option.equals("1")){
             this.editEmail();
         }
         else if(option.equals("2")){this.editPassword();}
+        else if(option.equals("3")){this.returnUserPage();}
         else{
             System.out.println("Invalid order :( Please try again");
         }
@@ -51,45 +53,74 @@ public class EditInformation {
     }
 
     public void editEmail(){
+        boolean Success = false;
+        boolean wanttoContinue = true;
         System.out.println("\nYour current username is: " + userChanged.getEmail());
         Scanner scan = new Scanner(System.in);
         System.out.println("The new username: ");
-        String option = scan.nextLine();
-        if(option.equals(this.userChanged.getEmail())){
-            System.out.println("Please enter a new username");
-        }
-        if(this.validateUser(option)){
-            if (this.checkIfUserExists(option) == 1){
-                this.userChanged.setEmail(option);
-            }else{
-                System.out.println("The username already exists\n");
+        while(!Success && wanttoContinue){
+            String option = scan.nextLine();
+            if(option.equals(this.userChanged.getEmail())){
+                System.out.println("Please enter a new username");
             }
-        }else {
-            System.out.println("Invalid Username :( Please use gmail, hotmail or yahoo email address.\n");
+            if(this.validateUser(option)){
+                if (this.checkIfUserExists(option) == 1){
+                    this.userChanged.setEmail(option);
+                    Success = true;
+                }else{
+                    System.out.println("The username already exists\n");
+                }
+            }else {
+                System.out.println("Invalid Username :( Please use gmail, hotmail or yahoo email address.");
+                System.out.println("Do you wanna try again? (Y/N)\n");
+                if(option.equals("Y")){}else if(option.equals("N")){
+                    wanttoContinue = false;
+                }else{
+                    System.out.println("Invalid input.Please choose from Y or N\n");
+                }
+            }
+        }
+        if(wanttoContinue == false){
+            this.nextOption();
         }
     }
 
     public void editPassword(){
         Scanner scan = new Scanner(System.in);
-        System.out.println("Security check, please enter your old password: ");
-        String pw = scan.nextLine();
-        if (pw.equals(this.userChanged.getPassword())){
-            System.out.println("New password: ");
-            String newpassword = scan.nextLine();
-
-        }else {
-            System.out.println("The password is incorrect. Please check it again");
+        boolean Success = false;
+        boolean wanttoContinue = true;
+        while (!Success && wanttoContinue) {
+            System.out.println("Security check, please enter your old password: ");
+            String pw = scan.nextLine();
+            if (pw.equals(this.userChanged.getPassword())) {
+                System.out.println("New password: ");
+                if(this.isValidPassword(pw)){
+                    this.userChanged.setPassword(pw);
+                    Success = true;
+                }
+            } else {
+                System.out.println("The password is incorrect. Please check it again");
+            }
+            System.out.println("Do you wanna try again? (Y/N)\n");
+            if(pw.equals("Y")){}else if(pw.equals("N")){
+                wanttoContinue = false;
+            }else{
+                System.out.println("Invalid input.Please choose from Y or N\n");
+            }
+        }
+        if(!wanttoContinue){
+            this.nextOption();
         }
     }
 
 
-    public void setUserEmail(String email){
-        this.userChanged.setEmail(email);
-    }
-
-    public void setUserPassword(String password) {
-        this.userChanged.setPassword(password);
-    }
+//    public void setUserEmail(String email){
+//        this.userChanged.setEmail(email);
+//    }
+//
+//    public void setUserPassword(String password) {
+//        this.userChanged.setPassword(password);
+//    }
 
     // same as the Registration method check the username whether matches format or not
     public boolean validateUser(String email){ //or email
@@ -153,6 +184,11 @@ public class EditInformation {
     }
 
     public void nextOption(){
+        System.out.println("Return the Edit Option page...\n");
+    }
 
+    public void returnUserPage(){
+        System.out.println("Return the User default page...\n");
+        this.giveChoice();
     }
 }
