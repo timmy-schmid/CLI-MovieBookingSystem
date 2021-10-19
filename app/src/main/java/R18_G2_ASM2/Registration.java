@@ -228,10 +228,29 @@ public class Registration {
       // System.out.println("2. HELP BUTTON for contacting staff");
       
       //acts like what happens after you login successfully~
-      System.out.println("1. SETTINGS BUTTON for updating your details"); //what amber is working on
+      System.out.println("\n1. SETTINGS BUTTON for updating your details"); //what amber is working on
       System.out.println("2. DEFAULT HOME PAGE for filtering movies");
       System.out.println("3. SIGN OUT BUTTON");
 
+      int option = -1;
+      while (true){
+        option = scan.nextInt();
+        System.out.println("\n*******************************************************");
+        if (option == 1){
+          System.out.println("Directing you to SETTINGS page~ in 3..2..1..");
+          break;
+        } else if (option == 2){
+          System.out.println("Directing you to DEFAULT HOME page~ in 3..2..1..");
+          break;
+        } else if (option == 3){
+          System.out.println("SIGNING OUT~ See you next time!~");
+          break;
+        } else {
+          System.out.printf("OH NO, please enter a valid command");
+        }
+        System.out.println("\n*******************************************************");
+      }
+      System.out.println("*******************************************************");
       return "CONTINUE";
       
     } else if (result == 2){

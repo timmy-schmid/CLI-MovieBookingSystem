@@ -4,6 +4,8 @@ package R18_G2_ASM2;
 import java.util.LinkedHashMap;
 import java.util.List;
 
+import R18_G2_ASM2.Registration;
+
 public class User {
 
   private int ID;
@@ -31,13 +33,24 @@ public class User {
   }
 
   //setter methods: e.g. for changing login details ...
+  //validate to ensure values to be set to are valid
   public void setID(int ID){
-    this.ID = ID;
+    if (ID >= 0){
+      this.ID = ID;
+    }
   }
+
+  //only set email if its valid
   public void setEmail(String email){
-    this.email = email;
+    if (new Registration().validateUser(email) == true){
+      this.email = email;
+    }
   }
-  public void setPassword(String Password){
-    this.password = password;
+
+  //only set password if its valid
+  public void setPassword(String newPassword){
+    if (new Registration().isValidPassword(newPassword) == true){
+      this.password = newPassword;
+    }
   }
 }
