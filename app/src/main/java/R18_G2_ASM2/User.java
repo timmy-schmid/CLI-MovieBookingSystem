@@ -13,7 +13,7 @@ public class User {
   private String password;
   private LinkedHashMap<Movie,String> filterMovie;
   private LinkedHashMap<Person,Integer> ticket = new LinkedHashMap<>();
-  private String ticketMessage;
+  private String ticketMessage = "";
 
   //acts as a user settings? --> modify existing details of a customer
 
@@ -64,9 +64,9 @@ public class User {
     ticket.replace(person,num);
   }
 
-  public void printTicketMessage(){
+  public void AddTicketMessage(){
     for(Person key: ticket.keySet()){
-      System.out.println("--"+key+"----"+Integer.toString(ticket.get(key)));
+      ticketMessage = (ticketMessage+"--"+key+"----"+Integer.toString(ticket.get(key))+"\n");
     }
   }
 }
