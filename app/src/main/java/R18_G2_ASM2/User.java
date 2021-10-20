@@ -69,4 +69,8 @@ public class User {
       ticketMessage = (ticketMessage+"--"+key+"----"+Integer.toString(ticket.get(key))+"\n");
     }
   }
+
+  public String getTicketMessage(){
+    return this.ticketMessage;
+  }
 }
