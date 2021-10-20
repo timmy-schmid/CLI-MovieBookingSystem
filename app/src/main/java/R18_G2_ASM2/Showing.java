@@ -70,13 +70,25 @@ public class Showing {
     return false;
   }
 
-  public int getTotalSeatsBooked() {
-    return 0;
+  public int totalSeatsBooked() {
+    return movieSeat.totalSeatsBooked();
   }
 
-  public int getTotalSeatsLeft() {
-    return 0;
+  public int totalSeatsLeft() {
+    return movieSeat.totalSeatsLeft();
   }
+
+  public int rearSeatBooked(){
+    return movieSeat.rearSeatBooked();
+}
+
+public int frontSeatBooked(){
+    return movieSeat.frontSeatBooked();
+}
+
+public int middleSeatBooked(){
+    return movieSeat.middleSeatBooked();
+}
 
   public MovieSeat getMovieSeat(){
     return movieSeat;

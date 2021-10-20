@@ -14,6 +14,10 @@ public class MovieSeat{
     private DataFrame<String> seatMap;
     private File movieSeat;
     private int frontRowNum;
+
+    private int totalFrontSeat;
+    private int totalMiddleSeat;
+    private int totalRearSeat;
     public MovieSeat(Showing showing) throws IOException{
         this.showing = showing;
 
@@ -31,6 +35,10 @@ public class MovieSeat{
         }
         seatMap = readFromDatabase();
         frontRowNum = seatMap.getRowCount()/3;
+
+        totalFrontSeat = frontRowNum*seatMap.getColumnCount();
+        totalRearSeat = frontRowNum*seatMap.getColumnCount();
+        totalMiddleSeat = seatMap.getRowCount()*seatMap.getColumnCount()-totalFrontSeat-totalRearSeat;
     }
 
     public void writeToDatabase() throws IOException{
@@ -84,6 +92,53 @@ public class MovieSeat{
     public void showRearSeats(){
         seatMap.print(seatMap.getRowCount()-frontRowNum, seatMap.getRowCount()-1);
     }
+
+    public int rearSeatBooked(){
+        int seatBooked = 0;
+        for (int i = seatMap.getRowCount()-1-frontRowNum; i< seatMap.getRowCount(); i++){
+            for (String value : seatMap.getRow(i).getValues()){
+                if (value.equals("Reserved")){
+                    seatBooked++;
+                }
+            }   
+        }
+        
+        return seatBooked;
+    }
+
+    public int frontSeatBooked(){
+        int seatBooked = 0;
+        for (int i = 0; i< frontRowNum-1; i++){
+            for (String value : seatMap.getRow(i).getValues()){
+                if (value.equals("Reserved")){
+                    seatBooked++;
+                }
+            }   
+        }
+        
+        return seatBooked;
+    }
+
+    public int middleSeatBooked(){
+        int seatBooked = 0;
+        for (int i = frontRowNum; i< seatMap.getRowCount()-1-frontRowNum; i++){
+            for (String value : seatMap.getRow(i).getValues()){
+                if (value.equals("Reserved")){
+                    seatBooked++;
+                }
+            }   
+        }
+        
+        return seatBooked;
+    }
+
+    public int totalSeatsBooked() {
+        return middleSeatBooked()+frontSeatBooked()+rearSeatBooked();
+      }
+    
+      public int totalSeatsLeft() {
+        return totalFrontSeat+totalMiddleSeat+totalRearSeat-totalSeatsBooked();
+      }
 
 
     
