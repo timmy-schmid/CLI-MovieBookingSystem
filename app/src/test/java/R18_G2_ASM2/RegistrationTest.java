@@ -159,11 +159,10 @@ class RegistrationTest {
   }
 
   @Test void testCancelRegistration(){
-
-    String welcomeMsg = "\n*******************************************************\n" +
+    String welcomeMsg = "\n***********************************************************\n" +
     "            Welcome to the registration page :)            \n" +
     "       Not a member with us yet? Sign up now FOR FREE!       \n" +
-    "*******************************************************\n";
+    "***********************************************************\n";
     String optionMsg = "\nPRESS Y TO CONTINUE REGISTERING"+
     " OR PRESS N TO CANCEL AND GO BACK TO HOME PAGE~\n";
     String yNOption = "Enter Y/N: ";
@@ -178,5 +177,11 @@ class RegistrationTest {
     System.setIn(in);
     reg.retrieveUserInputDetails();
     assertEquals(outContent.toString(), expected);
+  }
+
+  @Test void testNullUserFields(){
+    String input = null;
+    assertFalse(reg.validateUser(input));
+    assertFalse(reg.isValidPassword(input));
   }
 }

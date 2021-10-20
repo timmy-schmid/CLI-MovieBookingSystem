@@ -4,9 +4,9 @@ package R18_G2_ASM2;
 import java.util.LinkedHashMap;
 import java.util.List;
 
-import R18_G2_ASM2.Registration;
+import R18_G2_ASM2.UserFields;
 
-public class User {
+public class User extends UserFields {
 
   private int ID;
   private String email; //used to represent the unique username
@@ -49,14 +49,14 @@ public class User {
 
   //only set email if its valid
   public void setEmail(String email){
-    if (new Registration().validateUser(email) == true){
+    if (this.validateUser(email) == true){
       this.email = email;
     }
   }
 
   //only set password if its valid
   public void setPassword(String newPassword){
-    if (new Registration().isValidPassword(newPassword) == true){
+    if (this.isValidPassword(newPassword) == true){
       this.password = newPassword;
     }
   }

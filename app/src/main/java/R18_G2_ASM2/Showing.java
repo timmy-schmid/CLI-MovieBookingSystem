@@ -1,32 +1,35 @@
 package R18_G2_ASM2;
 
-import java.io.IOException;
 import java.text.SimpleDateFormat;
-import java.time.DayOfWeek;
+import java.util.ArrayList;
 import java.util.Calendar;
-import java.util.Date;
-import java.util.HashMap;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.Map;
+import java.util.TimeZone;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Locale;
 
-import R18_G2_ASM2.SeatDataTools.MovieDataFrame;
 
 public class Showing {
   private int showingId;
   private Movie movie;
   private Cinema cinema;
+  private Calendar showingTime;
 
-  private Date showingTime;
+  private static final TimeZone AEST = TimeZone.getTimeZone("Australia/Sydney");
 
-  private  Map<String, Boolean> seatMap;
+  //private  Map<String, Boolean> seatMap;
   private  Map<SeatLocation, Integer> seatsBooked; 
   private MovieSeat movieSeat;
 
-  public Showing (int showingId, Movie movie, Cinema cinema, Date showingTime) throws IOException {
+  public Showing (int showingId, Movie movie, Cinema cinema, Calendar showingTime) {
     this.showingId = showingId;
     this.movie = movie;
     this.cinema = cinema;
     this.showingTime = showingTime;
-    this.movieSeat = new MovieSeat(this);
+    //this.movieSeat = new MovieSeat(this); handle Io-Exception
 
     // initialise seatMap based on cinema type
     
@@ -50,20 +53,18 @@ public class Showing {
   public Cinema getCinema() {
     return cinema;
   }
-  public int getShowingDay() {
-    Calendar calendar = Calendar.getInstance(); //local timezone
-    calendar.setTime(showingTime);
-    return calendar.get(Calendar.DAY_OF_WEEK);
+  public String getShowingTimeFormatted() {
+    SimpleDateFormat formatter = new SimpleDateFormat("EEE dd MMM - K:mma",Locale.ENGLISH);
+
+    return formatter.format(showingTime.getTime()).toUpperCase();
   }
 
-  public String getShowingTime() {
-    Calendar calendar = Calendar.getInstance(); //local timezone
-    calendar.setTime(showingTime);
+  public String getShowingTimeShort() {
+    SimpleDateFormat formatter = new SimpleDateFormat("EEE K:mma",Locale.ENGLISH);
 
-    SimpleDateFormat formatter = new SimpleDateFormat("KK:mm a");
-    return formatter.format(showingTime);
+    return formatter.format(showingTime.getTime()).toUpperCase();
   }
-
+  
   public boolean isSeatEmpty(String seat) {
     return false;
   }
@@ -72,18 +73,139 @@ public class Showing {
     return false;
   }
 
-  public int getTotalSeatsBooked() {
-    return 0;
+  public int totalSeatsBooked() {
+    return movieSeat.totalSeatsBooked();
   }
 
-  public int getTotalSeatsLeft() {
-    return 0;
+  public int totalSeatsLeft() {
+    return movieSeat.totalSeatsLeft();
   }
+
+  public int rearSeatBooked(){
+    return movieSeat.rearSeatBooked();
+}
+
+public int frontSeatBooked(){
+    return movieSeat.frontSeatBooked();
+}
+
+public int middleSeatBooked(){
+    return movieSeat.middleSeatBooked();
+}
 
   public MovieSeat getMovieSeat(){
     return movieSeat;
   }
 
+  @Override
+  public String toString() {
+    return cinema.getId() + ":" + getShowingTimeFormatted() + ":" + movie.getName();
+  }
+
+  static class SortMovieByShowingTime implements Comparator<Showing> {
+    @Override
+    public int compare(Showing a, Showing b) {
+        return Long.compare(a.showingTime.getTimeInMillis(), b.showingTime.getTimeInMillis());
+    }
+  }
+  static class SortMoviesByTitleThenShowingTime implements Comparator<Showing> {
+    @Override
+    public int compare(Showing a, Showing b) {
+
+        int comp = a.getMovie().getName().compareTo(b.getMovie().getName());
+        if(comp == 0) {
+          return new SortMovieByShowingTime().compare(a,b);  
+        }
+        return comp;
+    }
+  }
+  public void showAllSeats(){
+    movieSeat.showAllSeats();
+  }
+  public static int getSingleMovieShowings(HashMap<Integer,Showing> showings, StringBuilder s, Movie m) {
+
+    s.append("UPCOMING SESSIONS:\n");
+    s.append("-----------------------------------------\n");
+    s.append("ID  TIME                 CINEMA\n");
+    s.append("-----------------------------------------\n");
+
+
   
+    List<Showing> showingsByTime = new ArrayList<>(showings.values());
+    Collections.sort(showingsByTime, new SortMovieByShowingTime());
+
+    int count = 0;
+    for (Showing currShowing : showingsByTime) {
+        if(currShowing.getMovie().getId() == m.getId() &&
+           currShowing.showingTime.after(Calendar.getInstance(AEST,Locale.ENGLISH))) {
+          s.append(String.format("%-4s",count+1));
+          s.append(String.format("%-21s",currShowing.getShowingTimeFormatted()));
+          s.append(String.format("%s - %s CLASS\n",currShowing.getCinema().getId(),currShowing.getCinema().getScreen().name()));
+          count++;
+        }
+    }
+    return count;
+  }
+
+  public static int getAllMovieShowings(HashMap<Integer,Showing> showings, StringBuilder s) {
+    s.append("UPCOMING SESSIONS:\n");
+
+    
+    s.append("------------------------------------------------------------------------------------------\n");
+    s.append("ID  MOVIE                                             SHOWINGS\n");
+    s.append("------------------------------------------------------------------------------------------");
+    
+    
+    List<Showing> sortedShowings = new ArrayList<>(showings.values());
+    Collections.sort(sortedShowings, new SortMoviesByTitleThenShowingTime());
+
+    int count = 0;
+    int currTitle = 0;
+    int lastTitle = -1;
+    int padding = 55;
+    int sessionCounter = 0;
+
+    for (Showing currShowing : sortedShowings) {
+      currTitle = currShowing.movie.getId();
+      if (currShowing.showingTime.after(Calendar.getInstance(AEST,Locale.ENGLISH)) &&
+          currShowing.showingTime.before(getNextMonday(currShowing.showingTime))) {
+        
+        if (lastTitle != currTitle) {
+          s.append(String.format("\n%-4s",currShowing.getMovie().getId()));
+
+          String currName = currShowing.getMovie().getName();
+
+          if (currName.length() > 47) {
+            currName = currName.substring(0,47) + "...";
+          }
+          s.append(String.format("%-51s", currName));
+          s.append(String.format("%s",currShowing.getShowingTimeShort()));
+          sessionCounter = 1;
+          count++;
+        } else {
+          if (Math.floorMod(sessionCounter,3) == 0) {
+            s.append(String.format(",\n%" + padding + "s", " "));
+            s.append(String.format("%s",currShowing.getShowingTimeShort()));
+          } else {
+            s.append(String.format(", %s",currShowing.getShowingTimeShort()));
+          }
+          sessionCounter++;
+        }
+        lastTitle = currTitle;
+
+      }
+    }
+    return count;
+  }
+
+  public static Calendar getNextMonday (Calendar c) {
+    Calendar nextMon = Calendar.getInstance(AEST, Locale.ENGLISH);
+    nextMon.setTime(c.getTime());
+    nextMon.set(Calendar.DAY_OF_WEEK, Calendar.MONDAY);
+    nextMon.add(Calendar.DATE,7);
+    return nextMon;
+  }
+
+
 }
 
