@@ -9,8 +9,13 @@ import java.io.FileWriter;
 
 import java.util.Scanner;
 import java.util.regex.Pattern;
+// import R18_G2_ASM2.UserFields;
 
+<<<<<<< HEAD
 public class Registration {
+=======
+public class Registration extends UserFields{
+>>>>>>> 44035fa19189059ae10b3b29264fd8c60a89789c
   /*
   This class: prints screen for when user clicks: 'To Register'
   and creates a new user account for them
@@ -36,74 +41,77 @@ public class Registration {
     this.userCsvFile = name;
   }
 
-  public void retrieveUserInputDetails(){
+  public void retrieveUserInputDetails(){ //return a USER object?
     this.printWelcome();
     Scanner scan = new Scanner(System.in);
 
     System.out.println("PRESS Y TO CONTINUE REGISTERING"+
     " OR PRESS N TO CANCEL AND GO BACK TO HOME PAGE~");
     System.out.printf("Enter Y/N: ");
-    String option = scan.nextLine();
-    // System.out.println("OPTION LINE 39 -------------> " + option);
-    if (option.toUpperCase().startsWith("N") == true){
-      System.out.println("\n*******************************************************");
-      System.out.println("REDIRECTING YOU BACK TO HOME PAGE~ in 3..2..1..");
-      System.out.println("*******************************************************");
-      //call function from defaultScreen?
-      return;
-    } else if (option.toUpperCase().startsWith("Y")) {
-      // validate user details after retrieving input!!!
-      System.out.println();
-      String email = null;
-      String password = null;
-
-      boolean returnResult = false;
-      boolean returnResult2 = false;
-    
-      while (true) { 
-        System.out.printf("Please enter your email: "); //[re-enter]
-        email = scan.nextLine();
-        int result = this.checkIfUserExists(email);
-        if (result == -1){
-          System.out.println("Email is taken already/exists in system. Please enter another.");
-        } else {
-          boolean isValidEmail = this.validateUser(email);
-          if (isValidEmail == true){
-            returnResult = true;
-            break;
-          } 
-        }
+    while (true){
+      String option = scan.nextLine();
+      if (option.toUpperCase().startsWith("N") == true){
+        System.out.println("\n*******************************************************");
+        System.out.println("REDIRECTING YOU BACK TO HOME PAGE~ in 3..2..1..");
+        System.out.println("*******************************************************");
+        //call function from defaultScreen?
+        // return;
+        break;
+      } else if (option.toUpperCase().startsWith("Y")) {
+        // validate user details after retrieving input!!!
         System.out.println();
-      }
+        String email = null;
+        String password = null;
+
+        boolean returnResult = false;
+        boolean returnResult2 = false;
       
-      // TODO: update password with Robin's login hidePassword functions
-
-      // Login log = new Login();
-      // PasswordField pwdField =  log.new PasswordField();
-      while (true){
-        // pwdField.readPassword("\nPlease enter your password: ");
-        System.out.printf("\nPlease enter your password: ");
-        password = scan.nextLine();
-        boolean isValidPwd = this.isValidPassword(password);
-        if (isValidPwd == true){
-          returnResult2 = true;
-          break;
-        } //else, continue to enter a valid pwd
-      }
-
-      //user doesn't exist in system and creates a new acc
-      if (returnResult == true && returnResult2 == true) {
-        this.createAccount(email, password); //if 51-52 is satisfied    
-        String resultOption = this.nextOption();
-        if (resultOption == null){
-          System.out.println("\nINVALID OPTION SELECTED~");
+        while (true) { 
+          System.out.printf("Please enter your email: "); //[re-enter]
+          email = scan.nextLine();
+          int result = this.checkIfUserExists(email);
+          if (result == -1){
+            System.out.println("Email is taken already/exists in system. Please enter another.");
+          } else {
+            boolean isValidEmail = this.validateUser(email);
+            if (isValidEmail == true){
+              returnResult = true;
+              break;
+            } 
+          }
+          System.out.println();
         }
-        System.out.printf("\nUSER PREFERENCE: [%s]\n", resultOption);
-      //else: keep entering a new password
+        
+        // TODO: update password with Robin's login hidePassword functions
+        while (true){
+          System.out.printf("\nPlease enter your password: ");
+          password = scan.nextLine();
+          boolean isValidPwd = this.isValidPassword(password);
+          if (isValidPwd == true){
+            returnResult2 = true;
+            break;
+          } //else, continue to enter a valid pwd
+        }
+
+        //user doesn't exist in system and creates a new acc
+        if (returnResult == true && returnResult2 == true) {
+          this.createAccount(email, password); //if 51-52 is satisfied    
+          String resultOption = this.nextOption();
+          if (resultOption == null){
+            System.out.println("\nINVALID OPTION SELECTED~");
+          }
+          System.out.printf("\nUSER PREFERENCE: [%s]\n", resultOption);
+          break;
+        //else: keep entering a new password
+        } 
       } else { //user input not y/n
-        System.out.printf("Invalid input [%s], please select Y/N\n", option);
-        return;
+        System.out.printf("\nInvalid input provided, please enter Y/N again: ", option);
+        // System.out.println("*******************************************************");
+        // System.out.println("REDIRECTING YOU BACK TO HOME PAGE~ in 3..2..1..");
+        // System.out.println("*******************************************************");
+        // return;
       }
+      System.out.println();
     }
   }
 
@@ -142,36 +150,21 @@ public class Registration {
     System.out.println("            Welcome to the registration page :)            ");
     System.out.println("       Not a member with us yet? Sign up now FOR FREE!       ");
     System.out.println("*******************************************************\n");
-
   }
-
-  //alphanumeric only 
-  public boolean validateUser(String email){ //or email
-    //should contain: @ + .com
-    String emailRegex = "^.*\\w@(gmail|hotmail|yahoo)\\.com$";
-    Pattern pattern = Pattern.compile(emailRegex);
-    if (pattern.matcher(email).matches()){
-      return true;
-    } else {
-      System.out.println("Your email did not satisfy acceptance criteria.");
-      return false;
-    }
-  }
-  //Valid Password password [at least > n characters, mixture of letters, numbers, min 10 chars, at least 1 capital]
-  public boolean isValidPassword(String password){
-    //now, use regex to ensure it contains a mixture of letters + numbers + symbols (--> optional?, allow whitespace or NAH?)    
-    
-    //\\w === [a-zA-Z_0-9]
-    // String passwordRegex = "^(?=.*\\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[!@#$%^&+=]).{10,}$";
-    String passwordRegex = "^(?=.*\\d)(?=.*[a-z])(?=.*[A-Z]).{10,}$";
-    Pattern pattern = Pattern.compile(passwordRegex);
-    if (pattern.matcher(password).matches()){
-      return true;
-    } else {
-      System.out.println("Your password did not satisfy acceptance criteria.");
-      return false;
-    }
-  }
+  
+  // public void printStars(int starsCount){
+  //   for (int i=0; i < stars; i++){
+  //     System.out.printf("*");
+  //   }
+  //   System.out.println();
+  // }
+  // public void printMessages(String message, int lineNUmbers, int stars){
+  //   System.out.println("\n*******************************************************");
+  //   this.printStars();
+  //   System.out.println("            Welcome to the registration page :)            ");
+  //   System.out.println("       Not a member with us yet? Sign up now FOR FREE!       ");
+  //   this.printStars();
+  // }
 
   public int writeUserDetailsToFile(String email, String password){
     int id = -1;
@@ -219,8 +212,9 @@ public class Registration {
     int result = scan.nextInt();
 
     if (result == 1){
-      
-      System.out.println("\n~~~~~~~~~~~THANK YOU FOR SIGNING IN :) ~~~~~~~~~~~~~~~");
+      System.out.println("*****************************************");
+      System.out.println("       THANK YOU FOR SIGNING IN :)       ");
+      System.out.println("*****************************************");
       System.out.printf("\nPlease select from the following: \n");
       // System.out.println("1. TOUR BUTTON for navigating the page"); //probs not necesssary for text based interface
       // System.out.println("2. HELP BUTTON for contacting staff");
@@ -229,6 +223,7 @@ public class Registration {
       System.out.println("\n1. SETTINGS BUTTON for updating your details"); //what amber is working on
       System.out.println("2. DEFAULT HOME PAGE for filtering movies");
       System.out.println("3. SIGN OUT BUTTON");
+      String res = "CONTINUE";
 
       int option = -1;
       while (true){
@@ -242,6 +237,7 @@ public class Registration {
           break;
         } else if (option == 3){
           System.out.println("SIGNING OUT~ See you next time!~");
+          res = "CANCEL";
           break;
         } else {
           System.out.printf("OH NO, please enter a valid command");
@@ -249,9 +245,12 @@ public class Registration {
         System.out.println("\n*******************************************************");
       }
       System.out.println("*******************************************************");
-      return "CONTINUE";
-      
+      return res;
+
     } else if (result == 2){
+      System.out.println("*******************************************************");
+      System.out.println("REDIRECTING YOU BACK TO HOME PAGE~ in 3..2..1..");
+      System.out.println("*******************************************************");
       return "CANCEL"; //go back to home/default page
     } else {
       return null;

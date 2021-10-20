@@ -7,7 +7,8 @@ import java.io.IOException;
 import java.util.Scanner;
 import java.util.regex.Pattern;
 
-public class EditInformation {
+//this class acts as user settings that can modify a user's details
+public class EditInformation extends UserFields { 
     /*
     This class: print screen for when user clicks "E" in the welcome page of user
     and edit the information of it
@@ -57,11 +58,11 @@ public class EditInformation {
 
     public void editEmail(){
         boolean Success = false;
-        boolean wanttoContinue = true;
+        boolean wantToContinue = true;
         System.out.println("\nYour current username is: " + userChanged.getEmail());
         Scanner scan = new Scanner(System.in);
         System.out.println("The new username: ");
-        while(!Success && wanttoContinue){
+        while(!Success && wantToContinue){
             //not sure about where the code comes from and how to verify the code is correct one
             System.out.println("Please enter a code to verify: ");
             String option = scan.nextLine();
@@ -73,20 +74,20 @@ public class EditInformation {
                     this.setUserEmail(option);
                     Success = true;
                 }else{
-                    System.out.println("The username already exists\n");
+                    System.out.println("The username already exists!\n");
                 }
             }
             else {
                 System.out.println("Invalid Username :( Please use gmail, hotmail or yahoo email address.");
-                System.out.println("Do you wanna try again? (Y/N)\n");
-                if(option.equals("Y")){}else if(option.equals("N")){
-                    wanttoContinue = false;
+                System.out.println("Do you wanna try again? (Y/N): \n");
+                if(option.equals("Y")){} else if(option.equals("N")){
+                    wantToContinue = false;
                 }else{
-                    System.out.println("Invalid input.Please choose from Y or N\n");
+                    System.out.println("Invalid input. Please choose from Y or N: \n");
                 }
             }
         }
-        if(wanttoContinue == false){
+        if(wantToContinue == false){
             this.nextOption();
         }
     }
@@ -94,8 +95,8 @@ public class EditInformation {
     public void editPassword(){
         Scanner scan = new Scanner(System.in);
         boolean Success = false;
-        boolean wanttoContinue = true;
-        while (!Success && wanttoContinue) {
+        boolean wantToContinue = true;
+        while (!Success && wantToContinue) {
             System.out.println("Security check, please enter your old password: ");
             String pw = scan.nextLine();
             if (pw.equals(this.userChanged.getPassword())) {
@@ -109,12 +110,12 @@ public class EditInformation {
             }
             System.out.println("Do you wanna try again? (Y/N)\n");
             if(pw.equals("Y")){}else if(pw.equals("N")){
-                wanttoContinue = false;
+                wantToContinue = false;
             }else{
                 System.out.println("Invalid input.Please choose from Y or N\n");
             }
         }
-        if(!wanttoContinue){
+        if(!wantToContinue){
             this.nextOption();
         }
     }
@@ -131,19 +132,18 @@ public class EditInformation {
         this.writeUsertoFile(this.userChanged,this.userCsvFile);
     }
 
-    // same as the Registration method check the username whether matches format or not
-    public boolean validateUser(String email){ //or email
-        //should contain: @ + .com
-        String emailRegex = "^.*\\w@(gmail|hotmail|yahoo)\\.com$";
-        Pattern pattern = Pattern.compile(emailRegex);
-        if (pattern.matcher(email).matches()){
-            return true;
-        } else {
-            System.out.println("Your email did not satisfy acceptance criteria.");
-            return false;
-        }
-    }
-
+    // // same as the Registration method check the username whether matches format or not
+    // public boolean validateUser(String email){ //or email
+    //     //should contain: @ + .com
+    //     String emailRegex = "^.*\\w@(gmail|hotmail|yahoo)\\.com$";
+    //     Pattern pattern = Pattern.compile(emailRegex);
+    //     if (pattern.matcher(email).matches()){
+    //         return true;
+    //     } else {
+    //         System.out.println("Your email did not satisfy acceptance criteria.");
+    //         return false;
+    //     }
+    // }
 
     //same as the Registration method to check the duplicate user name
     public int checkIfUserExists(String userEmail){
@@ -176,28 +176,27 @@ public class EditInformation {
     }
 
 
-    //same as the Registration method to check the password is valid
-    public boolean isValidPassword(String password){
-        //now, use regex to ensure it contains a mixture of letters + numbers + symbols (--> optional?, allow whitespace or NAH?)
+    // //same as the Registration method to check the password is valid //EDIT: call from UserFields class (sharing function?) - Anna
 
-        //\\w === [a-zA-Z_0-9]
-        // String passwordRegex = "^(?=.*\\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[!@#$%^&+=]).{10,}$";
-        String passwordRegex = "^(?=.*\\d)(?=.*[a-z])(?=.*[A-Z]).{10,}$";
-        Pattern pattern = Pattern.compile(passwordRegex);
-        if (pattern.matcher(password).matches()){
-            return true;
-        } else {
-            System.out.println("Your password did not satisfy acceptance criteria.");
-            return false;
-        }
-    }
+    // public boolean isValidPassword(String password){
+    //     //now, use regex to ensure it contains a mixture of letters + numbers + symbols (--> optional?, allow whitespace or NAH?)
+
+    //     String passwordRegex = "^(?=.*\\d)(?=.*[a-z])(?=.*[A-Z]).{10,}$";
+    //     Pattern pattern = Pattern.compile(passwordRegex);
+    //     if (pattern.matcher(password).matches()){
+    //         return true;
+    //     } else {
+    //         System.out.println("Your password did not satisfy acceptance criteria.");
+    //         return false;
+    //     }
+    // }
 
     public void nextOption(){
-        System.out.println("Return the Edit Option page...\n");
+        System.out.println("Return to the Edit Option page...\n");
     }
 
     public void returnUserPage(){
-        System.out.println("Return the User default page...\n");
+        System.out.println("Return to the User default page...\n");
         this.giveChoice();
     }
 

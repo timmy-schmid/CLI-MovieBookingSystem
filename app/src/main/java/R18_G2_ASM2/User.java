@@ -16,8 +16,6 @@ public class User extends UserFields {
   private String ticketMessage = "";
   private double totalPriceMutiplier = 0;
 
-  //acts as a user settings? --> modify existing details of a customer
-
   public User(int ID, String email, String password){
     this.ID = ID;
     this.email = email;
@@ -61,6 +59,7 @@ public class User extends UserFields {
     }
   }
 
+  //rename maybe bookingTicket --> bookTicket? OR nahh
   public void bookingTicket(Person person, int num){
     ticket.replace(person,ticket.get(person)+num);
   }
@@ -75,7 +74,7 @@ public class User extends UserFields {
       totalPriceMutiplier += key.getValue()*ticket.get(key);
     }
   }
-  public double gettotalPrice(){
+  public double getTotalPrice(){
     return this.totalPriceMutiplier;
   }
 

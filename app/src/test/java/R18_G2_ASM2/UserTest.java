@@ -55,4 +55,18 @@ class UserTest {
     userB.setPassword(newPassword);
     assertNotEquals(userB.getPassword(), newPassword);
   }
+
+  @Test void testCanGetUserID(){
+    User userB = new User(5, "hello@gmail.com", "oHxd124!xh");
+    assertEquals(5, userB.getID());
+  }
+
+  //updates on user --> additional methods e.g. on tickets
+  // @Test void test userCanBookTicket(){ //single ticket test
+  //   User userA = new User(10, "amy@gmail.com", "holaAmigos1");
+  //   // x0.5, 
+  //   userA.bookingTicket(Person.Child, 1);
+  //   // assertEquals(userA.getTicketMessage(), "--"+Person.Child.getValue()+
+  //   // "----"+Integer.toString(Person.Child.getValue()))+"\n");
+  // }
 }

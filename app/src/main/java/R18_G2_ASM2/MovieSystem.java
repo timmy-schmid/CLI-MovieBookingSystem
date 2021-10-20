@@ -17,6 +17,10 @@ public class MovieSystem {
   private HashMap<Integer,String> showingReadErrors = new HashMap<>();
 
   public void run() {
+
+    Registration reg = new Registration();
+    reg.retrieveUserInputDetails();
+    
     try {
       movieReadErrors = DataController.importMovies(movies,MOVIES_FILE_NAME);
     } catch (IOException e) {
@@ -34,16 +38,20 @@ public class MovieSystem {
     } catch (IOException e) {
       System.out.println("Error reading file: " + SHOWINGS_FILE_NAME);
     } 
+    /*
     DataController.printErrorMap(movieReadErrors);
     DataController.printErrorMap(cinemaReadErrors);
     DataController.printErrorMap(showingReadErrors);
+
 
     StringBuilder s = new StringBuilder();
     Showing.getAllMovieShowings(showings, s);
     s.append("\n\n");
     movies.get(1).toString(s);
     Showing.getSingleMovieShowings(showings, s, movies.get(1));
-    System.out.println(s);
+    System.out.println(s);*/
+    //show default page first
+
   }
 
 
