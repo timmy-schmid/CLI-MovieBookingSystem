@@ -18,6 +18,7 @@ import java.io.IOException;
 
 import java.io.BufferedReader;
 import java.io.FileReader;
+import jline.ConsoleReader;
 
 class LoginTest {
   Login login;
@@ -96,4 +97,26 @@ class LoginTest {
     login.nextOption();
     assertEquals(outContent.toString(), expected);
   }
+
+  @Test void testCheckRightEmailandPassword() throws Exception{
+    String username = "dannie@gmail.com";
+    String password = "Asdf1234!*";
+    Login login = new Login();
+    String expectedOutput = login.checkEmailandPassword(username, password);
+    assertEquals(expectedOutput, "break");
+  }
+
+//  @Test void testCheckWrongEmailandPassword() throws Exception{
+//    String username = "dan@gmail.com";
+//    String password = "Asdf1234!*";
+//    Login login = new Login();
+//    String inputMessage = "2";
+//    ByteArrayInputStream in = new ByteArrayInputStream(inputMessage.getBytes());
+//    System.setIn(in);
+////    ConsoleReader mockConsoleReader = mock(ConsoleReader.class);
+////    when(mockConsoleReader.readLine()).thenReturn("2");
+////    ByteArrayOutputStream actualOut = new ByteArrayOutputStream();
+//    String expectedOutput = login.checkEmailandPassword(username, password);
+//    assertEquals(expectedOutput, "continue");
+//  }
 }
