@@ -1,11 +1,7 @@
 package R18_G2_ASM2.SeatDataTools;
 
 import java.util.*;
-import java.util.function.BinaryOperator;
-import java.util.function.Function;
-import java.util.function.Predicate;
-import java.util.stream.Collectors;
-import java.util.stream.DoubleStream;
+
 
 public class MovieDataFrame implements DataFrame <String> {
     private List<String> columnNames;

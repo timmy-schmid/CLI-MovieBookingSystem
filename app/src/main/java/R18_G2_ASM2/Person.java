@@ -9,6 +9,4 @@ public enum Person {
     public double getValue(){
         return this.value;
     }
-
-
 }
