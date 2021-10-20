@@ -2,6 +2,7 @@ package R18_G2_ASM2;
 
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
 public class Movie {
@@ -13,6 +14,7 @@ public class Movie {
   private Classification classification;
   private List<String> directors;
   private List<String> cast;
+  private HashMap<Integer,Showing> showings;
 
   public Movie (int id, String name, List<String> cast, Classification classification, List<String> directors, String synopsis,Calendar releaseDate) {
     this.id = id;
@@ -50,6 +52,10 @@ public class Movie {
 
   public Calendar getReleaseDate() {
     return releaseDate;
+  }
+
+  public void addShowing(Showing showing) {
+    showings.put(showing.getShowingId(), showing);
   }
 
   public void toString(StringBuilder s) {

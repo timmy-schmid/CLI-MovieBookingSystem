@@ -2,7 +2,7 @@ package R18_G2_ASM2;
 import java.io.*;
 import java.util.Scanner;
 import java.util.regex.Pattern;
-import jline.ConsoleReader;
+import org.jline.ConsoleReader;
 
 public class Login {
   /*
@@ -120,7 +120,7 @@ public class Login {
     textinput = consoleReader.readLine();
     return textinput;
   }
-
+}
 //class PasswordField {
 //  /**
 //   *@param prompt The prompt to display to the user

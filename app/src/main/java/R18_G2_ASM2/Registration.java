@@ -10,8 +10,6 @@ import java.io.FileWriter;
 import java.util.Scanner;
 import java.util.regex.Pattern;
 
-import R18_G2_ASM2.Login.PasswordField;
-
 public class Registration {
   /*
   This class: prints screen for when user clicks: 'To Register'

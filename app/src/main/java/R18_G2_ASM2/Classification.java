@@ -11,6 +11,6 @@ public enum Classification {
         return c;
       }
     }
-    throw new InvalidClassificationException(s + " cannot be converted to a valid screen type.");
+    throw new InvalidClassificationException(s + " cannot be converted to a valid classification.");
   }
 }

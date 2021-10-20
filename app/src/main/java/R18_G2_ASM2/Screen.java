@@ -16,7 +16,7 @@ public enum Screen {
   public static Screen parseScreen(String s) {
     
     for (Screen screen : Screen.values()) {
-      if (screen.name().equals(s)) {
+      if (screen.name().equals(s.toUpperCase())) {
         return screen;
       }
     }

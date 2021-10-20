@@ -33,8 +33,9 @@ dependencies {
     
     // implementation group: 'org.jline', name: 'jline', version: '3.21.0'
     // compile group: 'org.jline', name: 'jline', version: '1.0' //Thanks for using https://jar-download.com 
-
-    implementation 'com.github.jline:jline3:jline-3.3.1' //jline --> no change?
+    //implementation 'org.jline:jline:3.21.0' 
+    //implementation 'com.github.jline:jline3:jline-3.3.1' //jline --> no change?
+    implementation 'jline:jline:3.0.0.M1'
 }
 
 application {
