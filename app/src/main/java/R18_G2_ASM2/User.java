@@ -14,6 +14,7 @@ public class User {
   private LinkedHashMap<Movie,String> filterMovie;
   private LinkedHashMap<Person,Integer> ticket = new LinkedHashMap<>();
   private String ticketMessage = "";
+  private double totalPriceMutiplier = 0;
 
   //acts as a user settings? --> modify existing details of a customer
 
@@ -68,6 +69,14 @@ public class User {
     for(Person key: ticket.keySet()){
       ticketMessage = (ticketMessage+"--"+key+"----"+Integer.toString(ticket.get(key))+"\n");
     }
+  }
+  public void totalPrice(){
+    for(Person key: ticket.keySet()){
+      totalPriceMutiplier += key.getValue()*ticket.get(key);
+    }
+  }
+  public double gettotalPrice(){
+    return this.totalPriceMutiplier;
   }
 
   public String getTicketMessage(){
