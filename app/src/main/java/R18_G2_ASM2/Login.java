@@ -34,33 +34,40 @@ public class Login {
 //        char[] pwd = con.readPassword("Please enter your password: ");
 //        password = new String(pwd);
 //      }
-      int result = this.checkIfUserExists(username, password);
-      if (result == 1){
-        System.out.println("Welcome back " + username + "!");
+
+//      int result = this.checkIfUserExists(username, password);
+//      if (result == 1){
+//        System.out.println("Welcome back " + username + "!");
+//        break;
+//        //Direct to next page!!!
+//      } else if (result == -1){
+//        int temp = 0;
+//        while (temp == 0) {
+//          String textinput = this.nextOption();
+//          if (textinput.equals("1")) {
+//            temp = 1;
+//          } else if (textinput.equals("2")) {
+//            System.out
+//                .println("Please answer the following questions: --To be add in the user.csv");
+//            temp = 2;
+//          } else if (textinput.equals("3")) {
+//            System.out.println("Back to default page--Tim part defalt screen");
+//            temp = 2;
+//          } else {
+//            System.out.println("Invalid input, please choose agian!");
+//          }
+//        }
+//        if (temp == 1) {
+//          continue;
+//        } else if (temp == 2) {
+//          break;
+//        }
+//      }
+      String s = this.checkEmailandPassword(username, password);
+      if (s.equals("break")) {
         break;
-        //Direct to next page!!!
-      } else if (result == -1){
-        int temp = 0;
-        while (temp == 0) {
-          String textinput = this.nextOption();
-          if (textinput.equals("1")) {
-            temp = 1;
-          } else if (textinput.equals("2")) {
-            System.out
-                .println("Please answer the following questions: --To be add in the user.csv");
-            temp = 2;
-          } else if (textinput.equals("3")) {
-            System.out.println("Back to default page--Tim part defalt screen");
-            temp = 2;
-          } else {
-            System.out.println("Invalid input, please choose agian!");
-          }
-        }
-        if (temp == 1) {
-          continue;
-        } else if (temp == 2) {
-          break;
-        }
+      } else if (s.equals("continue")) {
+        continue;
       }
     }
   }
@@ -119,6 +126,37 @@ public class Login {
     String textinput = null;
     textinput = consoleReader.readLine();
     return textinput;
+  }
+
+  public String checkEmailandPassword(String username, String password) throws Exception{
+    int result = this.checkIfUserExists(username, password);
+    if (result == 1){
+      System.out.println("Welcome back " + username + "!");
+      return "break";
+      //Direct to next page!!!
+    } else {
+      int temp = 0;
+      while (temp == 0) {
+        String textinput = this.nextOption();
+        if (textinput.equals("1")) {
+          temp = 1;
+        } else if (textinput.equals("2")) {
+          System.out
+              .println("Please answer the following questions: --To be add in the user.csv");
+          temp = 2;
+        } else if (textinput.equals("3")) {
+          System.out.println("Back to default page--Tim part defalt screen");
+          temp = 2;
+        } else {
+          System.out.println("Invalid input, please choose agian!");
+        }
+      }
+      if (temp == 1) {
+        return "continue";
+      } else {
+        return "break";
+      }
+    }
   }
 }
 
