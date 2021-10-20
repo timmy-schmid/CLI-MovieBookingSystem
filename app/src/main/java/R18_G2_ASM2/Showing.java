@@ -71,13 +71,25 @@ public class Showing {
     return false;
   }
 
-  public int getTotalSeatsBooked() {
-    return 0;
+  public int totalSeatsBooked() {
+    return movieSeat.totalSeatsBooked();
   }
 
-  public int getTotalSeatsLeft() {
-    return 0;
+  public int totalSeatsLeft() {
+    return movieSeat.totalSeatsLeft();
   }
+
+  public int rearSeatBooked(){
+    return movieSeat.rearSeatBooked();
+}
+
+public int frontSeatBooked(){
+    return movieSeat.frontSeatBooked();
+}
+
+public int middleSeatBooked(){
+    return movieSeat.middleSeatBooked();
+}
 
   public MovieSeat getMovieSeat(){
     return movieSeat;
@@ -105,13 +117,17 @@ public class Showing {
         return comp;
     }
   }
-
+  public void showAllSeats(){
+    movieSeat.showAllSeats();
+  }
   public static int getSingleMovieShowings(HashMap<Integer,Showing> showings, StringBuilder s, Movie m) {
 
     s.append("UPCOMING SESSIONS:\n");
     s.append("-----------------------------------------\n");
     s.append("ID  TIME                 CINEMA\n");
     s.append("-----------------------------------------\n");
+
+
   
     List<Showing> showingsByTime = new ArrayList<>(showings.values());
     Collections.sort(showingsByTime, new SortMovieByShowingTime());

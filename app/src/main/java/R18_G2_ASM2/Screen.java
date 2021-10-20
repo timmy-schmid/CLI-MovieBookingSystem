@@ -1,7 +1,7 @@
 package R18_G2_ASM2;
 
 public enum Screen {
-  GOLD(2,35),
+  GOLD(2,42),
   SILVER(1.5,80),
   BRONZE(1,150);
 
@@ -20,7 +20,7 @@ public enum Screen {
         return screen;
       }
     }
-    throw new InvalidScreenException(s + " is a Invalid screen type.");
+    throw new InvalidScreenException(s + " is an Invalid screen type.");
   }
 
   public double getMultiplier () {
