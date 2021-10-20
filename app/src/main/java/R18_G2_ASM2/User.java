@@ -12,6 +12,8 @@ public class User {
   private String email; //used to represent the unique username
   private String password;
   private LinkedHashMap<Movie,String> filterMovie;
+  private LinkedHashMap<Person,Integer> ticket = new LinkedHashMap<>();
+  private String ticketMessage;
 
   //acts as a user settings? --> modify existing details of a customer
 
@@ -19,6 +21,10 @@ public class User {
     this.ID = ID;
     this.email = email;
     this.password = password;
+    ticket.put(Person.Child,0);
+    ticket.put(Person.Student,0);
+    ticket.put(Person.Senior,0);
+    ticket.put(Person.Adult,0);
   }
 
   //getter methods below ~
@@ -51,6 +57,16 @@ public class User {
   public void setPassword(String newPassword){
     if (new Registration().isValidPassword(newPassword) == true){
       this.password = newPassword;
+    }
+  }
+
+  public void bookingTicket(Person person, int num){
+    ticket.replace(person,num);
+  }
+
+  public void printTicketMessage(){
+    for(Person key: ticket.keySet()){
+      System.out.println("--"+key+"----"+Integer.toString(ticket.get(key)));
     }
   }
 }
