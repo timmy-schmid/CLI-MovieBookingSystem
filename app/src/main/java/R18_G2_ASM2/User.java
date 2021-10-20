@@ -61,7 +61,7 @@ public class User {
   }
 
   public void bookingTicket(Person person, int num){
-    ticket.replace(person,num);
+    ticket.replace(person,ticket.get(person)+num);
   }
 
   public void AddTicketMessage(){
