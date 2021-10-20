@@ -18,9 +18,6 @@ public class MovieSystem {
 
   public void run() {
 
-    Registration reg = new Registration();
-    reg.retrieveUserInputDetails();
-    
     try {
       movieReadErrors = DataController.importMovies(movies,MOVIES_FILE_NAME);
     } catch (IOException e) {
@@ -38,6 +35,15 @@ public class MovieSystem {
     } catch (IOException e) {
       System.out.println("Error reading file: " + SHOWINGS_FILE_NAME);
     } 
+
+    User tim = new User(1, "tim@gmail.com", "TestOne12!@");
+    BookingTicket t = new BookingTicket(showings.get(2), tim);
+    t.run();
+    //Registration reg = new Registration();
+    //reg.retrieveUserInputDetails();
+
+
+
     /*
     DataController.printErrorMap(movieReadErrors);
     DataController.printErrorMap(cinemaReadErrors);

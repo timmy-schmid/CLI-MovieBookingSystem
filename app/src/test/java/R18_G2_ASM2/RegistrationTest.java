@@ -178,11 +178,7 @@ class RegistrationTest {
     ByteArrayInputStream in = new ByteArrayInputStream(inputMessage.getBytes());
     System.setIn(in);
     reg.retrieveUserInputDetails();
-<<<<<<< HEAD
-    //assertEquals(outContent.toString(), expected);--Tim: Commenting out as it fails 
-=======
     assertEquals(outContent.toString(), expectedOut);
->>>>>>> 44035fa19189059ae10b3b29264fd8c60a89789c
   }
 
   //.NoSuchElementException: No line found --> ERROR MSG :((

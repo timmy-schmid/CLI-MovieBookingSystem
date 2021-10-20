@@ -11,11 +11,7 @@ import java.util.Scanner;
 import java.util.regex.Pattern;
 // import R18_G2_ASM2.UserFields;
 
-<<<<<<< HEAD
-public class Registration {
-=======
 public class Registration extends UserFields{
->>>>>>> 44035fa19189059ae10b3b29264fd8c60a89789c
   /*
   This class: prints screen for when user clicks: 'To Register'
   and creates a new user account for them
