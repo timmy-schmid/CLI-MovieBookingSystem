@@ -77,6 +77,7 @@ public class MovieSeat{
         return true;
     }
 
+
     public void showAllSeats(){
         seatMap.print(0, seatMap.getRowCount()-1);
     }

@@ -43,6 +43,9 @@ public class Showing {
     return showingId;
   }
 
+  public MovieSeat getMovieSet(){
+          return this.movieSeat;}
+
   public Movie getMovie() {
     return movie;
   }
@@ -50,7 +53,6 @@ public class Showing {
   public Cinema getCinema() {
     return cinema;
   }
-
   public String getShowingTimeFormatted() {
     SimpleDateFormat formatter = new SimpleDateFormat("EEE dd MMM - K:mma",Locale.ENGLISH);
 
