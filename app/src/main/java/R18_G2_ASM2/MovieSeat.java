@@ -16,7 +16,7 @@ public class MovieSeat{
     public MovieSeat(Showing showing) throws IOException{
         this.showing = showing;
 
-        movieSeat = new File("app/src/main/datasets/movieSeatsMap/"+ String.valueOf(showing.getMovie().getId())+"-"+ String.valueOf(showing.getCinema().getCinemaId())+"-"+String.valueOf(showing.getShowingId())+".csv");
+        movieSeat = new File("app/src/main/datasets/movieSeatsMap/"+ String.valueOf(showing.getMovie().getId())+"-"+ String.valueOf(showing.getCinema().getId())+"-"+String.valueOf(showing.getShowingId())+".csv");
         // movieSeat = new File("/Users/weizhang/Desktop/SOFT2412/R18_G2_ASM2/app/src/main/datasets/movieSeatsMap/1-1-1.csv");
 
         // List<String> colNames = Arrays.asList("1", "2", "3", "4", "5", "6", "7");

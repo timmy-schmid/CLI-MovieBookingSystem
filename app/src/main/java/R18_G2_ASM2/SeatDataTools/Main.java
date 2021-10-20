@@ -38,7 +38,7 @@ public class Main {
 
         // mdf.print();
 
-        MovieSeat seatMap = new MovieSeat(new Showing(1, new Movie(1,"77", null, null, null, null ), new Cinema(1, Screen.GOLD), null));
+        MovieSeat seatMap = new MovieSeat(new Showing(1, new Movie(1,"77", null, null, null, null,null), new Cinema(1, Screen.GOLD), null));
         DataFrame<String> newFrame = seatMap.readFromDatabase();
         newFrame.print();
         seatMap.getSeatMap().setValue(3, "2", "Reserved");
