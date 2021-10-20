@@ -12,6 +12,9 @@ public class User extends UserFields {
   private String email; //used to represent the unique username
   private String password;
   private LinkedHashMap<Movie,String> filterMovie;
+  private LinkedHashMap<Person,Integer> ticket = new LinkedHashMap<>();
+  private String ticketMessage = "";
+  private double totalPriceMutiplier = 0;
 
   //acts as a user settings? --> modify existing details of a customer
 
@@ -19,6 +22,10 @@ public class User extends UserFields {
     this.ID = ID;
     this.email = email;
     this.password = password;
+    ticket.put(Person.Child,0);
+    ticket.put(Person.Student,0);
+    ticket.put(Person.Senior,0);
+    ticket.put(Person.Adult,0);
   }
 
   //getter methods below ~
@@ -52,5 +59,27 @@ public class User extends UserFields {
     if (this.isValidPassword(newPassword) == true){
       this.password = newPassword;
     }
+  }
+
+  public void bookingTicket(Person person, int num){
+    ticket.replace(person,ticket.get(person)+num);
+  }
+
+  public void AddTicketMessage(){
+    for(Person key: ticket.keySet()){
+      ticketMessage = (ticketMessage+"--"+key+"----"+Integer.toString(ticket.get(key))+"\n");
+    }
+  }
+  public void totalPrice(){
+    for(Person key: ticket.keySet()){
+      totalPriceMutiplier += key.getValue()*ticket.get(key);
+    }
+  }
+  public double gettotalPrice(){
+    return this.totalPriceMutiplier;
+  }
+
+  public String getTicketMessage(){
+    return this.ticketMessage;
   }
 }
