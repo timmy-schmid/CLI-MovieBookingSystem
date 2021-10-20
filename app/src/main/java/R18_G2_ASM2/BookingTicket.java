@@ -93,7 +93,7 @@ public class BookingTicket {
     public void printBookingMessage(){
         this.user.totalPrice();
         System.out.println(this.user.getTicketMessage());
-        System.out.println("Total = "+this.user.gettotalPrice()*price);
+        System.out.println("Total = "+this.user.getTotalPrice()*price);
     }
 
     public void bookingTicketForPersons(Person person,int num){

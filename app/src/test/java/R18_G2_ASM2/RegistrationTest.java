@@ -151,7 +151,7 @@ class RegistrationTest {
     // }
     }
   }
-
+  
   @Test void testWriteToFileFails(){ //should still validate inside function or just outside?
     String username = "benjilala1@hotmail.com";
     String pwd = "Blahblahblah3";

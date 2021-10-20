@@ -3,7 +3,9 @@ import java.util.regex.Pattern;
 
 public abstract class UserFields {
 
-  public boolean validateUser(String email){ //or email
+  //checks for user email + password are done here to ensure it satisfies acceptance criteria 
+  
+  public boolean validateUser(String email){
     //should contain: @ + .com
     if (email == null){
       return false;

@@ -37,7 +37,7 @@ public class Registration extends UserFields{
     this.userCsvFile = name;
   }
 
-  public void retrieveUserInputDetails(){
+  public void retrieveUserInputDetails(){ //return a USER object?
     this.printWelcome();
     Scanner scan = new Scanner(System.in);
 
