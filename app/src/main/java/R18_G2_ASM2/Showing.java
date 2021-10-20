@@ -82,6 +82,10 @@ public class Showing {
     return movieSeat;
   }
 
+  public void showAllSeats(){
+    movieSeat.showAllSeats();
+  }
+
   
 }
 

@@ -112,11 +112,11 @@ public interface DataFrame<E> extends Iterable<DataVector<E>>
 	 * Prints the contents of this data frame to System.out using a default column
 	 * width
 	 */
-	public default void print()
+	public default void print(int shartRow, int endRow)
 	{
 		//System.out.println("\033[1;93;45mhello\033m");
 		// System.out.println("\033[1;93;45m"+formatMatrix(DEFAULT_FORMAT_WIDTH)+"\033m");
-		System.out.println(formatMatrix(DEFAULT_FORMAT_WIDTH));
+		System.out.println(formatMatrix(DEFAULT_FORMAT_WIDTH, shartRow, endRow));
 	}
 
 	/**
@@ -128,7 +128,7 @@ public interface DataFrame<E> extends Iterable<DataVector<E>>
 	 * @param colWidth the number of character to use for a single column
 	 * @return a string representation of this data frame
 	 */
-	public default String formatMatrix(int colWidth)
+	public default String formatMatrix(int colWidth, int startRow, int endRow)
 	{
 		String fmt = "%-" + colWidth + "." + colWidth + "s";
 		StringBuilder sb = new StringBuilder();
@@ -142,18 +142,27 @@ public interface DataFrame<E> extends Iterable<DataVector<E>>
 		sb.append("\n");
 		for (int i = 0; i < getRowCount(); i++)
 		{
+
 			sb.append(String.format(Locale.ROOT, fmt, (char) (65+i)));
 			for (String colName : colNames)
 			{
+				if (i >= startRow && i <= endRow){
+					sb.append("\033[1;93;42m");
+				}
 				sb.append(" ");
 				
 				if (getValue(i, colName).equals("Reserved")){
 					sb.append("\033[35m"+String.format(Locale.ROOT, fmt, getValue(i, colName))+"\033[0m");
+					// sb.append(String.format(Locale.ROOT, fmt, getValue(i, colName)));
 				}else{
 					sb.append(String.format(Locale.ROOT, fmt, getValue(i, colName)));
 				}
+				if (i <= endRow){
+					sb.append("\033[0m");
+				}
 				
 			}
+
 			sb.append("\n");
 		}
 		return sb.toString();
