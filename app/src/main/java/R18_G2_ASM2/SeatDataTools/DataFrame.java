@@ -148,7 +148,7 @@ public interface DataFrame<E> extends Iterable<DataVector<E>>
 				sb.append(" ");
 				
 				if (getValue(i, colName).equals("Reserved")){
-					sb.append("\033[35;4m"+String.format(Locale.ROOT, fmt, getValue(i, colName))+"\033[0m");
+					sb.append("\033[35m"+String.format(Locale.ROOT, fmt, getValue(i, colName))+"\033[0m");
 				}else{
 					sb.append(String.format(Locale.ROOT, fmt, getValue(i, colName)));
 				}
