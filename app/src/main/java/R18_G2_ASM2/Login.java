@@ -2,13 +2,9 @@ package R18_G2_ASM2;
 import java.io.*;
 import java.util.Scanner;
 import java.util.regex.Pattern;
-<<<<<<< HEAD:app/bin/main/R18_G2_ASM2/Login.txt
-import org.jline.ConsoleReader;
-=======
-// import jline.ConsoleReader;
->>>>>>> 44035fa19189059ae10b3b29264fd8c60a89789c:app/src/main/java/R18_G2_ASM2/Login.java
+import jline.ConsoleReader;
 
-public class Login extends UserFields {
+public class Login {
   /*
   This class: prints screen for when user clicks: 'Log in' and direct them to type their username
   and password
@@ -21,19 +17,18 @@ public class Login extends UserFields {
 
   public void retrieveUserInputDetails() throws Exception{
     this.printScreen();
-   Scanner scan = new Scanner(System.in);
-    // ConsoleReader consoleReader = new ConsoleReader();
+//    Scanner scan = new Scanner(System.in);
+    ConsoleReader consoleReader = new ConsoleReader();
     //validate user details after retrieving input!!!
     String username = null;
     String password = null;
     while (true) {
       System.out.printf("Please enter your username: ");
-      username = scan.nextLine();
-      // username = consoleReader.readLine();
+//      username = scan.nextLine();
+      username = consoleReader.readLine();
 //      password = PasswordMasking.PasswordHide();
       System.out.printf("Please enter your password: ");
-      password = scan.nextLine();
-      // password = new jline.ConsoleReader().readLine(new Character('*'));
+      password = new jline.ConsoleReader().readLine(new Character('*'));
 //      Console con = System.console();
 //      if (con != null) {
 //        char[] pwd = con.readPassword("Please enter your password: ");
@@ -120,11 +115,9 @@ public class Login extends UserFields {
     System.out.println("1. CONTINUE LOGGING IN");
     System.out.println("2. FORGOT MY LOGIN DETAILS");
     System.out.println("3. CANCEL");
-    // ConsoleReader consoleReader = new ConsoleReader();
-    Scanner scan = new Scanner(System.in);
+    ConsoleReader consoleReader = new ConsoleReader();
     String textinput = null;
-    textinput = scan.nextLine();
-    // textinput = consoleReader.readLine();
+    textinput = consoleReader.readLine();
     return textinput;
   }
 }

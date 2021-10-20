@@ -36,9 +36,15 @@ public class MovieSystem {
       System.out.println("Error reading file: " + SHOWINGS_FILE_NAME);
     } 
 
-    User tim = new User(1, "tim@gmail.com", "TestOne12!@");
-    BookingTicket t = new BookingTicket(showings.get(2), tim);
-    t.run();
+    try {
+      Login login = new Login();
+      login.retrieveUserInputDetails();
+    } catch (Exception e) {
+      System.out.println(e.getStackTrace());
+    }
+    //User tim = new User(1, "tim@gmail.com", "TestOne12!@");
+    //BookingTicket t = new BookingTicket(showings.get(2), tim);
+    //t.run();
     //Registration reg = new Registration();
     //reg.retrieveUserInputDetails();
 
