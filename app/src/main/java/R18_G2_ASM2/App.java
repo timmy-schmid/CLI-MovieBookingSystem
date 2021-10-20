@@ -8,8 +8,6 @@ public class App {
     public static void main(String[] args) {
         // Login login = new Login();
         // login.retrieveUserInputDetails();
-        Registration reg = new Registration();
-        reg.retrieveUserInputDetails();
         MovieSystem system = new MovieSystem();
         system.run();
     }

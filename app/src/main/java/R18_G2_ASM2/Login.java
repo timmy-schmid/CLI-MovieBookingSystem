@@ -2,9 +2,9 @@ package R18_G2_ASM2;
 import java.io.*;
 import java.util.Scanner;
 import java.util.regex.Pattern;
-import jline.ConsoleReader;
+// import jline.ConsoleReader;
 
-public class Login {
+public class Login extends UserFields {
   /*
   This class: prints screen for when user clicks: 'Log in' and direct them to type their username
   and password
@@ -17,18 +17,19 @@ public class Login {
 
   public void retrieveUserInputDetails() throws Exception{
     this.printScreen();
-//    Scanner scan = new Scanner(System.in);
-    ConsoleReader consoleReader = new ConsoleReader();
+   Scanner scan = new Scanner(System.in);
+    // ConsoleReader consoleReader = new ConsoleReader();
     //validate user details after retrieving input!!!
     String username = null;
     String password = null;
     while (true) {
       System.out.printf("Please enter your username: ");
-//      username = scan.nextLine();
-      username = consoleReader.readLine();
+      username = scan.nextLine();
+      // username = consoleReader.readLine();
 //      password = PasswordMasking.PasswordHide();
       System.out.printf("Please enter your password: ");
-      password = new jline.ConsoleReader().readLine(new Character('*'));
+      password = scan.nextLine();
+      // password = new jline.ConsoleReader().readLine(new Character('*'));
 //      Console con = System.console();
 //      if (con != null) {
 //        char[] pwd = con.readPassword("Please enter your password: ");
@@ -115,12 +116,14 @@ public class Login {
     System.out.println("1. CONTINUE LOGGING IN");
     System.out.println("2. FORGOT MY LOGIN DETAILS");
     System.out.println("3. CANCEL");
-    ConsoleReader consoleReader = new ConsoleReader();
+    // ConsoleReader consoleReader = new ConsoleReader();
+    Scanner scan = new Scanner(System.in);
     String textinput = null;
-    textinput = consoleReader.readLine();
+    textinput = scan.nextLine();
+    // textinput = consoleReader.readLine();
     return textinput;
   }
-
+}
 //class PasswordField {
 //  /**
 //   *@param prompt The prompt to display to the user

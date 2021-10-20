@@ -55,4 +55,9 @@ class UserTest {
     userB.setPassword(newPassword);
     assertNotEquals(userB.getPassword(), newPassword);
   }
+
+  @Test void testCanGetUserID(){
+    User userB = new User(5, "hello@gmail.com", "oHxd124!xh");
+    assertEquals(5, userB.getID());
+  }
 }
