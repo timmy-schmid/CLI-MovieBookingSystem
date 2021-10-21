@@ -40,7 +40,7 @@ public class BookingTicketTest {
         ByteArrayOutputStream outContent = new ByteArrayOutputStream();
             System.setOut(new PrintStream(outContent));
             testBookingTicket.printBookingMessage();
-            String output = ("Total = "+testUser.getTotalPrice()*50);
+            String output = ("\nTotal = "+testUser.getTotalPrice()*50+"\n");
             assertEquals(outContent,output);
         }
         catch (Exception e){ e.printStackTrace();
