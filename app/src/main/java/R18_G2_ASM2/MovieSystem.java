@@ -12,6 +12,7 @@ public class MovieSystem {
   private HashMap<Integer,Movie> movies = new HashMap<>();
   private HashMap<Integer,Cinema> cinemas = new HashMap<>();
   private HashMap<Integer,Showing> showings = new HashMap<>();
+  User currentUser = null;
 
   Scanner sc = new Scanner(System.in);
   
@@ -32,7 +33,7 @@ public class MovieSystem {
     } else if (selection.equals("2")) {
       try {
         Registration reg = new Registration();
-        reg.retrieveUserInputDetails();
+        currentUser = reg.retrieveUserInputDetails();
       } catch (Exception e) {
         System.out.println(e.getStackTrace());
       }
