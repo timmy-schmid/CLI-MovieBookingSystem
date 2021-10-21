@@ -51,6 +51,6 @@ public class BookingTicketTest {
     @Test
     public void setTestBookingTicketForPerson(){
         testUser.bookingTicket(Person.Child,1);
-        assertEquals(40.0,testUser.getTotalPrice());
+        assertEquals(0.5,testUser.getTotalPrice());
     }
 }
