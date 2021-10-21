@@ -68,7 +68,6 @@ public class Login {
         break;
       } else if (s.equals("continue")) {
         continue;
-=======
       int result = this.checkIfUserExists(username, password);
       if (result == 1){
         System.out.println("Welcome back " + username + "!");
@@ -97,7 +96,6 @@ public class Login {
         } else if (temp == 2) {
           break;
         }
->>>>>>> dc48df2c88b70ab0cb33b41d13393c466c8c378d:app/src/main/java/R18_G2_ASM2/Login.java
       }
     }
   }
