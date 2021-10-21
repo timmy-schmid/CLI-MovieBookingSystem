@@ -12,7 +12,7 @@ public class Login {
   private File userCsvFile;
 
   public Login(){
-    this.userCsvFile = new File("src/main/datasets/user1.csv");
+    this.userCsvFile = new File("app/src/main/datasets/user1.csv");
 //    this.userCsvFile = new File("/Users/robingo/Desktop/usyd yr 2 s2/soft2412/asm2/R18_G2_ASM2/app/src/main/datasets/user1.csv");
   }
 
@@ -103,7 +103,7 @@ public class Login {
         }
       }
     } catch (FileNotFoundException e) {
-      System.out.println("LINE 103: USER1.CSV FILE NOT FOUND!!!");
+      System.out.println("LINE 107: USER1.CSV FILE NOT FOUND!!!");
     }
     return result;
   }

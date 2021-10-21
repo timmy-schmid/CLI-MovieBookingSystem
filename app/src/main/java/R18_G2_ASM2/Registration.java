@@ -9,6 +9,7 @@ import java.io.FileWriter;
 
 import java.util.Scanner;
 import jline.ConsoleReader;
+import java.io.*;
 
 public class Registration extends UserFields{
   /*
@@ -21,11 +22,18 @@ public class Registration extends UserFields{
   --> looks at file user1.csv (say e.g. those people who made an account but haven't booked yet so no card details stored?)
 
   --> user.csv file (contains card details, remembers those who have booked tickets before - details saved in system)
+
+  VERSION update: removed additional options after signing in and only directed to home page.
   */
   private File userCsvFile;
 
   public Registration(){
-    this.userCsvFile = new File("app/src/main/datasets/user1.csv");
+    this.userCsvFile = new File("/Users/annasu/Downloads/USYD2021/SEMESTER_2/SOFT2412/ASSIGNMENT_2/R18_G2_ASM2/app/src/main/datasets/user1.csv");
+      
+    //"app/src/main/datasets/user1.csv");
+
+
+    
   }
 
   public File getUserFile(){
@@ -40,10 +48,7 @@ public class Registration extends UserFields{
     this.printWelcome();
     Scanner scan = new Scanner(System.in);
     User currentUser = null;
-
-    // System.out.println("PRESS Y TO CONTINUE REGISTERING"+
-    // " OR PRESS N TO CANCEL AND GO BACK TO HOME PAGE~");
-    // System.out.printf("Enter Y/N: ");
+;
     System.out.println("1. ENTER Y TO CONTINUE REGISTERING\n"+
     "2. ENTER N TO CANCEL AND GO BACK TO HOME PAGE\n" +
     "3. ALREADY A MEMBER WITH US? ENTER M TO LOGIN~");
@@ -55,9 +60,8 @@ public class Registration extends UserFields{
         System.out.println("\n*******************************************************");
         System.out.println("REDIRECTING YOU BACK TO HOME PAGE~ in 3..2..1..");
         System.out.println("*******************************************************");
-        //call function from defaultScreen?
-        // return;
         break;
+
       } else if (option.toUpperCase().startsWith("Y")) {
         // validate user details after retrieving input!!!
         System.out.println();
@@ -88,6 +92,12 @@ public class Registration extends UserFields{
           System.out.printf("\nPlease enter your password: ");
           // password = scan.nextLine();
           password = new jline.ConsoleReader().readLine(new Character('*'));
+
+          // Console con = System.console();
+          // if (con != null) {
+          //   char[] pwd = con.readPassword("Please enter your password: ");
+          //   password = new String(pwd);
+          // }
           boolean isValidPwd = this.isValidPassword(password);
           if (isValidPwd == true){
             returnResult2 = true;
@@ -102,7 +112,6 @@ public class Registration extends UserFields{
           if (resultOption == null){
             System.out.println("\nINVALID OPTION SELECTED~");
           }
-          // System.out.printf("\nUSER PREFERENCE: [%s]\n", resultOption);
           break;
         //else: keep entering a new password
         } 
@@ -114,10 +123,6 @@ public class Registration extends UserFields{
 
       } else { //user input not y/n
         System.out.printf("\nInvalid input provided, please enter option again: ", option);
-        // System.out.println("*******************************************************");
-        // System.out.println("REDIRECTING YOU BACK TO HOME PAGE~ in 3..2..1..");
-        // System.out.println("*******************************************************");
-        // return;
       }
       System.out.println();
     }
@@ -150,6 +155,7 @@ public class Registration extends UserFields{
       }
     } catch (FileNotFoundException e) {
       System.out.printf("FILE NOT FOUND ERROR: %s FILE NOT FOUND!", this.userCsvFile);
+      System.exit(0);
     }
     return result;
   }
@@ -157,25 +163,10 @@ public class Registration extends UserFields{
   public void printWelcome(){
     System.out.println("\n*******************************************************");
     System.out.println("            Welcome to the registration page :)            ");
-    // System.out.println("       Not a member with us yet? Sign up now FOR FREE!       ");
     System.out.println("                   Sign up now FOR FREE!                  ");
 
     System.out.println("*******************************************************\n");
   }
-  
-  // public void printStars(int starsCount){
-  //   for (int i=0; i < stars; i++){
-  //     System.out.printf("*");
-  //   }
-  //   System.out.println();
-  // }
-  // public void printMessages(String message, int lineNUmbers, int stars){
-  //   System.out.println("\n*******************************************************");
-  //   this.printStars();
-  //   System.out.println("            Welcome to the registration page :)            ");
-  //   System.out.println("       Not a member with us yet? Sign up now FOR FREE!       ");
-  //   this.printStars();
-  // }
 
   public int writeUserDetailsToFile(String email, String password){
     int id = -1;
@@ -226,31 +217,20 @@ public class Registration extends UserFields{
       System.out.println("*****************************************");
       System.out.println("       THANK YOU FOR SIGNING IN :)       ");
       System.out.println("*****************************************");
-      System.out.printf("\nPlease select from the following: \n");
-      // System.out.println("1. TOUR BUTTON for navigating the page"); //probs not necesssary for text based interface
-      // System.out.println("2. HELP BUTTON for contacting staff");
-      
+      // System.out.printf("\nPlease select from the following: \n");
+     
       //acts like what happens after you login successfully~
-      System.out.println("\n1. SETTINGS BUTTON for updating your details"); //what amber is working on
-      System.out.println("2. DEFAULT HOME PAGE for filtering movies");
-      System.out.println("3. SIGN OUT BUTTON");
+      System.out.println("PLEASE ENTER 1 TO GO TO DEFAULT HOME PAGE");
       String res = "CONTINUE";
 
       int option = -1;
       while (true){
         option = scan.nextInt();
         System.out.println("\n*******************************************************");
-        if (option == 1){
-          System.out.println("Directing you to SETTINGS page~ in 3..2..1..");
-          break;
-        } else if (option == 2){
+        if (option == 1){  
           System.out.println("Directing you to DEFAULT HOME page~ in 3..2..1..");
           break;
-        } else if (option == 3){
-          System.out.println("SIGNING OUT~ See you next time!~");
-          res = "CANCEL";
-          break;
-        } else {
+        }  else {
           System.out.printf("OH NO, please enter a valid command");
         }
         System.out.println("\n*******************************************************");
