@@ -12,7 +12,8 @@ public class Login {
   private File userCsvFile;
 
   public Login(){
-    this.userCsvFile = new File("src/main/datasets/user1.csv");
+//    this.userCsvFile = new File("src/main/datasets/user1.csv");
+    this.userCsvFile = new File("/Users/robingo/Desktop/usyd yr 2 s2/soft2412/asm2/R18_G2_ASM2/app/src/main/datasets/user1.csv");
   }
 
   public void setUserFile(File name){
@@ -21,21 +22,22 @@ public class Login {
 
   public void retrieveUserInputDetails() throws IOException{
     this.printScreen();
-//    Scanner scan = new Scanner(System.in);
-    ConsoleReader consoleReader = new ConsoleReader();
+    Scanner scan = new Scanner(System.in);
+//    ConsoleReader consoleReader = new ConsoleReader();
     //validate user details after retrieving input!!!
     String username = null;
     String password = null;
     while (true) {
       System.out.printf("Please enter your username: ");
-      username = consoleReader.readLine();
-      System.out.printf("Please enter your password: ");
-      password = new jline.ConsoleReader().readLine(new Character('*'));
-//      Console con = System.console();
-//      if (con != null) {
-//        char[] pwd = con.readPassword("Please enter your password: ");
-//        password = new String(pwd);
-//      }
+//      username = consoleReader.readLine();
+      username = scan.nextLine();
+//      System.out.printf("Please enter your password: ");
+//      password = new jline.ConsoleReader().readLine(new Character('*'));
+      Console con = System.console();
+      if (con != null) {
+        char[] pwd = con.readPassword("Please enter your password: ");
+        password = new String(pwd);
+      }
       int result = this.checkIfUserExists(username, password);
       if (result == 1){
         System.out.println("Welcome back " + username + "!");
@@ -118,9 +120,11 @@ public class Login {
     System.out.println("1. CONTINUE LOGGING IN");
     System.out.println("2. FORGOT MY LOGIN DETAILS");
     System.out.println("3. CANCEL");
-    ConsoleReader consoleReader = new ConsoleReader();
+//    ConsoleReader consoleReader = new ConsoleReader();
     String textinput = null;
-    textinput = consoleReader.readLine();
+//    textinput = consoleReader.readLine();
+    Scanner scan = new Scanner(System.in);
+    textinput = scan.nextLine();
     return textinput;
   }
 }
