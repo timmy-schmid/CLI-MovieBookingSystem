@@ -36,6 +36,7 @@ public class MovieSystem {
       importMovieData();
       Showing.getAllMovieShowings(showings);
     } else if (selection == "q" || selection == "Q") {
+      System.out.println("Thanks. See you next time!\n");
       break;
     }
   }

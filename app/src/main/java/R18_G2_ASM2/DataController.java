@@ -111,7 +111,6 @@ public class DataController {
     br.close();
     return err;
   }
-
   public static HashMap<Integer, String> importCinemas(Map<Integer,Cinema> cinemas, String filename) throws FileNotFoundException, IOException {
     HashMap<Integer, String> err = new HashMap<>();
   
