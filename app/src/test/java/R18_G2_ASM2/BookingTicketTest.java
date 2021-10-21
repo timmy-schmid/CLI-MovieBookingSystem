@@ -5,9 +5,11 @@ import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.*;
 
 import java.io.ByteArrayOutputStream;
+import java.io.InputStream;
 import java.io.PrintStream;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.LinkedHashMap;
 import java.util.List;
 
 public class BookingTicketTest {
@@ -50,5 +52,11 @@ public class BookingTicketTest {
     @Test
     public void setTestBookingTicketForPerson(){
         testUser.bookingTicket(Person.Child,1);
+        assertEquals(0.5,testUser.getTotalPrice());
     }
+    @Test
+    public void setAskForBooking(){
+    }
+
+
 }
