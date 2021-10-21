@@ -8,6 +8,8 @@ public class MovieSystem {
   private final String MOVIES_FILE_NAME = "movie.csv";
   private final String CINEMAS_FILE_NAME = "cinema.csv";
   private final String SHOWINGS_FILE_NAME = "showing.csv";
+  public static final String ANSI_BLUE = "\u001B[34m";
+  public static final String ANSI_RESET = "\u001B[0m";
 
   private HashMap<Integer,Movie> movies = new HashMap<>();
   private HashMap<Integer,Cinema> cinemas = new HashMap<>();
@@ -40,8 +42,22 @@ public class MovieSystem {
     } else if (selection.equals("3")) {
       importMovieData();
       Showing.getAllMovieShowings(showings);
-    } else if (selection == "q" || selection == "Q") {
-      System.out.println("SEE YOU NEXT TIME! :)");
+      printShowingsScreen();
+
+      if (currentUser != null) {
+        selection = parseInput("EeQq",showings.size());
+        if (selection.equals("E") || selection.equals("E")) {
+          editUser();
+        }
+      } else {
+        selection = parseInput("RrQq",showings.size());       
+      }
+      if (selection.equals("q") || selection.equals("Q")) {
+        quit();
+        return;
+      }
+    } else if (selection.equals("q") || selection.equals("Q")) {
+      quit();
       break;
     }
   }
@@ -118,19 +134,61 @@ public class MovieSystem {
 
     StringBuilder s = new StringBuilder();
     s.append("******************************************************************\n");
-    // s.append("------------------------------------------------------------------\n");
     s.append("\nWELCOME TO FANCY CINEMAS! PLEASE CHOOSE FROM THE FOLLOWING OPTIONS\n");
-    // s.append("------------------------------------------------------------------\n");
     s.append("\n******************************************************************\n");
 
     s.append("1 - Log In\n");
     s.append("2 - Register\n");
-    s.append("3 - Show Movies\n");  
+    s.append("3 - View upcoming showings\n");  
     s.append("Q - Quit\n");
 
     System.out.println(s);    
   }
 
+  public void printShowingsScreen() {
+    StringBuilder s = new StringBuilder();
+
+    s.append("******************************************************************\n");
+    s.append("                      SHOWINGS PAGE                                 ");
+    s.append("\n******************************************************************\n");
+
+
+    if (currentUser != null) {
+      s.append(String.format("Welcome, %s,\n",currentUser.getEmail()));
+    } else {
+      s.append(String.format("Welcome,\n"));
+    }
+
+    s.append("\nPlease select from the following options:\n");
+    s.append(String.format("  %s - to see further details about a particular movie (listed above).\n",wrapColour("[ID]")));
+
+    if (currentUser != null) {
+      s.append(String.format("   %s - to edit account details\n", wrapColour("E")));
+    } else {
+      s.append(String.format("   %s - to register an account\n", wrapColour("R")));
+    }
   
+    s.append(String.format("   %s - to log out and quit\n\n", wrapColour("Q")));
+
+    System.out.println(s);
+
+  }
+
+  public void quit() {
+    System.out.println("SEE YOU NEXT TIME! :)");   
+  }
+
+  private String wrapColour(String s) {
+    return ANSI_BLUE + s + ANSI_RESET;
+  }
+
+
+  public void editUser() {
+
+    EditInformation edit = new EditInformation(currentUser);
+    edit.giveChoice();
+
+  }
+
 
 }
