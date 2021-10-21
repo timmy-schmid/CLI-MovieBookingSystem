@@ -70,6 +70,7 @@ public class User extends UserFields {
     }
   }
   public void totalPrice(){
+    totalPriceMutiplier = 0;
     for(Person key: ticket.keySet()){
       totalPriceMutiplier += key.getValue()*ticket.get(key);
     }
