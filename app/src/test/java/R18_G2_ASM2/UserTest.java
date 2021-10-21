@@ -60,6 +60,11 @@ class UserTest {
     User userB = new User(5, "hello@gmail.com", "oHxd124!xh");
     assertEquals(5, userB.getID());
   }
+  @Test void testBookingTicket(){
+    User userB = new User(5, "hello@gmail.com", "oHxd124!xh");
+    userB.bookingTicket(Person.Child,1);
+    assertEquals(0.5,userB.getTotalPrice());
+  }
 
   //updates on user --> additional methods e.g. on tickets
   // @Test void test userCanBookTicket(){ //single ticket test

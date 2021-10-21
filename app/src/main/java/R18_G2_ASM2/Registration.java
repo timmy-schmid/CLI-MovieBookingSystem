@@ -36,9 +36,10 @@ public class Registration extends UserFields{
     this.userCsvFile = name;
   }
 
-  public void retrieveUserInputDetails() throws IOException{ //return a USER object?
+  public User retrieveUserInputDetails() throws IOException { //return a USER object?
     this.printWelcome();
     Scanner scan = new Scanner(System.in);
+    User currentUser = null;
 
     // System.out.println("PRESS Y TO CONTINUE REGISTERING"+
     // " OR PRESS N TO CANCEL AND GO BACK TO HOME PAGE~");
@@ -96,7 +97,7 @@ public class Registration extends UserFields{
 
         //user doesn't exist in system and creates a new acc
         if (returnResult == true && returnResult2 == true) {
-          this.createAccount(email, password); //if 51-52 is satisfied    
+          currentUser = this.createAccount(email, password); //if 51-52 is satisfied    
           String resultOption = this.nextOption();
           if (resultOption == null){
             System.out.println("\nINVALID OPTION SELECTED~");
@@ -120,6 +121,7 @@ public class Registration extends UserFields{
       }
       System.out.println();
     }
+    return currentUser;
   }
 
   //compare against existing emails in database to see if email for registering is taken already or not
@@ -206,9 +208,9 @@ public class Registration extends UserFields{
   }
 
   //after all validations are done, create a new user obj that is a customer account + save/write details to user.csv
-  public void createAccount(String email, String password){
+  public User createAccount(String email, String password){
     int ID = this.writeUserDetailsToFile(email, password);
-    User newCustomer = new User(ID, email, password);  //creates a new user object
+    return new User(ID, email, password);  //creates a new user object
   }
 
   //remove option of saving details...

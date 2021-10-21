@@ -33,7 +33,7 @@ public class DataController {
   public static void printErrorMap(Map<Integer, String> errors) {
 
     System.out.println("There were errors reading from the following lines:");
-    for (var entry: errors.entrySet()) {
+    for (Map.Entry<Integer,String> entry: errors.entrySet()) {
       System.out.format("  Line %d: %s\n",entry.getKey(),entry.getValue());
     }
   }
@@ -111,7 +111,6 @@ public class DataController {
     br.close();
     return err;
   }
-
   public static HashMap<Integer, String> importCinemas(Map<Integer,Cinema> cinemas, String filename) throws FileNotFoundException, IOException {
     HashMap<Integer, String> err = new HashMap<>();
   

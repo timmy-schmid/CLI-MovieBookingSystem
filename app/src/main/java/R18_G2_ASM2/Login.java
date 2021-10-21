@@ -12,7 +12,11 @@ public class Login {
   private File userCsvFile;
 
   public Login(){
-    this.userCsvFile = new File("app/src/main/datasets/user1.csv");
+    this.userCsvFile = new File("src/main/datasets/user1.csv");
+  }
+
+  public void setUserFile(File name){
+    this.userCsvFile = name;
   }
 
   public void retrieveUserInputDetails() throws IOException{
@@ -24,9 +28,7 @@ public class Login {
     String password = null;
     while (true) {
       System.out.printf("Please enter your username: ");
-//      username = scan.nextLine();
       username = consoleReader.readLine();
-//      password = PasswordMasking.PasswordHide();
       System.out.printf("Please enter your password: ");
       password = new jline.ConsoleReader().readLine(new Character('*'));
 //      Console con = System.console();
