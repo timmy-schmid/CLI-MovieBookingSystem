@@ -30,12 +30,17 @@ public class MovieSystem {
         System.out.println(e.getStackTrace());
       }
     } else if (selection.equals("2")) {
-      Registration reg = new Registration();
-      reg.retrieveUserInputDetails();
+      try {
+        Registration reg = new Registration();
+        reg.retrieveUserInputDetails();
+      } catch (Exception e) {
+        System.out.println(e.getStackTrace());
+      }
     } else if (selection.equals("3")) {
       importMovieData();
       Showing.getAllMovieShowings(showings);
     } else if (selection == "q" || selection == "Q") {
+      System.out.println("SEE YOU NEXT TIME! :)");
       break;
     }
   }
@@ -53,7 +58,7 @@ public class MovieSystem {
 
   //parses either an integer selection OR a single character specified by pattern
   public String parseInput(String pattern, int max) {
-    System.out.print("User Input:");
+    System.out.print("User Input: ");
     while (sc.hasNextLine()) {
 
       Scanner line = new Scanner(sc.nextLine());
@@ -63,12 +68,12 @@ public class MovieSystem {
 
         if (inputInt < 0 || inputInt > max) {
           System.out.println("Invalid selection. Please try again.\n");
-          System.out.print("User Input:");
+          System.out.print("User Input: ");
           line.close();
           continue;
         } else if (line.hasNext()) {
           System.out.println("Invalid selection. Please try again.\n");
-          System.out.print("User Input:");
+          System.out.print("User Input: ");
           line.close();
           continue;       
         }
@@ -111,9 +116,11 @@ public class MovieSystem {
   public void printStartScreen() {
 
     StringBuilder s = new StringBuilder();
-    s.append("------------------------------------------------------------------\n");
-    s.append("WELCOME TO FANCY CINEMAS! PLEASE CHOOSE FROM THE FOLLOWING OPTIONS\n");
-    s.append("------------------------------------------------------------------\n");
+    s.append("******************************************************************\n");
+    // s.append("------------------------------------------------------------------\n");
+    s.append("\nWELCOME TO FANCY CINEMAS! PLEASE CHOOSE FROM THE FOLLOWING OPTIONS\n");
+    // s.append("------------------------------------------------------------------\n");
+    s.append("\n******************************************************************\n");
 
     s.append("1 - Log In\n");
     s.append("2 - Register\n");
