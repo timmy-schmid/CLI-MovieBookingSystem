@@ -27,6 +27,8 @@ class LoginTest {
   @BeforeEach
   public void setUp() {
     login = new Login();
+    login.setUserFile(new File("app/src/test/resources/userTest.csv"));
+
     //set up streams
     System.setOut(new PrintStream(outContent));
   }
@@ -44,14 +46,14 @@ class LoginTest {
     assertNotNull(login);
   }
 
-//  @Test
-//  public void testValidUsername(){
-//    Login login = new Login();
-//    String username = "dannie@gmail.com";
-//    String password = "Asdf1234!*";
-//    int result = login.checkIfUserExists(username, password);
-//    assertEquals(result, 1);
-//  }
+  @Test
+  public void testValidUsername(){
+    Login login = new Login();
+    String username = "dannie@gmail.com";
+    String password = "Asdf1234!*";
+    int result = login.checkIfUserExists(username, password);
+    assertEquals(result, 1);
+  }
 //
 //  @Test
 //  public void testInvalidUsername(){
