@@ -2,13 +2,9 @@ package R18_G2_ASM2;
 import java.io.*;
 import java.util.Scanner;
 import java.util.regex.Pattern;
-<<<<<<< HEAD:app/bin/main/R18_G2_ASM2/Login.txt
-import org.jline.ConsoleReader;
-=======
-// import jline.ConsoleReader;
->>>>>>> 44035fa19189059ae10b3b29264fd8c60a89789c:app/src/main/java/R18_G2_ASM2/Login.java
+import jline.ConsoleReader;
 
-public class Login extends UserFields {
+public class Login {
   /*
   This class: prints screen for when user clicks: 'Log in' and direct them to type their username
   and password
@@ -19,30 +15,65 @@ public class Login extends UserFields {
     this.userCsvFile = new File("src/main/datasets/user1.csv");
   }
 
-  public void retrieveUserInputDetails() throws Exception{
+  public void retrieveUserInputDetails() throws IOException{
     this.printScreen();
-   Scanner scan = new Scanner(System.in);
-    // ConsoleReader consoleReader = new ConsoleReader();
+//    Scanner scan = new Scanner(System.in);
+    ConsoleReader consoleReader = new ConsoleReader();
     //validate user details after retrieving input!!!
     String username = null;
     String password = null;
     while (true) {
       System.out.printf("Please enter your username: ");
-      username = scan.nextLine();
-      // username = consoleReader.readLine();
+//      username = scan.nextLine();
+      username = consoleReader.readLine();
 //      password = PasswordMasking.PasswordHide();
       System.out.printf("Please enter your password: ");
-      password = scan.nextLine();
-      // password = new jline.ConsoleReader().readLine(new Character('*'));
+      password = new jline.ConsoleReader().readLine(new Character('*'));
 //      Console con = System.console();
 //      if (con != null) {
 //        char[] pwd = con.readPassword("Please enter your password: ");
 //        password = new String(pwd);
 //      }
+
+//      int result = this.checkIfUserExists(username, password);
+//      if (result == 1){
+//        System.out.println("Welcome back " + username + "!");
+//        break;
+//        //Direct to next page!!!
+//      } else if (result == -1){
+//        int temp = 0;
+//        while (temp == 0) {
+//          String textinput = this.nextOption();
+//          if (textinput.equals("1")) {
+//            temp = 1;
+//          } else if (textinput.equals("2")) {
+//            System.out
+//                .println("Please answer the following questions: --To be add in the user.csv");
+//            temp = 2;
+//          } else if (textinput.equals("3")) {
+//            System.out.println("Back to default page--Tim part defalt screen");
+//            temp = 2;
+//          } else {
+//            System.out.println("Invalid input, please choose agian!");
+//          }
+//        }
+//        if (temp == 1) {
+//          continue;
+//        } else if (temp == 2) {
+//          break;
+//        }
+//      }
+      String s = this.checkEmailandPassword(username, password);
+      if (s.equals("break")) {
+        break;
+      } else if (s.equals("continue")) {
+        continue;
+=======
       int result = this.checkIfUserExists(username, password);
       if (result == 1){
         System.out.println("Welcome back " + username + "!");
-        break;
+        // break;
+        return;
         //Direct to next page!!!
       } else if (result == -1){
         int temp = 0;
@@ -55,7 +86,7 @@ public class Login extends UserFields {
                 .println("Please answer the following questions: --To be add in the user.csv");
             temp = 2;
           } else if (textinput.equals("3")) {
-            System.out.println("Back to default page--Tim part defalt screen");
+            System.out.println("Back to default page--Tim part default screen");
             temp = 2;
           } else {
             System.out.println("Invalid input, please choose agian!");
@@ -66,6 +97,7 @@ public class Login extends UserFields {
         } else if (temp == 2) {
           break;
         }
+>>>>>>> dc48df2c88b70ab0cb33b41d13393c466c8c378d:app/src/main/java/R18_G2_ASM2/Login.java
       }
     }
   }
@@ -109,23 +141,52 @@ public class Login extends UserFields {
   }
 
   public void printScreen(){
-    System.out.println("\n---------------------------------------------------------");
-    System.out.println("               Welcome to the log in page :)            ");
-    System.out.println("---------------------------------------------------------\n");
+    System.out.println("\n*******************************************************");
+    System.out.println("            Welcome to the log in page :)            ");
+    System.out.println("*******************************************************");
   }
 
 
-  public String nextOption() throws Exception{
+  public String nextOption() throws IOException{
     System.out.printf("\nInvalid username or password, please select from the following:\n");
     System.out.println("1. CONTINUE LOGGING IN");
     System.out.println("2. FORGOT MY LOGIN DETAILS");
     System.out.println("3. CANCEL");
-    // ConsoleReader consoleReader = new ConsoleReader();
-    Scanner scan = new Scanner(System.in);
+    ConsoleReader consoleReader = new ConsoleReader();
     String textinput = null;
-    textinput = scan.nextLine();
-    // textinput = consoleReader.readLine();
+    textinput = consoleReader.readLine();
     return textinput;
+  }
+
+  public String checkEmailandPassword(String username, String password) throws Exception{
+    int result = this.checkIfUserExists(username, password);
+    if (result == 1){
+      System.out.println("Welcome back " + username + "!");
+      return "break";
+      //Direct to next page!!!
+    } else {
+      int temp = 0;
+      while (temp == 0) {
+        String textinput = this.nextOption();
+        if (textinput.equals("1")) {
+          temp = 1;
+        } else if (textinput.equals("2")) {
+          System.out
+              .println("Please answer the following questions: --To be add in the user.csv");
+          temp = 2;
+        } else if (textinput.equals("3")) {
+          System.out.println("Back to default page--Tim part defalt screen");
+          temp = 2;
+        } else {
+          System.out.println("Invalid input, please choose agian!");
+        }
+      }
+      if (temp == 1) {
+        return "continue";
+      } else {
+        return "break";
+      }
+    }
   }
 }
 //class PasswordField {

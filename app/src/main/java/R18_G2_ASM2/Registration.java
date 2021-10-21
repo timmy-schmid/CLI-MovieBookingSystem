@@ -8,8 +8,7 @@ import java.io.FileNotFoundException;
 import java.io.FileWriter;
 
 import java.util.Scanner;
-import java.util.regex.Pattern;
-// import R18_G2_ASM2.UserFields;
+import jline.ConsoleReader;
 
 public class Registration extends UserFields{
   /*
@@ -37,13 +36,18 @@ public class Registration extends UserFields{
     this.userCsvFile = name;
   }
 
-  public void retrieveUserInputDetails(){ //return a USER object?
+  public void retrieveUserInputDetails() throws IOException{ //return a USER object?
     this.printWelcome();
     Scanner scan = new Scanner(System.in);
 
-    System.out.println("PRESS Y TO CONTINUE REGISTERING"+
-    " OR PRESS N TO CANCEL AND GO BACK TO HOME PAGE~");
-    System.out.printf("Enter Y/N: ");
+    // System.out.println("PRESS Y TO CONTINUE REGISTERING"+
+    // " OR PRESS N TO CANCEL AND GO BACK TO HOME PAGE~");
+    // System.out.printf("Enter Y/N: ");
+    System.out.println("1. ENTER Y TO CONTINUE REGISTERING\n"+
+    "2. ENTER N TO CANCEL AND GO BACK TO HOME PAGE\n" +
+    "3. ALREADY A MEMBER WITH US? ENTER M TO LOGIN~");
+    System.out.printf("\nEnter option: ");
+
     while (true){
       String option = scan.nextLine();
       if (option.toUpperCase().startsWith("N") == true){
@@ -77,11 +81,12 @@ public class Registration extends UserFields{
           }
           System.out.println();
         }
-        
-        // TODO: update password with Robin's login hidePassword functions
+        ConsoleReader consoleReader = new ConsoleReader();
         while (true){
+          
           System.out.printf("\nPlease enter your password: ");
-          password = scan.nextLine();
+          // password = scan.nextLine();
+          password = new jline.ConsoleReader().readLine(new Character('*'));
           boolean isValidPwd = this.isValidPassword(password);
           if (isValidPwd == true){
             returnResult2 = true;
@@ -100,8 +105,14 @@ public class Registration extends UserFields{
           break;
         //else: keep entering a new password
         } 
+      } else if (option.toUpperCase().startsWith("M")) {
+        //redirect to login page!
+        Login login = new Login();
+        login.retrieveUserInputDetails();
+        break; // or return to default page
+
       } else { //user input not y/n
-        System.out.printf("\nInvalid input provided, please enter Y/N again: ", option);
+        System.out.printf("\nInvalid input provided, please enter option again: ", option);
         // System.out.println("*******************************************************");
         // System.out.println("REDIRECTING YOU BACK TO HOME PAGE~ in 3..2..1..");
         // System.out.println("*******************************************************");
@@ -144,7 +155,9 @@ public class Registration extends UserFields{
   public void printWelcome(){
     System.out.println("\n*******************************************************");
     System.out.println("            Welcome to the registration page :)            ");
-    System.out.println("       Not a member with us yet? Sign up now FOR FREE!       ");
+    // System.out.println("       Not a member with us yet? Sign up now FOR FREE!       ");
+    System.out.println("                   Sign up now FOR FREE!                  ");
+
     System.out.println("*******************************************************\n");
   }
   

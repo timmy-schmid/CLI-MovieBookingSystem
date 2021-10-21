@@ -122,7 +122,9 @@ public int middleSeatBooked(){
   public void showAllSeats(){
     movieSeat.showAllSeats();
   }
-  public static int getSingleMovieShowings(HashMap<Integer,Showing> showings, StringBuilder s, Movie m) {
+  public static int getSingleMovieShowings(HashMap<Integer,Showing> showings, Movie m) {
+
+    StringBuilder s = new StringBuilder();
 
     s.append("UPCOMING SESSIONS:\n");
     s.append("-----------------------------------------\n");
@@ -144,10 +146,13 @@ public int middleSeatBooked(){
           count++;
         }
     }
+    System.out.println(s);
     return count;
   }
 
-  public static int getAllMovieShowings(HashMap<Integer,Showing> showings, StringBuilder s) {
+  public static int getAllMovieShowings(HashMap<Integer,Showing> showings) {
+    
+    StringBuilder s = new StringBuilder();
     s.append("UPCOMING SESSIONS:\n");
 
     
@@ -195,6 +200,7 @@ public int middleSeatBooked(){
 
       }
     }
+    System.out.println(s);
     return count;
   }
 
