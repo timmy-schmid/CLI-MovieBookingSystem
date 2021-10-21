@@ -41,7 +41,7 @@ public class BookingTicketTest {
             System.setOut(new PrintStream(outContent));
             testBookingTicket.printBookingMessage();
             String output = ("\nTotal = "+testUser.getTotalPrice()*50+"\n");
-            assertEquals(outContent,output);
+            assertEquals(outContent.toString(),output);
         }
         catch (Exception e){ e.printStackTrace();
         }
