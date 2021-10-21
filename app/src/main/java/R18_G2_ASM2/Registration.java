@@ -101,7 +101,7 @@ public class Registration extends UserFields{
           if (resultOption == null){
             System.out.println("\nINVALID OPTION SELECTED~");
           }
-          System.out.printf("\nUSER PREFERENCE: [%s]\n", resultOption);
+          // System.out.printf("\nUSER PREFERENCE: [%s]\n", resultOption);
           break;
         //else: keep entering a new password
         } 
