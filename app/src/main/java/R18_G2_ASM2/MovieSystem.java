@@ -45,19 +45,21 @@ public class MovieSystem {
       printShowingsScreen();
 
       if (currentUser != null) {
-        selection = parseInput("EeQq",showings.size());
+        selection = parseInput("Qq",showings.size());
+        /*
         if (selection.equals("E") || selection.equals("E")) {
           editUser();
-        }
+        }*/
       } else {
-        selection = parseInput("RrQq",showings.size());
+        selection = parseInput("Qq",showings.size());
+        /*
         if (selection.equals("R") || selection.equals("r")) {
           try {
             currentUser = reg.retrieveUserInputDetails();
           } catch (Exception e) {
             System.out.println(e.getStackTrace());
           }
-        } 
+        } */
       }
       if (selection.equals("q") || selection.equals("Q")) {
         quit();
@@ -68,6 +70,7 @@ public class MovieSystem {
         printMovieScreen(movies.get(movieId));
 
         selection = parseInput("bB",0);
+        
       }
 
 
@@ -178,9 +181,9 @@ public class MovieSystem {
     s.append(String.format("  %s - to see further details about a particular movie (listed above).\n",wrapColour("[ID]")));
 
     if (currentUser != null) {
-      s.append(String.format("   %s - to edit account details\n", wrapColour("E")));
+      //s.append(String.format("   %s - to edit account details\n", wrapColour("E")));
     } else {
-      s.append(String.format("   %s - to register an account\n", wrapColour("R")));
+      //s.append(String.format("   %s - to register an account\n", wrapColour("R")));
     }
   
     s.append(String.format("   %s - to log out and quit\n\n", wrapColour("Q")));
@@ -203,7 +206,7 @@ public class MovieSystem {
     m.printMovieDetails(s);
     Showing.getSingleMovieShowings(showings,s, m);
 
-    s.append("\nIf you would like to go back to all showings press " + wrapColour("B"));
+    s.append("\nIf you would like to go back press " + wrapColour("B"));
       
     System.out.println(s);
 
