@@ -1,16 +1,14 @@
 package R18_G2_ASM2;
 
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.*;
 
 import java.io.ByteArrayOutputStream;
-import java.io.IOException;
 import java.io.PrintStream;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
-
-import org.junit.jupiter.api.BeforeAll;
 
 public class BookingTicketTest {
     private Calendar testcal;
@@ -20,7 +18,8 @@ public class BookingTicketTest {
     private BookingTicket testBookingTicket;
     private User testUser;
     private Showing aShow;
-    @BeforeAll
+
+    @BeforeEach
     public void setUp(){
         testcal = Calendar.getInstance();
         testActor.add("some name1");
@@ -45,5 +44,10 @@ public class BookingTicketTest {
         }
         catch (Exception e){ e.printStackTrace();
         }
+    }
+
+    @Test
+    public void setTestBookingTicketForPerson(){
+        testUser.bookingTicket(Person.Child,1);
     }
 }
