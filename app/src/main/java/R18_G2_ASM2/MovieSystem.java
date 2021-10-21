@@ -10,6 +10,7 @@ public class MovieSystem {
   private final String SHOWINGS_FILE_NAME = "showing.csv";
   public static final String ANSI_BLUE = "\u001B[34m";
   public static final String ANSI_RESET = "\u001B[0m";
+  public static final String ANSI_YELLOW = "\u001B[33m";
 
   private HashMap<Integer,Movie> movies = new HashMap<>();
   private HashMap<Integer,Cinema> cinemas = new HashMap<>();
@@ -22,7 +23,7 @@ public class MovieSystem {
 
   while (true) {
     printStartScreen();
-
+    Registration reg = new Registration();
     String selection = parseInput("qQ", 3);
 
     if (selection.equals("1")) {
@@ -34,7 +35,6 @@ public class MovieSystem {
       }
     } else if (selection.equals("2")) {
       try {
-        Registration reg = new Registration();
         currentUser = reg.retrieveUserInputDetails();
       } catch (Exception e) {
         System.out.println(e.getStackTrace());
@@ -50,12 +50,27 @@ public class MovieSystem {
           editUser();
         }
       } else {
-        selection = parseInput("RrQq",showings.size());       
+        selection = parseInput("RrQq",showings.size());
+        if (selection.equals("R") || selection.equals("r")) {
+          try {
+            currentUser = reg.retrieveUserInputDetails();
+          } catch (Exception e) {
+            System.out.println(e.getStackTrace());
+          }
+        } 
       }
       if (selection.equals("q") || selection.equals("Q")) {
         quit();
         return;
+      } else {
+
+        int movieId = Integer.parseInt(selection);
+        printMovieScreen(movies.get(movieId));
+
+        selection = parseInput("bB",0);
       }
+
+
     } else if (selection.equals("q") || selection.equals("Q")) {
       quit();
       break;
@@ -148,9 +163,9 @@ public class MovieSystem {
   public void printShowingsScreen() {
     StringBuilder s = new StringBuilder();
 
-    s.append("******************************************************************\n");
-    s.append("                      SHOWINGS PAGE                                 ");
-    s.append("\n******************************************************************\n");
+    printBar(s);
+    s.append("                                       SHOWINGS PAGE\n");
+    printBar(s);
 
 
     if (currentUser != null) {
@@ -174,6 +189,27 @@ public class MovieSystem {
 
   }
 
+  public void printMovieScreen(Movie m) {
+    StringBuilder s = new StringBuilder();
+
+    s.append("\033[H\033[2J"); //clears console
+
+    MovieSystem.printBar(s);
+    s.append(ANSI_YELLOW);
+    s.append(String.format("                                   %s\n",m.getName().toUpperCase()));
+    s.append(ANSI_RESET); 
+    MovieSystem.printBar(s);
+
+    m.printMovieDetails(s);
+    Showing.getSingleMovieShowings(showings,s, m);
+
+    s.append("\nIf you would like to go back to all showings press " + wrapColour("B"));
+      
+    System.out.println(s);
+
+
+  }
+
   public void quit() {
     System.out.println("SEE YOU NEXT TIME! :)");   
   }
@@ -188,6 +224,12 @@ public class MovieSystem {
     EditInformation edit = new EditInformation(currentUser);
     edit.giveChoice();
 
+  }
+  
+
+  public static void printBar(StringBuilder s) {
+    s.append("*********************************************************");
+    s.append("**************************************\n");
   }
 
 

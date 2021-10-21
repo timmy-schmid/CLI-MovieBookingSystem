@@ -58,11 +58,10 @@ public class Movie {
     showings.put(showing.getShowingId(), showing);
   }
 
-  public void toString(StringBuilder s) {
+  public void printMovieDetails(StringBuilder s) {
 
     SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/YY",Locale.ENGLISH);
 
-    s.append(String.format("TITLE: %s\n\n",name));
     s.append(String.format("SYNOPSIS: %s\n\n",synopsis));
     s.append(String.format("CLASSIFICATION: %s\n",classification.name()));
     s.append(String.format("RELEASE DATE: %s\n",formatter.format(releaseDate.getTime())));
@@ -115,7 +114,5 @@ public class Movie {
       }
       i++;
     }
-
-
   }
 }
