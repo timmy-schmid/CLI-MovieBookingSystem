@@ -54,15 +54,15 @@ class LoginTest {
     int result = login.checkIfUserExists(username, password);
     assertEquals(result, 1);
   }
-//
-//  @Test
-//  public void testInvalidUsername(){
-//    Login login = new Login();
-//    String username = "dann@gmail.com";
-//    String password = "Asdf1234!*";
-//    int result = login.checkIfUserExists(username, password);
-//    assertEquals(result, -1);
-//  }
+
+  @Test
+  public void testInvalidUsername(){
+    Login login = new Login();
+    String username = "dann@gmail.com";
+    String password = "Asdf1234!*";
+    int result = login.checkIfUserExists(username, password);
+    assertEquals(result, -1);
+  }
 //
 //  @Test
 //  public void testValidPassword(){
