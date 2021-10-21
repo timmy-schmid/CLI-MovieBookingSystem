@@ -1,18 +1,15 @@
-package R18_G2_ASM2.SeatDataTools;
+package R18_G2_ASM2;
 
 import java.io.File;
 import java.io.IOException;
-import java.lang.invoke.SerializedLambda;
 import java.util.Arrays;
 import java.util.List;
 
-import R18_G2_ASM2.Cinema;
-import R18_G2_ASM2.Movie;
-import R18_G2_ASM2.Screen;
-import R18_G2_ASM2.MovieSeat;
-import R18_G2_ASM2.Showing;
+import R18_G2_ASM2.SeatDataTools.DataFrame;
+import R18_G2_ASM2.SeatDataTools.MovieDataFrame;
 
-public class Main {
+class MainTest{
+
     public static void main(String[] args) throws IOException{
         List<String> colNames;
         // colNames = Arrays.asList("col_1", "col_2", "col_3", "col_4", "col_5", "col_6", "col_7");
@@ -21,34 +18,26 @@ public class Main {
                 { "Reserved", "Available", "Available", "Available", "Available", "Available", "Available"},
                 { "Available", "Available", "Available", "Reserved", "Available" , "Available", "Available"},
                 { "Available", "Available", "Available", "Reserved", "Reserved" , "Available", "Available"},
+                { "Available", "Available", "Available", "Available", "Reserved" , "Available", "Available"},
                 { "Available", "Available", "Available", "Available", "Reserved" , "Available", "Available"}};
         MovieDataFrame filmAvailable = new MovieDataFrame(colNames, data);
         filmAvailable.print(0,4);
-
+    
         // System.out.println(filmAvailable.getRow(1).getValues());
-
-
+    
+    
         System.out.println("\033[1;93;45m"+ "hello"+"\033[m");
-        
-        // File f = new File("mydata.csv");
-
-
-        // FileTools.writeToCsv(filmAvailable, f);
-        
-        // DataFrame mdf =  FileTools.readFromCsv(f);
-
+    
         // mdf.print();
-
+        // File movieSeat = new File("src/test/resources/"+ "SeatMapTest.csv");
+    
         MovieSeat seatMap = new MovieSeat(new Showing(2, new Movie(1,"77", null, null, null, null,null), new Cinema(1, Screen.SILVER), null));
         DataFrame<String> newFrame = seatMap.readFromDatabase();
+        seatMap.writeToDatabase();
         // newFrame.print();
-        seatMap.bookSeat('A', 0);
-        seatMap.bookSeat('D', 6);
-        seatMap.bookSeat('E', 6);
+
         seatMap.bookSeat('D', 5);
-        // seatMap.getSeatMap().print();
-        // seatMap.cancelReservation('A', 0);
-        // seatMap.getSeatMap().print();
+    
         seatMap.showAllSeats();
         System.out.println(seatMap.frontSeatBooked());
         System.out.println(seatMap.middleSeatBooked());
