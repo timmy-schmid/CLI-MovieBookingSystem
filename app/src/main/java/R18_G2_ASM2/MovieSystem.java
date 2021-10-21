@@ -37,9 +37,13 @@ public class MovieSystem {
     } 
 
     try {
-      Login login = new Login();
-      login.retrieveUserInputDetails();
-    } catch (Exception e) {
+      // Login login = new Login();
+      // login.retrieveUserInputDetails();
+
+      Registration reg = new Registration();
+      reg.retrieveUserInputDetails();
+
+    } catch (IOException e) {
       System.out.println(e.getStackTrace());
     }
     //User tim = new User(1, "tim@gmail.com", "TestOne12!@");

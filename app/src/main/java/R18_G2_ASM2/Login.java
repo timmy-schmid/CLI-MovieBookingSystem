@@ -15,7 +15,7 @@ public class Login {
     this.userCsvFile = new File("src/main/datasets/user1.csv");
   }
 
-  public void retrieveUserInputDetails() throws Exception{
+  public void retrieveUserInputDetails() throws IOException{
     this.printScreen();
 //    Scanner scan = new Scanner(System.in);
     ConsoleReader consoleReader = new ConsoleReader();
@@ -37,7 +37,8 @@ public class Login {
       int result = this.checkIfUserExists(username, password);
       if (result == 1){
         System.out.println("Welcome back " + username + "!");
-        break;
+        // break;
+        return;
         //Direct to next page!!!
       } else if (result == -1){
         int temp = 0;
@@ -50,7 +51,7 @@ public class Login {
                 .println("Please answer the following questions: --To be add in the user.csv");
             temp = 2;
           } else if (textinput.equals("3")) {
-            System.out.println("Back to default page--Tim part defalt screen");
+            System.out.println("Back to default page--Tim part default screen");
             temp = 2;
           } else {
             System.out.println("Invalid input, please choose agian!");
@@ -104,13 +105,13 @@ public class Login {
   }
 
   public void printScreen(){
-    System.out.println("\n---------------------------------------------------------");
-    System.out.println("               Welcome to the log in page :)            ");
-    System.out.println("---------------------------------------------------------\n");
+    System.out.println("\n*******************************************************");
+    System.out.println("            Welcome to the log in page :)            ");
+    System.out.println("*******************************************************");
   }
 
 
-  public String nextOption() throws Exception{
+  public String nextOption() throws IOException{
     System.out.printf("\nInvalid username or password, please select from the following:\n");
     System.out.println("1. CONTINUE LOGGING IN");
     System.out.println("2. FORGOT MY LOGIN DETAILS");
