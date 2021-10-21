@@ -25,7 +25,7 @@ public class Registration extends UserFields{
   private File userCsvFile;
 
   public Registration(){
-    this.userCsvFile = new File("src/main/datasets/user1.csv");
+    this.userCsvFile = new File("app/src/main/datasets/user1.csv");
   }
 
   public File getUserFile(){
