@@ -62,6 +62,7 @@ public class User extends UserFields {
   //rename maybe bookingTicket --> bookTicket? OR nahh
   public void bookingTicket(Person person, int num){
     ticket.replace(person,ticket.get(person)+num);
+    this.totalPrice();
   }
 
   public void AddTicketMessage(){
