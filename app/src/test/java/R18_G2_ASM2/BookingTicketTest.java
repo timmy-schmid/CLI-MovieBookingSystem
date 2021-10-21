@@ -8,6 +8,7 @@ import java.io.ByteArrayOutputStream;
 import java.io.PrintStream;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.LinkedHashMap;
 import java.util.List;
 
 public class BookingTicketTest {
@@ -50,5 +51,6 @@ public class BookingTicketTest {
     @Test
     public void setTestBookingTicketForPerson(){
         testUser.bookingTicket(Person.Child,1);
+        assertEquals(40.0,testUser.getTotalPrice());
     }
 }
