@@ -12,7 +12,7 @@ public class Login {
   private File userCsvFile;
 
   public Login(){
-    this.userCsvFile = new File("src/main/datasets/user1.csv");
+    this.userCsvFile = new File("app/src/main/datasets/user1.csv");
   }
 
   public void retrieveUserInputDetails() throws IOException{
