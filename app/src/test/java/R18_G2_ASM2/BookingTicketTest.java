@@ -5,6 +5,7 @@ import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.*;
 
 import java.io.ByteArrayOutputStream;
+import java.io.InputStream;
 import java.io.PrintStream;
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -53,4 +54,9 @@ public class BookingTicketTest {
         testUser.bookingTicket(Person.Child,1);
         assertEquals(0.5,testUser.getTotalPrice());
     }
+    @Test
+    public void setAskForBooking(){
+    }
+
+
 }
