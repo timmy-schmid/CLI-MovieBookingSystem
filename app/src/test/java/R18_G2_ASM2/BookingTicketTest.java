@@ -4,6 +4,7 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.*;
 
+import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.InputStream;
 import java.io.PrintStream;
@@ -55,8 +56,57 @@ public class BookingTicketTest {
         assertEquals(0.5,testUser.getTotalPrice());
     }
     @Test
-    public void setAskForBooking(){
+    public void testInvalidContinue(){
+        try{
+            ByteArrayOutputStream outContent = new ByteArrayOutputStream();
+            System.setOut(new PrintStream(outContent));
+            Integer a = -1;
+            ByteArrayInputStream inContent = new ByteArrayInputStream(new byte[]{a.byteValue()});
+            System.setIn(inContent);
+            testBookingTicket.Continue();
+            String output = "Invalid input,please try again: \n";
+            assertEquals(outContent.toString(),output);
+
+        }catch (Exception e){ e.printStackTrace();}
     }
 
+    @Test
+    public void testContinue(){
+        try{
+            ByteArrayOutputStream outContent = new ByteArrayOutputStream();
+            System.setOut(new PrintStream(outContent));
+            Integer a = 1;
+            ByteArrayInputStream inContent = new ByteArrayInputStream(new byte[]{a.byteValue()});
+            System.setIn(inContent);
+            testBookingTicket.Continue();
+            assertEquals(1, testBookingTicket.Continue());
+
+        }catch (Exception e){ e.printStackTrace();}
+    }
+
+    @Test
+    public void testContinueEnd(){
+        try{
+            ByteArrayOutputStream outContent = new ByteArrayOutputStream();
+            System.setOut(new PrintStream(outContent));
+            Integer a = 2;
+            ByteArrayInputStream inContent = new ByteArrayInputStream(new byte[]{a.byteValue()});
+            System.setIn(inContent);
+            testBookingTicket.Continue();
+            assertEquals(2, testBookingTicket.Continue());
+
+        }catch (Exception e){ e.printStackTrace();}
+    }
+
+//    @Test
+//    public void testAskForBooking(){
+//        ByteArrayOutputStream outContent = new ByteArrayOutputStream();
+//        System.setOut(new PrintStream(outContent));
+//        Integer a = 1;
+//        ByteArrayInputStream inContent = new ByteArrayInputStream(new byte[]{a.byteValue()});
+//        System.setIn(inContent);
+//        testBookingTicket.askForBooking();
+//        assertEquals("Invalid input,please try again", outContent.toString());
+//    }
 
 }
