@@ -1,9 +1,11 @@
 package R18_G2_ASM2;
 
+import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.*;
 
+import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.PrintStream;
 
@@ -59,5 +61,26 @@ public class EditInformationTest{
         }catch (Exception e){ e.printStackTrace();}
     }
 
+
+    @Test
+    public void testgiveChoice(){
+        try{
+            ByteArrayOutputStream outContent = new ByteArrayOutputStream();
+            System.setOut(new PrintStream(outContent));
+            String a = "\nsjafdnsa\n";
+            ByteArrayInputStream inContent = new ByteArrayInputStream(a.getBytes());
+            System.setIn(inContent);
+            editInformation.giveChoice();
+            String output = "Edit and Update Your Information\n"+"*******************************************************\n"+"PLEASE CHOOSE FORM THE FOLLOWING                         \n"+"*******************************************************\n\n" +
+                    "1 - Edit Email\n" +
+                    "2 - Edit Password\n" +
+                    "3- return to the user page\n" +
+                    "\n" +
+                    "User input: \n" +
+                    "Invalid order :( Please try again\n";
+            assertEquals(outContent.toString(),output);
+
+        }catch (Exception e){ e.printStackTrace();}
+    }
 
 }
