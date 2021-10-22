@@ -21,13 +21,13 @@ public class MovieSeat{
     public MovieSeat(Showing showing) throws IOException{
         this.showing = showing;
 
-        movieSeat = new File("app/src/main/datasets/movieSeatsMap/"+ String.valueOf(showing.getMovie().getId())+"-"+ String.valueOf(showing.getCinema().getId())+"-"+String.valueOf(showing.getShowingId())+".csv");
+        movieSeat = new File("src/main/datasets/movieSeatsMap/"+ String.valueOf(showing.getMovie().getId())+"-"+ String.valueOf(showing.getCinema().getId())+"-"+String.valueOf(showing.getShowingId())+".csv");
         // movieSeat = new File("app/src/main/datasets/movieSeatsMap/BRONZE.csv");
 
         if (!movieSeat.exists()){
             try {
                 movieSeat.createNewFile();
-                seatMap = FileTools.readFromCsv(new File("app/src/main/datasets/movieSeatsMap/"+showing.getCinema().cinemaScreen.toString()+".csv"));
+                seatMap = FileTools.readFromCsv(new File("src/main/datasets/movieSeatsMap/"+showing.getCinema().cinemaScreen.toString()+".csv"));
                 writeToDatabase();
             } catch (IOException e) {
                 e.printStackTrace();

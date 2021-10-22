@@ -1,5 +1,6 @@
 package R18_G2_ASM2;
 
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -41,6 +42,11 @@ public class Showing {
 
   public int getShowingId() {
     return showingId;
+  }
+  //add tests
+  public boolean setShowingTime(int year, int month, int date, int hourOfDay, int minute) {
+    this.showingTime.set(year, month, date, hourOfDay, minute);
+    return true;
   }
 
   public MovieSeat getMovieSet(){
