@@ -88,6 +88,7 @@ public class BookingTicket {
             }
             else {
                 System.out.println("Invalid input,please try again: ");
+                return 3;
         }
         }
     }
