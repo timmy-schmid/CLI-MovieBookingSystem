@@ -8,9 +8,9 @@ import java.util.HashMap;
 import java.util.Scanner;
 public class MovieSystem {
 
-  private final String MOVIES_FILE_NAME = "movie.csv";
-  private final String CINEMAS_FILE_NAME = "cinema.csv";
-  private final String SHOWINGS_FILE_NAME = "showing.csv";
+  private String MOVIES_FILE_NAME = "movie.csv";
+  private String CINEMAS_FILE_NAME = "cinema.csv";
+  private String SHOWINGS_FILE_NAME = "showing.csv";
   public static final String ANSI_BLUE = "\u001B[34m";
   public static final String ANSI_RESET = "\u001B[0m";
   public static final String ANSI_YELLOW = "\u001B[33m";
@@ -248,6 +248,20 @@ public class MovieSystem {
     s.append("*********************************************************");
     s.append("**************************************\n");
   }
+
+  public void setMovieDataFile(String name) {
+    MOVIES_FILE_NAME = name;
+  }
+
+  public void setCinemaDataFile(String name) {
+    SHOWINGS_FILE_NAME = name;
+  }
+
+  public void setShowingDataFile(String name) {
+    CINEMAS_FILE_NAME = name;
+  }
+
+
 
 
 }
