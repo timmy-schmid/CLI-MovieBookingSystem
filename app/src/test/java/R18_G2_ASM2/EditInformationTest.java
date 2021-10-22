@@ -83,4 +83,18 @@ public class EditInformationTest{
         }catch (Exception e){ e.printStackTrace();}
     }
 
+    @Test
+    public void testEditPassword(){
+        try{
+            ByteArrayOutputStream outContent = new ByteArrayOutputStream();
+            System.setOut(new PrintStream(outContent));
+            String a = "\nsjafdnsa\n";
+            ByteArrayInputStream inContent = new ByteArrayInputStream(a.getBytes());
+            System.setIn(inContent);
+            editInformation.editPassword();
+            String op = "The password is incorrect. Please check it again\n";
+            assertEquals(outContent.toString(),op);
+        }
+        catch (Exception e){ e.printStackTrace();}
+    }
 }
