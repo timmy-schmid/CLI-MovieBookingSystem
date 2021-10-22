@@ -41,6 +41,19 @@ public class MovieSeat{
         totalMiddleSeat = seatMap.getRowCount()*seatMap.getColumnCount()-totalFrontSeat-totalRearSeat;
     }
 
+    public MovieSeat(Showing showing, boolean isUnderTest) throws IOException{
+        this.showing = showing;
+
+        movieSeat = new File("src/test/resources/"+ "SeatMapTest.csv");
+
+        seatMap = readFromDatabase();
+        frontRowNum = seatMap.getRowCount()/3;
+
+        totalFrontSeat = frontRowNum*seatMap.getColumnCount();
+        totalRearSeat = frontRowNum*seatMap.getColumnCount();
+        totalMiddleSeat = seatMap.getRowCount()*seatMap.getColumnCount()-totalFrontSeat-totalRearSeat;
+    }
+
     public void writeToDatabase() throws IOException{
         FileTools.writeToCsv(seatMap, movieSeat);
     }
@@ -109,7 +122,7 @@ public class MovieSeat{
 
     public int frontSeatBooked(){
         int seatBooked = 0;
-        for (int i = 0; i< frontRowNum-1; i++){
+        for (int i = 0; i< frontRowNum; i++){
             for (String value : seatMap.getRow(i).getValues()){
                 if (value.equals("Reserved")){
                     seatBooked++;
@@ -135,11 +148,11 @@ public class MovieSeat{
 
     public int totalSeatsBooked() {
         return middleSeatBooked()+frontSeatBooked()+rearSeatBooked();
-      }
+    }
     
-      public int totalSeatsLeft() {
+    public int totalSeatsLeft() {
         return totalFrontSeat+totalMiddleSeat+totalRearSeat-totalSeatsBooked();
-      }
+    }
 
 
     

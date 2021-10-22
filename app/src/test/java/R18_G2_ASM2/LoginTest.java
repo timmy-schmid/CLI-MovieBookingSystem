@@ -28,8 +28,8 @@ class LoginTest {
   public void setUp() {
     login = new Login();
     login.setUserFile(new File("app/src/test/resources/userTest.csv"));
-
-    //set up streams
+//    login.setUserFile(new File("/Users/robingo/Desktop/usyd yr 2 s2/soft2412/asm2/R18_G2_ASM2/app/src/main/datasets/user1.csv"));
+//    set up streams
     System.setOut(new PrintStream(outContent));
   }
 
@@ -105,4 +105,15 @@ class LoginTest {
     login.nextOption();
     assertEquals(outContent.toString(), expected);
   }
+//
+//  @Test
+//  public void testUsernameAndPasswordInput() throws Exception{
+//    Login login = new Login();
+//    String inputMessage = "dannie@gmail.com\n" + "Asdf1234!*";
+//    String expected = "Welcome dannie@gmail.com!";
+//    ByteArrayInputStream in = new ByteArrayInputStream(inputMessage.getBytes());
+//    System.setIn(in);
+//    login.retrieveUserInputDetails();
+//    assertEquals(outContent.toString(), expected);
+//  }
 }
