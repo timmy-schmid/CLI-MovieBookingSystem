@@ -80,14 +80,15 @@ class MovieSeatTest{
             thrown = true;
         }
         assertTrue(thrown);
-    
         thrown = false;
         try {
             MovieSeat testSeat = new MovieSeat(new Showing(2, new Movie(1,"77", null, null, null, null,null), new Cinema(1, Screen.SILVER), null));
         } catch (IOException e){
             thrown = true;
         }
+        
         assertTrue(thrown);
+
     }
 
 }
