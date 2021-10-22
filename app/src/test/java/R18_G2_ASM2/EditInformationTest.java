@@ -46,4 +46,18 @@ public class EditInformationTest{
         editInformation.setUserPassword("12345ABCed");
         assertEquals("12345ABCed",testUser.getPassword());
     }
+
+    @Test
+    public void testReturnUserPage(){
+        try{
+            ByteArrayOutputStream outContent = new ByteArrayOutputStream();
+            System.setOut(new PrintStream(outContent));
+            editInformation.returnUserPage();
+            String output = "Return to the User default page...\n\n";
+            assertEquals(outContent.toString(),output);
+
+        }catch (Exception e){ e.printStackTrace();}
+    }
+
+
 }
