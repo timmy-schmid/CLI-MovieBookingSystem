@@ -172,7 +172,7 @@ public class EditInformation extends UserFields {
 
     public void returnUserPage(){
         System.out.println("Return to the User default page...\n");
-        this.giveChoice();
+//        this.giveChoice();
     }
 
     public void writeUsertoFile(User user,File file) {
