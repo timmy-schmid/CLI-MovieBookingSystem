@@ -16,7 +16,7 @@ public class EditInformation extends UserFields {
      */
     private File userCsvFile = new File("src/main/datasets/user1.csv");
     private User userChanged;
-    private File tempFile;
+    private File tempFile = new File("src/main/datasets/TempUser1.csv") ;
 
     // call from the default screen
     public EditInformation(User aUser){
@@ -132,18 +132,6 @@ public class EditInformation extends UserFields {
         this.writeUsertoFile(this.userChanged,this.userCsvFile);
     }
 
-    // // same as the Registration method check the username whether matches format or not
-    // public boolean validateUser(String email){ //or email
-    //     //should contain: @ + .com
-    //     String emailRegex = "^.*\\w@(gmail|hotmail|yahoo)\\.com$";
-    //     Pattern pattern = Pattern.compile(emailRegex);
-    //     if (pattern.matcher(email).matches()){
-    //         return true;
-    //     } else {
-    //         System.out.println("Your email did not satisfy acceptance criteria.");
-    //         return false;
-    //     }
-    // }
 
     //same as the Registration method to check the duplicate user name
     public int checkIfUserExists(String userEmail){
@@ -176,20 +164,7 @@ public class EditInformation extends UserFields {
     }
 
 
-    // //same as the Registration method to check the password is valid //EDIT: call from UserFields class (sharing function?) - Anna
 
-    // public boolean isValidPassword(String password){
-    //     //now, use regex to ensure it contains a mixture of letters + numbers + symbols (--> optional?, allow whitespace or NAH?)
-
-    //     String passwordRegex = "^(?=.*\\d)(?=.*[a-z])(?=.*[A-Z]).{10,}$";
-    //     Pattern pattern = Pattern.compile(passwordRegex);
-    //     if (pattern.matcher(password).matches()){
-    //         return true;
-    //     } else {
-    //         System.out.println("Your password did not satisfy acceptance criteria.");
-    //         return false;
-    //     }
-    // }
 
     public void nextOption(){
         System.out.println("Return to the Edit Option page...\n");

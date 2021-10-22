@@ -29,7 +29,9 @@ class RegistrationTest {
   @BeforeEach
   public void setUp() {
     reg = new Registration();
-    reg.setUserFile(new File("src/test/resources/userTest.csv"));
+    // reg.setUserFile(new File("src/test/resources/userTest.csv"));
+
+    reg.setUserFile("src/test/resources/userTest.csv");
 
     //set up streams
     System.setOut(new PrintStream(outContent));
@@ -102,12 +104,10 @@ class RegistrationTest {
     assertTrue(reg.isValidPassword(input));
   }
 
-  //testing reading file FAILS
-
   @Test void testUserFileNotFound(){
-    reg.setUserFile(new File("src/main/datasets/UNKNOWN.csv"));
-    reg.checkIfUserExists("username@gmail.com");
-    assertEquals(outContent.toString(), "FILE NOT FOUND ERROR: src/main/datasets/UNKNOWN.csv FILE NOT FOUND!");
+    reg.setUserFile("src/main/datasets/UNKNOWN.csv");
+    int result = reg.checkIfUserExists("username@gmail.com");
+    assert(result == -2);
   }
   //testing writing to file works
   @Test void testValidReadingFile(){
@@ -115,11 +115,13 @@ class RegistrationTest {
     assert(result == 1);
   }
 
+  @Test void nullUserFile(){
+    reg.setUserFile(null);
+    assertNull(reg.getUserFile());
+  }
   @Test void testValidReadingFile2(){ //user already exists
     int result = reg.checkIfUserExists("zendaya11@gmail.com");
     assert(result == -1);
-    //expected vs actual
-    // assertEquals(outContent.toString(), "Email is taken already/exists in system. Please enter another.");
   }
 
   //testing writing to file
@@ -142,23 +144,37 @@ class RegistrationTest {
       myReader.close();
       int id = id = Integer.parseInt(lastLine.split(",")[0]);
       assertEquals(lastLine, String.valueOf(id) + ","+ username + ","+pwd);
-    // } else {
-    //   //test nothing new written to file
-    //   BufferedReader reader = new BufferedReader(new FileReader("file.txt"));
-    //   int lines = 0;
-    //   while (reader.readLine() != null) lines++;
-    //   reader.close();
-    // }
     }
   }
-  
-  @Test void testWriteToFileFails(){ //should still validate inside function or just outside?
-    String username = "benjilala1@hotmail.com";
-    String pwd = "Blahblahblah3";
-    reg.setUserFile(new File("src/main/datasets/UNKNOWN.csv"));
-    reg.writeUserDetailsToFile(username, pwd);
-    assertEquals(outContent.toString(), "FILE NOT FOUND ERROR: src/main/datasets/UNKNOWN.csv FILE NOT FOUND!");
+  @Test void testCreateAccountWorks() throws IOException{
+    reg.setUserFile("src/test/resources/newUserTest.csv");
+    int result = reg.checkIfUserExists("newUser@gmail.com");
+    if (result == -1){ //exists alrdy
+      return;
+    } else {
+      User newUser = reg.createAccount("newUser@gmail.com", "NewPassword1");
+      assertNotNull(newUser);
+
+      BufferedReader myReader = new BufferedReader(new FileReader(reg.getUserFile()));
+      String currentLine = "";
+      String firstLine = "";
+      while ((currentLine = myReader.readLine()) != null){
+        firstLine = currentLine;
+        // break;
+      }
+      myReader.close();
+      assertEquals(firstLine, String.valueOf(1) + ","+ "newUser@gmail.com" + ","+"NewPassword1");
+    }
   }
+  // @Test void testWriteToFileFails(){ //should still validate inside function or just outside?
+  //   String username = "benjilala1@hotmail.com";
+  //   String pwd = "Blahblahblah3";
+  //   // reg.setUserFile(new File("src/main/datasets/UNKNOWN.csv"));
+  //   reg.setUserFile("src/main/datasets/UNKNOWN.csv");
+
+  //   reg.writeUserDetailsToFile(username, pwd);
+  //   assertEquals(outContent.toString(), "FILE NOT FOUND ERROR: src/main/datasets/UNKNOWN.csv FILE NOT FOUND!");
+  // }
 
   @Test void testCancelRegistration() throws IOException {
     String welcomeMsg = "\n*******************************************************\n" +
