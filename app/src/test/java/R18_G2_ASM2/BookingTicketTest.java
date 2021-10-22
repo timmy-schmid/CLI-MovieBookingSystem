@@ -60,10 +60,10 @@ public class BookingTicketTest {
             System.setIn(inContent);
             ByteArrayOutputStream outContent = new ByteArrayOutputStream();
             System.setOut(new PrintStream(outContent));
-            testBookingTicket.Continue();
-            String output = "Invalid input,please try again: \n";
-            assertEquals(outContent.toString(),output);
-
+//            testBookingTicket.Continue();
+//            String output = "Invalid input,please try again: \n";
+//            assertEquals(outContent.toString(),output);
+            assertEquals(3,testBookingTicket.Continue());
         }catch (Exception e){ e.printStackTrace();}
     }
 
