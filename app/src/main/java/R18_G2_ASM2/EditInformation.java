@@ -63,9 +63,7 @@ public class EditInformation extends UserFields {
         Scanner scan = new Scanner(System.in);
         System.out.println("The new username: ");
         while(!Success && wantToContinue){
-            //not sure about where the code comes from and how to verify the code is correct one
-            System.out.println("Please enter a code to verify: ");
-            String option = scan.nextLine();
+            String option = scan.next();
             if(option.equals(this.userChanged.getEmail())){
                 System.out.println("Please enter a new username");
             }
@@ -73,6 +71,7 @@ public class EditInformation extends UserFields {
                 if (this.checkIfUserExists(option) == 1){
                     this.setUserEmail(option);
                     Success = true;
+                    System.out.println("Success\n");
                 }else{
                     System.out.println("The username already exists!\n");
                 }
@@ -172,7 +171,7 @@ public class EditInformation extends UserFields {
 
     public void returnUserPage(){
         System.out.println("Return to the User default page...\n");
-        this.giveChoice();
+//        this.giveChoice();
     }
 
     public void writeUsertoFile(User user,File file) {

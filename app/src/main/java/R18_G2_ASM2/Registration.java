@@ -214,6 +214,9 @@ public class Registration extends UserFields{
 
   //after all validations are done, create a new user obj that is a customer account + save/write details to user.csv
   public User createAccount(String email, String password){
+    if (email == null || password == null || email == "" || password == ""){
+      return null;
+    }
     int ID = this.writeUserDetailsToFile(email, password);
     return new User(ID, email, password);  //creates a new user object
   }
@@ -254,7 +257,7 @@ public class Registration extends UserFields{
 
     } else if (result == 2){
       System.out.println("*******************************************************");
-      System.out.println("REDIRECTING YOU BACK TO HOME PAGE~ in 3..2..1..");
+      System.out.println("REDIRECTING YOU BACK TO HOME PAGE~ in 3..2..1..\nSEE YOU NEXT TIME! :)");
       System.out.println("*******************************************************");
       return "CANCEL"; //go back to home/default page
     } else {

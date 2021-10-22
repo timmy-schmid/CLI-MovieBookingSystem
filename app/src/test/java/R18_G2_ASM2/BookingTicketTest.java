@@ -55,15 +55,12 @@ public class BookingTicketTest {
     @Test
     public void testInvalidContinue(){
         try{
+            String a = "-34\r\n";
+            ByteArrayInputStream inContent = new ByteArrayInputStream(a.getBytes());
+            System.setIn(inContent);
             ByteArrayOutputStream outContent = new ByteArrayOutputStream();
             System.setOut(new PrintStream(outContent));
-            Integer a = -1;
-            ByteArrayInputStream inContent = new ByteArrayInputStream(new byte[]{a.byteValue()});
-            System.setIn(inContent);
-            testBookingTicket.Continue();
-            String output = "Invalid input,please try again: \n";
-            assertEquals(outContent.toString(),output);
-
+            assertEquals(3,testBookingTicket.Continue());
         }catch (Exception e){ e.printStackTrace();}
     }
 
@@ -72,10 +69,9 @@ public class BookingTicketTest {
         try{
             ByteArrayOutputStream outContent = new ByteArrayOutputStream();
             System.setOut(new PrintStream(outContent));
-            Integer a = 1;
-            ByteArrayInputStream inContent = new ByteArrayInputStream(new byte[]{a.byteValue()});
+            String a = "1\n";
+            ByteArrayInputStream inContent = new ByteArrayInputStream(a.getBytes());
             System.setIn(inContent);
-            testBookingTicket.Continue();
             assertEquals(1, testBookingTicket.Continue());
 
         }catch (Exception e){ e.printStackTrace();}
@@ -86,10 +82,9 @@ public class BookingTicketTest {
         try{
             ByteArrayOutputStream outContent = new ByteArrayOutputStream();
             System.setOut(new PrintStream(outContent));
-            Integer a = 2;
-            ByteArrayInputStream inContent = new ByteArrayInputStream(new byte[]{a.byteValue()});
+            String a = "2\n";
+            ByteArrayInputStream inContent = new ByteArrayInputStream(a.getBytes());
             System.setIn(inContent);
-            testBookingTicket.Continue();
             assertEquals(2, testBookingTicket.Continue());
 
         }catch (Exception e){ e.printStackTrace();}
