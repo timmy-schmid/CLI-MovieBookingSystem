@@ -216,15 +216,13 @@ class RegistrationTest {
     String optionMsg = "\n1. ENTER Y TO CONTINUE REGISTERING\n"+
     "2. ENTER N TO CANCEL AND GO BACK TO HOME PAGE\n" +
     "3. ALREADY A MEMBER WITH US? ENTER M TO LOGIN~\n";
-    // String yNOption = "Enter Y/N: ";
-    String yNOption = "\nEnter option: ";
+    String Option = "\nEnter option: ";
 
     String inputMessage = "No";
-    String expectedOut = welcomeMsg + optionMsg + yNOption + "\n*******************************************************\n"+
+    String expectedOut = welcomeMsg + optionMsg + Option + "\n*******************************************************\n"+
     "REDIRECTING YOU BACK TO HOME PAGE~ in 3..2..1.."+
     "\n*******************************************************\n";
 
-    // String expectedOut = welcomeMsg + optionMsg + yNOption + expected;
     ByteArrayInputStream in = new ByteArrayInputStream(inputMessage.getBytes());
     System.setIn(in);
     reg.retrieveUserInputDetails();
