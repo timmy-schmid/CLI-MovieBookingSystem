@@ -120,7 +120,7 @@ class RegistrationTest {
     assertNull(reg.getUserFile());
   }
   @Test void testValidReadingFile2(){ //user already exists
-    int result = reg.checkIfUserExists("zendaya11@gmail.com");
+    int result = reg.checkIfUserExists("lilyjones@gmail.com");
     assert(result == -1);
   }
 
@@ -146,7 +146,39 @@ class RegistrationTest {
       assertEquals(lastLine, String.valueOf(id) + ","+ username + ","+pwd);
     }
   }
+  @Test void testCreateAccountFails() throws IOException{
+    User newUser = reg.createAccount(null, "NewPassword1");
+    assertNull(newUser);
+  }
+
+  @Test void testCreateAccountFails2() throws IOException{
+    User newUser = reg.createAccount("hello@gmail.com", "");
+    assertNull(newUser);
+  }
+
   @Test void testCreateAccountWorks() throws IOException{
+    int result = reg.checkIfUserExists("newUser@gmail.com");
+    if (result == 1){
+      User newUser = reg.createAccount("newUser@gmail.com", "NewPassword1");
+      assertNotNull(newUser);
+
+      BufferedReader myReader = new BufferedReader(new FileReader(reg.getUserFile()));
+      String currentLine = "";
+      String lastLine = "";
+      while ((currentLine = myReader.readLine()) != null){
+        lastLine = currentLine;
+        // break;
+      }
+      myReader.close();
+        int id = id = Integer.parseInt(lastLine.split(",")[0]);
+
+      assertEquals(lastLine, String.valueOf(5) + ","+ "newUser@gmail.com" + ","+"NewPassword1");
+    } else {
+      assert(result == -1);
+    }
+  }
+
+  @Test void testCreateAccountWorks2() throws IOException{
     reg.setUserFile("src/test/resources/newUserTest.csv");
     int result = reg.checkIfUserExists("newUser@gmail.com");
     if (result == -1){ //exists alrdy
@@ -247,51 +279,58 @@ class RegistrationTest {
     assertFalse(reg.isValidPassword(input)); //--Tim: Commenting out as it fails
   }
 
-  // public byte[] bigIntToByteArray(int num){
-  //   return BigInteger.valueOf(num).toByteArray();
-  // }
+  @Test void testValidNextOption(){ //testing 1. CONTINUE LOGGIN IN
+    String optionMsg = "\nPlease select from the following: \n"+
+    "1. CONTINUE LOGGING IN\n"+
+    "2. CANCEL\n";
 
-  // @Test void testValidNextOption(){ //testing 1. CONTINUE LOGGIN IN
-  //   String optionMsg = "\nPlease select from the following: \n"+
-  //   "1. CONTINUE LOGGING IN\n"+
-  //   "2. CANCEL\n";
+    String printMsg = "*****************************************\n" +
+      "       THANK YOU FOR SIGNING IN :)       \n"+
+      "*****************************************\n" + 
+      "PLEASE ENTER 1 TO GO TO DEFAULT HOME PAGE\n";
 
-  //   String printMsg = "*****************************************\n" +
-  //     "       THANK YOU FOR SIGNING IN :)       \n"+
-  //     "*****************************************\n";
+      String option1 = "\n*******************************************************\n" +
+      "Directing you to DEFAULT HOME page~ in 3..2..1..\n"+
+      "*******************************************************\n";
+    String expectedOut = optionMsg + printMsg +option1;
+    String inputMessage = "1\n1";
+   
+    ByteArrayOutputStream outContent = new ByteArrayOutputStream();
+    System.setOut(new PrintStream(outContent));
 
-  //     String option1 = "\n*******************************************************\n" +
-  //     "Directing you to SETTINGS page~ in 3..2..1..\n"+
-  //     "*******************************************************\n";
-  //   String expectedOut = optionMsg + printMsg +option1;
-  //   // int inputMessage = 1;
-  //   String inputMessage = "1";
-  //   // ByteArrayInputStream in = new ByteArrayInputStream(bigIntToByteArray(inputMessage));
-  //   ByteArrayInputStream in = new ByteArrayInputStream(inputMessage.getBytes());
+    ByteArrayInputStream in = new ByteArrayInputStream(inputMessage.getBytes());
 
-  //   System.setIn(in);
-  //   reg.nextOption();
-  //   assertEquals(outContent.toString(), expectedOut);
-  // }
+    System.setIn(in);
+    reg.nextOption();
+    assertEquals(outContent.toString(), expectedOut);
+  }
 
-  // public static class IntegerAsker {
-  //   Scanner scan;
-  //   PrintStream out;
+  @Test void testNotValidNextOption(){ //testing 1. CONTINUE LOGGIN IN, then incorrect command, then valid
+    String optionMsg = "\nPlease select from the following: \n"+
+    "1. CONTINUE LOGGING IN\n"+
+    "2. CANCEL\n";
 
-  //   public IntegerAsker(InputStream input, PrintStream output){
-  //     scan = new Scanner(input);
-  //   }
+    String printMsg = "*****************************************\n" +
+      "       THANK YOU FOR SIGNING IN :)       \n"+
+      "*****************************************\n" + 
+      "PLEASE ENTER 1 TO GO TO DEFAULT HOME PAGE\n";
 
-  //   public int askInput(String msg){
-  //     out.println(msg);
-  //     return scan.nextInt();
-  //   }
-  // }
+      String option1 = "\n*******************************************************\n"+ "OH NO, please enter a valid command" +
+      "\n*******************************************************\n"+"\n*******************************************************\n" +
+      "Directing you to DEFAULT HOME page~ in 3..2..1..\n"+
+      "*******************************************************\n";
+    String expectedOut = optionMsg + printMsg +option1;
+    String inputMessage = "1\n3\n1";
+   
+    ByteArrayOutputStream outContent = new ByteArrayOutputStream();
+    System.setOut(new PrintStream(outContent));
 
-  // @Test void getIntegerFromNextOption(){
-  //   IntegerAsker intAsker = mock(IntegerAsker.class);
-  //   when(intAsker.ask("String"))
-  // }
+    ByteArrayInputStream in = new ByteArrayInputStream(inputMessage.getBytes());
+
+    System.setIn(in);
+    reg.nextOption();
+    assertEquals(outContent.toString(), expectedOut);
+  }
   
   @Test void testFailCancelRegistration() throws IOException { //first wrong input then correct input
     String welcomeMsg = "\n*******************************************************\n" +
@@ -301,7 +340,6 @@ class RegistrationTest {
     String optionMsg = "\n1. ENTER Y TO CONTINUE REGISTERING\n"+
     "2. ENTER N TO CANCEL AND GO BACK TO HOME PAGE\n" +
     "3. ALREADY A MEMBER WITH US? ENTER M TO LOGIN~\n";
-    // String yNOption = "Enter Y/N: ";
     String yNOption = "\nEnter option: ";
 
     String invalidInput = "\nInvalid input provided, please enter option again: \n";
@@ -318,10 +356,6 @@ class RegistrationTest {
   }
 
   @Test void printValidWelcomeScreen(){
-    // String welcomeMsg = "\n*******************************************************\n" +
-    // "            Welcome to the registration page :)            \n" +
-    // "       Not a member with us yet? Sign up now FOR FREE!       \n" +
-    // "*******************************************************\n\n";
     String welcomeMsg = "\n*******************************************************\n" +
     "            Welcome to the registration page :)            \n" +
     "                   Sign up now FOR FREE!                  "+
@@ -342,8 +376,8 @@ class RegistrationTest {
   //   String yNOption = "\nEnter option: ";
     
   //   String username = "billy@yahoo.com\n";
-  //   String password = "Helloworld123\n";
-  //   String inputMessage = "Mem\n" + username; //+ password;
+  //   String password = "Helloworld123";
+  //   String inputMessage = "Mem\n" + username + password;
   //   String printLogin = "\n*******************************************************\n"+
   //   "            Welcome to the log in page :)            \n"+
   //   "*******************************************************\n";
@@ -353,7 +387,12 @@ class RegistrationTest {
   //   String welcomeB = "\nWelcome back " + username + "!\n";
 
   //   String expectedOut = welcomeMsg + optionMsg + yNOption + printLogin + prompt1 + prompt2 + welcomeB;
+
+  //   ByteArrayOutputStream outContent = new ByteArrayOutputStream();
+  //   System.setOut(new PrintStream(outContent));
+
   //   ByteArrayInputStream in = new ByteArrayInputStream(inputMessage.getBytes());
+
   //   System.setIn(in);
   //   reg.retrieveUserInputDetails();
   //   assertEquals(outContent.toString(), expectedOut);
