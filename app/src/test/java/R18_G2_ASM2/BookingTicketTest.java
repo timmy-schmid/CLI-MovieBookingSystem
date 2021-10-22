@@ -75,7 +75,7 @@ public class BookingTicketTest {
             Integer a = 1;
             ByteArrayInputStream inContent = new ByteArrayInputStream(new byte[]{a.byteValue()});
             System.setIn(inContent);
-            testBookingTicket.Continue();
+//            testBookingTicket.Continue();
             assertEquals(1, testBookingTicket.Continue());
 
         }catch (Exception e){ e.printStackTrace();}
