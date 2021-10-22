@@ -67,6 +67,7 @@ public class BookingTicket {
                     break;
                 } else {
                     System.out.println("Invalid input,please try again: ");
+                    break;
                 }
             }
             Ct =this.Continue();
@@ -77,15 +78,15 @@ public class BookingTicket {
     public int Continue(){
         Scanner scan = new Scanner(System.in);
         while(true){
-        Integer re = scan.nextInt();
-        System.out.println("1. Continue\n" +
-                "2. End\n");
-        if(re == 1){return 1;}
-        else if(re == 2){
-            return 2;
-        }
-        else {
-            System.out.println("Invalid input,please try again: ");
+            String str = scan.next();
+            System.out.println("1. Continue\n" +
+                    "2. End\n");
+            if(str.equals("1")){return 1;}
+            else if(str.equals("2")){
+                return 2;
+            }
+            else {
+                System.out.println("Invalid input,please try again: ");
         }
         }
     }
