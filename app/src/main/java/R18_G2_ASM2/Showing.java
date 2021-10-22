@@ -43,6 +43,11 @@ public class Showing {
   public int getShowingId() {
     return showingId;
   }
+  //add tests
+  public boolean setShowingTime(int year, int month, int date, int hourOfDay, int minute) {
+    this.showingTime.set(year, month, date, hourOfDay, minute);
+    return true;
+  }
 
 
   public Movie getMovie() {
