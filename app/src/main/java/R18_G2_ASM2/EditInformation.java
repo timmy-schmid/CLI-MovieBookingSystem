@@ -72,6 +72,7 @@ public class EditInformation extends UserFields {
                 if (this.checkIfUserExists(option) == 1){
                     this.setUserEmail(option);
                     Success = true;
+                    System.out.println("Success\n");
                 }else{
                     System.out.println("The username already exists!\n");
                 }
