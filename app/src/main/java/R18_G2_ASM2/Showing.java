@@ -1,6 +1,6 @@
 package R18_G2_ASM2;
 
-import java.text.ParseException;
+import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -25,12 +25,12 @@ public class Showing {
   private  Map<SeatLocation, Integer> seatsBooked; 
   private MovieSeat movieSeat;
 
-  public Showing (int showingId, Movie movie, Cinema cinema, Calendar showingTime) {
+  public Showing (int showingId, Movie movie, Cinema cinema, Calendar showingTime) throws IOException {
     this.showingId = showingId;
     this.movie = movie;
     this.cinema = cinema;
     this.showingTime = showingTime;
-    //this.movieSeat = new MovieSeat(this); handle Io-Exception
+    // this.movieSeat = new MovieSeat(this); //handle Io-Exception
 
     // initialise seatMap based on cinema type
     
@@ -49,8 +49,6 @@ public class Showing {
     return true;
   }
 
-  public MovieSeat getMovieSet(){
-          return this.movieSeat;}
 
   public Movie getMovie() {
     return movie;
@@ -71,12 +69,12 @@ public class Showing {
     return formatter.format(showingTime.getTime()).toUpperCase();
   }
   
-  public boolean isSeatEmpty(String seat) {
-    return false;
+  public boolean isSeatEmpty() {
+    return totalSeatsBooked()==0;
   }
 
   public boolean isShowingFull() {
-    return false;
+    return totalSeatsLeft() == 0;
   }
 
   public int totalSeatsBooked() {
@@ -101,6 +99,14 @@ public int middleSeatBooked(){
 
   public MovieSeat getMovieSeat(){
     return movieSeat;
+  }
+
+  public void setMovieSeat() throws IOException{
+    this.movieSeat = new MovieSeat(this);
+  }
+
+  public void setMovieSeatForTest() throws IOException{
+    this.movieSeat = new MovieSeat(this, true);
   }
 
   @Override

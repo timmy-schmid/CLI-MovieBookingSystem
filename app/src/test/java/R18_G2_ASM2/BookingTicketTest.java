@@ -6,6 +6,7 @@ import static org.junit.jupiter.api.Assertions.*;
 
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
+import java.io.IOException;
 import java.io.InputStream;
 import java.io.PrintStream;
 import java.util.ArrayList;
@@ -23,7 +24,7 @@ public class BookingTicketTest {
     private Showing aShow;
 
     @BeforeEach
-    public void setUp(){
+    public void setUp() throws IOException{
         testcal = Calendar.getInstance();
         testActor.add("some name1");
         testActor.add("some name2");
@@ -32,10 +33,6 @@ public class BookingTicketTest {
         testBookingTicket = new BookingTicket(aShow,testUser);
     }
 
-    @Test
-    public void testCheckFullorNot(){
-        assertFalse(testBookingTicket.checkFullorNot());
-    }
 
     @Test
     public void testPrintBookingMessage(){
@@ -102,7 +99,7 @@ public class BookingTicketTest {
 //    public void testAskForBooking(){
 //        ByteArrayOutputStream outContent = new ByteArrayOutputStream();
 //        System.setOut(new PrintStream(outContent));
-//        Integer a = 1;
+//        Integer a = -1;
 //        ByteArrayInputStream inContent = new ByteArrayInputStream(new byte[]{a.byteValue()});
 //        System.setIn(inContent);
 //        testBookingTicket.askForBooking();
