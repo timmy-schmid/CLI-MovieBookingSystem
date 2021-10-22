@@ -122,8 +122,6 @@ class RegistrationTest {
   @Test void testValidReadingFile2(){ //user already exists
     int result = reg.checkIfUserExists("zendaya11@gmail.com");
     assert(result == -1);
-    //expected vs actual
-    // assertEquals(outContent.toString(), "Email is taken already/exists in system. Please enter another.");
   }
 
   //testing writing to file

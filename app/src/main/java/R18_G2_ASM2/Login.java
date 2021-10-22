@@ -115,8 +115,7 @@ public class Login {
   public String nextOption() throws IOException{
     System.out.printf("\nInvalid username or password, please select from the following:\n");
     System.out.println("1. CONTINUE LOGGING IN");
-    System.out.println("2. FORGOT MY LOGIN DETAILS");
-    System.out.println("3. CANCEL");
+    System.out.println("2. CANCEL");
 //    ConsoleReader consoleReader = new ConsoleReader();
     String textinput = null;
 //    textinput = consoleReader.readLine();

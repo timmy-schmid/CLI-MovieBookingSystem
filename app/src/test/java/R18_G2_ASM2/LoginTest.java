@@ -98,8 +98,7 @@ class LoginTest {
     String inputMessage = "1";
     String expected = "\nInvalid username or password, please select from the following:\n" +
         "1. CONTINUE LOGGING IN\n" +
-        "2. FORGOT MY LOGIN DETAILS\n" +
-        "3. CANCEL\n";
+        "2. CANCEL\n";
     ByteArrayInputStream in = new ByteArrayInputStream(inputMessage.getBytes());
     System.setIn(in);
     login.nextOption();
