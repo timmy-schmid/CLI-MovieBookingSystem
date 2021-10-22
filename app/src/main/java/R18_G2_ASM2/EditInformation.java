@@ -16,7 +16,7 @@ public class EditInformation extends UserFields {
      */
     private File userCsvFile = new File("src/main/datasets/user1.csv");
     private User userChanged;
-    private File tempFile;
+    private File tempFile = new File("src/main/datasets/TempUser1.csv") ;
 
     // call from the default screen
     public EditInformation(User aUser){
