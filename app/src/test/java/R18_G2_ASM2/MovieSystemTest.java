@@ -64,9 +64,9 @@ public class MovieSystemTest {
   }
 
   @Test void testQuit() {
-    mockIn = new ByteArrayInputStream("SEE YOU NEXT TIME! :)".getBytes());
+    mockIn = new ByteArrayInputStream("".getBytes());
     movSystem = new MovieSystem(mockIn, actualOutPrint);
     movSystem.quit();
-    assertEquals("SEE YOU NEXT TIME! :)",actualOut.toString()); 
+    assertEquals("SEE YOU NEXT TIME! :)\n",actualOut.toString()); 
   }
 }
