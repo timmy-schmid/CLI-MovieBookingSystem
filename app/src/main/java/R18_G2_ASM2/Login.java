@@ -23,7 +23,6 @@ public class Login {
   public void retrieveUserInputDetails() throws IOException{
     this.printScreen();
     Scanner scan = new Scanner(System.in);
-//    ConsoleReader consoleReader = new ConsoleReader();
     //validate user details after retrieving input!!!
     String username = null;
     String password = null;
@@ -31,17 +30,15 @@ public class Login {
       System.out.printf("Please enter your username: ");
 //      username = consoleReader.readLine();
       username = scan.nextLine();
-//      System.out.printf("Please enter your password: ");
-//      password = new jline.ConsoleReader().readLine(new Character('*'));
       Console con = System.console();
       if (con != null) {
         char[] pwd = con.readPassword("Please enter your password: ");
         password = new String(pwd);
+        System.out.printf("PASSWORD LINE 100: [%s]\n", password);
       }
       int result = this.checkIfUserExists(username, password);
       if (result == 1){
         System.out.println("Welcome back " + username + "!");
-        // break;
         return;
         //Direct to next page!!!
       } else if (result == -1){

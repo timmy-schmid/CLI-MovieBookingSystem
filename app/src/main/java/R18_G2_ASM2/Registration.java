@@ -28,12 +28,8 @@ public class Registration extends UserFields{
   private File userCsvFile;
 
   public Registration(){
-    this.userCsvFile = new File("/Users/annasu/Downloads/USYD2021/SEMESTER_2/SOFT2412/ASSIGNMENT_2/R18_G2_ASM2/app/src/main/datasets/user1.csv");
-      
-    //"app/src/main/datasets/user1.csv");
-
-
-    
+    // this.userCsvFile = new File("/Users/annasu/Downloads/USYD2021/SEMESTER_2/SOFT2412/ASSIGNMENT_2/R18_G2_ASM2/app/src/main/datasets/user1.csv");
+    this.userCsvFile = new File("app/src/main/datasets/user1.csv");
   }
 
   public File getUserFile(){
@@ -86,18 +82,14 @@ public class Registration extends UserFields{
           }
           System.out.println();
         }
-        ConsoleReader consoleReader = new ConsoleReader();
+        Scanner scan2 = new Scanner(System.in);
         while (true){
-          
-          System.out.printf("\nPlease enter your password: ");
-          // password = scan.nextLine();
-          password = new jline.ConsoleReader().readLine(new Character('*'));
-
-          // Console con = System.console();
-          // if (con != null) {
-          //   char[] pwd = con.readPassword("Please enter your password: ");
-          //   password = new String(pwd);
-          // }
+          Console con = System.console();
+          if (con != null) {
+            char[] pwd = con.readPassword("\nPlease enter your password: ");
+            password = new String(pwd);
+            System.out.printf("PASSWORD LINE 100: [%s]\n", password);
+          }
           boolean isValidPwd = this.isValidPassword(password);
           if (isValidPwd == true){
             returnResult2 = true;
