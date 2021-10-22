@@ -27,8 +27,8 @@ public class Registration extends UserFields{
   private String userCsvFile;
 
   public Registration(){
-    // this.userCsvFile = "app/src/main/datasets/user1.csv";
-    this.userCsvFile = "/Users/annasu/Downloads/USYD2021/SEMESTER_2/SOFT2412/ASSIGNMENT-2-NEW/R18_G2_ASM2/app/src/main/datasets/user1.csv";
+    this.userCsvFile = "app/src/main/datasets/user1.csv";
+    // this.userCsvFile = "/Users/annasu/Downloads/USYD2021/SEMESTER_2/SOFT2412/ASSIGNMENT-2-NEW/R18_G2_ASM2/app/src/main/datasets/user1.csv";
   }
 
   public String getUserFile(){
