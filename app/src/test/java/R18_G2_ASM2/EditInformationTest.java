@@ -17,7 +17,7 @@ public class EditInformationTest{
             ByteArrayOutputStream outContent = new ByteArrayOutputStream();
             System.setOut(new PrintStream(outContent));
             editInformation.Welcome();
-            String output = "Edit and Update Your Information\n"+"*******************************************************\n"+"PLEASE CHOOSE FORM THE FOLLOWING                         "+"*******************************************************\n";
+            String output = "Edit and Update Your Information\n"+"*******************************************************\n"+"PLEASE CHOOSE FORM THE FOLLOWING                         \n"+"*******************************************************\n";
             assertEquals(outContent.toString(),output);
 
         }catch (Exception e){ e.printStackTrace();}
@@ -29,7 +29,7 @@ public class EditInformationTest{
             ByteArrayOutputStream outContent = new ByteArrayOutputStream();
             System.setOut(new PrintStream(outContent));
             editInformation.nextOption();
-            String output = "Return to the Edit Option page...\n";
+            String output = "Return to the Edit Option page...\n\n";
             assertEquals(outContent.toString(),output);
 
         }catch (Exception e){ e.printStackTrace();}
