@@ -64,7 +64,7 @@ public class EditInformation extends UserFields {
         System.out.println("The new username: ");
         while(!Success && wantToContinue){
             //not sure about where the code comes from and how to verify the code is correct one
-            String option = scan.nextLine();
+            String option = scan.next();
             if(option.equals(this.userChanged.getEmail())){
                 System.out.println("Please enter a new username");
             }
