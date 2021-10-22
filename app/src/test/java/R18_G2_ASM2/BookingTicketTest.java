@@ -55,7 +55,7 @@ public class BookingTicketTest {
     @Test
     public void testInvalidContinue(){
         try{
-            String a = "-34\n";
+            String a = "-34\r\n";
             ByteArrayInputStream inContent = new ByteArrayInputStream(a.getBytes());
             System.setIn(inContent);
             ByteArrayOutputStream outContent = new ByteArrayOutputStream();
