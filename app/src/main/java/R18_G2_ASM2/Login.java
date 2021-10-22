@@ -12,8 +12,8 @@ public class Login {
   private File userCsvFile;
 
   public Login(){
-    this.userCsvFile = new File("app/src/main/datasets/user1.csv");
-//    this.userCsvFile = new File("/Users/robingo/Desktop/usyd yr 2 s2/soft2412/asm2/R18_G2_ASM2/app/src/main/datasets/user1.csv");
+    // this.userCsvFile = new File("app/src/main/datasets/user1.csv");
+    this.userCsvFile = new File("/Users/annasu/Downloads/USYD2021/SEMESTER_2/SOFT2412/ASSIGNMENT-2-NEW/R18_G2_ASM2/app/src/main/datasets/user1.csv");
   }
 
   public void setUserFile(File name){

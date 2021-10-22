@@ -50,9 +50,9 @@ class LoginTest {
   public void testValidUsername(){
     Login login = new Login();
     String username = "dannie@gmail.com";
-    String password = "Asdf1234!*";
+    String password = "HAsdf1234!*";
     int result = login.checkIfUserExists(username, password);
-    assertEquals(result, 1);
+    assertEquals(result, -1); //1 = user exists 
   }
 
   @Test
@@ -70,7 +70,7 @@ class LoginTest {
     String username = "harrypotter@gmail.com";
     String password = "Asdf1235!*";
     int result = login.checkIfUserExists(username, password);
-    assertEquals(result, 1);
+    assertEquals(result, 1); //exists alrdy
   }
 
   @Test

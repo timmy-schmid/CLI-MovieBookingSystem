@@ -25,18 +25,19 @@ public class Registration extends UserFields{
 
   VERSION update: removed additional options after signing in and only directed to home page.
   */
-  private File userCsvFile;
-
+  // private File userCsvFile;
+  private String userCsvFile;
   public Registration(){
     // this.userCsvFile = new File("/Users/annasu/Downloads/USYD2021/SEMESTER_2/SOFT2412/ASSIGNMENT_2/R18_G2_ASM2/app/src/main/datasets/user1.csv");
-    this.userCsvFile = new File("app/src/main/datasets/user1.csv");
+
+    this.userCsvFile = "app/src/main/datasets/user1.csv";
   }
 
-  public File getUserFile(){
+  public String getUserFile(){
     return this.userCsvFile;
   }
 
-  public void setUserFile(File name){
+  public void setUserFile(String name){
     this.userCsvFile = name;
   }
 
@@ -73,7 +74,11 @@ public class Registration extends UserFields{
           int result = this.checkIfUserExists(email);
           if (result == -1){
             System.out.println("Email is taken already/exists in system. Please enter another.");
-          } else {
+          } else if (result == -2){
+            System.out.printf("FILE NOT FOUND ERROR: %s FILE NOT FOUND!", this.userCsvFile);
+            break;
+          }
+          else {
             boolean isValidEmail = this.validateUser(email);
             if (isValidEmail == true){
               returnResult = true;
@@ -128,8 +133,10 @@ public class Registration extends UserFields{
     String password = null;
     int result = 1;
 
+    //check file follows right format...
     try {
-      Scanner myReader = new Scanner(userCsvFile);
+      File f = new File(this.userCsvFile);
+      Scanner myReader = new Scanner(f);
       while (myReader.hasNextLine()) { //as long as you can keep reading the file, grab the details
         String line = myReader.nextLine();
         String[] detailsArray = line.split(",");
@@ -146,8 +153,8 @@ public class Registration extends UserFields{
         } 
       }
     } catch (FileNotFoundException e) {
-      System.out.printf("FILE NOT FOUND ERROR: %s FILE NOT FOUND!", this.userCsvFile);
-      System.exit(0);
+      // System.exit(0);
+      return -2;
     }
     return result;
   }
@@ -163,16 +170,21 @@ public class Registration extends UserFields{
   public int writeUserDetailsToFile(String email, String password){
     int id = -1;
     try {
-      BufferedReader myReader = new BufferedReader(new FileReader(this.userCsvFile));
-      FileWriter myWriter = new FileWriter(this.userCsvFile, true); //for appending to existing file
+      BufferedReader myReader = new BufferedReader(new FileReader(new File(this.userCsvFile)));
       
       String currentLine = "";
       String lastLine = "";
-      //extract last number ID from row, then add 1.
+      
+      //if file exists and theres data inside
+      int line = 0;
       while ((currentLine = myReader.readLine()) != null){
         lastLine = currentLine;
+        line+=1;
       }
+
       myReader.close();
+      //extract last number ID from row, then add 1.
+      FileWriter myWriter = new FileWriter(new File(this.userCsvFile), true); //for appending to existing file
       try{
         id = Integer.parseInt(lastLine.split(",")[0]);
         myWriter.write("\n"+String.valueOf(id+1)+","+email+","+password);
@@ -181,9 +193,19 @@ public class Registration extends UserFields{
       } catch(NumberFormatException e){
         e.printStackTrace();
       }
+      // }
       myWriter.close();
     } catch (FileNotFoundException e){
-      System.out.printf("FILE NOT FOUND ERROR: %s FILE NOT FOUND!", this.userCsvFile);
+      //if reading file doesn't exist, write to file path
+      // System.out.printf("FILE NOT FOUND ERROR: %s FILE NOT FOUND!", this.userCsvFile);
+     
+      try {
+        FileWriter myWriter = new FileWriter(new File(this.userCsvFile)); //for appending to existing file
+        myWriter.write(String.valueOf(1)+","+email+","+password);
+        myWriter.close();
+      } catch (IOException ioe) {
+        ioe.printStackTrace();
+      }
     } catch (IOException e) {
       e.printStackTrace();
     }
