@@ -27,10 +27,6 @@ public class Registration extends UserFields{
   */
   // private File userCsvFile;
   private String userCsvFile;
-
-  // public Registration(){}
-
-  // }
   public Registration(){
     // this.userCsvFile = new File("/Users/annasu/Downloads/USYD2021/SEMESTER_2/SOFT2412/ASSIGNMENT_2/R18_G2_ASM2/app/src/main/datasets/user1.csv");
 
@@ -218,7 +214,7 @@ public class Registration extends UserFields{
 
   //after all validations are done, create a new user obj that is a customer account + save/write details to user.csv
   public User createAccount(String email, String password){
-    if (email == null || password == null || email == "" || password == "") {
+    if (email == null || password == null || email == "" || password == ""){
       return null;
     }
     int ID = this.writeUserDetailsToFile(email, password);
@@ -261,7 +257,7 @@ public class Registration extends UserFields{
 
     } else if (result == 2){
       System.out.println("*******************************************************");
-      System.out.println("REDIRECTING YOU BACK TO HOME PAGE~ in 3..2..1..");
+      System.out.println("REDIRECTING YOU BACK TO HOME PAGE~ in 3..2..1..\nSEE YOU NEXT TIME! :)");
       System.out.println("*******************************************************");
       return "CANCEL"; //go back to home/default page
     } else {

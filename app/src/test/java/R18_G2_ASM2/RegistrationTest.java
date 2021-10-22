@@ -305,6 +305,27 @@ class RegistrationTest {
     assertEquals(outContent.toString(), expectedOut);
   }
 
+  @Test void testValidNextOption2(){ //testing 2. CANCEL
+    String optionMsg = "\nPlease select from the following: \n"+
+    "1. CONTINUE LOGGING IN\n"+
+    "2. CANCEL\n";
+
+      String printMsg = "*******************************************************\n" +
+      "REDIRECTING YOU BACK TO HOME PAGE~ in 3..2..1..\nSEE YOU NEXT TIME! :)\n"+
+      "*******************************************************\n";
+    String expectedOut = optionMsg+printMsg;
+    String inputMessage = "2\n";
+   
+    ByteArrayOutputStream outContent = new ByteArrayOutputStream();
+    System.setOut(new PrintStream(outContent));
+
+    ByteArrayInputStream in = new ByteArrayInputStream(inputMessage.getBytes());
+
+    System.setIn(in);
+    reg.nextOption();
+    assertEquals(outContent.toString(), expectedOut);
+  }
+
   @Test void testNotValidNextOption(){ //testing 1. CONTINUE LOGGIN IN, then incorrect command, then valid
     String optionMsg = "\nPlease select from the following: \n"+
     "1. CONTINUE LOGGING IN\n"+
