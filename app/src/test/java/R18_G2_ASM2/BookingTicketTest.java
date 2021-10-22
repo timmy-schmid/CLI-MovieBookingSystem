@@ -55,11 +55,11 @@ public class BookingTicketTest {
     @Test
     public void testInvalidContinue(){
         try{
-            ByteArrayOutputStream outContent = new ByteArrayOutputStream();
-            System.setOut(new PrintStream(outContent));
-            String a = "-2\n";
+            String a = "-fhsf\n\n";
             ByteArrayInputStream inContent = new ByteArrayInputStream(a.getBytes());
             System.setIn(inContent);
+            ByteArrayOutputStream outContent = new ByteArrayOutputStream();
+            System.setOut(new PrintStream(outContent));
             testBookingTicket.Continue();
             String output = "Invalid input,please try again: \n";
             assertEquals(outContent.toString(),output);
