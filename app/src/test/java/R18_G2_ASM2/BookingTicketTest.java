@@ -72,8 +72,8 @@ public class BookingTicketTest {
         try{
             ByteArrayOutputStream outContent = new ByteArrayOutputStream();
             System.setOut(new PrintStream(outContent));
-            Integer a = 1;
-            ByteArrayInputStream inContent = new ByteArrayInputStream(new byte[]{a.byteValue()});
+            String a = "1\n";
+            ByteArrayInputStream inContent = new ByteArrayInputStream(a.getBytes());
             System.setIn(inContent);
 //            testBookingTicket.Continue();
             assertEquals(1, testBookingTicket.Continue());
