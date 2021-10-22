@@ -1,6 +1,9 @@
 package R18_G2_ASM2;
 
+import java.io.ByteArrayInputStream;
+import java.io.ByteArrayOutputStream;
 import java.io.IOException;
+import java.io.PrintStream;
 import java.util.HashMap;
 import java.util.Scanner;
 public class MovieSystem {
@@ -17,8 +20,20 @@ public class MovieSystem {
   private HashMap<Integer,Showing> showings = new HashMap<>();
   User currentUser = null;
 
-  Scanner sc = new Scanner(System.in);
+
+  Scanner sc;
+  PrintStream out;
   
+  public MovieSystem(ByteArrayInputStream in, PrintStream out) {
+    this.sc = new Scanner(in);
+    this.out = out;
+  }
+
+  public MovieSystem() {
+    this.sc = new Scanner(System.in);
+    this.out = System.out;
+  }
+
   public void run() {
 
   while (true) {
@@ -31,13 +46,13 @@ public class MovieSystem {
       Login login = new Login();
       login.retrieveUserInputDetails();
       } catch (Exception e) {
-        System.out.println(e.getStackTrace());
+        out.println(e.getStackTrace());
       }
     } else if (selection.equals("2")) {
       try {
         currentUser = reg.retrieveUserInputDetails();
       } catch (Exception e) {
-        System.out.println(e.getStackTrace());
+        out.println(e.getStackTrace());
       }
     } else if (selection.equals("3")) {
       importMovieData();
@@ -57,7 +72,7 @@ public class MovieSystem {
           try {
             currentUser = reg.retrieveUserInputDetails();
           } catch (Exception e) {
-            System.out.println(e.getStackTrace());
+            out.println(e.getStackTrace());
           }
         } */
       }
@@ -87,13 +102,13 @@ public class MovieSystem {
 
       movies.get(1).toString(s);
       Showing.getSingleMovieShowings(showings, s, movies.get(1));
-      System.out.println(s);
+      out.println(s);
   */
 
 
   //parses either an integer selection OR a single character specified by pattern
   public String parseInput(String pattern, int max) {
-    System.out.print("User Input: ");
+    out.print("User Input:");
     while (sc.hasNextLine()) {
 
       Scanner line = new Scanner(sc.nextLine());
@@ -102,13 +117,13 @@ public class MovieSystem {
         int inputInt = line.nextInt();
 
         if (inputInt < 0 || inputInt > max) {
-          System.out.println("Invalid selection. Please try again.\n");
-          System.out.print("User Input: ");
+          out.println("Invalid selection. Please try again.\n");
+          out.print("User Input:");
           line.close();
           continue;
         } else if (line.hasNext()) {
-          System.out.println("Invalid selection. Please try again.\n");
-          System.out.print("User Input: ");
+          out.println("Invalid selection. Please try again.\n");
+          out.print("User Input:");
           line.close();
           continue;       
         }
@@ -119,8 +134,8 @@ public class MovieSystem {
         line.close();
         return s;
       } else {
-        System.out.println("Invalid selection. Please try again.\n");
-        System.out.print("User Input:");
+        out.println("Invalid selection. Please try again.\n");
+        out.print("User Input:");
         line.close();
         continue; 
       }
@@ -132,19 +147,19 @@ public class MovieSystem {
     try {
       DataController.importMovies(movies,MOVIES_FILE_NAME);
     } catch (IOException e) {
-      System.out.println("Error reading file: " + MOVIES_FILE_NAME);
+      out.println("Error reading file: " + MOVIES_FILE_NAME);
     } 
 
     try {
       DataController.importCinemas(cinemas,CINEMAS_FILE_NAME);
     } catch (IOException e) {
-      System.out.println("Error reading file: " + CINEMAS_FILE_NAME);
+      out.println("Error reading file: " + CINEMAS_FILE_NAME);
     } 
 
     try {
       DataController.importShowings(movies,cinemas, showings, SHOWINGS_FILE_NAME);
     } catch (IOException e) {
-      System.out.println("Error reading file: " + SHOWINGS_FILE_NAME);
+      out.println("Error reading file: " + SHOWINGS_FILE_NAME);
     } 
   }
 
@@ -160,7 +175,7 @@ public class MovieSystem {
     s.append("3 - View upcoming showings\n");  
     s.append("Q - Quit\n");
 
-    System.out.println(s);    
+    out.println(s);    
   }
 
   public void printShowingsScreen() {
@@ -188,7 +203,7 @@ public class MovieSystem {
   
     s.append(String.format("   %s - to log out and quit\n\n", wrapColour("Q")));
 
-    System.out.println(s);
+    out.println(s);
 
   }
 
@@ -208,13 +223,13 @@ public class MovieSystem {
 
     s.append("\nIf you would like to go back press " + wrapColour("B"));
       
-    System.out.println(s);
+    out.println(s);
 
 
   }
 
   public void quit() {
-    System.out.println("SEE YOU NEXT TIME! :)");   
+    out.println("SEE YOU NEXT TIME! :)");   
   }
 
   private String wrapColour(String s) {
