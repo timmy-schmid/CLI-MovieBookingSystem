@@ -189,7 +189,7 @@ public class Registration extends UserFields{
       try{
         id = Integer.parseInt(lastLine.split(",")[0]);
         
-        myWriter.write(String.valueOf(id+1)+","+email+","+password +"\n");
+        myWriter.write("\n"+String.valueOf(id+1)+","+email+","+password);
         id+=1;
 
       } catch(NumberFormatException e){
