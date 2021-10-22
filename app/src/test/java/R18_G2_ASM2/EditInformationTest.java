@@ -1,9 +1,11 @@
 package R18_G2_ASM2;
 
+import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.*;
 
+import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.PrintStream;
 
@@ -59,5 +61,19 @@ public class EditInformationTest{
         }catch (Exception e){ e.printStackTrace();}
     }
 
+    @Test
+    public void testEditEmail(){
+        try{
+            ByteArrayOutputStream outContent = new ByteArrayOutputStream();
+            System.setOut(new PrintStream(outContent));
+            String a = "\nnewusername@gmai.com\n";
+            ByteArrayInputStream inContent = new ByteArrayInputStream(a.getBytes());
+            System.setIn(inContent);
+            editInformation.editEmail();
+            String output = "Success\n";
+            assertEquals(outContent.toString(),output);
+
+        }catch (Exception e){ e.printStackTrace();}
+    }
 
 }
