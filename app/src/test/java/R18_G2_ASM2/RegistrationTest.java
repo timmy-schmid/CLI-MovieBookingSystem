@@ -120,7 +120,7 @@ class RegistrationTest {
     assertNull(reg.getUserFile());
   }
   @Test void testValidReadingFile2(){ //user already exists
-    int result = reg.checkIfUserExists("zendaya11@gmail.com");
+    int result = reg.checkIfUserExists("lilyjones@gmail.com");
     assert(result == -1);
   }
 
@@ -157,20 +157,25 @@ class RegistrationTest {
   }
 
   @Test void testCreateAccountWorks() throws IOException{
-    User newUser = reg.createAccount("newUser@gmail.com", "NewPassword1");
-    assertNotNull(newUser);
+    int result = reg.checkIfUserExists("newUser@gmail.com");
+    if (result == 1){
+      User newUser = reg.createAccount("newUser@gmail.com", "NewPassword1");
+      assertNotNull(newUser);
 
-    BufferedReader myReader = new BufferedReader(new FileReader(reg.getUserFile()));
-    String currentLine = "";
-    String lastLine = "";
-    while ((currentLine = myReader.readLine()) != null){
-      lastLine = currentLine;
-      // break;
+      BufferedReader myReader = new BufferedReader(new FileReader(reg.getUserFile()));
+      String currentLine = "";
+      String lastLine = "";
+      while ((currentLine = myReader.readLine()) != null){
+        lastLine = currentLine;
+        // break;
+      }
+      myReader.close();
+        int id = id = Integer.parseInt(lastLine.split(",")[0]);
+
+      assertEquals(lastLine, String.valueOf(5) + ","+ "newUser@gmail.com" + ","+"NewPassword1");
+    } else {
+      assert(result == -1);
     }
-    myReader.close();
-      int id = id = Integer.parseInt(lastLine.split(",")[0]);
-
-    assertEquals(lastLine, String.valueOf(19) + ","+ "newUser@gmail.com" + ","+"NewPassword1");
   }
 
   @Test void testCreateAccountWorks2() throws IOException{
