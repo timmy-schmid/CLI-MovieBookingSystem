@@ -40,17 +40,17 @@ public class BookingTicket {
                     "3. Adult - $$\n" +
                     "4. Senior - $\n");
             while (true) {
-                Integer num = scan.nextInt();
-                if (num == 1) {
+                String num = scan.next();
+                if (num.equals("1")) {
                     bookingType = Person.Child;
                     break;
-                } else if (num == 2) {
+                } else if (num.equals("2")) {
                     bookingType = Person.Student;
                     break;
-                } else if (num == 3) {
+                } else if (num.equals("3")) {
                     bookingType = Person.Adult;
                     break;
-                } else if (num == 4) {
+                } else if (num.equals("4")) {
                     bookingType = Person.Senior;
                     break;
                 } else {
@@ -78,9 +78,10 @@ public class BookingTicket {
     public int Continue(){
         Scanner scan = new Scanner(System.in);
         while(true){
-            String str = scan.next();
             System.out.println("1. Continue\n" +
                     "2. End\n");
+            String str = scan.next();
+
             if(str.equals("1")){return 1;}
             else if(str.equals("2")){
                 return 2;
