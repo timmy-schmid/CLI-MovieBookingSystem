@@ -9,12 +9,7 @@ import java.io.PrintStream;
 
 public class EditInformationTest{
     private User testUser = new User(277,"abcdhsa@gmail.com","123Qwertyui");
-    private EditInformation editInformation;
-
-    @BeforeAll
-    public void setup(){
-        editInformation = new EditInformation(testUser);
-    }
+    private EditInformation editInformation = new EditInformation(testUser);
 
     @Test
     public void testWelcome(){
