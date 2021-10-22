@@ -76,7 +76,7 @@ public class EditInformationTest{
                     "2 - Edit Password\n" +
                     "3- return to the user page\n" +
                     "\n" +
-                    "User input:\n" +
+                    "User input: \n" +
                     "Invalid order :( Please try again\n";
             assertEquals(outContent.toString(),output);
 
