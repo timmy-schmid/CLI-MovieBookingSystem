@@ -27,8 +27,8 @@ class LoginTest {
   @BeforeEach
   public void setUp() {
     login = new Login();
-//    login.setUserFile(new File("app/src/test/resources/userTest.csv"));
-    login.setUserFile(new File("/Users/robingo/Desktop/usyd yr 2 s2/soft2412/asm2/R18_G2_ASM2/app/src/main/datasets/user1.csv"));
+    login.setUserFile(new File("app/src/test/resources/userTest.csv"));
+//    login.setUserFile(new File("/Users/robingo/Desktop/usyd yr 2 s2/soft2412/asm2/R18_G2_ASM2/app/src/main/datasets/user1.csv"));
 //    set up streams
     System.setOut(new PrintStream(outContent));
   }
