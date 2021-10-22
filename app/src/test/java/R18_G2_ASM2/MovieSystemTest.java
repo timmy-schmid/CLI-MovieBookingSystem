@@ -48,19 +48,25 @@ public class MovieSystemTest {
   }
 
   @Test void parseInputTestInvalidInteger() {
-
-    mockIn = new ByteArrayInputStream("-1\n-980\n100\n10\n".getBytes());
-    movSystem = new MovieSystem(mockIn, actualOutPrint);    
+    mockIn = new ByteArrayInputStream("-1\n-980\n100\n10 a\n10\n".getBytes());
+    movSystem = new MovieSystem(mockIn, actualOutPrint);
 
     assertEquals("10",movSystem.parseInput("a", 10)); // need to check if no input passed
     assertEquals(actualOut.toString(),"User Input:" + //original
                    "Invalid selection. Please try again.\n\n" + //-1 input
                    "User Input:" +
                    "Invalid selection. Please try again.\n\n" + //-980 input
-                   "User Input:" +                  
+                   "User Input:" + 
                    "Invalid selection. Please try again.\n\n" + //100 input
+                   "User Input:" +                    
+                   "Invalid selection. Please try again.\n\n" + //10a input
                    "User Input:");    
   }
 
-  
+  @Test void testQuit() {
+    mockIn = new ByteArrayInputStream("".getBytes());
+    movSystem = new MovieSystem(mockIn, actualOutPrint);
+    movSystem.quit();
+    assertEquals("SEE YOU NEXT TIME! :)\n",actualOut.toString()); 
+  }
 }

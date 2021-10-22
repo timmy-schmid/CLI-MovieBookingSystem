@@ -21,8 +21,8 @@ public class MovieSystem {
   User currentUser = null;
 
 
-  Scanner sc;
-  PrintStream out;
+  private Scanner sc;
+  private PrintStream out;
   
   public MovieSystem(ByteArrayInputStream in, PrintStream out) {
     this.sc = new Scanner(in);
@@ -115,13 +115,12 @@ public class MovieSystem {
 
       if (line.hasNextInt()) {
         int inputInt = line.nextInt();
-
         if (inputInt < 0 || inputInt > max) {
           out.println("Invalid selection. Please try again.\n");
           out.print("User Input:");
           line.close();
           continue;
-        } else if (line.hasNext()) {
+        } else if (line.hasNext()) { // need to fix to not include trailing chars on an int
           out.println("Invalid selection. Please try again.\n");
           out.print("User Input:");
           line.close();

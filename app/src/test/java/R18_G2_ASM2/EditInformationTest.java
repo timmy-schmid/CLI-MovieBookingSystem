@@ -83,4 +83,9 @@ public class EditInformationTest{
         }catch (Exception e){ e.printStackTrace();}
     }
 
+    @Test
+    public void testwriteUserForFile(){
+        editInformation.writeUsertoFile(testUser,editInformation.getUserFile());
+    }
+
 }
