@@ -23,6 +23,8 @@ public class Registration extends UserFields{
   --> user.csv file (contains card details, remembers those who have booked tickets before - details saved in system)
 
   VERSION update: removed additional options after signing in and only directed to home page.
+
+  1. when a user first registers, they are prompted to enter their email, password + card number + phone number
   */
   private String userCsvFile;
 
@@ -39,6 +41,7 @@ public class Registration extends UserFields{
     this.userCsvFile = name;
   }
 
+  // --> SPRINT 1 version
   public User retrieveUserInputDetails() throws IOException { //return a USER object?
     this.printWelcome();
     Scanner scan = new Scanner(System.in);
@@ -124,6 +127,92 @@ public class Registration extends UserFields{
     return currentUser;
   }
 
+  // --> SPRINT 2 version: add extra questions for user to fill out
+
+  public User retrieveUserInputDetails() throws IOException { //return a USER object?
+    this.printWelcome();
+    Scanner scan = new Scanner(System.in);
+    User currentUser = null;
+;
+    System.out.println("1. ENTER Y TO CONTINUE REGISTERING\n"+
+    "2. ENTER N TO CANCEL AND GO BACK TO HOME PAGE\n" +
+    "3. ALREADY A MEMBER WITH US? ENTER M TO LOGIN~");
+    System.out.printf("\nEnter option: ");
+
+    while (true){
+      String option = scan.nextLine();
+      if (option.toUpperCase().startsWith("N") == true){
+        System.out.println("\n*******************************************************");
+        System.out.println("REDIRECTING YOU BACK TO HOME PAGE~ in 3..2..1..");
+        System.out.println("*******************************************************");
+        break;
+
+      } else if (option.toUpperCase().startsWith("Y")) {
+        // validate user details after retrieving input!!!
+        System.out.println();
+        String email = null;
+        String password = null;
+
+        boolean returnResult = false;
+        boolean returnResult2 = false;
+      
+        while (true) { 
+          System.out.printf("Please enter your email: "); //[re-enter]
+          email = scan.nextLine();
+          int result = this.checkIfUserExists(email);
+          if (result == -1){
+            System.out.println("Email is taken already/exists in system. Please enter another.");
+          } else if (result == -2){
+            System.out.printf("FILE NOT FOUND ERROR: %s FILE NOT FOUND!", this.userCsvFile);
+            break;
+          }
+          else {
+            boolean isValidEmail = this.validateUser(email);
+            if (isValidEmail == true){
+              returnResult = true;
+              break;
+            } 
+          }
+          System.out.println();
+        }
+        Scanner scan2 = new Scanner(System.in);
+        while (true){
+          Console con = System.console();
+          if (con != null) {
+            char[] pwd = con.readPassword("\nPlease enter your password: ");
+            password = new String(pwd);
+          }
+          boolean isValidPwd = this.isValidPassword(password);
+          if (isValidPwd == true){
+            returnResult2 = true;
+            break;
+          } //else, continue to enter a valid pwd
+        }
+
+        //user doesn't exist in system and creates a new acc
+        if (returnResult == true && returnResult2 == true) {
+          currentUser = this.createAccount(email, password); //if 51-52 
+        
+          String resultOption = this.nextOption();
+          if (resultOption == null){
+            System.out.println("\nINVALID OPTION SELECTED~");
+          }
+          break;
+        //else: keep entering a new password
+        } 
+      } else if (option.toUpperCase().startsWith("M")) {
+        //redirect to login page!
+        Login login = new Login();
+        login.retrieveUserInputDetails();
+        break; // or return to default page
+
+      } else { //user input not y/n
+        System.out.printf("\nInvalid input provided, please enter option again: ", option);
+      }
+      System.out.println();
+    }
+    return currentUser;
+  }
   //compare against existing emails in database to see if email for registering is taken already or not
   public int checkIfUserExists(String userEmail){
     int userID = 1;

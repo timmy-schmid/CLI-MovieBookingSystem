@@ -34,4 +34,11 @@ public abstract class UserFields {
       return false;
     }
   }
+
+  public void checkValidPhoneNumber(){ //ensures only numbers <n> digits
+
+  }
+  public void checkCardNumber(){ //did the user enter a correct card number that satisfies acceptance criteria?
+
+  }
 }

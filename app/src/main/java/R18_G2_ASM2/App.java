@@ -6,7 +6,12 @@ package R18_G2_ASM2;
 
 public class App {
     public static void main(String[] args) {
-        MovieSystem system = new MovieSystem();
-        system.run();
+        // MovieSystem system = new MovieSystem();
+        // system.run();
+        GiftCard userGiftCard = new GiftCard("1111111111111111", true); //still redeemable
+
+        User lala = new User(1, "hello@gmail.com", "passWord123", userGiftCard);
+        Transaction t = new Transaction(lala);
+        t.proceedPayment();
     }
 }

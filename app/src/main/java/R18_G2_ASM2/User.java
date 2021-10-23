@@ -6,6 +6,12 @@ import java.util.List;
 
 import R18_G2_ASM2.UserFields;
 
+
+/*
+
+ADD user status: save card details for next time
+
+*/
 public class User extends UserFields {
 
   private int ID;
@@ -16,6 +22,9 @@ public class User extends UserFields {
   private String ticketMessage = "";
   private double totalPriceMutiplier = 0;
 
+  private boolean autoFill;
+  private GiftCard giftCard;
+
   public User(int ID, String email, String password){
     this.ID = ID;
     this.email = email;
@@ -24,6 +33,22 @@ public class User extends UserFields {
     ticket.put(Person.Student,0);
     ticket.put(Person.Senior,0);
     ticket.put(Person.Adult,0);
+
+    this.autoFill = false; //default, then prompt user during transaction stage to update
+  }
+
+  public User(int ID, String email, String password, GiftCard userGiftCard){ //extra fields added
+    this.ID = ID;
+    this.email = email;
+    this.password = password;
+    this.giftCard = userGiftCard;
+
+    ticket.put(Person.Child,0);
+    ticket.put(Person.Student,0);
+    ticket.put(Person.Senior,0);
+    ticket.put(Person.Adult,0);
+
+    this.autoFill = false; //default, then prompt user during transaction stage to update
   }
 
   //getter methods below ~
@@ -35,6 +60,10 @@ public class User extends UserFields {
   }
   public String getPassword(){
     return this.password;
+  }
+
+  public boolean getAutoFillStatus(){
+    return this.autoFill;
   }
 
   //setter methods: e.g. for changing login details ...
@@ -58,6 +87,11 @@ public class User extends UserFields {
       this.password = newPassword;
     }
   }
+
+  public void setAutoFillStatus(boolean newStatus){
+    this.autoFill = newStatus;
+  }
+
 
   //rename maybe bookingTicket --> bookTicket? OR nahh
   public void bookingTicket(Person person, int num){
