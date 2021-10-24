@@ -11,15 +11,22 @@ public class Login {
   */
   private File userCsvFile;
 
+  private User user;
   public Login(){
-    this.userCsvFile = new File("src/main/datasets/user1.csv");
+    // this.userCsvFile = new File("src/main/datasets/user1.csv");
+    this.userCsvFile = new File("/Users/annasu/Downloads/USYD2021/SEMESTER_2/SOFT2412/ASSIGNMENT-2-NEW/R18_G2_ASM2/app/src/main/datasets/newUserDetails.csv");
+    this.user = null;
   }
 
+  public User getUser(){
+    return this.user;
+  }
   public void setUserFile(File name){
     this.userCsvFile = name;
   }
 
-  public void retrieveUserInputDetails() throws IOException{
+  public User retrieveUserInputDetails() throws IOException{
+  // public void retrieveUserInputDetails() throws IOException{
     this.printScreen();
     Scanner scan = new Scanner(System.in);
     //validate user details after retrieving input!!!
@@ -33,12 +40,14 @@ public class Login {
       if (con != null) {
         char[] pwd = con.readPassword("Please enter your password: ");
         password = new String(pwd);
-        System.out.printf("PASSWORD LINE 100: [%s]\n", password);
+        System.out.printf("PASSWORD LINE 38: [%s]\n", password);
       }
-      int result = this.checkIfUserExists(username, password);
+      // int result = this.checkIfUserExists(username, password);
+      int result = this.checkIfUserExists2(username, password);
+
       if (result == 1){
-        System.out.println("Welcome back " + username + "!");
-        return;
+        System.out.println("\nWelcome back " + username + "!");
+        return this.getUser();
         //Direct to next page!!!
       } else if (result == -1){
         int temp = 0;
@@ -64,8 +73,12 @@ public class Login {
         }
       }
     }
+
+    System.out.printf("USER DETAILS LINE 77 :, user number: %s\n", this.getUser().getPhoneNumber());
+    return this.getUser();
   }
 
+  //sprint 1 version
   public int checkIfUserExists(String userEmail, String userPassword){
     int userID = 1;
     String email = null;
@@ -104,6 +117,59 @@ public class Login {
     return result;
   }
 
+  //sprint 2 version: edit (added more fields to csv file)
+  //create a user object + return it??
+  public int checkIfUserExists2(String userEmail, String userPassword){
+    int userID = 1;
+    String email = null;
+    String realPassword = null;
+    int result = 0;
+
+    try {
+      Scanner myReader = new Scanner(userCsvFile);
+      while (myReader.hasNextLine()) { //as long as you can keep reading the file, grab the details
+        String line = myReader.nextLine();
+        String[] detailsArray = line.split(",");
+        try{
+          userID = Integer.parseInt(detailsArray[0]);
+        } catch(NumberFormatException e){
+          e.printStackTrace();
+          break;
+        }
+        email = detailsArray[2];
+        System.out.println("LINE 132: email in csv = " + email);
+        realPassword = detailsArray[5];
+        if (userEmail.equals(email)){
+          if (realPassword.equals(userPassword)) {
+            result = 1;
+            GiftCard userGiftCard = null;
+            if (detailsArray[7].equals("T")){
+              userGiftCard = new GiftCard(detailsArray[6], true); //still redeemable
+            } else if (detailsArray[7].equals("F")){
+              userGiftCard = new GiftCard(detailsArray[6], false); //still redeemable
+            }
+            Card creditCard = new Card(detailsArray[1], detailsArray[4]);
+            
+            this.user = new User(Integer.parseInt(detailsArray[0]), detailsArray[1], detailsArray[2], detailsArray[3], realPassword, creditCard, userGiftCard);
+            if (detailsArray[8].equals("T")){
+              user.setAutoFillStatus(true);
+            }
+            break;
+          }
+          else {
+            result = -1;
+          }
+        }
+        else {
+          result = -1;
+        }
+      }
+    } catch (FileNotFoundException e) {
+      System.out.println("LINE 107: USER1.CSV FILE NOT FOUND!!!");
+    }
+    return result;
+  }
+
   public void printScreen(){
     System.out.println("\n*******************************************************");
     System.out.println("            Welcome to the log in page :)            ");
@@ -115,6 +181,7 @@ public class Login {
     System.out.printf("\nInvalid username or password, please select from the following:\n");
     System.out.println("1. CONTINUE LOGGING IN");
     System.out.println("2. CANCEL");
+
 //    ConsoleReader consoleReader = new ConsoleReader();
     String textinput = null;
 //    textinput = consoleReader.readLine();

@@ -15,6 +15,8 @@ ADD user status: save card details for next time
 public class User extends UserFields {
 
   private int ID;
+  private String nickname;
+  private String phoneNumber;
   private String email; //used to represent the unique username
   private String password;
   private LinkedHashMap<Movie,String> filterMovie;
@@ -24,6 +26,7 @@ public class User extends UserFields {
 
   private boolean autoFill;
   private GiftCard giftCard;
+  private Card creditCard;
 
   public User(int ID, String email, String password){
     this.ID = ID;
@@ -37,10 +40,13 @@ public class User extends UserFields {
     this.autoFill = false; //default, then prompt user during transaction stage to update
   }
 
-  public User(int ID, String email, String password, GiftCard userGiftCard){ //extra fields added
+  public User(int ID, String nickname, String email, String phoneNumber, String password, Card creditCard, GiftCard userGiftCard){ //extra fields added
     this.ID = ID;
+    this.nickname = nickname;
     this.email = email;
+    this.phoneNumber = phoneNumber;
     this.password = password;
+    this.creditCard = creditCard;
     this.giftCard = userGiftCard;
 
     ticket.put(Person.Child,0);
@@ -62,8 +68,20 @@ public class User extends UserFields {
     return this.password;
   }
 
+  public String getPhoneNumber(){
+    return this.phoneNumber;
+  }
+
   public boolean getAutoFillStatus(){
     return this.autoFill;
+  }
+
+  public Card getCreditCard(){
+    return this.creditCard;
+  }
+
+  public GiftCard getGiftCard(){
+    return this.giftCard;
   }
 
   //setter methods: e.g. for changing login details ...

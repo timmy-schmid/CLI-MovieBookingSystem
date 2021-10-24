@@ -38,7 +38,10 @@ public abstract class UserFields {
   public void checkValidPhoneNumber(){ //ensures only numbers <n> digits
 
   }
-  public void checkCardNumber(){ //did the user enter a correct card number that satisfies acceptance criteria?
+  public void checkCardNumber(String number){ //did the user enter a correct card number that satisfies acceptance criteria?
+    if (number == null || number.length() != 5){
+      System.out.println("Your card number did not satisfy acceptance criteria.");
+    }
 
   }
 }

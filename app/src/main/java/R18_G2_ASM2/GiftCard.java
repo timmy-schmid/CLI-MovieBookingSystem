@@ -11,16 +11,21 @@ Cinema Staff: Cinema staff should be able to insert movie data, delete movie dat
 
 
 Q: how to know which customer has a gift card?
+Q: how much money can be stored on a gift card?
+-- i.e. default all as 100, if user decides to pay with gift card (prompt them do u wish to pay remaining amount with credit card? or go back option to select gift vs credit card)
 */
 public class GiftCard {
   private boolean status; //redeemable or not
   private String cardNumber;
   private String giftCardFile;
 
+  private final double amount;
+
   public GiftCard(String cardNumber, boolean status){
     this.cardNumber = cardNumber;
     this.status = status;
     this.giftCardFile = null;
+    this.amount = 100.00;
   }
   public String getCardNumber(){ //16-digit
     return this.cardNumber;

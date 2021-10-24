@@ -39,12 +39,13 @@ public class MovieSystem {
   while (true) {
     printStartScreen();
     Registration reg = new Registration();
-    String selection = parseInput("qQ", 3);
+    // String selection = parseInput("qQ", 3);
+    String selection = parseInput("qQ", 4);
 
     if (selection.equals("1")) {
      try {
       Login login = new Login();
-      login.retrieveUserInputDetails();
+      currentUser = login.retrieveUserInputDetails();
       } catch (Exception e) {
         out.println(e.getStackTrace());
       }
@@ -89,7 +90,17 @@ public class MovieSystem {
       }
 
 
-    } else if (selection.equals("q") || selection.equals("Q")) {
+    } else if (selection.equals("4")){ //added for testing purposes
+      if (currentUser != null) {
+        Transaction t = new Transaction(currentUser);
+        t.proceedPayment();
+      } else {
+        System.out.println("\nPlease login or register before heading here~\n");
+      }
+
+    }
+    
+    else if (selection.equals("q") || selection.equals("Q")) {
       quit();
       break;
     }
@@ -172,6 +183,7 @@ public class MovieSystem {
     s.append("1 - Log In\n");
     s.append("2 - Register\n");
     s.append("3 - View upcoming showings\n");  
+    s.append("4 - Direct to transaction page\n"); //testing purposes (move later?)
     s.append("Q - Quit\n");
 
     out.println(s);    

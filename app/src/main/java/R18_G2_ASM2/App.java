@@ -3,15 +3,21 @@
  */
 package R18_G2_ASM2;
 
+import java.io.IOException;
 
 public class App {
-    public static void main(String[] args) {
-        // MovieSystem system = new MovieSystem();
-        // system.run();
-        GiftCard userGiftCard = new GiftCard("1111111111111111", true); //still redeemable
+    public static void main(String[] args) throws IOException
+    {
+        MovieSystem system = new MovieSystem();
+        system.run();
+        // GiftCard userGiftCard = new GiftCard("1111111111111113", true); //still redeemable
 
-        User lala = new User(1, "hello@gmail.com", "passWord123", userGiftCard);
-        Transaction t = new Transaction(lala);
-        t.proceedPayment();
+        // Card creditCard = new Card("harry", "12345");
+        // User lala = new User(1, "harry", "harrypotter@gmail.com", "Password123!*", creditCard, userGiftCard);
+        // Transaction t = new Transaction(lala);
+        // t.proceedPayment();
+
+        // Registration reg = new Registration();
+        // reg.retrieveUserInputDetails2();
     }
 }
