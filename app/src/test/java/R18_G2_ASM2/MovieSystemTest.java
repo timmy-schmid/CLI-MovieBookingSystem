@@ -103,7 +103,7 @@ public class MovieSystemTest {
                     "**************************************\n" +
                     "SYNOPSIS: some movie description\n\n" +
                     "CLASSIFICATION: PG\n" +
-                    "RELEASE DATE: 20/12/21\n" +
+                    "RELEASE DATE: 19/12/21\n" +
                     "DIRECTORS: director\n" +
                     "CAST: actor one, actor two\n" +
                     "UPCOMING SESSIONS:\n" +
