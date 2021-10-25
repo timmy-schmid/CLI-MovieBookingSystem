@@ -5,7 +5,7 @@ package R18_G2_ASM2;
 
 
 public class App {
-    public static void main(String[] args) {
+    public static void main(String[] args) throws Exception{
         MovieSystem system = new MovieSystem();
         system.run();
     }
