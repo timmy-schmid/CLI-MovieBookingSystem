@@ -104,12 +104,12 @@ class LoginTest {
     login.nextOption();
     assertEquals(outContent.toString(), expected);
   }
-//
+
 //  @Test
 //  public void testUsernameAndPasswordInput() throws Exception{
 //    Login login = new Login();
-//    String inputMessage = "dannie@gmail.com\n" + "Asdf1234!*";
-//    String expected = "Welcome dannie@gmail.com!";
+//    String inputMessage = "harrypotter@gmail.com\n" + "Asdf1235!*";
+//    String expected = "Welcome harrypotter@gmail.com!";
 //    ByteArrayInputStream in = new ByteArrayInputStream(inputMessage.getBytes());
 //    System.setIn(in);
 //    login.retrieveUserInputDetails();
