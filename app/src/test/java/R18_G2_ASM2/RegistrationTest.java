@@ -3,36 +3,30 @@ package R18_G2_ASM2;
 import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.*;
 
-import static org.mockito.Mockito.*;
-
-import java.util.*;
 import java.io.*;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeAll;
 
 import java.io.ByteArrayOutputStream;
-
-import java.io.File;
-import java.io.FileNotFoundException;
 import java.io.IOException;
 
 import java.io.BufferedReader;
 import java.io.FileReader;
-
-import java.math.BigInteger;
 
 class RegistrationTest {
   Registration reg;
   private final ByteArrayOutputStream outContent = new ByteArrayOutputStream(); //for testing printing statements
   private final PrintStream originalOutput = System.out;    
 
+  @BeforeAll static void setPath() {
+    DataController.setBasePath("src/test/resources/");
+  }
+
   @BeforeEach
   public void setUp() {
+    Registration.setUserFile("userTest.csv");
     reg = new Registration();
-    // reg.setUserFile(new File("src/test/resources/userTest.csv"));
-
-    reg.setUserFile("src/test/resources/userTest.csv");
-
     //set up streams
     System.setOut(new PrintStream(outContent));
   }
@@ -105,7 +99,10 @@ class RegistrationTest {
   }
 
   @Test void testUserFileNotFound(){
-    reg.setUserFile("src/main/datasets/UNKNOWN.csv");
+    Registration.setUserFile("UNKNOWN.csv");
+    reg = new Registration();
+
+    System.out.println("DO I GET HERE1");
     int result = reg.checkIfUserExists("username@gmail.com");
     assert(result == -2);
   }
@@ -116,8 +113,9 @@ class RegistrationTest {
   }
 
   @Test void nullUserFile(){
-    reg.setUserFile(null);
-    assertNull(reg.getUserFile());
+    Registration.setUserFile(null);
+    reg = new Registration();
+    assertNull(Registration.getUserFile());
   }
   @Test void testValidReadingFile2(){ //user already exists
     int result = reg.checkIfUserExists("lilyjones@gmail.com");
@@ -179,7 +177,7 @@ class RegistrationTest {
   }
 
   @Test void testCreateAccountWorks2() throws IOException{
-    reg.setUserFile("src/test/resources/newUserTest.csv");
+    reg.setUserFile("newUserTest.csv");
     int result = reg.checkIfUserExists("newUser@gmail.com");
     if (result == -1){ //exists alrdy
       return;
