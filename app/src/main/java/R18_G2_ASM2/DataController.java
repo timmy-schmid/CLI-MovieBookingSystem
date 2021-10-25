@@ -1,10 +1,17 @@
 package R18_G2_ASM2;
 
 import java.io.BufferedReader;
+import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.net.URISyntaxException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
@@ -16,16 +23,106 @@ import java.util.TimeZone;
 
 import javax.naming.directory.InvalidAttributeValueException;
 
+
 import java.util.Arrays;
 
 public class DataController {
 
-  //int id, String name, List<String> cast, Classification classification, List<String> directors, String synopsis,Calendar releaseDate) {
-
-  private static String basepath = "src/main/datasets/";
+  private static String basepath = "src/main/resources/";
   private static final SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd",Locale.ENGLISH);
   private static final TimeZone AEST = TimeZone.getTimeZone("Australia/Sydney");
   
+  public static File accessCSVFile(String resource) {
+
+    //checks if resource is actually .csv
+    if (resource == null || !resource.endsWith(".csv")) { //mb throw an exception.
+      System.out.println("Invalid filename provided:" + resource);
+      return null;
+    }
+
+    File f = null;
+    String path = "";
+
+    if (Files.exists(Paths.get(basepath))) { // checks gradle dir v1
+      path = basepath + resource;
+      f = new File(path);
+    } else if (Files.exists(Paths.get("app/" + basepath))) { // checks gradle dir v2
+      path = "app/" + basepath + resource;
+      f = new File(path);
+    } else {
+      // if not Gradle, must be .jar. Check to to see if db files exist.
+      // The path of the jar file is located.
+      try {
+        String parentPath = new File(DataController.class.getProtectionDomain().getCodeSource().getLocation().toURI().getPath()).getParent();
+        f = new File(parentPath + "/" + resource);
+      } catch (URISyntaxException e) {
+        e.printStackTrace();
+      }
+
+      //System.out.println("JAR PATH:" + f.getAbsolutePath());
+      //System.out.println("  EXISTS?:" + f.exists());
+      
+      //If there is no db file, we copy the resource contents from the .jar to create a new db file.
+      if (!f.exists()) {
+        InputStream in = DataController.class.getClassLoader().getResourceAsStream(resource);
+        try {
+          Files.copy(in,f.getAbsoluteFile().toPath());
+        } catch (IOException e) {
+          return f; // if copy fails, then return f.
+        }
+      }
+    }
+    //System.out.println("PATH:" + f.getAbsolutePath());
+    //System.out.println(" FILE EXISTS?:" + f.exists());
+    return f;    
+  }
+
+  public static File accessJSONFile(String resource) {
+
+    //checks if resource is actually .csv
+    if (resource == null || !resource.endsWith(".json")) { //mb throw an exception.
+      System.out.println("Invalid filename provided:" + resource);
+      return null;
+    }
+
+    File f = null;
+    String path = "";
+
+    if (Files.exists(Paths.get(basepath))) { // checks gradle dir v1
+      path = basepath + resource;
+      f = new File(path);
+    } else if (Files.exists(Paths.get("app/" + basepath))) { // checks gradle dir v2
+      path = "app/" + basepath + resource;
+      f = new File(path);
+    } else {
+      // if not Gradle, must be .jar. Check to to see if db files exist.
+      // The path of the jar file is located.
+      try {
+        String parentPath = new File(DataController.class.getProtectionDomain().getCodeSource().getLocation().toURI().getPath()).getParent();
+        f = new File(parentPath + "/" + resource);
+      } catch (URISyntaxException e) {
+        e.printStackTrace();
+      }
+
+      //System.out.println("JAR PATH:" + f.getAbsolutePath());
+      //System.out.println("  EXISTS?:" + f.exists());
+
+      //If there is no db file, we copy the resource contents from the .jar to create a new db file.
+      if (!f.exists()) {
+        InputStream in = DataController.class.getClassLoader().getResourceAsStream(resource);
+        try {
+          Files.copy(in,f.getAbsoluteFile().toPath());
+        } catch (IOException e) {
+          return f; // if copy fails, then return f.
+        }
+      }
+    }
+    //System.out.println("PATH:" + f.getAbsolutePath());
+    //System.out.println(" FILE EXISTS?:" + f.exists());
+    return f;
+  }
+
+
   public static void setBasePath(String s) {
     basepath = s;
   }
@@ -42,8 +139,8 @@ public class DataController {
     HashMap<Integer, String> err = new HashMap<>();
   
     if (filename == null) throw new FileNotFoundException();
-
-    BufferedReader br = new BufferedReader(new FileReader(new File(basepath + filename)));
+    
+    BufferedReader br = new BufferedReader(new FileReader(DataController.accessCSVFile(filename)));
 
     String line;
     int lineNum = 0;
@@ -116,7 +213,7 @@ public class DataController {
   
     if (filename == null) throw new FileNotFoundException();
 
-    BufferedReader br = new BufferedReader(new FileReader(new File(basepath + filename)));
+    BufferedReader br = new BufferedReader(new FileReader(DataController.accessCSVFile(filename)));
 
     String line;
     int lineNum = 0;
@@ -174,7 +271,7 @@ public class DataController {
   
     if (filename == null) throw new FileNotFoundException();
 
-    BufferedReader br = new BufferedReader(new FileReader(new File(basepath + filename)));
+    BufferedReader br = new BufferedReader(new FileReader(DataController.accessCSVFile(filename)));
 
     String line;
     int lineNum = 0;
