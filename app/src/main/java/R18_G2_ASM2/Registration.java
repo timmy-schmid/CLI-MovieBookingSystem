@@ -248,30 +248,25 @@ public class Registration extends UserFields{
         id+=1;
 
       } catch(NumberFormatException e){
-        System.out.println("LINE 263---------------------------------");
         e.printStackTrace();
       }
       myWriter.close();
-      System.out.println("LINE 266---------------------------------");
+      // System.out.println("LINE 266---------------------------------");
     } catch (FileNotFoundException e){
       //if reading file doesn't exist, write to file path     
-      System.out.println("LINE 270---------------------------------");
+      // System.out.println("LINE 270---------------------------------");
 
       try {
         FileWriter myWriter = new FileWriter(this.userCsvFile2); //for appending to existing file
         myWriter.write("\n"+String.valueOf(1)+","+nickname+","+email+","+phoneNumber+","+password+",F");
-        System.out.println("LINE 275---------------------------------");
 
         myWriter.close();
       } catch (IOException ioe) {
         ioe.printStackTrace();
-        System.out.println("LINE 279---------------------------------");
 
       }
     } catch (IOException e) {
       e.printStackTrace();
-      System.out.println("LINE 285---------------------------------");
-
     }
     return id;
   }
