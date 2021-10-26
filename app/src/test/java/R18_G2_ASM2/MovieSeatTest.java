@@ -16,6 +16,7 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
+import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 
 class MovieSeatTest{
@@ -23,6 +24,7 @@ class MovieSeatTest{
     Showing show;
 
     MovieDataFrame filmAvailable;
+
     @BeforeEach
     public void setUp() throws IOException{
         List<String> colNames;
@@ -100,11 +102,11 @@ class MovieSeatTest{
         }
         assertTrue(thrown);
         thrown = false;
-        try {
-            MovieSeat testSeat = new MovieSeat(new Showing(2, new Movie(1,"77", null, null, null, null,null), new Cinema(1, Screen.SILVER), null));
-        } catch (IOException e){
-            thrown = true;
-        }
+        //try {
+            //MovieSeat testSeat = new MovieSeat(new Showing(2, new Movie(1,"77", null, null, null, null,null), new Cinema(1, Screen.SILVER), null));
+        //} catch (IOException e){
+            //thrown = true;
+        //}
         
         // assertTrue(thrown);
 
@@ -113,11 +115,11 @@ class MovieSeatTest{
     @Test 
     public void movieSeatTest() throws IOException{
         boolean thrown = false;
-        try {
-            show.setMovieSeat();
-        } catch (IOException e){
-            thrown = true;
-        }
+        //try {
+            //show.setMovieSeat();
+        //} catch (IOException e){
+            //thrown = true;
+        //}
         show.setMovieSeatForTest();
         assertEquals(7, show.totalSeatsBooked());
         assertEquals(35, show.totalSeatsLeft());
