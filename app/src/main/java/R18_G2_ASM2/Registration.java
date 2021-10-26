@@ -30,7 +30,7 @@ public class Registration extends UserFields{
 
   public Registration(){
     // this.userCsvFile = "app/src/main/datasets/newUserDetails.csv";
-    this.userCsvFile = "/Users/annasu/Downloads/USYD2021/SEMESTER_2/SOFT2412/ASSIGNMENT-2-NEW/R18_G2_ASM2/app/src/main/datasets/newUserDetails.csv";
+    this.userCsvFile = "/Users/annasu/Downloads/USYD2021/SEMESTER_2/SOFT2412/ASSIGNMENT-2-NEW/R18_G2_ASM2/app/src/main/datasets/newUserDetails2.csv";
   }
 
   public String getUserFile(){
@@ -232,41 +232,100 @@ public class Registration extends UserFields{
     }
     return currentUser;
   }
-  // //compare against existing emails in database to see if email for registering is taken already or not
-  // public int checkIfUserExists(String userEmail){
-  //   int userID = 1;
-  //   String email = null;
-  //   String password = null;
-  //   int result = 1;
+ 
+  //sprint 2 --> new after meeting update:
+  public User retrieveUserInputDetails3() throws IOException { //return a USER object?
+    this.printWelcome();
+    Scanner scan = new Scanner(System.in);
+    User currentUser = null;
+  ;
+    System.out.println("1. ENTER Y TO CONTINUE REGISTERING\n"+
+    "2. ENTER N TO CANCEL AND GO BACK TO HOME PAGE\n" +
+    "3. ALREADY A MEMBER WITH US? ENTER M TO LOGIN~");
+    System.out.printf("\nEnter option: ");
 
-  //   //check file follows right format...
-  //   try {
-  //     File f = new File(this.userCsvFile);
-  //     Scanner myReader = new Scanner(f);
-  //     while (myReader.hasNextLine()) { //as long as you can keep reading the file, grab the details
-  //       String line = myReader.nextLine();
-  //       String[] detailsArray = line.split(",");
-  //       try{
-  //         userID = Integer.parseInt(detailsArray[0]);
-  //       } catch(NumberFormatException e){
-  //         e.printStackTrace();
-  //         break;
-  //       }
-  //       email = detailsArray[1];
-  //       if(userEmail.equals(email)){
-  //         result = -1;
-  //         break;
-  //       } 
-  //     }
-  //     myReader.close();
-  //   } catch (FileNotFoundException e) {
-  //     // System.exit(0);
-  //     return -2;
-  //   }
-  //   return result;
-  // }
+    while (true){
+      String option = scan.nextLine();
+      if (option.toUpperCase().startsWith("N") == true){
+        System.out.println("\n*******************************************************");
+        System.out.println("REDIRECTING YOU BACK TO HOME PAGE~ in 3..2..1..");
+        System.out.println("*******************************************************");
+        break;
 
+      } else if (option.toUpperCase().startsWith("Y")) {
+        // validate user details after retrieving input!!!
+        System.out.println();
+        String email = null;
+        String nickname = null;
+        String password = null;
 
+        String phoneNumber = null;
+        boolean returnResult = false;
+        boolean returnResult2 = false;
+      
+        //TODO: validate email, phoneNumber
+        while (true) { 
+          System.out.printf("Please enter a nickname: "); //[re-enter]
+          nickname = scan.nextLine();
+
+          System.out.printf("\nPlease enter your email: "); 
+          email = scan.nextLine();
+
+          System.out.printf("\nPlease enter your phone number: "); 
+          phoneNumber = scan.nextLine();
+
+          int result = this.checkIfUserExists3(email, phoneNumber);
+          
+          if (result == 1) { //all fields are valid
+            boolean isValidEmail = this.validateUser(email);
+            if (isValidEmail){
+              returnResult = true;
+              break;
+            } 
+          } else if (result == -1){ //entered value (that should be unique) already exists in db
+            System.out.println("The supplied details contain info that already exists in our system. Please re-enter again: ");
+          }
+          System.out.println();
+        }
+
+        Scanner scan2 = new Scanner(System.in);
+        while (true){
+          Console con = System.console();
+          if (con != null) {
+            char[] pwd = con.readPassword("\nPlease enter your password: ");
+            password = new String(pwd);
+          }
+          boolean isValidPwd = this.isValidPassword(password);
+          if (isValidPwd) {
+            returnResult2 = true;
+            break;
+          } //else, continue to enter a valid pwd
+        }
+
+        //user doesn't exist in system and creates a new acc
+        if (returnResult == true && returnResult2 == true) {
+          currentUser = this.createAccount3(nickname, email, phoneNumber, password);
+        
+          String resultOption = this.nextOption();
+          if (resultOption == null){
+            System.out.println("\nINVALID OPTION SELECTED~");
+          }
+          break;
+        //else: keep entering a new password
+        } 
+      } else if (option.toUpperCase().startsWith("M")) {
+        //redirect to login page!
+        Login login = new Login();
+        login.retrieveUserInputDetails();
+        break; // or return to default page
+
+      } else { //user input not y/n
+        System.out.printf("\nInvalid input provided, please enter option again: ", option);
+      }
+      System.out.println();
+    }
+    return currentUser;
+  }
   //return: result: int
   public int checkIfUserExists2(String userEmail, String userPhoneNumber, String userCardNumber, String userGiftCardNumber){
     int userID = 1;
@@ -304,14 +363,6 @@ public class Registration extends UserFields{
           type = "Phone number";
           break;
         }
-        //does card number have to be unique??
-
-        // cardNumber = detailsArray[3];
-        // if(userCardNumber.equals(cardNumber)){
-        //   result = -1;
-        //   type = "card number";
-        //   break;
-        // }
         giftCardNumber= detailsArray[6];
         if(userGiftCardNumber.equals(giftCardNumber)){
           result = -1;
@@ -338,64 +389,53 @@ public class Registration extends UserFields{
     System.out.println("*******************************************************\n");
   }
 
-  // //sprint 1 version
-  // public int writeUserDetailsToFile(String email, String password){
-  //   int id = -1;
-  //   try {
-  //     BufferedReader myReader = new BufferedReader(new FileReader(new File(this.userCsvFile)));
-      
-  //     String currentLine = "";
-  //     String lastLine = "";
-      
-  //     //if file exists and theres data inside
-  //     int line = 0;
-  //     while ((currentLine = myReader.readLine()) != null){
-  //       if (currentLine.trim().length() > 0) {
-  //         lastLine = currentLine;
-  //         line+=1;
-  //       }
-  //     }
-
-  //     myReader.close();
-  //     //extract last number ID from row, then add 1.
-  //     FileWriter myWriter = new FileWriter(new File(this.userCsvFile), true); //for appending to existing file
-  //     try{
-  //       id = Integer.parseInt(lastLine.split(",")[0]);
-        
-  //       myWriter.write("\n"+String.valueOf(id+1)+","+email+","+password);
-  //       id+=1;
-
-  //     } catch(NumberFormatException e){
-  //       e.printStackTrace();
-  //     }
-  //     // }
-  //     myWriter.close();
-  //   } catch (FileNotFoundException e){
-  //     //if reading file doesn't exist, write to file path
-  //     // System.out.printf("FILE NOT FOUND ERROR: %s FILE NOT FOUND!", this.userCsvFile);
-     
-  //     try {
-  //       FileWriter myWriter = new FileWriter(new File(this.userCsvFile)); //for appending to existing file
-  //       myWriter.write(String.valueOf(1)+","+email+","+password);
-  //       myWriter.close();
-  //     } catch (IOException ioe) {
-  //       ioe.printStackTrace();
-  //     }
-  //   } catch (IOException e) {
-  //     e.printStackTrace();
-  //   }
-  //   return id;
-  // }
-
-  //after all validations are done, create a new user obj that is a customer account + save/write details to user.csv
-  // public User createAccount(String email, String password){
-  //   if (email == null || password == null || email.equals("") || password .equals("")){
-  //     return null;
-  //   }
-  //   int ID = this.writeUserDetailsToFile(email, password);
-  //   return new User(ID, email, password);  //creates a new user object
-  // }
-
+  //sprint 2 --> new version after meeting update: 
+  public int checkIfUserExists3(String userEmail, String userPhoneNumber){
+      int userID = 1;
+      String email = null;
+      String phoneNumber = null;
+  
+      int result = 1;
+      String type = "";
+  
+      //check file follows right format...
+      try {
+        File f = new File(this.userCsvFile);
+        Scanner myReader = new Scanner(f);
+        while (myReader.hasNextLine()) { //as long as you can keep reading the file, grab the details
+          String line = myReader.nextLine();
+          String[] detailsArray = line.split(",");
+          try{
+            userID = Integer.parseInt(detailsArray[0]);
+          } catch(NumberFormatException e){
+            e.printStackTrace();
+            break;
+          }
+          email = detailsArray[2];
+          if(userEmail.equals(email)){
+            result = -1;
+            type = "Email";
+            break;
+          }
+          phoneNumber = detailsArray[3];
+          if(userPhoneNumber.equals(phoneNumber)){
+            result = -1;
+            type = "Phone number";
+            break;
+          }
+        }
+        myReader.close();
+      } catch (FileNotFoundException e) {
+        System.out.printf("FILE NOT FOUND ERROR: %s FILE NOT FOUND!", this.userCsvFile);
+        return -2;
+      }
+      if (result == -1) {
+        System.out.printf("%s is taken already/exists in system. Please re-enter your details.\n", type);
+        return result;
+      }
+      return result;
+    }
+  
    //VERSION 2: add more details to csv file
    public User createAccount2(String nickname, String email, String phoneNumber, String cardNumber, String giftCardNumber, String password){
     if (email == null || password == null || email.equals("") || phoneNumber == null || phoneNumber.equals("") || cardNumber == null || cardNumber.equals("") || giftCardNumber == null || giftCardNumber.equals("")
@@ -408,6 +448,20 @@ public class Registration extends UserFields{
     User returnUser = new User(ID, nickname, email, phoneNumber, password, new Card(nickname, cardNumber), new GiftCard(giftCardNumber, true));  //creates a new user object
     return returnUser;
   }
+
+
+  //sprint2 --> new after meeting tues
+  public User createAccount3(String nickname, String email, String phoneNumber, String password){
+    if (email == null || email.equals("") || phoneNumber == null || phoneNumber.equals("") || password == null || password .equals("")){
+      return null;
+    }
+    
+    int ID = this.writeUserDetailsToFile3(nickname, email, phoneNumber, password);
+
+    User returnUser = new User(ID, nickname, email, phoneNumber, password);  //creates a new user object
+    return returnUser;
+  }
+
 
   //sprint 2 version
   public int writeUserDetailsToFile2(String nickname, String email, String phoneNumber, String cardNumber, String giftCardNumber, String password){
@@ -445,6 +499,53 @@ public class Registration extends UserFields{
       try {
         FileWriter myWriter = new FileWriter(new File(this.userCsvFile)); //for appending to existing file
         myWriter.write("\n"+String.valueOf(1)+","+nickname+","+email+","+phoneNumber+","+cardNumber+","+password+","+giftCardNumber+","+"T,F");
+        myWriter.close();
+      } catch (IOException ioe) {
+        ioe.printStackTrace();
+      }
+    } catch (IOException e) {
+      e.printStackTrace();
+    }
+    return id;
+  }
+
+  //UPDATED: SPRINT 2: NEW VERSION AFTER TUES MEETING: 
+  public int writeUserDetailsToFile3(String nickname, String email, String phoneNumber, String password){
+    int id = -1;
+    try {
+      BufferedReader myReader = new BufferedReader(new FileReader(new File(this.userCsvFile)));
+      
+      String currentLine = "";
+      String lastLine = "";
+      
+      //if file exists and theres data inside
+      // int line = 0;
+      while ((currentLine = myReader.readLine()) != null){
+        if (currentLine.trim().length() > 0) {
+          lastLine = currentLine;
+          // line+=1;
+        }
+      }
+
+      myReader.close();
+      //extract last number ID from row, then add 1.
+      FileWriter myWriter = new FileWriter(new File(this.userCsvFile), true); //for appending to existing file
+      try{
+        id = Integer.parseInt(lastLine.split(",")[0]);
+        myWriter.write("\n"+String.valueOf(id+1)+","+nickname+","+email+","+phoneNumber+","+password+",F");
+        id+=1;
+
+      } catch(NumberFormatException e){
+        e.printStackTrace();
+      }
+      // }
+      myWriter.close();
+    } catch (FileNotFoundException e){
+      //if reading file doesn't exist, write to file path     
+      try {
+        FileWriter myWriter = new FileWriter(new File(this.userCsvFile)); //for appending to existing file
+        myWriter.write("\n"+String.valueOf(1)+","+nickname+","+email+","+phoneNumber+","+password+",F");
+
         myWriter.close();
       } catch (IOException ioe) {
         ioe.printStackTrace();

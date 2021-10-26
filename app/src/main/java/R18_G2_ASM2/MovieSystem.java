@@ -51,7 +51,9 @@ public class MovieSystem {
       }
     } else if (selection.equals("2")) {
       try {
-        currentUser = reg.retrieveUserInputDetails2();
+        // currentUser = reg.retrieveUserInputDetails2();
+        currentUser = reg.retrieveUserInputDetails3();
+
       } catch (Exception e) {
         out.println(e.getStackTrace());
       }
@@ -199,7 +201,7 @@ public class MovieSystem {
 
 
     if (currentUser != null) {
-      s.append(String.format("Welcome, %s,\n",currentUser.getEmail()));
+      s.append(String.format("Welcome, %s,\n",currentUser.getNicknameName()));
     } else {
       s.append(String.format("Welcome,\n"));
     }

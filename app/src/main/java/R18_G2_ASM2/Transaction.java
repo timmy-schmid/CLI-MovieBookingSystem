@@ -14,6 +14,11 @@ import java.io.FileWriter;
 CSV FORMAT: <userID, nickname, email, phoneNumber, creditCardNumber, password, giftCard, reedemableStatus, autoFillStatus>
 
 read newUserDetails.csv
+
+UPDATE: remove card details input in newUserDetails.csv (only let user input when paying (and check against credit_cards.json file))
+
+-- create a new file for gift cards (just the card number + status to compare against when user enters gift card number to pay)
+
 */
 
 public class Transaction {
@@ -23,15 +28,21 @@ public class Transaction {
 
   private File tempFile;
   private File tempFile2;
+
+  private String giftCardsFile;
+
   private String userCsvFile;
+
+
   public Transaction(User customer){
     this.customer = customer;
     // this.userCsvFile = "app/src/main/datasets/newUserDetails.csv";
-    this.userCsvFile = "/Users/annasu/Downloads/USYD2021/SEMESTER_2/SOFT2412/ASSIGNMENT-2-NEW/R18_G2_ASM2/app/src/main/datasets/newUserDetails.csv";
+    this.userCsvFile = "/Users/annasu/Downloads/USYD2021/SEMESTER_2/SOFT2412/ASSIGNMENT-2-NEW/R18_G2_ASM2/app/src/main/datasets/newUserDetails2.csv";
     this.tempFile = new File("/Users/annasu/Downloads/USYD2021/SEMESTER_2/SOFT2412/ASSIGNMENT-2-NEW/R18_G2_ASM2/app/src/main/datasets/cardTemp.csv");
 
     this.tempFile2 = new File("/Users/annasu/Downloads/USYD2021/SEMESTER_2/SOFT2412/ASSIGNMENT-2-NEW/R18_G2_ASM2/app/src/main/datasets/cardTemp2.csv");
 
+    this.giftCardsFile = "/Users/annasu/Downloads/USYD2021/SEMESTER_2/SOFT2412/ASSIGNMENT-2-NEW/R18_G2_ASM2/app/src/main/datasets/giftCards.csv";
   }
 
   public User getCustomer(){
@@ -106,8 +117,10 @@ public class Transaction {
       
       if (res == -1 && this.getCustomer().getAutoFillStatus() == true){
         System.out.println("\nprinting user's card details below (saved before)!");
-        System.out.printf("Name: %s\n", this.getCustomer().getCreditCard().getName());
-        System.out.printf("Card number provided: %s\n", this.getCustomer().getCreditCard().getCardNumber());
+        // System.out.printf("Name: %s\n", this.getCustomer().getCreditCard().getName());
+        // System.out.printf("Card number provided: %s\n", this.getCustomer().getCreditCard().getCardNumber());
+        System.out.printf("Name: %s\n", this.getCustomer().getNicknameName());
+        System.out.printf("Card number provided: %s\n", this.getCustomer().getCardNumber());
         System.out.println("Are the details above correct? OR would you like to update your card details? (Y/N): ");
         //..............................................................
         System.out.println("\nTRANSACTION COMPLETE");
@@ -116,16 +129,19 @@ public class Transaction {
         //or save automatically bc entered when registering?
         System.out.printf("Please enter your gift card number: ");
         String num = scan.nextLine();
-        if (num.equals(this.getCustomer().getGiftCard().getCardNumber())){
+
+        
+        String msg = this.checkIfGiftCardExists(num);
+        if (msg.equals("found")){
+          String returnMsg = this.updateGiftCardStatus(num);
           //if it is redeemable but not enough money ask to pay with credit card remaining
-          // if it isn't: go back to pay with card
-          int returnNum = this.updateGiftCardStatus();
-          if (returnNum == 1){
+          // String returnMsg = this.updateGiftCardStatus(num);
+          if (returnMsg.equals("not redeemable")){
             System.out.println("line 116: now need to go back to prev page to pay with credit card...");
-          } else {
-            System.out.println("\nTRANSACTION COMPLETE (Y/N): "); //status updated (T--> F)
-          }          
-        } else {
+          } else if (returnMsg.equals("first time ok")){
+            System.out.println("\nTRANSACTION COMPLETE (Y/N): ");
+          }
+        } else { //invalid number
           //re-loop this
           System.out.println("The gift card number you have provided does not match the details provided in our system. Please try again");
         } 
@@ -133,11 +149,14 @@ public class Transaction {
 
         //TODO: validate credit card number is same as whats provided when registering
         System.out.printf("\nPlease enter your card number: ");
-        String cNum = scan.nextLine();
-        // System.out.printf("Please enter your csv number: ");
-        // String csvNum = scan.nextLine();
+        String cNumber = scan.nextLine();
+        System.out.printf("Please enter your csv number: ");
+        String csvNumber = scan.nextLine();
 
         //first time assume user hasn't save card details but a prompt pops up after they entered details
+
+        // TODO: validate cNumber with robin's reading credit_cards.json function...
+
         System.out.printf("\nWould you like to save your card details for next time? (Y/N): ");
         String option2 = scan.nextLine();
         String result = this.checkAutoFillOption(option2);
@@ -146,6 +165,7 @@ public class Transaction {
           System.out.println("ABOUT TO UPDATE USER DETAILS IN FILE LINE 121 ~~~~~~~~~~~~~~");
           this.updateAutoFillStatus();
           this.getCustomer().setAutoFillStatus(true);
+          this.getCustomer().setCardNumber(cNumber);
 
           System.out.println("TRANSACTION COMPLETE :)");
         }
@@ -183,19 +203,20 @@ public class Transaction {
   //first check if they select gift card --> then check if valid, if not return immediately + print msg. Otherwise, continue to check autoFill status
   // if user selects credit card, skip gift card number/status + search for autoFill status
 
-  public void updateAutoFillStatus(){ //search for user in newUserDetails.csv file, modify default autoFillStatus false to true
+  public void updateAutoFillStatus(){ //search for user in newUserDetails.csv file, modify default autoFillStatus false to true 
     try {
-      File f = new File(this.userCsvFile);
+      File f = new File(this.userCsvFile); //this.userCsvFile
       Scanner myReader = new Scanner(f);
       FileWriter myWriter = new FileWriter(tempFile);
 
       while (myReader.hasNextLine()){
         String line = myReader.nextLine();
         //find matching customer result
+        // System.out.printf("LINE 209 :::::::::::::::: [%s], {%s]\n", line.split(",")[4], line.split(",")[5]);
         if(line.split(",")[2].equals(this.getCustomer().getEmail())
-        && line.split(",")[8].equals("F")){ //update as 'T'
+        && line.split(",")[5].equals("F")){ //update as 'T'
          //update as 'T'
-          myWriter.write(line.substring(0, line.length()-1) +"T\n");
+          myWriter.write(line.substring(0, line.length()-1) +"T");
         } else {
           myWriter.write(line+"\n");
         }
@@ -212,46 +233,64 @@ public class Transaction {
   //checks if status is reedemble, if it is, update to become false
   // if it isn't, return value saying you cant use this gift card number anymore
 
-  //same as updateAutofillStatus()
-  public int updateGiftCardStatus(){ //overwrites existing gift cards in file by changing the reedemble status of the gift card so it can no longer be used for next time
-    int returnNum = -1;
-    // System.out.println("LINE 221: inside updateGiftCardStatus() function ----------->");
+  public String updateGiftCardStatus(String userInputGNumber){ //overwrites existing gift cards in file by changing the reedemble status of the gift card so it can no longer be used for next time
+    String msg = "not redeemable";;
     try {
-      File f = new File(this.userCsvFile);
+      File f = new File(this.giftCardsFile);
       Scanner myReader = new Scanner(f);
       FileWriter myWriter = new FileWriter(tempFile2);
-
+      //find matching customer result
       while (myReader.hasNextLine()){
         String line = myReader.nextLine();
-        //find matching customer result
         String[] detailsArray = line.split(",");
-        if (this.getCustomer().getGiftCard().getCardNumber().equals(detailsArray[6])){
-          
-          if(detailsArray[7].equals("T") && this.getCustomer().getAutoFillStatus() == true) {
-            myWriter.write(line.substring(0, line.length()-3) +"F,T\n"); //set as no longer reedemable
-          } else if(detailsArray[7].equals("T") && this.getCustomer().getAutoFillStatus() == false){
-            myWriter.write(line.substring(0, line.length()-3) +"F,F\n"); //set as no longer reedemable
-          }
-          else if(detailsArray[7].equals("F")){
+        //change reedemable to not reedemable
+        if (userInputGNumber.equals(detailsArray[0])){  //match found
+          if (detailsArray[1].equals("T")){
+            myWriter.write(line.substring(0, line.length()-1) +"F\n"); //set as no longer reedemable
+            msg = "first time ok";
+          } else if (detailsArray[1].equals("F")){
             myWriter.write(line+"\n");
-            returnNum = 1;
-          }
+          } 
         } else {
           myWriter.write(line+"\n");
+          // msg = "invalid number";
         }
       }
       myReader.close();
       myWriter.close();
-      tempFile2.renameTo(new File(this.userCsvFile)); //replace temp file with og file
+      tempFile2.renameTo(new File(this.giftCardsFile)); //replace temp file with og file
 
     } catch (IOException e) {
       e.printStackTrace();
     }
 
-    if (returnNum == 1){
+    if(msg.equals("not redeemable")){
       System.out.println("LINE 254: OH NO! The gift card number you have entered is no longer redeemable. Please enter another or go back to pay with credit card.");
-
     }
-    return returnNum;
+
+    System.out.printf("LINE271::::::::::: msg = [%s]\n", msg);
+    return msg;
+  }
+
+  public String checkIfGiftCardExists(String userInputGNumber){ //overwrites existing gift cards in file by changing the reedemble status of the gift card so it can no longer be used for next time
+    String msg = "invalid number";
+    try {
+      File f = new File(this.giftCardsFile);
+      Scanner myReader = new Scanner(f);
+      
+      //find matching customer result
+      while (myReader.hasNextLine()){
+        String line = myReader.nextLine();
+        String[] detailsArray = line.split(",");
+        //change reedemable to not reedemable
+        if (userInputGNumber.equals(detailsArray[0])){  //match found
+          msg = "found";
+          break;
+        }
+      }
+    } catch (IOException e) {
+      e.printStackTrace();
+    }
+    return msg;
   }
 }

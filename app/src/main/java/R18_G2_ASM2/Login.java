@@ -14,7 +14,7 @@ public class Login {
   private User user;
   public Login(){
     // this.userCsvFile = new File("src/main/datasets/user1.csv");
-    this.userCsvFile = new File("/Users/annasu/Downloads/USYD2021/SEMESTER_2/SOFT2412/ASSIGNMENT-2-NEW/R18_G2_ASM2/app/src/main/datasets/newUserDetails.csv");
+    this.userCsvFile = new File("/Users/annasu/Downloads/USYD2021/SEMESTER_2/SOFT2412/ASSIGNMENT-2-NEW/R18_G2_ASM2/app/src/main/datasets/newUserDetails2.csv");
     this.user = null;
   }
 
@@ -82,7 +82,7 @@ public class Login {
   public int checkIfUserExists(String userEmail, String userPassword){
     int userID = 1;
     String email = null;
-    String real_password = null;
+    String realPassword = null;
     int result = 0;
 
     try {
@@ -96,10 +96,12 @@ public class Login {
           e.printStackTrace();
           break;
         }
-        email = detailsArray[1];
-        real_password = detailsArray[2];
+        // email = detailsArray[1];
+        // realPassword = detailsArray[2];
+        email = detailsArray[2];
+        realPassword = detailsArray[4];
         if (userEmail.equals(email)){
-          if (real_password.equals(userPassword)) {
+          if (realPassword.equals(userPassword)) {
             result = 1;
             break;
           }
@@ -137,21 +139,12 @@ public class Login {
           break;
         }
         email = detailsArray[2];
-        // System.out.println("LINE 132: email in csv = " + email);
-        realPassword = detailsArray[5];
+        realPassword = detailsArray[4];
         if (userEmail.equals(email)){
           if (realPassword.equals(userPassword)) {
-            result = 1;
-            GiftCard userGiftCard = null;
-            if (detailsArray[7].equals("T")){
-              userGiftCard = new GiftCard(detailsArray[6], true); //still redeemable
-            } else if (detailsArray[7].equals("F")){
-              userGiftCard = new GiftCard(detailsArray[6], false); //still redeemable
-            }
-            Card creditCard = new Card(detailsArray[1], detailsArray[4]);
-            
-            this.user = new User(Integer.parseInt(detailsArray[0]), detailsArray[1], detailsArray[2], detailsArray[3], realPassword, creditCard, userGiftCard);
-            if (detailsArray[8].equals("T")){
+            result = 1;          
+            this.user = new User(Integer.parseInt(detailsArray[0]), detailsArray[1], detailsArray[2], detailsArray[3],detailsArray[4]);
+            if (detailsArray[5].equals("T")){
               user.setAutoFillStatus(true);
             }
             break;

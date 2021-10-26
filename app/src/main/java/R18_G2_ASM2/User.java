@@ -28,6 +28,8 @@ public class User extends UserFields {
   private GiftCard giftCard;
   private Card creditCard;
 
+  private String cardNumber;
+
   public User(int ID, String email, String password){
     this.ID = ID;
     this.email = email;
@@ -40,6 +42,7 @@ public class User extends UserFields {
     this.autoFill = false; //default, then prompt user during transaction stage to update
   }
 
+  // TO BE REMOVED!!!!! SPRINT 2 TUES MEETING --> NEW UPDATW
   public User(int ID, String nickname, String email, String phoneNumber, String password, Card creditCard, GiftCard userGiftCard){ //extra fields added
     this.ID = ID;
     this.nickname = nickname;
@@ -57,9 +60,30 @@ public class User extends UserFields {
     this.autoFill = false; //default, then prompt user during transaction stage to update
   }
 
+
+  //current new version - sprint 2
+  public User(int ID, String nickname, String email, String phoneNumber, String password){ //extra fields added
+    this.ID = ID;
+    this.nickname = nickname;
+    this.email = email;
+    this.phoneNumber = phoneNumber;
+    this.password = password;
+
+    ticket.put(Person.Child,0);
+    ticket.put(Person.Student,0);
+    ticket.put(Person.Senior,0);
+    ticket.put(Person.Adult,0);
+    this.cardNumber = null;
+    this.autoFill = false; //default, then prompt user during transaction stage to update
+  }
+
   //getter methods below ~
   public int getID(){
     return this.ID;
+  }
+
+  public String getNicknameName(){
+    return this.nickname;
   }
   public String getEmail(){
     return this.email;
@@ -76,14 +100,17 @@ public class User extends UserFields {
     return this.autoFill;
   }
 
-  public Card getCreditCard(){
-    return this.creditCard;
-  }
+  // public Card getCreditCard(){
+  //   return this.creditCard;
+  // }
 
-  public GiftCard getGiftCard(){
-    return this.giftCard;
+  // public GiftCard getGiftCard(){
+  //   return this.giftCard;
+  // }
+  
+  public String getCardNumber(){
+    return this.cardNumber;
   }
-
   //setter methods: e.g. for changing login details ...
   //validate to ensure values to be set to are valid
   public void setID(int ID){
@@ -108,6 +135,10 @@ public class User extends UserFields {
 
   public void setAutoFillStatus(boolean newStatus){
     this.autoFill = newStatus;
+  }
+
+  public void setCardNumber(String number){
+    this.cardNumber = number;
   }
 
 
