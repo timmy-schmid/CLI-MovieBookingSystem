@@ -18,5 +18,5 @@ public class Card {
     return this.cardNumber;
   }
 
-  //read card.json file
+  //read credit_card.json file
 }

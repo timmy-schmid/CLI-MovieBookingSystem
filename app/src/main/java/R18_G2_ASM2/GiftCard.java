@@ -39,15 +39,12 @@ public class GiftCard {
     this.status = newStatus;
   }
 
-  public void validateGiftCard(){ //a staff member enters gift cards into database/file so that a customer can use them
+  public void validateGiftCard(User staffMember){ //a staff member enters gift cards into database/file so that a customer can use them
     //check length of cardNumber == 16, numbers only 
   }
-  
-  public String readCardCsvFile(String filename){
-    return null;
-  }
 
-  public void updateGiftCardFile(String filename){ //overwrites existing gift cards in file by changing the status of the card
-    return;
-  }
+  // public String readCardCsvFile(String filename){
+  //   return null;
+  // }
+
 }
