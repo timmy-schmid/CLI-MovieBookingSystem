@@ -2,24 +2,22 @@ package R18_G2_ASM2;
 
 import org.junit.jupiter.api.Test;
 
-import R18_G2_ASM2.SeatDataTools.DataFrame;
-import R18_G2_ASM2.SeatDataTools.MovieDataFrame;
-
 import static org.junit.jupiter.api.Assertions.*;
-
-import java.io.File;
 import java.io.IOException;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.Arrays;
 import java.util.Calendar;
 import java.util.Date;
-import java.util.List;
 
+import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 
 class ShowingTest{
+
+  @BeforeAll public static void setPath() {
+    DataController.setBasePath("src/main/resources/");
+  }
 
     Showing show;
     @BeforeEach

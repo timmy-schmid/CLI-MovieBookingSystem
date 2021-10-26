@@ -35,6 +35,8 @@ dependencies {
     //implementation 'org.jline:jline:3.21.0' 
     //implementation 'com.github.jline:jline3:jline-3.3.1' //jline --> no change?
     implementation 'jline:jline:1.0'
+    implementation 'org.json:json:20210307'
+    implementation 'com.googlecode.json-simple:json-simple:1.1.1'
 }
 
 application {

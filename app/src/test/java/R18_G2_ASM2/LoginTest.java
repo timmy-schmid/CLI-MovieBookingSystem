@@ -9,6 +9,7 @@ import java.util.*;
 import java.io.*;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeAll;
 
 import java.io.ByteArrayOutputStream;
 
@@ -20,15 +21,20 @@ import java.io.BufferedReader;
 import java.io.FileReader;
 
 class LoginTest {
+
   Login login;
   private final ByteArrayOutputStream outContent = new ByteArrayOutputStream();
   private final PrintStream originalOutput = System.out;
 
+
+  @BeforeAll public static void setPath() {
+    DataController.setBasePath("src/test/resources/");
+  }
+
   @BeforeEach
   public void setUp() {
+    Login.setUserFile("userTest.csv");
     login = new Login();
-    login.setUserFile(new File("app/src/test/resources/userTest.csv"));
-//    login.setUserFile(new File("/Users/robingo/Desktop/usyd yr 2 s2/soft2412/asm2/R18_G2_ASM2/app/src/main/datasets/user1.csv"));
 //    set up streams
     System.setOut(new PrintStream(outContent));
   }
@@ -104,15 +110,16 @@ class LoginTest {
     login.nextOption();
     assertEquals(outContent.toString(), expected);
   }
-//
+
 //  @Test
 //  public void testUsernameAndPasswordInput() throws Exception{
 //    Login login = new Login();
-//    String inputMessage = "dannie@gmail.com\n" + "Asdf1234!*";
-//    String expected = "Welcome dannie@gmail.com!";
+//    String inputMessage = "harrypotter@gmail.com\n" + "Asdf1235!*";
+//    String expected = "Welcome harrypotter@gmail.com!";
 //    ByteArrayInputStream in = new ByteArrayInputStream(inputMessage.getBytes());
 //    System.setIn(in);
 //    login.retrieveUserInputDetails();
 //    assertEquals(outContent.toString(), expected);
 //  }
+
 }
