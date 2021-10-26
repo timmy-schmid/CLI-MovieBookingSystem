@@ -1,16 +1,18 @@
 package R18_G2_ASM2;
 
 import java.io.ByteArrayInputStream;
-import java.io.ByteArrayOutputStream;
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.PrintStream;
 import java.util.HashMap;
 import java.util.Scanner;
 public class MovieSystem {
 
-  private final String MOVIES_FILE_NAME = "movie.csv";
-  private final String CINEMAS_FILE_NAME = "cinema.csv";
-  private final String SHOWINGS_FILE_NAME = "showing.csv";
+  private static String resourceAbsPath;
+
+  private String MOVIES_FILE_NAME = "movie.csv";
+  private String CINEMAS_FILE_NAME = "cinema.csv";
+  private String SHOWINGS_FILE_NAME = "showing.csv";
   public static final String ANSI_BLUE = "\u001B[34m";
   public static final String ANSI_RESET = "\u001B[0m";
   public static final String ANSI_YELLOW = "\u001B[33m";
@@ -21,24 +23,27 @@ public class MovieSystem {
   User currentUser = null;
 
 
-  Scanner sc;
-  PrintStream out;
+  private Scanner sc;
+  private PrintStream out;
   
   public MovieSystem(ByteArrayInputStream in, PrintStream out) {
     this.sc = new Scanner(in);
     this.out = out;
+    resourceAbsPath = System.getProperty("user.dir");
   }
 
   public MovieSystem() {
     this.sc = new Scanner(System.in);
     this.out = System.out;
+    resourceAbsPath = System.getProperty("user.dir");
   }
 
   public void run() {
 
   while (true) {
     printStartScreen();
-    Registration reg = new Registration();
+    Registration reg = null;
+      reg = new Registration();
     String selection = parseInput("qQ", 3);
 
     if (selection.equals("1")) {
@@ -115,13 +120,12 @@ public class MovieSystem {
 
       if (line.hasNextInt()) {
         int inputInt = line.nextInt();
-
         if (inputInt < 0 || inputInt > max) {
           out.println("Invalid selection. Please try again.\n");
           out.print("User Input:");
           line.close();
           continue;
-        } else if (line.hasNext()) {
+        } else if (line.hasNext()) { // need to fix to not include trailing chars on an int
           out.println("Invalid selection. Please try again.\n");
           out.print("User Input:");
           line.close();
@@ -249,6 +253,20 @@ public class MovieSystem {
     s.append("*********************************************************");
     s.append("**************************************\n");
   }
+
+  public void setMovieDataFile(String name) {
+    MOVIES_FILE_NAME = name;
+  }
+
+  public void setCinemaDataFile(String name) {
+    SHOWINGS_FILE_NAME = name;
+  }
+
+  public void setShowingDataFile(String name) {
+    CINEMAS_FILE_NAME = name;
+  }
+
+
 
 
 }

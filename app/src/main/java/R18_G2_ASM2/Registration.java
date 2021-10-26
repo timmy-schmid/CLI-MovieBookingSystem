@@ -8,7 +8,6 @@ import java.io.FileNotFoundException;
 import java.io.FileWriter;
 
 import java.util.Scanner;
-import jline.ConsoleReader;
 import java.io.*;
 
 public class Registration extends UserFields{
@@ -25,21 +24,24 @@ public class Registration extends UserFields{
 
   VERSION update: removed additional options after signing in and only directed to home page.
   */
-  // private File userCsvFile;
-  private String userCsvFile;
-  public Registration(){
-    // this.userCsvFile = new File("/Users/annasu/Downloads/USYD2021/SEMESTER_2/SOFT2412/ASSIGNMENT_2/R18_G2_ASM2/app/src/main/datasets/user1.csv");
+  private File userCsvFile;
+  private static String USER_FILE_NAME = "user1.csv";
 
-    this.userCsvFile = "app/src/main/datasets/user1.csv";
+  public Registration() {
+
+    this.userCsvFile = DataController.accessCSVFile(USER_FILE_NAME);
+
+    //"app/src/main/datasets/user1.csv";
+    // this.userCsvFile = "/Users/annasu/Downloads/USYD2021/SEMESTER_2/SOFT2412/ASSIGNMENT-2-NEW/R18_G2_ASM2/app/src/main/datasets/user1.csv";
+  }
+  
+  public static String getUserFile(){
+    return USER_FILE_NAME;
+  }
+  public static void setUserFile(String name){
+    USER_FILE_NAME = name;
   }
 
-  public String getUserFile(){
-    return this.userCsvFile;
-  }
-
-  public void setUserFile(String name){
-    this.userCsvFile = name;
-  }
 
   public User retrieveUserInputDetails() throws IOException { //return a USER object?
     this.printWelcome();
@@ -93,7 +95,9 @@ public class Registration extends UserFields{
           if (con != null) {
             char[] pwd = con.readPassword("\nPlease enter your password: ");
             password = new String(pwd);
-            System.out.printf("PASSWORD LINE 100: [%s]\n", password);
+          } else {
+            System.out.print("\nPlease enter your password: ");
+            password = scan2.nextLine();
           }
           boolean isValidPwd = this.isValidPassword(password);
           if (isValidPwd == true){
@@ -104,7 +108,8 @@ public class Registration extends UserFields{
 
         //user doesn't exist in system and creates a new acc
         if (returnResult == true && returnResult2 == true) {
-          currentUser = this.createAccount(email, password); //if 51-52 is satisfied    
+          currentUser = this.createAccount(email, password); //if 51-52 
+        
           String resultOption = this.nextOption();
           if (resultOption == null){
             System.out.println("\nINVALID OPTION SELECTED~");
@@ -135,10 +140,11 @@ public class Registration extends UserFields{
 
     //check file follows right format...
     try {
-      File f = new File(this.userCsvFile);
-      Scanner myReader = new Scanner(f);
+     Scanner myReader = new Scanner(userCsvFile);
       while (myReader.hasNextLine()) { //as long as you can keep reading the file, grab the details
+
         String line = myReader.nextLine();
+        System.out.println(line);
         String[] detailsArray = line.split(",");
         try{
           userID = Integer.parseInt(detailsArray[0]);
@@ -152,9 +158,10 @@ public class Registration extends UserFields{
           break;
         } 
       }
+      myReader.close();
     } catch (FileNotFoundException e) {
-      // System.exit(0);
-      return -2;
+      result = -2;
+      System.out.println(USER_FILE_NAME + " was not found.");   
     }
     return result;
   }
@@ -170,7 +177,7 @@ public class Registration extends UserFields{
   public int writeUserDetailsToFile(String email, String password){
     int id = -1;
     try {
-      BufferedReader myReader = new BufferedReader(new FileReader(new File(this.userCsvFile)));
+      BufferedReader myReader = new BufferedReader(new FileReader(userCsvFile));
       
       String currentLine = "";
       String lastLine = "";
@@ -178,15 +185,19 @@ public class Registration extends UserFields{
       //if file exists and theres data inside
       int line = 0;
       while ((currentLine = myReader.readLine()) != null){
-        lastLine = currentLine;
-        line+=1;
+        if (currentLine.trim().length() > 0) {
+          lastLine = currentLine;
+          line+=1;
+        }
       }
 
       myReader.close();
       //extract last number ID from row, then add 1.
-      FileWriter myWriter = new FileWriter(new File(this.userCsvFile), true); //for appending to existing file
+      FileWriter myWriter = new FileWriter(userCsvFile, true); //for appending to existing file
+
       try{
         id = Integer.parseInt(lastLine.split(",")[0]);
+        
         myWriter.write("\n"+String.valueOf(id+1)+","+email+","+password);
         id+=1;
 
@@ -200,7 +211,7 @@ public class Registration extends UserFields{
       // System.out.printf("FILE NOT FOUND ERROR: %s FILE NOT FOUND!", this.userCsvFile);
      
       try {
-        FileWriter myWriter = new FileWriter(new File(this.userCsvFile)); //for appending to existing file
+        FileWriter myWriter = new FileWriter(userCsvFile); //for appending to existing file
         myWriter.write(String.valueOf(1)+","+email+","+password);
         myWriter.close();
       } catch (IOException ioe) {
@@ -214,7 +225,7 @@ public class Registration extends UserFields{
 
   //after all validations are done, create a new user obj that is a customer account + save/write details to user.csv
   public User createAccount(String email, String password){
-    if (email == null || password == null || email == "" || password == ""){
+    if (email == null || password == null || email.equals("") || password .equals("")){
       return null;
     }
     int ID = this.writeUserDetailsToFile(email, password);
@@ -228,23 +239,25 @@ public class Registration extends UserFields{
     System.out.println("1. CONTINUE LOGGING IN");
     System.out.println("2. CANCEL");
     Scanner scan = new Scanner(System.in);
-    int result = scan.nextInt();
+    
+    // int result = scan.nextInt();
+    String result = scan.nextLine();
 
-    if (result == 1){
+    if (result.equals("1")){
       System.out.println("*****************************************");
       System.out.println("       THANK YOU FOR SIGNING IN :)       ");
       System.out.println("*****************************************");
-      // System.out.printf("\nPlease select from the following: \n");
      
       //acts like what happens after you login successfully~
       System.out.println("PLEASE ENTER 1 TO GO TO DEFAULT HOME PAGE");
       String res = "CONTINUE";
 
-      int option = -1;
+      // int option = -1;
+      String option = null;
       while (true){
-        option = scan.nextInt();
+        option = scan.nextLine();
         System.out.println("\n*******************************************************");
-        if (option == 1){  
+        if (option.equals("1")){  
           System.out.println("Directing you to DEFAULT HOME page~ in 3..2..1..");
           break;
         }  else {
@@ -255,7 +268,7 @@ public class Registration extends UserFields{
       System.out.println("*******************************************************");
       return res;
 
-    } else if (result == 2){
+    } else if (result.equals("2")){
       System.out.println("*******************************************************");
       System.out.println("REDIRECTING YOU BACK TO HOME PAGE~ in 3..2..1..\nSEE YOU NEXT TIME! :)");
       System.out.println("*******************************************************");
