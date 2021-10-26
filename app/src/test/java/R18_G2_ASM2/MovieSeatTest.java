@@ -47,7 +47,7 @@ class MovieSeatTest{
          
        Calendar calendar1 = Calendar.getInstance();
        calendar1.setTime(date1);
-       show = new Showing(2, new Movie(1,"77", null, null, null, null,null), new Cinema(1, Screen.SILVER), calendar1);
+       show = new Showing(2, new Movie(1,"77", null, null, null, null,null), new Cinema(1, MovieClass.SILVER), calendar1);
     }
 
     @Test
@@ -60,7 +60,7 @@ class MovieSeatTest{
     public void MovieSeatTest() throws IOException {
 
 
-        MovieSeat seatMap = new MovieSeat(new Showing(2, new Movie(1,"77", null, null, null, null,null), new Cinema(1, Screen.SILVER), null), true);
+        MovieSeat seatMap = new MovieSeat(new Showing(2, new Movie(1,"77", null, null, null, null,null), new Cinema(1, MovieClass.SILVER), null), true);
         //DataFrame<String> newFrame = seatMap.readFromDatabase();
         // newFrame.print();
 

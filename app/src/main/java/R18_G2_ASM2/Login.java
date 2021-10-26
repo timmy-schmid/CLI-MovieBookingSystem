@@ -2,15 +2,14 @@ package R18_G2_ASM2;
 import java.io.*;
 
 import java.util.Scanner;
-
-
-public class Login {
+public class Login extends Screen {
   /*
   This class: prints screen for when user clicks: 'Log in' and direct them to type their username
   and password
   */
   private File userCsvFile;
   private static  String USER_FILE_NAME = "user1.csv";
+  private Scanner sc;
 
   public Login() {
     userCsvFile = DataController.accessCSVFile(USER_FILE_NAME);
@@ -22,16 +21,26 @@ public class Login {
     USER_FILE_NAME = name;
   }
 
+  @Override
+  public void run(Scanner sc) {
+    try {
+      this.sc = sc;
+      retrieveUserInputDetails();
+    } catch (Exception e) {
+
+    }
+  }
+  
   public void retrieveUserInputDetails() throws IOException{
     this.printScreen();
-    Scanner scan = new Scanner(System.in);
+
     //validate user details after retrieving input!!!
     String username = null;
     String password = null;
     while (true) {
       System.out.printf("Please enter your username: ");
 //      username = consoleReader.readLine();
-      username = scan.nextLine();
+      username = sc.nextLine();
       Console con = System.console();
       if (con != null) {
         char[] pwd = con.readPassword("Please enter your password: ");
@@ -39,7 +48,7 @@ public class Login {
         //System.out.printf("PASSWORD LINE 100: [%s]\n", password);
       } else {
         System.out.printf("Please enter your password: ");
-        password = scan.nextLine();
+        password = sc.nextLine();
       }
 
       int result = this.checkIfUserExists(username, password);
@@ -130,6 +139,18 @@ public class Login {
     Scanner scan = new Scanner(System.in);
     textinput = scan.nextLine();
     return textinput;
+  }
+
+  @Override
+  protected void chooseOption() {
+    // TODO Auto-generated method stub
+    
+  }
+
+  @Override
+  public void print() {
+    // TODO Auto-generated method stub
+    
   }
 }
 //class PasswordField {

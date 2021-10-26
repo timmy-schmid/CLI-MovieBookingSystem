@@ -202,9 +202,9 @@ public class DataController {
       }
       
       //validate screen
-      Screen screen = null;
+      MovieClass screen = null;
       try {
-        screen = Screen.parseScreen(fields[1]);
+        screen = MovieClass.parseScreen(fields[1]);
       } catch (InvalidScreenException e) {
         err.put(lineNum, e.getMessage());
         lineNum++;

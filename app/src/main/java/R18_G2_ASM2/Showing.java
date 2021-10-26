@@ -163,14 +163,11 @@ public int middleSeatBooked(){
   public static int getAllMovieShowings(HashMap<Integer,Showing> showings) {
     
     StringBuilder s = new StringBuilder();
-    s.append("UPCOMING SESSIONS:\n");
-
-    
     s.append("------------------------------------------------------------------------------------------\n");
     s.append("ID  MOVIE                                              TIMES\n");
     s.append("------------------------------------------------------------------------------------------");
     
-    
+
     List<Showing> sortedShowings = new ArrayList<>(showings.values());
     Collections.sort(sortedShowings, new SortMoviesByTitleThenShowingTime());
 
@@ -186,6 +183,10 @@ public int middleSeatBooked(){
           currShowing.showingTime.before(getNextMonday(currShowing.showingTime))) {
         
         if (lastTitle != currTitle) {
+
+          
+          //String currId = Screen.formatANSI(String.valueOf(currShowing.getMovie().getId()),Screen.ANSI_USER_OPTION);
+
           s.append(String.format("\n%-4s",currShowing.getMovie().getId()));
 
           String currName = currShowing.getMovie().getName();

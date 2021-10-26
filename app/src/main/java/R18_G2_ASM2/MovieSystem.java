@@ -1,14 +1,11 @@
 package R18_G2_ASM2;
 
 import java.io.ByteArrayInputStream;
-import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.PrintStream;
 import java.util.HashMap;
 import java.util.Scanner;
 public class MovieSystem {
-
-  private static String resourceAbsPath;
 
   private String MOVIES_FILE_NAME = "movie.csv";
   private String CINEMAS_FILE_NAME = "cinema.csv";
@@ -22,24 +19,34 @@ public class MovieSystem {
   private HashMap<Integer,Showing> showings = new HashMap<>();
   User currentUser = null;
 
-
   private Scanner sc;
   private PrintStream out;
   
   public MovieSystem(ByteArrayInputStream in, PrintStream out) {
     this.sc = new Scanner(in);
     this.out = out;
-    resourceAbsPath = System.getProperty("user.dir");
+
+    importMovieData();
   }
 
   public MovieSystem() {
     this.sc = new Scanner(System.in);
     this.out = System.out;
-    resourceAbsPath = System.getProperty("user.dir");
+
+    importMovieData();
   }
 
   public void run() {
 
+    HomeScreen home = new HomeScreen(showings);
+    StartScreen startScreen = new StartScreen(home);
+
+    startScreen.run(sc);
+  }
+
+
+
+  /*
   while (true) {
     printStartScreen();
     Registration reg = null;
@@ -66,20 +73,9 @@ public class MovieSystem {
 
       if (currentUser != null) {
         selection = parseInput("Qq",showings.size());
-        /*
-        if (selection.equals("E") || selection.equals("E")) {
-          editUser();
-        }*/
+   
       } else {
         selection = parseInput("Qq",showings.size());
-        /*
-        if (selection.equals("R") || selection.equals("r")) {
-          try {
-            currentUser = reg.retrieveUserInputDetails();
-          } catch (Exception e) {
-            out.println(e.getStackTrace());
-          }
-        } */
       }
       if (selection.equals("q") || selection.equals("Q")) {
         quit();
@@ -98,8 +94,7 @@ public class MovieSystem {
       quit();
       break;
     }
-  }
-}
+  }*/
     /*
       User tim = new User(1, "tim@gmail.com", "TestOne12!@");
       BookingTicket t = new BookingTicket(showings.get(2), tim);
@@ -208,7 +203,6 @@ public class MovieSystem {
     s.append(String.format("   %s - to log out and quit\n\n", wrapColour("Q")));
 
     out.println(s);
-
   }
 
   public void printMovieScreen(Movie m) {

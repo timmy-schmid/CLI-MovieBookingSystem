@@ -10,7 +10,7 @@ import java.io.FileWriter;
 import java.util.Scanner;
 import java.io.*;
 
-public class Registration extends UserFields{
+public class Registration extends Screen{
   /*
   This class: prints screen for when user clicks: 'To Register'
   and creates a new user account for them
@@ -26,6 +26,7 @@ public class Registration extends UserFields{
   */
   private File userCsvFile;
   private static String USER_FILE_NAME = "user1.csv";
+  Scanner sc;
 
   public Registration() {
 
@@ -42,10 +43,18 @@ public class Registration extends UserFields{
     USER_FILE_NAME = name;
   }
 
+  @Override
+  public void run(Scanner sc) {
+    this.sc = sc;
+    try {
+      retrieveUserInputDetails();
+    } catch (IOException e) {
+      e.printStackTrace();
+    }
+  }
 
   public User retrieveUserInputDetails() throws IOException { //return a USER object?
     this.printWelcome();
-    Scanner scan = new Scanner(System.in);
     User currentUser = null;
 ;
     System.out.println("1. ENTER Y TO CONTINUE REGISTERING\n"+
@@ -54,7 +63,7 @@ public class Registration extends UserFields{
     System.out.printf("\nEnter option: ");
 
     while (true){
-      String option = scan.nextLine();
+      String option = sc.nextLine();
       if (option.toUpperCase().startsWith("N") == true){
         System.out.println("\n*******************************************************");
         System.out.println("REDIRECTING YOU BACK TO HOME PAGE~ in 3..2..1..");
@@ -72,7 +81,7 @@ public class Registration extends UserFields{
       
         while (true) { 
           System.out.printf("Please enter your email: "); //[re-enter]
-          email = scan.nextLine();
+          email = sc.nextLine();
           int result = this.checkIfUserExists(email);
           if (result == -1){
             System.out.println("Email is taken already/exists in system. Please enter another.");
@@ -81,7 +90,7 @@ public class Registration extends UserFields{
             break;
           }
           else {
-            boolean isValidEmail = this.validateUser(email);
+            boolean isValidEmail = User.validateUser(email);
             if (isValidEmail == true){
               returnResult = true;
               break;
@@ -99,7 +108,7 @@ public class Registration extends UserFields{
             System.out.print("\nPlease enter your password: ");
             password = scan2.nextLine();
           }
-          boolean isValidPwd = this.isValidPassword(password);
+          boolean isValidPwd = User.isValidPassword(password);
           if (isValidPwd == true){
             returnResult2 = true;
             break;
@@ -276,5 +285,17 @@ public class Registration extends UserFields{
     } else {
       return null;
     }
+  }
+
+  @Override
+  protected void chooseOption() {
+    // TODO Auto-generated method stub
+    
+  }
+
+  @Override
+  public void print() {
+    // TODO Auto-generated method stub
+    
   }
 }
