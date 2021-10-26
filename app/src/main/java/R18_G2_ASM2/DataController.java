@@ -77,6 +77,51 @@ public class DataController {
     return f;    
   }
 
+  public static File accessJSONFile(String resource) {
+
+    //checks if resource is actually .csv
+    if (resource == null || !resource.endsWith(".json")) { //mb throw an exception.
+      System.out.println("Invalid filename provided:" + resource);
+      return null;
+    }
+
+    File f = null;
+    String path = "";
+
+    if (Files.exists(Paths.get(basepath))) { // checks gradle dir v1
+      path = basepath + resource;
+      f = new File(path);
+    } else if (Files.exists(Paths.get("app/" + basepath))) { // checks gradle dir v2
+      path = "app/" + basepath + resource;
+      f = new File(path);
+    } else {
+      // if not Gradle, must be .jar. Check to to see if db files exist.
+      // The path of the jar file is located.
+      try {
+        String parentPath = new File(DataController.class.getProtectionDomain().getCodeSource().getLocation().toURI().getPath()).getParent();
+        f = new File(parentPath + "/" + resource);
+      } catch (URISyntaxException e) {
+        e.printStackTrace();
+      }
+
+      //System.out.println("JAR PATH:" + f.getAbsolutePath());
+      //System.out.println("  EXISTS?:" + f.exists());
+
+      //If there is no db file, we copy the resource contents from the .jar to create a new db file.
+      if (!f.exists()) {
+        InputStream in = DataController.class.getClassLoader().getResourceAsStream(resource);
+        try {
+          Files.copy(in,f.getAbsoluteFile().toPath());
+        } catch (IOException e) {
+          return f; // if copy fails, then return f.
+        }
+      }
+    }
+    //System.out.println("PATH:" + f.getAbsolutePath());
+    //System.out.println(" FILE EXISTS?:" + f.exists());
+    return f;
+  }
+
 
   public static void setBasePath(String s) {
     basepath = s;
