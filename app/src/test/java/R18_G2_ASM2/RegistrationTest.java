@@ -30,7 +30,7 @@ class RegistrationTest {
   public void setUp() {
     reg = new Registration();
     // reg.setUserFile("src/test/resources/userTest.csv");
-    reg.setUserFile("src/test/resources/newUserDetailsTest.csv");
+    reg.setUserFile("src/test/resources/newUserDetailsTest2.csv");
 
     //set up streams
     System.setOut(new PrintStream(outContent));
@@ -105,14 +105,15 @@ class RegistrationTest {
 
   @Test void testUserFileNotFound(){
     reg.setUserFile("src/main/datasets/UNKNOWN.csv");
-    int result = reg.checkIfUserExists2("username@gmail.com", "1000000000", "12345", "0000000000000000");
+    int result = reg.checkIfUserExists3("username@gmail.com", "1000000000");
     // int result = reg.checkIfUserExists("username@gmail.com");
     assert(result == -2);
   }
   //testing writing to file works
   @Test void testValidReadingFile(){ //user not found in csv file 
     // int result = reg.checkIfUserExists("username@gmail.com");
-    int result = reg.checkIfUserExists2("username@gmail.com", "1000000000", "12345", "0000000000000000");
+    // int result = reg.checkIfUserExists2("username@gmail.com", "1000000000", "12345", "0000000000000000");
+    int result = reg.checkIfUserExists3("username@gmail.com", "04111211113");
     assert(result == 1);
   }
 
@@ -122,7 +123,8 @@ class RegistrationTest {
   }
   @Test void testValidReadingFile2(){ //user already exists
     // int result = reg.checkIfUserExists("lilyjones@gmail.com");
-    int result = reg.checkIfUserExists2("anna@yahoo.com", "0412345881", "12345", "1111111111111116");
+    // int result = reg.checkIfUserExists2("anna@yahoo.com", "0412345881", "12345", "1111111111111116");
+    int result = reg.checkIfUserExists3("anna@yahoo.com", "0412345881");
     assert(result == -1);
   }
 
@@ -131,10 +133,10 @@ class RegistrationTest {
     String username = "benjilala@hotmail.com";
     String pwd = "Blahblahblah3";
 
-    if (reg.checkIfUserExists2(username, "0404040123", "12345", "1111111111111117") != -1){ //if user doesn't exist
+    if (reg.checkIfUserExists3(username, "0404040123") != -1){ //if user doesn't exist
     // if (reg.checkIfUserExists(username) != -1){ //if user doesn't exist
       // reg.writeUserDetailsToFile(username, pwd);
-      reg.writeUserDetailsToFile2("benji", username,"0404040123", "12345", "1111111111111117", pwd);
+      reg.writeUserDetailsToFile3("benji", username,"0404040123", pwd);
 
     //retrieve last line and compare
       String currentLine = "";
@@ -148,30 +150,29 @@ class RegistrationTest {
       myReader.close();
       int id = id = Integer.parseInt(lastLine.split(",")[0]);
       // assertEquals(lastLine, String.valueOf(id) + ","+ username + ","+pwd);
-      assertEquals(lastLine, String.valueOf(id) + ",benji,"+ username + ",0404040123,12345,"+pwd+",1111111111111117,T,F");
+      assertEquals(lastLine, String.valueOf(id) + ",benji,"+ username + ",0404040123,"+pwd+",F");
     }
   }
   @Test void testCreateAccountFails() throws IOException{
     // User newUser = reg.createAccount(null, "NewPassword1");
-    User newUser = reg.createAccount2(null, null, null, null, null, "NewPassword1");
+    User newUser = reg.createAccount3(null, null, null, "NewPassword1");
     assertNull(newUser);
   }
 
   @Test void testCreateAccountFails2() throws IOException{
     // User newUser = reg.createAccount("hello@gmail.com", "");
-    User newUser = reg.createAccount2(null, "hello@gmail.com", null, "", null, "NewPassword1");
-
+    User newUser = reg.createAccount3(null, "hello@gmail.com", "", "NewPassword1");
     assertNull(newUser);
   }
 
   @Test void testCreateAccountWorks() throws IOException{
     // int result = reg.checkIfUserExists("newUser@gmail.com");
-    int result = reg.checkIfUserExists2("newUser@gmail.com", "0404189234","12345",  "1111111111111118");
+    int result = reg.checkIfUserExists3("newUser@gmail.com", "0404189234");
 
     if (result == 1){
       // User newUser = reg.createAccount("newUser@gmail.com", "NewPassword1");
-      User newUser = reg.createAccount2("newUser", "newUser@gmail.com", "0404189234",
-      "12345", "1111111111111118", "NewPassword1");
+      User newUser = reg.createAccount3("newUser", "newUser@gmail.com", "0404189234",
+      "NewPassword1");
 
       assertNotNull(newUser);
 
@@ -186,7 +187,7 @@ class RegistrationTest {
         int id = id = Integer.parseInt(lastLine.split(",")[0]);
 
       // assertEquals(lastLine, String.valueOf(5) + ","+ "newUser@gmail.com" + ","+"NewPassword1");
-      assertEquals(lastLine, String.valueOf(id) + ",newUser,newUser@gmail.com,0404189234,12345,NewPassword1,1111111111111118,T,F");
+      assertEquals(lastLine, String.valueOf(id) + ",newUser,newUser@gmail.com,0404189234,NewPassword1,F");
 
     } else {
       assert(result == -1);
@@ -240,7 +241,7 @@ class RegistrationTest {
     ByteArrayInputStream in = new ByteArrayInputStream(inputMessage.getBytes());
     System.setIn(in);
     // reg.retrieveUserInputDetails();
-    reg.retrieveUserInputDetails2();
+    reg.retrieveUserInputDetails3();
 
     assertEquals(outContent.toString(), expectedOut);
   }
@@ -386,7 +387,7 @@ class RegistrationTest {
 
     ByteArrayInputStream in = new ByteArrayInputStream(inputMessage.getBytes());
     System.setIn(in);
-    reg.retrieveUserInputDetails2();
+    reg.retrieveUserInputDetails3();
 
     assertEquals(outContent.toString(), expectedOut);
   }

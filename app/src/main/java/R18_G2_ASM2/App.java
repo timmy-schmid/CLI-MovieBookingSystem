@@ -10,14 +10,5 @@ public class App {
     {
         MovieSystem system = new MovieSystem();
         system.run();
-        // GiftCard userGiftCard = new GiftCard("1111111111111113", true); //still redeemable
-
-        // Card creditCard = new Card("harry", "12345");
-        // User lala = new User(1, "harry", "harrypotter@gmail.com", "Password123!*", creditCard, userGiftCard);
-        // Transaction t = new Transaction(lala);
-        // t.proceedPayment();
-
-        // Registration reg = new Registration();
-        // reg.retrieveUserInputDetails2();
     }
 }

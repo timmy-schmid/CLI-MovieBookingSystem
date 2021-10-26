@@ -51,7 +51,6 @@ public class MovieSystem {
       }
     } else if (selection.equals("2")) {
       try {
-        // currentUser = reg.retrieveUserInputDetails2();
         currentUser = reg.retrieveUserInputDetails3();
 
       } catch (Exception e) {
