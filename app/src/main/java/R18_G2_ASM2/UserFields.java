@@ -35,13 +35,18 @@ public abstract class UserFields {
     }
   }
 
-  public void checkValidPhoneNumber(){ //ensures only numbers <n> digits
-
+  public boolean checkValidPhoneNumber(String phoneNumber){ //ensures only numbers <n> digits
+    if (phoneNumber == null || phoneNumber.length() != 10){
+      System.out.println("Your phone number did not satisfy acceptance criteria.");
+      return false;
+    }
+    return true;
   }
-  public void checkCardNumber(String number){ //did the user enter a correct card number that satisfies acceptance criteria?
+  public boolean checkCardNumber(String number){ //did the user enter a correct card number that satisfies acceptance criteria?
     if (number == null || number.length() != 5){
       System.out.println("Your card number did not satisfy acceptance criteria.");
+      return false;
     }
-
+    return true;
   }
 }

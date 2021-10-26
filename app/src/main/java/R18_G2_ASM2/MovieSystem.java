@@ -51,7 +51,7 @@ public class MovieSystem {
       }
     } else if (selection.equals("2")) {
       try {
-        currentUser = reg.retrieveUserInputDetails();
+        currentUser = reg.retrieveUserInputDetails2();
       } catch (Exception e) {
         out.println(e.getStackTrace());
       }
@@ -183,6 +183,7 @@ public class MovieSystem {
     s.append("1 - Log In\n");
     s.append("2 - Register\n");
     s.append("3 - View upcoming showings\n");  
+    //proceed to booking --> direct to transaction page
     s.append("4 - Direct to transaction page\n"); //testing purposes (move later?)
     s.append("Q - Quit\n");
 

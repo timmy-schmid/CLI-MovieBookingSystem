@@ -137,7 +137,7 @@ public class Login {
           break;
         }
         email = detailsArray[2];
-        System.out.println("LINE 132: email in csv = " + email);
+        // System.out.println("LINE 132: email in csv = " + email);
         realPassword = detailsArray[5];
         if (userEmail.equals(email)){
           if (realPassword.equals(userPassword)) {

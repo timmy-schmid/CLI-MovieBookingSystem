@@ -104,52 +104,50 @@ public class Transaction {
       //ask for gift vs credit lol
       int res = this.askAutoFillCardDetails();
       
-      if (res == 1 && this.getCustomer().getAutoFillStatus() == true){
-        System.out.println("printing user's card details below (saved before)!");
+      if (res == -1 && this.getCustomer().getAutoFillStatus() == true){
+        System.out.println("\nprinting user's card details below (saved before)!");
         System.out.printf("Name: %s\n", this.getCustomer().getCreditCard().getName());
         System.out.printf("Card number provided: %s\n", this.getCustomer().getCreditCard().getCardNumber());
         System.out.println("Are the details above correct? OR would you like to update your card details? (Y/N): ");
         //..............................................................
         System.out.println("\nTRANSACTION COMPLETE");
 
-      } else {
-        if (res == 2){ //user wants to enter their gift card num
-          //or save automatically bc entered when registering?
-          System.out.printf("Please enter your gift card number: ");
-          String num = scan.nextLine();
-          if (num.equals(this.getCustomer().getGiftCard().getCardNumber())){
-            //if it is redeemable but not enough money ask to pay with credit card remaining
-            // if it isn't: go back to pay with card
-            int returnNum = this.updateGiftCardStatus();
-            if (returnNum == 1){
-              System.out.println("line 116: now need to go back to prev page to pay with credit card...");
-            } else {
-              System.out.println("\nTRANSACTION COMPLETE (Y/N): "); //status updated (T--> F)
-            }          
+      } else if (res == 2){ //user wants to enter their gift card num
+        //or save automatically bc entered when registering?
+        System.out.printf("Please enter your gift card number: ");
+        String num = scan.nextLine();
+        if (num.equals(this.getCustomer().getGiftCard().getCardNumber())){
+          //if it is redeemable but not enough money ask to pay with credit card remaining
+          // if it isn't: go back to pay with card
+          int returnNum = this.updateGiftCardStatus();
+          if (returnNum == 1){
+            System.out.println("line 116: now need to go back to prev page to pay with credit card...");
           } else {
-            //re-loop this
-            System.out.println("The gift card number you have provided does not match the details provided in our system. Please try again");
-          }
-        } else if (res == -1){ //user wants to pay w credit card but no auto fill, prompt for input 
+            System.out.println("\nTRANSACTION COMPLETE (Y/N): "); //status updated (T--> F)
+          }          
+        } else {
+          //re-loop this
+          System.out.println("The gift card number you have provided does not match the details provided in our system. Please try again");
+        } 
+      } else if (res == -1 && this.getCustomer().getAutoFillStatus() == false){ //user wants to pay w credit card but no auto fill, prompt for input 
 
-          //TODO: validate credit card number is same as whats provided when registering
-          System.out.printf("\nPlease enter your card number: ");
-          String cNum = scan.nextLine();
-          // System.out.printf("Please enter your csv number: ");
-          // String csvNum = scan.nextLine();
+        //TODO: validate credit card number is same as whats provided when registering
+        System.out.printf("\nPlease enter your card number: ");
+        String cNum = scan.nextLine();
+        // System.out.printf("Please enter your csv number: ");
+        // String csvNum = scan.nextLine();
 
-          //first time assume user hasn't save card details but a prompt pops up after they entered details
-          System.out.printf("\nWould you like to save your card details for next time? (Y/N): ");
-          String option2 = scan.nextLine();
-          String result = this.checkAutoFillOption(option2);
-          if (result.equals("yes")){
-            //search for user in newUserDetails.csv file, modify default false to true
-            System.out.println("ABOUT TO UPDATE USER DETAILS IN FILE LINE 121 ~~~~~~~~~~~~~~");
-            this.updateAutoFillStatus();
-            this.getCustomer().setAutoFillStatus(true);
+        //first time assume user hasn't save card details but a prompt pops up after they entered details
+        System.out.printf("\nWould you like to save your card details for next time? (Y/N): ");
+        String option2 = scan.nextLine();
+        String result = this.checkAutoFillOption(option2);
+        if (result.equals("yes")){
+          //search for user in newUserDetails.csv file, modify default false to true
+          System.out.println("ABOUT TO UPDATE USER DETAILS IN FILE LINE 121 ~~~~~~~~~~~~~~");
+          this.updateAutoFillStatus();
+          this.getCustomer().setAutoFillStatus(true);
 
-            System.out.println("TRANSACTION COMPLETE :)");
-          }
+          System.out.println("TRANSACTION COMPLETE :)");
         }
       }
     }
