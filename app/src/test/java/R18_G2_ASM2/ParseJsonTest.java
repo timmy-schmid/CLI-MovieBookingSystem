@@ -30,6 +30,11 @@ class ParseJsonTest {
     parseJson = new ParseJson();
   }
 
+  @AfterEach
+  public void tearDown(){
+    parseJson = null;
+  }
+
   @Test
   public void ParseJsonNotNull() throws Exception{
     assertNotNull(parseJson);
@@ -40,6 +45,62 @@ class ParseJsonTest {
     parseJson.retrieveCardDetails();
     HashMap<String, String> creditCards = parseJson.getCreditCards();
     assertEquals(creditCards.size(), 48);
+  }
+
+  @Test
+  public void testMatchValidCard1() throws Exception{
+    parseJson.retrieveCardDetails();
+    assertTrue(parseJson.matchCard("Charles", "40691"));
+  }
+
+  @Test
+  public void testMatchValidCard2() throws Exception{
+    parseJson.retrieveCardDetails();
+    assertTrue(parseJson.matchCard("Christine", "35717"));
+  }
+
+  @Test
+  public void testMatchValidCard3() throws Exception{
+    parseJson.retrieveCardDetails();
+    assertTrue(parseJson.matchCard("Debbie", "92090"));
+  }
+
+  @Test
+  public void testMatchInvalidCardName() throws Exception{
+    parseJson.retrieveCardDetails();
+    assertFalse(parseJson.matchCard("Deie", "92090"));
+  }
+
+  @Test
+  public void testMatchInvalidCardNumber() throws Exception{
+    parseJson.retrieveCardDetails();
+    assertFalse(parseJson.matchCard("Blake", "11190"));
+  }
+
+  @Test
+  public void testMatchInvalidCardNameAndNumber() throws Exception{
+    parseJson.retrieveCardDetails();
+    assertFalse(parseJson.matchCard("Bl", "110"));
+  }
+
+  @Test
+  public void testSetCreditCards() throws Exception{
+    parseJson.retrieveCardDetails();
+    assertEquals(parseJson.getCreditCards().size(), 48);
+    HashMap<String, String> creditCards = new HashMap<String, String>();
+    creditCards.put("SOFT", "2412");
+    parseJson.setCreditCards(creditCards);
+    assertEquals(parseJson.getCreditCards().size(), 1);
+  }
+
+  @Test
+  public void testGetCreditCardsFile() throws Exception{
+    assertEquals(parseJson.getCreditCardsFile(), DataController.accessJSONFile("credit_cards.json"));
+  }
+
+  @Test
+  public void testGetCreditsCardsFileName() throws Exception{
+    assertEquals(parseJson.getCreditsCardsFileName(), "credit_cards.json");
   }
 
 }
