@@ -33,8 +33,10 @@ public class ParseJson {
   public boolean matchCard(String name, String number) {
     for (String s : creditCards.keySet()) {
 //      System.out.println("key: " + s + " value: " + creditCards.get(s));
-      if ((creditCards.get(s)).equals(number)) {
-        return true;
+      if (s.equals(name)) {
+        if ((creditCards.get(s)).equals(number)) {
+          return true;
+        }
       }
     }
     return false;
