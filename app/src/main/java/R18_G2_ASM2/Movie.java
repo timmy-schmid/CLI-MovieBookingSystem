@@ -5,6 +5,7 @@ import java.util.Calendar;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
+import java.util.TimeZone;
 public class Movie {
   
   private int id;
@@ -15,6 +16,9 @@ public class Movie {
   private List<String> directors;
   private List<String> cast;
   private HashMap<Integer,Showing> showings;
+
+  private static final TimeZone AEST = TimeZone.getTimeZone("Australia/Sydney");
+
 
   public Movie (int id, String name, List<String> cast, Classification classification, List<String> directors, String synopsis,Calendar releaseDate) {
     this.id = id;
@@ -61,6 +65,7 @@ public class Movie {
   public void printMovieDetails(StringBuilder s) {
 
     SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/YY",Locale.ENGLISH);
+    formatter.setTimeZone(AEST);
 
     s.append(String.format("SYNOPSIS: %s\n\n",synopsis));
     s.append(String.format("CLASSIFICATION: %s\n",classification.name()));

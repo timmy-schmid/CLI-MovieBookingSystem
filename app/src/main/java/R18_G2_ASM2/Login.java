@@ -1,8 +1,8 @@
 package R18_G2_ASM2;
 import java.io.*;
+
 import java.util.Scanner;
-import java.util.regex.Pattern;
-import jline.ConsoleReader;
+
 
 public class Login {
   /*
@@ -10,21 +10,21 @@ public class Login {
   and password
   */
   private File userCsvFile;
-
+  private static  String USER_FILE_NAME = "newUserDetails2.csv";
   private User user;
-  public Login(){
-    // this.userCsvFile = new File("src/main/datasets/user1.csv");
-    this.userCsvFile = new File("/Users/annasu/Downloads/USYD2021/SEMESTER_2/SOFT2412/ASSIGNMENT-2-NEW/R18_G2_ASM2/app/src/main/datasets/newUserDetails2.csv");
+
+  public Login() {
+    userCsvFile = DataController.accessCSVFile(USER_FILE_NAME);
     this.user = null;
+  }
+
+  public static void setUserFile(String name){
+    USER_FILE_NAME = name;
   }
 
   public User getUser(){
     return this.user;
   }
-  public void setUserFile(File name){
-    this.userCsvFile = name;
-  }
-
   public User retrieveUserInputDetails() throws IOException{
   // public void retrieveUserInputDetails() throws IOException{
     this.printScreen();
@@ -40,11 +40,13 @@ public class Login {
       if (con != null) {
         char[] pwd = con.readPassword("Please enter your password: ");
         password = new String(pwd);
-        System.out.printf("PASSWORD LINE 38: [%s]\n", password);
+        System.out.printf("PASSWORD LINE 100: [%s]\n", password);
+      } else {
+        System.out.printf("Please enter your password: ");
+        password = scan.nextLine();
       }
-      // int result = this.checkIfUserExists(username, password);
-      int result = this.checkIfUserExists2(username, password);
 
+      int result = this.checkIfUserExists2(username, password);
       if (result == 1){
         System.out.println("\nWelcome back " + username + "!");
         return this.getUser();
@@ -78,46 +80,48 @@ public class Login {
     return this.getUser();
   }
 
-  //sprint 1 version
-  public int checkIfUserExists(String userEmail, String userPassword){
-    int userID = 1;
-    String email = null;
-    String realPassword = null;
-    int result = 0;
+  // //sprint 1 version --> use checkIfUserExists2() ???????
+  // public int checkIfUserExists(String userEmail, String userPassword){
+  //   int userID = 1;
+  //   String email = null;
+  //   String realPassword = null;
+  //   int result = 0;
 
-    try {
-      Scanner myReader = new Scanner(userCsvFile);
-      while (myReader.hasNextLine()) { //as long as you can keep reading the file, grab the details
-        String line = myReader.nextLine();
-        String[] detailsArray = line.split(",");
-        try{
-          userID = Integer.parseInt(detailsArray[0]);
-        } catch(NumberFormatException e){
-          e.printStackTrace();
-          break;
-        }
-        // email = detailsArray[1];
-        // realPassword = detailsArray[2];
-        email = detailsArray[2];
-        realPassword = detailsArray[4];
-        if (userEmail.equals(email)){
-          if (realPassword.equals(userPassword)) {
-            result = 1;
-            break;
-          }
-          else {
-            result = -1;
-          }
-        }
-        else {
-          result = -1;
-        }
-      }
-    } catch (FileNotFoundException e) {
-      System.out.println("LINE 107: USER1.CSV FILE NOT FOUND!!!");
-    }
-    return result;
-  }
+  //   try {
+  //     Scanner myReader = new Scanner(userCsvFile);
+  //     while (myReader.hasNextLine()) { //as long as you can keep reading the file, grab the details
+  //       String line = myReader.nextLine();
+  //       String[] detailsArray = line.split(",");
+  //       try{
+  //         userID = Integer.parseInt(detailsArray[0]);
+  //       } catch(NumberFormatException e){
+  //         e.printStackTrace();
+  //         break;
+  //       }
+  //       // email = detailsArray[1];
+  //       // realPassword = detailsArray[2];
+  //       email = detailsArray[2];
+  //       realPassword = detailsArray[4];
+  //       if (userEmail.equals(email)){
+  //         if (realPassword.equals(userPassword)) {
+  //           result = 1;
+  //           break;
+  //         }
+  //         break;
+  //       }
+  //       else {
+  //         result = -1;
+  //       }
+  //     }
+  //     else {
+  //       result = -1;
+  //     }
+  //       myReader.close();
+  //     } catch (FileNotFoundException e) {
+  //       System.out.println(USER_FILE_NAME + " was not found.");
+  //     }
+  //   return result;
+  // }
 
   //sprint 2 version: edit (added more fields to csv file)
   //create a user object + return it??
@@ -146,19 +150,17 @@ public class Login {
             this.user = new User(Integer.parseInt(detailsArray[0]), detailsArray[1], detailsArray[2], detailsArray[3],detailsArray[4]);
             if (detailsArray[5].equals("T")){
               user.setAutoFillStatus(true);
+              break;
             }
-            break;
-          }
-          else {
+          } else {
             result = -1;
           }
-        }
-        else {
+        } else {
           result = -1;
         }
       }
     } catch (FileNotFoundException e) {
-      System.out.println("LINE 107: USER1.CSV FILE NOT FOUND!!!");
+      System.out.println("LINE 163: "+USER_FILE_NAME+"  FILE NOT FOUND!!!");
     }
     return result;
   }

@@ -36,7 +36,6 @@ public class Transaction {
 
   public Transaction(User customer){
     this.customer = customer;
-    // this.userCsvFile = "app/src/main/datasets/newUserDetails.csv";
     this.userCsvFile = "/Users/annasu/Downloads/USYD2021/SEMESTER_2/SOFT2412/ASSIGNMENT-2-NEW/R18_G2_ASM2/app/src/main/datasets/newUserDetails2.csv";
     this.tempFile = new File("/Users/annasu/Downloads/USYD2021/SEMESTER_2/SOFT2412/ASSIGNMENT-2-NEW/R18_G2_ASM2/app/src/main/datasets/cardTemp.csv");
 

@@ -1,12 +1,14 @@
 package R18_G2_ASM2;
 
 import java.io.ByteArrayInputStream;
-import java.io.ByteArrayOutputStream;
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.PrintStream;
 import java.util.HashMap;
 import java.util.Scanner;
 public class MovieSystem {
+
+  private static String resourceAbsPath;
 
   private String MOVIES_FILE_NAME = "movie.csv";
   private String CINEMAS_FILE_NAME = "cinema.csv";
@@ -27,20 +29,22 @@ public class MovieSystem {
   public MovieSystem(ByteArrayInputStream in, PrintStream out) {
     this.sc = new Scanner(in);
     this.out = out;
+    resourceAbsPath = System.getProperty("user.dir");
   }
 
   public MovieSystem() {
     this.sc = new Scanner(System.in);
     this.out = System.out;
+    resourceAbsPath = System.getProperty("user.dir");
   }
 
   public void run() {
 
   while (true) {
     printStartScreen();
-    Registration reg = new Registration();
-    // String selection = parseInput("qQ", 3);
-    String selection = parseInput("qQ", 4);
+    Registration reg = null;
+      reg = new Registration();
+    String selection = parseInput("qQ", 3);
 
     if (selection.equals("1")) {
      try {

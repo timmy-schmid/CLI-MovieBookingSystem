@@ -3,34 +3,31 @@ package R18_G2_ASM2;
 import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.*;
 
-import static org.mockito.Mockito.*;
-
-import java.util.*;
 import java.io.*;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeAll;
 
 import java.io.ByteArrayOutputStream;
-
-import java.io.File;
-import java.io.FileNotFoundException;
 import java.io.IOException;
 
 import java.io.BufferedReader;
 import java.io.FileReader;
-
-import java.math.BigInteger;
 
 class RegistrationTest {
   Registration reg;
   private final ByteArrayOutputStream outContent = new ByteArrayOutputStream(); //for testing printing statements
   private final PrintStream originalOutput = System.out;    
 
+  @BeforeAll static void setPath() {
+    DataController.setBasePath("src/test/resources/");
+  }
+
   @BeforeEach
   public void setUp() {
+    Registration.setUserFile("newUserDetailsTest2.csv");
     reg = new Registration();
-    // reg.setUserFile("src/test/resources/userTest.csv");
-    reg.setUserFile("src/test/resources/newUserDetailsTest2.csv");
+    // reg.setUserFile("src/test/resources/newUserDetailsTest2.csv");
 
     //set up streams
     System.setOut(new PrintStream(outContent));
@@ -103,23 +100,25 @@ class RegistrationTest {
     assertTrue(reg.isValidPassword(input));
   }
 
-  @Test void testUserFileNotFound(){
-    reg.setUserFile("src/main/datasets/UNKNOWN.csv");
-    int result = reg.checkIfUserExists3("username@gmail.com", "1000000000");
-    // int result = reg.checkIfUserExists("username@gmail.com");
-    assert(result == -2);
-  }
+  // @Test void testUserFileNotFound(){
+  //   reg.setUserFile("src/main/datasets/UNKNOWN.csv");
+  //   int result = reg.checkIfUserExists3("username@gmail.com", "1000000000");
+  //   // int result = reg.checkIfUserExists("username@gmail.com");
+  //   assert(result == -2);
+  // }
   //testing writing to file works
   @Test void testValidReadingFile(){ //user not found in csv file 
-    // int result = reg.checkIfUserExists("username@gmail.com");
-    // int result = reg.checkIfUserExists2("username@gmail.com", "1000000000", "12345", "0000000000000000");
     int result = reg.checkIfUserExists3("username@gmail.com", "04111211113");
     assert(result == 1);
   }
 
   @Test void nullUserFile(){
+    // Registration.setUserFile(null);
+    // reg = new Registration();
+    // assertNull(Registration.getUserFile());
+    Registration reg = new Registration();
     reg.setUserFile(null);
-    assertNull(reg.getUserFile());
+    assertNull(Registration.getUserFile());
   }
   @Test void testValidReadingFile2(){ //user already exists
     // int result = reg.checkIfUserExists("lilyjones@gmail.com");
@@ -154,19 +153,16 @@ class RegistrationTest {
     }
   }
   @Test void testCreateAccountFails() throws IOException{
-    // User newUser = reg.createAccount(null, "NewPassword1");
     User newUser = reg.createAccount3(null, null, null, "NewPassword1");
     assertNull(newUser);
   }
 
   @Test void testCreateAccountFails2() throws IOException{
-    // User newUser = reg.createAccount("hello@gmail.com", "");
     User newUser = reg.createAccount3(null, "hello@gmail.com", "", "NewPassword1");
     assertNull(newUser);
   }
 
   @Test void testCreateAccountWorks() throws IOException{
-    // int result = reg.checkIfUserExists("newUser@gmail.com");
     int result = reg.checkIfUserExists3("newUser@gmail.com", "0404189234");
 
     if (result == 1){
