@@ -1,5 +1,7 @@
 package R18_G2_ASM2;
 
+import java.awt.print.Book;
+import java.util.Calendar;
 import java.util.Scanner;
 
 public class BookingTicket {
@@ -8,10 +10,15 @@ public class BookingTicket {
     private User user;
     private boolean successBooking = false;
     private Integer Ct =1;
+
     public BookingTicket(Showing showing, User user){
         this.showing = showing;
         this.user = user;
     }
+
+//    public static void main(String[] args){
+//
+//    }
 
     public void run(){
        while(this.checkFullorNot()){
