@@ -22,7 +22,8 @@ public class MovieSeat{
         this.showing = showing;
         ///Users/timmy/Library/Mobile Documents/com~apple~CloudDocs/Uni/SOFT2412/Assignments/R18_G2_ASM2/app/src/test/resources/movieSeatsMap/1-1-2.csv
         ///Users/timmy/Library/Mobile Documents/com~apple~CloudDocs/Uni/SOFT2412/Assignments/R18_G2_ASM2/app/src/main/resources/movieSeatsMap/1-1-2.csv
-        movieSeat = DataController.accessCSVFile("movieSeatsMap/"+ String.valueOf(showing.getMovie().getId())+"-"+ String.valueOf(showing.getCinema().getId())+"-"+String.valueOf(showing.getShowingId())+".csv");
+        System.out.println(showing==null);
+        movieSeat = DataController.accessCSVFile("movieSeatsMap/"+ String.valueOf(this.showing.getMovie().getId())+"-"+ String.valueOf(this.showing.getCinema().getId())+"-"+String.valueOf(this.showing.getShowingId())+".csv");
         //System.out.println("MOVIE SEAT PATH:" + movieSeat.getAbsolutePath());
         if (!movieSeat.exists()){
             try {
@@ -176,10 +177,10 @@ public class MovieSeat{
         // mdf.print();
         // File movieSeat = new File("src/test/resources/"+ "SeatMapTest.csv");
     
-        MovieSeat seatMap = new MovieSeat(new Showing(2, new Movie(1,"77", null, null, null, null,null), new Cinema(1, MovieClass.SILVER), null));
-        DataFrame<String> newFrame = seatMap.readFromDatabase();
+        MovieSeat seatMap = new MovieSeat(new Showing(3, new Movie(1,"77", null, null, null, null,null), new Cinema(1, MovieClass.SILVER), null));
         seatMap.writeToDatabase();
         // newFrame.print();
+        System.out.println(seatMap.totalSeatsLeft()==0);
 
         seatMap.bookSeat('D', 5);
 
@@ -196,6 +197,9 @@ public class MovieSeat{
         System.out.println("Middle seats booked: "+seatMap.middleSeatBooked());
         System.out.println("Total seats left: "+seatMap.totalSeatsLeft());
         System.out.println("Total seats booked: "+seatMap.totalSeatsBooked());
+
+
+
     }
 
     

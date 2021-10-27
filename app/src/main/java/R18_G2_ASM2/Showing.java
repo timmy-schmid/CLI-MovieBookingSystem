@@ -30,7 +30,6 @@ public class Showing implements Comparable<Showing> {
     this.movie = movie;
     this.cinema = cinema;
     this.showingTime = showingTime;
-    // this.movieSeat = new MovieSeat(this); //handle Io-Exception
 
     // initialise seatMap based on cinema type
     
@@ -38,6 +37,7 @@ public class Showing implements Comparable<Showing> {
     seatsBooked.put(SeatLocation.REAR,0);
     seatsBooked.put(SeatLocation.MIDDLE,0);
     seatsBooked.put(SeatLocation.FRONT,0);
+    this.movieSeat = new MovieSeat(this); //handle Io-Exception
   }
 
   public int getShowingId() {
