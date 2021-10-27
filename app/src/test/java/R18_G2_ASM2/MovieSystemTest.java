@@ -121,10 +121,14 @@ public class MovieSystemTest {
     movSystem = new MovieSystem(mockIn, actualOutPrint);
     movSystem.printStartScreen();
 
+    // String screen = "******************************************************************\n" +
+    //                 "\nWELCOME TO FANCY CINEMAS! PLEASE CHOOSE FROM THE FOLLOWING OPTIONS\n" +
+    //                 "\n******************************************************************\n" +
+    //                 "1 - Log In\n2 - Register\n3 - View upcoming showings\nQ - Quit\n\n";
     String screen = "******************************************************************\n" +
-                    "\nWELCOME TO FANCY CINEMAS! PLEASE CHOOSE FROM THE FOLLOWING OPTIONS\n" +
-                    "\n******************************************************************\n" +
-                    "1 - Log In\n2 - Register\n3 - View upcoming showings\nQ - Quit\n\n";
+    "\nWELCOME TO FANCY CINEMAS! PLEASE CHOOSE FROM THE FOLLOWING OPTIONS\n" +
+    "\n******************************************************************\n" +
+    "1 - Log In\n2 - Register\n3 - View upcoming showings\n4 - Direct to transaction page\nQ - Quit\n\n";
     assertEquals(screen,actualOut.toString());
   }
 
