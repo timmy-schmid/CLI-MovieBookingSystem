@@ -57,7 +57,7 @@ public class BookingTicket {
     public void askForBooking(){
         Person bookingType = null;
         Scanner scan = new Scanner(System.in);
-        while(Ct == 1) {
+        while(true) {
             System.out.println("Select type of ticket you want to book: ");
             System.out.println("1 - Child -$\n" +
                     "2 - Student -$\n" +
@@ -96,7 +96,12 @@ public class BookingTicket {
                     System.out.println("Invalid input,please try again: ");
                 }
             }
+
             Ct =this.Continue();
+            if(Ct == 2){
+                Ct = 1;
+                break;
+            }
         }
     }
 
