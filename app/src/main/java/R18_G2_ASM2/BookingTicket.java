@@ -34,6 +34,7 @@ public class BookingTicket {
             System.out.println(count);
             for(int i =0; i<count; i++){
                 this.bookingShowingSection();
+                System.out.println("Do it line 37");
                 this.bookingASeat();
                 if(!this.checkFullorNot()){
                     break;
@@ -43,11 +44,11 @@ public class BookingTicket {
             String str = scan.next();
             if(str.equals("Y")){}else{
                 this.printBookingMessage();
-                //return the default page
                 break;
             }
         }
     }
+
     public boolean checkFullorNot(){
         if(!showing.isShowingFull()){
             System.out.println("No empty seat for the current show :(");
@@ -204,9 +205,9 @@ public class BookingTicket {
                     System.out.println("Do you want to continue? [Y/N]\n"+"C -cancel\n");
                     char[] mes = scan.next().toUpperCase().toCharArray();
                     if(mes[0] == 'N'){
-                        //return to the default page
+                        // return to the welcome page -> how to deal with that?
                         break;}else if (mes[0] == 'C'){
-                        //return to the default page -> how to do that?
+                        // return to the welcome page -> how to deal with that?
                         this.cancelBooking();
                         break;
                     }}
@@ -215,10 +216,10 @@ public class BookingTicket {
                 System.out.println("Do you want to continue? [Y/N]\n"+"C -cancel\n");
                 char[] mes = scan.next().toUpperCase().toCharArray();
                 if(mes[0] == 'N'){
-                    //return to the user default page
+                    // return to the welcome page -> how to deal with that?
                     break;
                 }else if (mes[0] == 'C'){
-                    //return to the default page -> how to do that?
+                    // return to the welcome page -> how to deal with that?
                     this.cancelBooking();
                     break;
                 }
@@ -252,6 +253,7 @@ public class BookingTicket {
         count = 0;
         indexofarray = 0;
         System.out.println("Successfully cancel.");
+        // return to the welcome page ->
         this.printBookingMessage();
     }
 }
