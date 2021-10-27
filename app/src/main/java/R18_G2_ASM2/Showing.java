@@ -13,7 +13,7 @@ import java.util.List;
 import java.util.Locale;
 
 
-public class Showing {
+public class Showing implements Comparable<Showing> {
   private int showingId;
   private Movie movie;
   private Cinema cinema;
@@ -49,7 +49,6 @@ public class Showing {
     return true;
   }
 
-
   public Movie getMovie() {
     return movie;
   }
@@ -57,6 +56,11 @@ public class Showing {
   public Cinema getCinema() {
     return cinema;
   }
+
+  public Calendar getShowingTime() {
+    return showingTime;
+  }
+
   public String getShowingTimeFormatted() {
     SimpleDateFormat formatter = new SimpleDateFormat("EEE dd MMM - K:mma",Locale.ENGLISH);
 
@@ -156,16 +160,13 @@ public int middleSeatBooked(){
     return movieSeat.cancelReservation(rowLetter, colNum);
   }
   
-  public static int getSingleMovieShowings(HashMap<Integer,Showing> showings,StringBuilder s, Movie m) {
+  public static int getSingleMovieShowings(HashMap<Integer,Showing> showings, Movie m) {
 
-
-    s.append("UPCOMING SESSIONS:\n");
+    StringBuilder s = new StringBuilder();
     s.append("-----------------------------------------\n");
     s.append("ID  TIME                 CINEMA\n");
     s.append("-----------------------------------------\n");
 
-
-  
     List<Showing> showingsByTime = new ArrayList<>(showings.values());
     Collections.sort(showingsByTime, new SortMovieByShowingTime());
 
@@ -179,20 +180,18 @@ public int middleSeatBooked(){
           count++;
         }
     }
+    System.out.println(s);
     return count;
   }
 
   public static int getAllMovieShowings(HashMap<Integer,Showing> showings) {
     
     StringBuilder s = new StringBuilder();
-    s.append("UPCOMING SESSIONS:\n");
-
-    
     s.append("------------------------------------------------------------------------------------------\n");
     s.append("ID  MOVIE                                              TIMES\n");
     s.append("------------------------------------------------------------------------------------------");
     
-    
+
     List<Showing> sortedShowings = new ArrayList<>(showings.values());
     Collections.sort(sortedShowings, new SortMoviesByTitleThenShowingTime());
 
@@ -208,6 +207,10 @@ public int middleSeatBooked(){
           currShowing.showingTime.before(getNextMonday(currShowing.showingTime))) {
         
         if (lastTitle != currTitle) {
+
+          
+          //String currId = Screen.formatANSI(String.valueOf(currShowing.getMovie().getId()),Screen.ANSI_USER_OPTION);
+
           s.append(String.format("\n%-4s",currShowing.getMovie().getId()));
 
           String currName = currShowing.getMovie().getName();
@@ -236,6 +239,11 @@ public int middleSeatBooked(){
     return count;
   }
 
+  @Override
+  public int compareTo(Showing b) {
+    return Long.compare(this.getShowingTime().getTimeInMillis(), b.getShowingTime().getTimeInMillis());
+  }
+
   public static Calendar getNextMonday (Calendar c) {
     Calendar nextMon = Calendar.getInstance(AEST, Locale.ENGLISH);
     nextMon.setTime(c.getTime());
@@ -243,7 +251,6 @@ public int middleSeatBooked(){
     nextMon.add(Calendar.DATE,7);
     return nextMon;
   }
-
 
 }
 

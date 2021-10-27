@@ -148,6 +148,11 @@ public class User extends UserFields {
     this.totalPrice();
   }
 
+  public void cancelTicket(Person person, int num){
+    ticket.replace(person,ticket.get(person)-num);
+    this.totalPrice();
+  }
+
   public void AddTicketMessage(){
     for(Person key: ticket.keySet()){
       ticketMessage = (ticketMessage+"--"+key+"----"+Integer.toString(ticket.get(key))+"\n");

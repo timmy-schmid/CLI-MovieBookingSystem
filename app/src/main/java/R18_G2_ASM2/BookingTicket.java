@@ -1,5 +1,6 @@
 package R18_G2_ASM2;
 
+import java.util.ArrayList;
 import java.util.Locale;
 import java.util.Scanner;
 
@@ -10,12 +11,14 @@ public class BookingTicket {
     private boolean successBooking = false;
     private Integer Ct =1;
 
+
     public BookingTicket(Showing showing, User user){
         this.showing = showing;
         this.user = user;
     }
 
     public void run(){
+      System.out.println("DO I GET HERE1");
        while(this.checkFullorNot()){
            this.bookingShowingSection();
            this.bookingASeat();
@@ -27,14 +30,16 @@ public class BookingTicket {
             }
         }
     }
+    
     public boolean checkFullorNot(){
         if(!showing.isShowingFull()){
             System.out.println("No empty seat for the current show :(");
         }
+        System.out.println("DO I GET HERE2");
         return showing.isShowingFull();
     }
 
-    public void askForBooking(){
+    public void askForBooking() {
         Person bookingType = null;
         Scanner scan = new Scanner(System.in);
         while(Ct == 1) {
@@ -178,10 +183,22 @@ public class BookingTicket {
                 System.out.println("Do you want to continue? [Y/N]");
                 char[] mes = scan.next().toUpperCase().toCharArray();
                 if(mes[0] == 'N'){
-                    //return to the default page
+                    //return to the user default page
                     break;
                 }
             }
+        }
+    }
+
+    public void cancellingBookingForPerson(Person person,int num){
+        this.user.cancelTicket(person,num);
+    }
+
+    public void cancelSeatForShow(char row, int col){
+        try{
+        this.showing.getMovieSeat().cancelReservation(row,col);}
+        catch (Exception e){
+            System.out.println("Invalid message, please try again.");
         }
     }
 }

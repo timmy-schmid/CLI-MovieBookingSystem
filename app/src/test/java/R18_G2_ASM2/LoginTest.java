@@ -25,6 +25,7 @@ class LoginTest {
   Login login;
   private final ByteArrayOutputStream outContent = new ByteArrayOutputStream();
   private final PrintStream originalOutput = System.out;
+  private HomeScreen home = new HomeScreen(null);
 
   @BeforeAll public static void setPath() {
     DataController.setBasePath("src/test/resources/");
@@ -47,7 +48,7 @@ class LoginTest {
 
   @Test
   public void LoginNotNull(){
-    Login login = new Login();
+    Login login = new Login(home);
     assertNotNull(login);
   }
 
@@ -95,8 +96,8 @@ class LoginTest {
 
   @Test
   public void testPrintScreen(){
-    Login login = new Login();
-    String expected = "\n*******************************************************\n" +
+    Login login = new Login(home);
+    String expected = "\033[H\033[2J\n*******************************************************\n" +
         "            Welcome to the log in page :)            \n" +
         "*******************************************************\n";
     login.printScreen();
@@ -105,7 +106,7 @@ class LoginTest {
 
   @Test
   public void testNextOption() throws Exception{
-    Login login = new Login();
+    Login login = new Login(home);
     String inputMessage = "1";
     String expected = "\nInvalid username or password, please select from the following:\n" +
         "1. CONTINUE LOGGING IN\n" +
