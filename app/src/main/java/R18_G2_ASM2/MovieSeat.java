@@ -2,9 +2,12 @@ package R18_G2_ASM2;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.Arrays;
+import java.util.List;
 
 import R18_G2_ASM2.SeatDataTools.DataFrame;
 import R18_G2_ASM2.SeatDataTools.FileTools;
+import R18_G2_ASM2.SeatDataTools.MovieDataFrame;
 
 public class MovieSeat{
     private Showing showing;
@@ -17,17 +20,10 @@ public class MovieSeat{
     private int totalRearSeat;
     public MovieSeat(Showing showing) throws IOException{
         this.showing = showing;
-<<<<<<< HEAD
-
-        movieSeat = new File("app/src/main/datasets/movieSeatsMap/"+ String.valueOf(showing.getMovie().getId())+"-"+ String.valueOf(showing.getCinema().getId())+"-"+String.valueOf(showing.getShowingId())+".csv");
-        // movieSeat = new File("app/src/main/datasets/movieSeatsMap/BRONZE.csv");
-
-=======
         ///Users/timmy/Library/Mobile Documents/com~apple~CloudDocs/Uni/SOFT2412/Assignments/R18_G2_ASM2/app/src/test/resources/movieSeatsMap/1-1-2.csv
         ///Users/timmy/Library/Mobile Documents/com~apple~CloudDocs/Uni/SOFT2412/Assignments/R18_G2_ASM2/app/src/main/resources/movieSeatsMap/1-1-2.csv
         movieSeat = DataController.accessCSVFile("movieSeatsMap/"+ String.valueOf(showing.getMovie().getId())+"-"+ String.valueOf(showing.getCinema().getId())+"-"+String.valueOf(showing.getShowingId())+".csv");
         //System.out.println("MOVIE SEAT PATH:" + movieSeat.getAbsolutePath());
->>>>>>> 51ea5571d3b927efa749a14216d10ba79e214238
         if (!movieSeat.exists()){
             try {
                 movieSeat.createNewFile();
@@ -74,10 +70,10 @@ public class MovieSeat{
         if (Character.getNumericValue(rowLetter)-10 >25 || Character.getNumericValue(rowLetter)-10 < 0){
             throw new IllegalArgumentException();
         }
-        else if (seatMap.getValue(Character.getNumericValue(rowLetter)-10, String.valueOf(colNum+1)).equals("Reserved")){
+        else if (seatMap.getValue(Character.getNumericValue(rowLetter)-10, String.valueOf(colNum)).equals("Reserved")){
             return false;
         }
-        seatMap.setValue(Character.getNumericValue(rowLetter)-10, String.valueOf(colNum+1), "Reserved");
+        seatMap.setValue(Character.getNumericValue(rowLetter)-10, String.valueOf(colNum), "Reserved");
         writeToDatabase();
         return true;
     }
@@ -86,10 +82,10 @@ public class MovieSeat{
         if (Character.getNumericValue(rowLetter)-10 >25 || Character.getNumericValue(rowLetter)-10 < 0){
             throw new IllegalArgumentException();
         }
-        else if (seatMap.getValue(Character.getNumericValue(rowLetter)-10, String.valueOf(colNum+1)).equals("Available")){
+        else if (seatMap.getValue(Character.getNumericValue(rowLetter)-10, String.valueOf(colNum)).equals("Available")){
             return false;
         }
-        seatMap.setValue(Character.getNumericValue(rowLetter)-10, String.valueOf(colNum+1), "Available");
+        seatMap.setValue(Character.getNumericValue(rowLetter)-10, String.valueOf(colNum), "Available");
         writeToDatabase();
         return true;
     }
@@ -186,14 +182,15 @@ public class MovieSeat{
         // newFrame.print();
 
         seatMap.bookSeat('D', 5);
-    
 
         seatMap.showFrontSeats();
         seatMap.showMiddleSeats();
         seatMap.showRearSeats();
 
         seatMap.showAllSeats();
-
+        seatMap.cancelReservation('D', 5);
+        System.out.println(seatMap.cancelReservation('A', 1));
+        seatMap.showAllSeats();
 
         System.out.println("Front seats booked: "+seatMap.frontSeatBooked());
         System.out.println("Middle seats booked: "+seatMap.middleSeatBooked());
