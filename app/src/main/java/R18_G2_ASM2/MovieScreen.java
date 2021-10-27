@@ -1,8 +1,6 @@
 package R18_G2_ASM2;
 
 import java.util.ArrayList;
-import java.util.Scanner;
-
 public class MovieScreen extends Screen {
 
   private static User user;
@@ -39,15 +37,6 @@ public class MovieScreen extends Screen {
   }
 
   @Override
-  public void run() {
-    while (!goBack) {
-      print();
-      askforInput();
-      chooseOption();
-    }
-  }
-
-  @Override
   protected void chooseOption() {   
     System.out.println("OPTION:" + intOption);
     System.out.println("MAX:"+maxInputInt);
@@ -68,7 +57,7 @@ public class MovieScreen extends Screen {
           goBack = true;
           break;
         case "Q": case "q":
-          out.print("SEE YOU NEXT TIME! :)\n");
+          System.out.print("SEE YOU NEXT TIME! :)\n");
           System.exit(0);
         default: throw new IllegalArgumentException("Critical error - invalid selection passed validation");
       }
@@ -81,24 +70,24 @@ public class MovieScreen extends Screen {
     printHeader();
 
     movie.printMovieDetails();
-    out.print("UPCOMING SESSIONS:\n");
-    out.print("Current Date & Time: OCT 27 - THU 9:57PM\n");  // TODO make dynamic time
+    System.out.print("UPCOMING SESSIONS:\n");
+    System.out.print("Current Date & Time: OCT 27 - THU 9:57PM\n");  // TODO make dynamic time
     maxInputInt = movie.printMovieShowings();
     if (user != null) {
-      out.printf("Hi %s,\n\n", user.getEmail());
+      System.out.printf("Hi %s,\n\n", user.getEmail());
     }
 
     printOptionsText();
         
     if (user == null) {
-      out.print(formatANSI("R",ANSI_USER_OPTION) + " - To book a session, please register an account (free).\n");
-      out.print(formatANSI("L",ANSI_USER_OPTION) + " - Already a member? Login\n");
-      out.print(formatANSI("B",ANSI_USER_OPTION) + " - To go back to all movies\n");
-      out.print(formatANSI("Q",ANSI_USER_OPTION) + " - Quit\n\n");
+      System.out.print(formatANSI("R",ANSI_USER_OPTION) + " - To book a session, please register an account (free).\n");
+      System.out.print(formatANSI("L",ANSI_USER_OPTION) + " - Already a member? Login\n");
+      System.out.print(formatANSI("B",ANSI_USER_OPTION) + " - To go back to all movies\n");
+      System.out.print(formatANSI("Q",ANSI_USER_OPTION) + " - Quit\n\n");
     } else {
-      out.print(formatANSI("[ID]",ANSI_USER_OPTION) +" - To book a session\n");
-      out.print(formatANSI("B",ANSI_USER_OPTION) + " - To go back to all movies\n");
-      out.print(formatANSI("Q",ANSI_USER_OPTION) + " - Log out and Quit\n\n");
+      System.out.print(formatANSI("[ID]",ANSI_USER_OPTION) +" - To book a session\n");
+      System.out.print(formatANSI("B",ANSI_USER_OPTION) + " - To go back to all movies\n");
+      System.out.print(formatANSI("Q",ANSI_USER_OPTION) + " - Log out and Quit\n\n");
     }
   
   }

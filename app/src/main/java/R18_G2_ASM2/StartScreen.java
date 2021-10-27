@@ -1,8 +1,4 @@
 package R18_G2_ASM2;
-
-import java.io.PrintStream;
-import java.util.Scanner;
-
 public class StartScreen extends Screen {
 
   private Login login;
@@ -25,19 +21,6 @@ public class StartScreen extends Screen {
     maxInputInt = 3;
   }
 
-  public StartScreen(PrintStream out) {
-    super(out);
-  }
-
-  @Override
-  public void run() {
-    while (!goBack) {
-      print();
-      askforInput();
-      chooseOption();
-    }
-  }
-
   @Override
   public void chooseOption() {
 
@@ -49,7 +32,7 @@ public class StartScreen extends Screen {
       case "3": home.run();
                 break;
       case "Q": case "q":
-        out.print("SEE YOU NEXT TIME! :)\n");
+        System.out.print("SEE YOU NEXT TIME! :)\n");
         System.exit(0);
         break;
       default: throw new IllegalArgumentException("Critical error - invalid selection passed validation");
@@ -63,10 +46,10 @@ public class StartScreen extends Screen {
 
     printOptionsText();
 
-    out.print(formatANSI("1",ANSI_USER_OPTION) + " - Log In\n");
-    out.print(formatANSI("2",ANSI_USER_OPTION) + " - Register\n");
-    out.print(formatANSI("3",ANSI_USER_OPTION) + " - View upcoming showings (continue as guest)\n");  
-    out.print(formatANSI("Q",ANSI_USER_OPTION) + " - Quit\n\n");
+    System.out.print(formatANSI("1",ANSI_USER_OPTION) + " - Log In\n");
+    System.out.print(formatANSI("2",ANSI_USER_OPTION) + " - Register\n");
+    System.out.print(formatANSI("3",ANSI_USER_OPTION) + " - View upcoming showings (continue as guest)\n");  
+    System.out.print(formatANSI("Q",ANSI_USER_OPTION) + " - Quit\n\n");
 
   }
 
