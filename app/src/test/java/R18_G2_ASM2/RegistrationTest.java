@@ -100,6 +100,16 @@ class RegistrationTest {
     assertTrue(reg.isValidPassword(input));
   }
 
+  @Test void testValidPhoneNumber(){
+    String input = "0412279198";
+    assertTrue(reg.checkValidPhoneNumber(input));
+  }
+
+   @Test void testValidGiftCardNumber(){
+    String input = "1111111111111116GC";
+    assertTrue(reg.checkGiftCardNumber(input));
+  }
+
   // @Test void testUserFileNotFound(){
   //   reg.setUserFile("src/main/datasets/UNKNOWN.csv");
   //   int result = reg.checkIfUserExists3("username@gmail.com", "1000000000");
@@ -113,16 +123,11 @@ class RegistrationTest {
   }
 
   @Test void nullUserFile(){
-    // Registration.setUserFile(null);
-    // reg = new Registration();
-    // assertNull(Registration.getUserFile());
     Registration reg = new Registration();
     reg.setUserFile(null);
     assertNull(Registration.getUserFile());
   }
   @Test void testValidReadingFile2(){ //user already exists
-    // int result = reg.checkIfUserExists("lilyjones@gmail.com");
-    // int result = reg.checkIfUserExists2("anna@yahoo.com", "0412345881", "12345", "1111111111111116");
     int result = reg.checkIfUserExists3("anna@yahoo.com", "0412345881");
     assert(result == -1);
   }
@@ -133,8 +138,6 @@ class RegistrationTest {
     String pwd = "Blahblahblah3";
 
     if (reg.checkIfUserExists3(username, "0404040123") != -1){ //if user doesn't exist
-    // if (reg.checkIfUserExists(username) != -1){ //if user doesn't exist
-      // reg.writeUserDetailsToFile(username, pwd);
       reg.writeUserDetailsToFile3("benji", username,"0404040123", pwd);
 
     //retrieve last line and compare
@@ -148,7 +151,6 @@ class RegistrationTest {
       }
       myReader.close();
       int id = id = Integer.parseInt(lastLine.split(",")[0]);
-      // assertEquals(lastLine, String.valueOf(id) + ","+ username + ","+pwd);
       assertEquals(lastLine, String.valueOf(id) + ",benji,"+ username + ",0404040123,"+pwd+",F");
     }
   }
@@ -212,11 +214,10 @@ class RegistrationTest {
   // @Test void testWriteToFileFails(){ //should still validate inside function or just outside?
   //   String username = "benjilala1@hotmail.com";
   //   String pwd = "Blahblahblah3";
-  //   // reg.setUserFile(new File("src/main/datasets/UNKNOWN.csv"));
-  //   reg.setUserFile("src/main/datasets/UNKNOWN.csv");
+  //   reg.setUserFile("src/test/resources/UNKNOWN.csv");
 
-  //   reg.writeUserDetailsToFile(username, pwd);
-  //   assertEquals(outContent.toString(), "FILE NOT FOUND ERROR: src/main/datasets/UNKNOWN.csv FILE NOT FOUND!");
+  //   reg.writeUserDetailsToFile3("benji", username, "0401234400", pwd);
+  //   assertEquals(outContent.toString(), "FILE NOT FOUND ERROR: " + reg.getUserCsvFile() +"!\n");
   // }
 
   @Test void testCancelRegistration() throws IOException {
@@ -236,7 +237,6 @@ class RegistrationTest {
 
     ByteArrayInputStream in = new ByteArrayInputStream(inputMessage.getBytes());
     System.setIn(in);
-    // reg.retrieveUserInputDetails();
     reg.retrieveUserInputDetails3();
 
     assertEquals(outContent.toString(), expectedOut);
@@ -396,6 +396,48 @@ class RegistrationTest {
     reg.printWelcome();
     assertEquals(outContent.toString(), welcomeMsg);
   }
+
+  //test fails because password cant be captured here: nosuchelementexception 
+  // @Test void testContinueRegistration() throws IOException { //go back to home page after
+  //   String welcomeMsg = "\n*******************************************************\n" +
+  //   "            Welcome to the registration page :)            \n" +
+  //   "       Not a member with us yet? Sign up now FOR FREE!       \n" +
+  //   "*******************************************************\n";
+  //   String optionMsg = "\nPRESS Y TO CONTINUE REGISTERING"+
+  //   " OR PRESS N TO CANCEL AND GO BACK TO HOME PAGE~\n";
+  //   String yNOption = "Enter Y/N: ";
+
+  //   String queries = "\nPlease enter a nickname: "+"\nPlease enter your email: " +"\nPlease enter your phone number: "+"\nPlease enter your password: ";
+  //   String inputMessage = "Yes\n" + "barry\n"+"barrytrotter@yahoo.com\n" +
+  //                         "0452211865\n"+"yerawizardBT3\n" + "1\n" +"1\n";
+  //   ;
+
+  //   String nextOption = "\nPlease select from the following: \n" +
+  //                     "1. CONTINUE LOGGING IN\n"+
+  //                     "2. CANCEL\n";
+
+
+  //   String printMsg = "*****************************************\n" +
+  //                     "       THANK YOU FOR SIGNING IN :)       \n"+
+  //                     "*****************************************\n"+
+  //                     "\nPLEASE ENTER 1 TO GO TO DEFAULT HOME PAGE\n";
+
+  //   // String nextOption2 = "\n1. SETTINGS BUTTON for updating your details\n" + //what amber is working on
+  //   //                       "2. DEFAULT HOME PAGE for filtering movies\n"+
+  //   //                       "3. SIGN OUT BUTTON\n";
+
+  //   String goHome = "\n*******************************************************\n" + 
+  //   "Directing you to DEFAULT HOME page~ in 3..2..1..\n" + 
+  //   "*******************************************************\n";
+
+  //   String expectedOut = welcomeMsg + optionMsg + yNOption +queries + nextOption + printMsg + goHome;
+
+  //   ByteArrayInputStream in = new ByteArrayInputStream(inputMessage.getBytes());
+  //   System.setIn(in);
+  //   reg.retrieveUserInputDetails3();
+  //   assertEquals(outContent.toString(), expectedOut);
+  // }
+
 
   // @Test void chooseLoginOption() throws IOException{
   //   String welcomeMsg = "\n*******************************************************\n" +

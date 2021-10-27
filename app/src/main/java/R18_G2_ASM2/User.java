@@ -82,7 +82,7 @@ public class User extends UserFields {
     return this.ID;
   }
 
-  public String getNicknameName(){
+  public String getNickname(){
     return this.nickname;
   }
   public String getEmail(){

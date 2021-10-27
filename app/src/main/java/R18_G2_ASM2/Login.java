@@ -48,7 +48,7 @@ public class Login {
 
       int result = this.checkIfUserExists2(username, password);
       if (result == 1){
-        System.out.println("\nWelcome back " + username + "!");
+        System.out.println("\nWelcome back " + this.getUser().getNickname() + "!");
         return this.getUser();
         //Direct to next page!!!
       } else if (result == -1){
@@ -79,49 +79,6 @@ public class Login {
     System.out.printf("USER DETAILS LINE 77 :, user number: %s\n", this.getUser().getPhoneNumber());
     return this.getUser();
   }
-
-  // //sprint 1 version --> use checkIfUserExists2() ???????
-  // public int checkIfUserExists(String userEmail, String userPassword){
-  //   int userID = 1;
-  //   String email = null;
-  //   String realPassword = null;
-  //   int result = 0;
-
-  //   try {
-  //     Scanner myReader = new Scanner(userCsvFile);
-  //     while (myReader.hasNextLine()) { //as long as you can keep reading the file, grab the details
-  //       String line = myReader.nextLine();
-  //       String[] detailsArray = line.split(",");
-  //       try{
-  //         userID = Integer.parseInt(detailsArray[0]);
-  //       } catch(NumberFormatException e){
-  //         e.printStackTrace();
-  //         break;
-  //       }
-  //       // email = detailsArray[1];
-  //       // realPassword = detailsArray[2];
-  //       email = detailsArray[2];
-  //       realPassword = detailsArray[4];
-  //       if (userEmail.equals(email)){
-  //         if (realPassword.equals(userPassword)) {
-  //           result = 1;
-  //           break;
-  //         }
-  //         break;
-  //       }
-  //       else {
-  //         result = -1;
-  //       }
-  //     }
-  //     else {
-  //       result = -1;
-  //     }
-  //       myReader.close();
-  //     } catch (FileNotFoundException e) {
-  //       System.out.println(USER_FILE_NAME + " was not found.");
-  //     }
-  //   return result;
-  // }
 
   //sprint 2 version: edit (added more fields to csv file)
   //create a user object + return it??
