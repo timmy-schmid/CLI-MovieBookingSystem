@@ -68,7 +68,7 @@ public abstract class UserFields {
     if (number == null){
       return false;
     }
-    String gnumberRegex = "^\\d{16}GC$";
+    String gnumberRegex = "^\\d{14}GC$$";
     Pattern pattern = Pattern.compile(gnumberRegex);
   
     if (pattern.matcher(number).matches()){
