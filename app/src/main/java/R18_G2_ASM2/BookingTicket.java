@@ -1,7 +1,6 @@
 package R18_G2_ASM2;
 
-import java.awt.print.Book;
-import java.util.Calendar;
+import java.util.Locale;
 import java.util.Scanner;
 
 public class BookingTicket {
@@ -16,12 +15,10 @@ public class BookingTicket {
         this.user = user;
     }
 
-//    public static void main(String[] args){
-//
-//    }
-
     public void run(){
        while(this.checkFullorNot()){
+           this.bookingShowingSection();
+           this.bookingASeat();
             this.askForBooking();
             if (Ct == 2){
                 // go back to the default user page
@@ -110,4 +107,81 @@ public class BookingTicket {
         this.user.bookingTicket(person,num);
     }
 
+
+    public boolean bookingTicketForSeat(char rowLetter, int col){
+        try{
+        return this.showing.getMovieSeat().bookSeat(rowLetter,col);
+        }
+        catch (Exception e){
+            System.out.println("error message");
+            return false;
+        }
+    }
+
+    public void bookingShowingSection(){
+        Scanner scan = new Scanner(System.in);
+        while(true){
+            System.out.println("Which area you wanna choose?");
+            System.out.println("1-Front");
+            System.out.println("2-Middle");
+            System.out.println("3-Rear");
+            System.out.println("4-All");
+            System.out.println("Q-quit\n");
+            String str = scan.next();
+            if(str.equals("1")){
+                this.showing.getMovieSeat().showFrontSeats();
+                break;
+            }else if(str.equals("2")){
+                this.showing.getMovieSeat().showMiddleSeats();
+                break;
+            }else if(str.equals("3")){
+                this.showing.getMovieSeat().showRearSeats();
+                break;
+            }else if(str.equals("4")){
+                this.showing.getMovieSeat().showAllSeats();
+                break;
+            }else if(str.equals("Q")){
+                // return exit;
+                break;
+            }else{
+                System.out.println("Invaild input, please try again.");
+            }
+
+        }
+    }
+
+    public void bookingASeat(){
+        Scanner scan = new Scanner(System.in);
+        int col = 0;
+        char[] row = null;
+        char rowLetter = 'Z';
+        while (true){
+            System.out.println("The row you chosen: ");
+            row = scan.next().toUpperCase().toCharArray();
+            if(row.length == 1){
+                rowLetter = row[0];
+                System.out.println("The column you chosen: ");
+                try{
+                    col = scan.nextInt();
+                    if(!this.bookingTicketForSeat(rowLetter,col)){
+                        throw new Exception();
+                    }
+                }catch (Exception e){
+                    System.out.println("Invalid input, please try again.");
+                    System.out.println("Do you want to continue? [Y/N]");
+                    char[] mes = scan.next().toUpperCase().toCharArray();
+                    if(mes[0] == 'N'){
+                        //return to the default page
+                        break;}}
+            }else{
+                System.out.println("Invalid message, please try again.");
+                System.out.println("Do you want to continue? [Y/N]");
+                char[] mes = scan.next().toUpperCase().toCharArray();
+                if(mes[0] == 'N'){
+                    //return to the default page
+                    break;
+                }
+            }
+        }
+    }
 }
