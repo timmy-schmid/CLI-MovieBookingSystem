@@ -44,7 +44,7 @@ public class MovieSystem {
     printStartScreen();
     Registration reg = null;
       reg = new Registration();
-    String selection = parseInput("qQ", 3);
+    String selection = parseInput("qQ", 4);
 
     if (selection.equals("1")) {
      try {
@@ -204,7 +204,7 @@ public class MovieSystem {
 
 
     if (currentUser != null) {
-      s.append(String.format("Welcome, %s,\n",currentUser.getNicknameName()));
+      s.append(String.format("Welcome, %s,\n",currentUser.getNickname()));
     } else {
       s.append(String.format("Welcome,\n"));
     }

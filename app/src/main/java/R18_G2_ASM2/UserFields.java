@@ -36,17 +36,46 @@ public abstract class UserFields {
   }
 
   public boolean checkValidPhoneNumber(String phoneNumber){ //ensures only numbers <n> digits
-    if (phoneNumber == null || phoneNumber.length() != 10){
+    if (phoneNumber == null){
+      return false;
+    }
+    String pnumberRegex = "^\\d{10}$";
+    Pattern pattern = Pattern.compile(pnumberRegex);
+
+    if (pattern.matcher(phoneNumber).matches()){
+      return true;
+    } else {
       System.out.println("Your phone number did not satisfy acceptance criteria.");
       return false;
     }
-    return true;
   }
   public boolean checkCardNumber(String number){ //did the user enter a correct card number that satisfies acceptance criteria?
-    if (number == null || number.length() != 5){
+    if (number == null){
+      return false;
+    }
+    String cnumberRegex = "^\\d{5}$";
+    Pattern pattern = Pattern.compile(cnumberRegex);
+
+    if (pattern.matcher(number).matches()){
+      return true;
+    } else {
       System.out.println("Your card number did not satisfy acceptance criteria.");
       return false;
     }
-    return true;
+  }
+
+  public boolean checkGiftCardNumber(String number){ //did the user enter a correct gift card number that satisfies acceptance criteria?
+    if (number == null){
+      return false;
+    }
+    String gnumberRegex = "^\\d{16}GC$";
+    Pattern pattern = Pattern.compile(gnumberRegex);
+  
+    if (pattern.matcher(number).matches()){
+      return true;
+    } else {
+      System.out.println("Your gift card number did not satisfy acceptance criteria.");
+      return false;
+    }
   }
 }
