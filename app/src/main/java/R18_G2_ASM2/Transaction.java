@@ -28,20 +28,30 @@ public class Transaction {
 
   private File tempFile;
   private File tempFile2;
+  private File userCsvFile;
+  private File giftCardsFile;
 
-  private String giftCardsFile;
+//  private String giftCardsFile;
 
-  private String userCsvFile;
+//  private String userCsvFile;
+  private static String USER_FILE_NAME = "newUserDetails2.csv";
+  private static String TEMP_FILE_NAME = "cardTemp.csv";
+  private static String TEMP_FILE_2_NAME = "cardTemp2.csv";
+  private static String GIFT_CARD_FILE_NAME = "giftCards.csv";
 
 
   public Transaction(User customer){
     this.customer = customer;
-    this.userCsvFile = "/Users/annasu/Downloads/USYD2021/SEMESTER_2/SOFT2412/ASSIGNMENT-2-NEW/R18_G2_ASM2/app/src/main/datasets/newUserDetails2.csv";
-    this.tempFile = new File("/Users/annasu/Downloads/USYD2021/SEMESTER_2/SOFT2412/ASSIGNMENT-2-NEW/R18_G2_ASM2/app/src/main/datasets/cardTemp.csv");
-
-    this.tempFile2 = new File("/Users/annasu/Downloads/USYD2021/SEMESTER_2/SOFT2412/ASSIGNMENT-2-NEW/R18_G2_ASM2/app/src/main/datasets/cardTemp2.csv");
-
-    this.giftCardsFile = "/Users/annasu/Downloads/USYD2021/SEMESTER_2/SOFT2412/ASSIGNMENT-2-NEW/R18_G2_ASM2/app/src/main/datasets/giftCards.csv";
+//    this.userCsvFile = "/Users/annasu/Downloads/USYD2021/SEMESTER_2/SOFT2412/ASSIGNMENT-2-NEW/R18_G2_ASM2/app/src/main/datasets/newUserDetails2.csv";
+//    this.tempFile = new File("/Users/annasu/Downloads/USYD2021/SEMESTER_2/SOFT2412/ASSIGNMENT-2-NEW/R18_G2_ASM2/app/src/main/datasets/cardTemp.csv");
+//
+//    this.tempFile2 = new File("/Users/annasu/Downloads/USYD2021/SEMESTER_2/SOFT2412/ASSIGNMENT-2-NEW/R18_G2_ASM2/app/src/main/datasets/cardTemp2.csv");
+//
+//    this.giftCardsFile = "/Users/annasu/Downloads/USYD2021/SEMESTER_2/SOFT2412/ASSIGNMENT-2-NEW/R18_G2_ASM2/app/src/main/datasets/giftCards.csv";
+    userCsvFile = DataController.accessCSVFile(USER_FILE_NAME);
+    tempFile = DataController.accessCSVFile(TEMP_FILE_NAME);
+    tempFile2 = DataController.accessCSVFile(TEMP_FILE_2_NAME);
+    giftCardsFile = DataController.accessCSVFile(GIFT_CARD_FILE_NAME);
   }
 
   public User getCustomer(){
@@ -204,7 +214,8 @@ public class Transaction {
 
   public void updateAutoFillStatus(){ //search for user in newUserDetails.csv file, modify default autoFillStatus false to true 
     try {
-      File f = new File(this.userCsvFile); //this.userCsvFile
+//      File f = new File(this.userCsvFile); //this.userCsvFile
+      File f = this.userCsvFile;
       Scanner myReader = new Scanner(f);
       FileWriter myWriter = new FileWriter(tempFile);
 
@@ -222,7 +233,8 @@ public class Transaction {
       }
       myReader.close();
       myWriter.close();
-      tempFile.renameTo(new File(this.userCsvFile)); //replace temp file with og file
+//      tempFile.renameTo(new File(this.userCsvFile)); //replace temp file with og file
+      tempFile.renameTo(this.userCsvFile);
 
     } catch (IOException e) {
       e.printStackTrace();
@@ -235,7 +247,7 @@ public class Transaction {
   public String updateGiftCardStatus(String userInputGNumber){ //overwrites existing gift cards in file by changing the reedemble status of the gift card so it can no longer be used for next time
     String msg = "not redeemable";;
     try {
-      File f = new File(this.giftCardsFile);
+      File f = this.giftCardsFile;
       Scanner myReader = new Scanner(f);
       FileWriter myWriter = new FileWriter(tempFile2);
       //find matching customer result
@@ -257,7 +269,7 @@ public class Transaction {
       }
       myReader.close();
       myWriter.close();
-      tempFile2.renameTo(new File(this.giftCardsFile)); //replace temp file with og file
+      tempFile2.renameTo(this.giftCardsFile); //replace temp file with og file
 
     } catch (IOException e) {
       e.printStackTrace();
@@ -274,7 +286,7 @@ public class Transaction {
   public String checkIfGiftCardExists(String userInputGNumber){ //overwrites existing gift cards in file by changing the reedemble status of the gift card so it can no longer be used for next time
     String msg = "invalid number";
     try {
-      File f = new File(this.giftCardsFile);
+      File f = this.giftCardsFile;
       Scanner myReader = new Scanner(f);
       
       //find matching customer result
@@ -291,5 +303,45 @@ public class Transaction {
       e.printStackTrace();
     }
     return msg;
+  }
+
+  public static String getUserFileName() {
+    return USER_FILE_NAME;
+  }
+
+  public File getUserCsvFile() {
+    return userCsvFile;
+  }
+
+  public Card getUserCreditcard() {
+    return userCreditcard;
+  }
+
+  public File getGiftCardsFile() {
+    return giftCardsFile;
+  }
+
+  public File getTempFile() {
+    return tempFile;
+  }
+
+  public File getTempFile2() {
+    return tempFile2;
+  }
+
+  public GiftCard getUserGiftCard() {
+    return userGiftCard;
+  }
+
+  public static String getGiftCardFileName() {
+    return GIFT_CARD_FILE_NAME;
+  }
+
+  public static String getTempFile2Name() {
+    return TEMP_FILE_2_NAME;
+  }
+
+  public static String getTempFileName() {
+    return TEMP_FILE_NAME;
   }
 }
