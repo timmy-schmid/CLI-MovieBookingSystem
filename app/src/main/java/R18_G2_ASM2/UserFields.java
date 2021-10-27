@@ -5,7 +5,7 @@ public abstract class UserFields {
 
   //checks for user email + password are done here to ensure it satisfies acceptance criteria 
   
-  public static boolean validateUser(String email){
+  public boolean validateUser(String email){
     //should contain: @ + .com
     if (email == null){
       return false;
@@ -20,7 +20,7 @@ public abstract class UserFields {
     }
   }
 
-  public static boolean isValidPassword(String password){
+  public boolean isValidPassword(String password){
     //now, use regex to ensure it contains a mixture of letters + numbers + symbols (--> optional?, allow whitespace or NAH?)    
     if (password == null){
       return false;

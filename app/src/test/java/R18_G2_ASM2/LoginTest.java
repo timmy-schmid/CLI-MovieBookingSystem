@@ -25,6 +25,7 @@ class LoginTest {
   Login login;
   private final ByteArrayOutputStream outContent = new ByteArrayOutputStream();
   private final PrintStream originalOutput = System.out;
+  private HomeScreen home = new HomeScreen(null);
 
 
   @BeforeAll public static void setPath() {
@@ -34,7 +35,7 @@ class LoginTest {
   @BeforeEach
   public void setUp() {
     Login.setUserFile("userTest.csv");
-    login = new Login();
+    login = new Login(home);
 //    set up streams
     System.setOut(new PrintStream(outContent));
   }
@@ -48,13 +49,13 @@ class LoginTest {
 
   @Test
   public void LoginNotNull(){
-    Login login = new Login();
+    Login login = new Login(home);
     assertNotNull(login);
   }
 
   @Test
   public void testValidUsername(){
-    Login login = new Login();
+    Login login = new Login(home);
     String username = "dannie@gmail.com";
     String password = "HAsdf1234!*";
     int result = login.checkIfUserExists(username, password);
@@ -63,7 +64,7 @@ class LoginTest {
 
   @Test
   public void testInvalidUsername(){
-    Login login = new Login();
+    Login login = new Login(home);
     String username = "dann@gmail.com";
     String password = "Asdf1234!*";
     int result = login.checkIfUserExists(username, password);
@@ -72,7 +73,7 @@ class LoginTest {
 
   @Test
   public void testValidPassword(){
-    Login login = new Login();
+    Login login = new Login(home);
     String username = "harrypotter@gmail.com";
     String password = "Asdf1235!*";
     int result = login.checkIfUserExists(username, password);
@@ -81,7 +82,7 @@ class LoginTest {
 
   @Test
   public void testInvalidPassword(){
-    Login login = new Login();
+    Login login = new Login(home);
     String username = "harrypotter@gmail.com";
     String password = "Asdf1235!";
     int result = login.checkIfUserExists(username, password);
@@ -90,8 +91,8 @@ class LoginTest {
 
   @Test
   public void testPrintScreen(){
-    Login login = new Login();
-    String expected = "\n*******************************************************\n" +
+    Login login = new Login(home);
+    String expected = "\033[H\033[2J\n*******************************************************\n" +
         "            Welcome to the log in page :)            \n" +
         "*******************************************************\n";
     login.printScreen();
@@ -100,7 +101,7 @@ class LoginTest {
 
   @Test
   public void testNextOption() throws Exception{
-    Login login = new Login();
+    Login login = new Login(home);
     String inputMessage = "1";
     String expected = "\nInvalid username or password, please select from the following:\n" +
         "1. CONTINUE LOGGING IN\n" +

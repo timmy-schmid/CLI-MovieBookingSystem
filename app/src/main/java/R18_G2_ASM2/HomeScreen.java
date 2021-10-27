@@ -2,21 +2,27 @@ package R18_G2_ASM2;
 
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.Scanner;
 
 public class HomeScreen extends Screen {
 
   private static User user;
-  private HashMap<Integer,Showing> showings = new HashMap<>();
+  private HashMap<Integer,Movie> movies = new HashMap<>();
+  private ArrayList<Movie> moviesSorted;
   private Login login;
   private Registration reg;
+  private MovieScreen movScreen;
 
-  public HomeScreen(HashMap<Integer,Showing> shows) {
+  public HomeScreen(HashMap<Integer,Movie> movies) {
     super();
+    this.login = new Login(this);
+    this.reg = new Registration(this);
 
-    this.login = new Login();
-    this.reg = new Registration();
-    this.showings = shows;
+    if (movies == null) {
+      movies = new HashMap<>();
+    } else {
+      this.movies = movies;
+    }
+    this.maxInputInt = movies.size();
     setUser(null);
     title = "CURRENT SHOWINGS (25 OCT - 31 OCT)"; //TODO create variable date
   }
@@ -40,10 +46,13 @@ public class HomeScreen extends Screen {
     options.add("B"); options.add("b");
   }
 
+  public static User getUser() {
+    return user;
+  }
+
   @Override
-  public void run(Scanner sc) {
-    this.reader = sc;
-    while (true) {
+  public void run() {
+    while (!goBack) {
       print();
       askforInput();
       chooseOption();
@@ -53,48 +62,55 @@ public class HomeScreen extends Screen {
   @Override
   protected void chooseOption() {
 
+
     if (intOption != NO_INT_OPTION) {
-
-    }
-
-    switch (selectedOption) {
-      case "L": case "l":
-        login.run(reader);
-        break;
-      case "R": case "r":
-        reg.run(reader);
-        break;
-      case "E": case "e":
-        // TODO add edit
-        break;
-      case "G": case "g":
-        // TODO add gold filter
-        break;
-      case "S": case "s":
-        // TODO add silver filter
-        break;
-      case "B": case "b":
-        // TODO add bronze filter
-        break;
-      case "A": case "a":
-        // TODO add std filter
-        break;
-      case "Q": out.print("SEE YOU NEXT TIME! :)\n");
-        System.exit(0);
-        break;
-      default: throw new IllegalArgumentException("Critical error - invalid selection passed validation");
+      movScreen = new MovieScreen(moviesSorted.get(intOption));
+      movScreen.run();
+    } else {
+      switch (selectedOption) {
+        case "L": case "l":
+          login.run();
+          break;
+        case "R": case "r":
+          reg.run();
+          break;
+        case "E": case "e":
+          // TODO add edit
+          break;
+        case "G": case "g":
+          // TODO add gold filter
+          break;
+        case "S": case "s":
+          // TODO add silver filter
+          break;
+        case "B": case "b":
+          // TODO add bronze filter
+          break;
+        case "A": case "a":
+          // TODO add std filter
+          break;
+        case "Q": case "q":
+          out.print("SEE YOU NEXT TIME! :)\n");
+          System.exit(0);
+          break;
+        default: throw new IllegalArgumentException("Critical error - invalid selection passed validation");
+      }
     }
   }
 
   @Override
   public void print() {
+    clearScreen();
+    out.print("Current Date & Time: OCT 27 - THU 9:57PM\n");  // TODO make dynamic time
+    
+    moviesSorted = Movie.printAllShowings(movies);
 
     printHeader();
 
     if (user == null) {
       out.print ("Welcome guest,\n\n");
     } else {
-      out.printf("Welcome %s,\n\n", user.getEmail());
+      out.printf("Welcome back %s,\n\n", user.getEmail());
     }
 
     printOptionsText();
@@ -118,9 +134,7 @@ public class HomeScreen extends Screen {
       out.print(formatANSI("Q",ANSI_USER_OPTION) + " - Log out and Quit\n\n");
 
     }
-    out.print("Current Date & Time: OCT 27 - THU 9:57PM\n");  // TODO make dynamic time
-   
-    Showing.getAllMovieShowings(showings);
+  
   }
 
 }

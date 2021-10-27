@@ -14,6 +14,7 @@ public class BookingTicket {
     }
 
     public void run(){
+      System.out.println("DO I GET HERE1");
        while(this.checkFullorNot()){
             this.askForBooking();
             if (Ct == 2){
@@ -23,14 +24,16 @@ public class BookingTicket {
             }
         }
     }
+    
     public boolean checkFullorNot(){
         if(!showing.isShowingFull()){
             System.out.println("No empty seat for the current show :(");
         }
+        System.out.println("DO I GET HERE2");
         return showing.isShowingFull();
     }
 
-    public void askForBooking(){
+    public void askForBooking() {
         Person bookingType = null;
         Scanner scan = new Scanner(System.in);
         while(Ct == 1) {

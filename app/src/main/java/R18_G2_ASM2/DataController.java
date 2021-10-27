@@ -1,16 +1,13 @@
 package R18_G2_ASM2;
 
 import java.io.BufferedReader;
-import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
 import java.io.InputStream;
-import java.io.InputStreamReader;
 import java.net.URISyntaxException;
 import java.nio.file.Files;
-import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -58,9 +55,6 @@ public class DataController {
       } catch (URISyntaxException e) {
         e.printStackTrace();
       }
-
-      //System.out.println("JAR PATH:" + f.getAbsolutePath());
-      //System.out.println("  EXISTS?:" + f.exists());
       
       //If there is no db file, we copy the resource contents from the .jar to create a new db file.
       if (!f.exists()) {
@@ -72,8 +66,6 @@ public class DataController {
         }
       }
     }
-    //System.out.println("PATH:" + f.getAbsolutePath());
-    //System.out.println(" FILE EXISTS?:" + f.exists());
     return f;    
   }
 
@@ -104,9 +96,6 @@ public class DataController {
         e.printStackTrace();
       }
 
-      //System.out.println("JAR PATH:" + f.getAbsolutePath());
-      //System.out.println("  EXISTS?:" + f.exists());
-
       //If there is no db file, we copy the resource contents from the .jar to create a new db file.
       if (!f.exists()) {
         InputStream in = DataController.class.getClassLoader().getResourceAsStream(resource);
@@ -117,8 +106,6 @@ public class DataController {
         }
       }
     }
-    //System.out.println("PATH:" + f.getAbsolutePath());
-    //System.out.println(" FILE EXISTS?:" + f.exists());
     return f;
   }
 
@@ -263,11 +250,9 @@ public class DataController {
     return err;
   }
   public static HashMap<Integer, String> importShowings(Map<Integer,Movie> movies,
-                                                        Map<Integer,Cinema> cinemas,
-                                                        Map<Integer,Showing> showings,
-                                                        String filename)
-                                                        throws FileNotFoundException, IOException {
-    HashMap<Integer, String> err = new HashMap<>();
+                             Map<Integer,Cinema> cinemas,
+                             String filename) throws FileNotFoundException, IOException {
+                             HashMap<Integer, String> err = new HashMap<>();
   
     if (filename == null) throw new FileNotFoundException();
 
@@ -325,15 +310,13 @@ public class DataController {
         err.put (lineNum, "cinemaID '" + fields[1] + "' does not exist in db");
         lineNum++;
         continue;
-      } finally {
-
       }
     
       //validate showingTime
       Calendar showingTime = Calendar.getInstance(AEST,Locale.ENGLISH);
       showingTime.setTimeInMillis(Long.parseLong(fields[2]));
-   
-      showings.put(lineNum, new Showing(lineNum, movies.get(movieId), cinemas.get(cinemaId),showingTime));
+  
+      movies.get(movieId).addShowing(new Showing(lineNum, movies.get(movieId), cinemas.get(cinemaId),showingTime));
       lineNum++;
     }
     br.close();

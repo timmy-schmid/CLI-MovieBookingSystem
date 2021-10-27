@@ -10,7 +10,7 @@ import java.io.FileWriter;
 import java.util.Scanner;
 import java.io.*;
 
-public class Registration extends Screen{
+public class Registration extends UserFields {
   /*
   This class: prints screen for when user clicks: 'To Register'
   and creates a new user account for them
@@ -26,9 +26,10 @@ public class Registration extends Screen{
   */
   private File userCsvFile;
   private static String USER_FILE_NAME = "user1.csv";
-  Scanner sc;
+  HomeScreen home;
 
-  public Registration() {
+  public Registration(HomeScreen home) {
+    this.home = home;
 
     this.userCsvFile = DataController.accessCSVFile(USER_FILE_NAME);
 
@@ -43,9 +44,7 @@ public class Registration extends Screen{
     USER_FILE_NAME = name;
   }
 
-  @Override
-  public void run(Scanner sc) {
-    this.sc = sc;
+  public void run() {
     try {
       retrieveUserInputDetails();
     } catch (IOException e) {
@@ -53,15 +52,15 @@ public class Registration extends Screen{
     }
   }
 
-  public User retrieveUserInputDetails() throws IOException { //return a USER object?
+  public void retrieveUserInputDetails() throws IOException { //return a USER object?
     this.printWelcome();
     User currentUser = null;
 ;
     System.out.println("1. ENTER Y TO CONTINUE REGISTERING\n"+
-    "2. ENTER N TO CANCEL AND GO BACK TO HOME PAGE\n" +
+    "2. ENTER N TO CANCEL AND GO BACK\n" +
     "3. ALREADY A MEMBER WITH US? ENTER M TO LOGIN~");
     System.out.printf("\nEnter option: ");
-
+    Scanner sc = new Scanner(System.in);
     while (true){
       String option = sc.nextLine();
       if (option.toUpperCase().startsWith("N") == true){
@@ -90,7 +89,7 @@ public class Registration extends Screen{
             break;
           }
           else {
-            boolean isValidEmail = User.validateUser(email);
+            boolean isValidEmail = this.validateUser(email);
             if (isValidEmail == true){
               returnResult = true;
               break;
@@ -98,7 +97,7 @@ public class Registration extends Screen{
           }
           System.out.println();
         }
-        Scanner scan2 = new Scanner(System.in);
+        //Scanner scan2 = new Scanner(System.in);
         while (true){
           Console con = System.console();
           if (con != null) {
@@ -106,9 +105,9 @@ public class Registration extends Screen{
             password = new String(pwd);
           } else {
             System.out.print("\nPlease enter your password: ");
-            password = scan2.nextLine();
+            password = sc.nextLine();
           }
-          boolean isValidPwd = User.isValidPassword(password);
+          boolean isValidPwd = this.isValidPassword(password);
           if (isValidPwd == true){
             returnResult2 = true;
             break;
@@ -118,17 +117,19 @@ public class Registration extends Screen{
         //user doesn't exist in system and creates a new acc
         if (returnResult == true && returnResult2 == true) {
           currentUser = this.createAccount(email, password); //if 51-52 
-        
+          /*
           String resultOption = this.nextOption();
           if (resultOption == null){
             System.out.println("\nINVALID OPTION SELECTED~");
-          }
+          }*/
+          home.setUser(currentUser);
+          home.run();
           break;
         //else: keep entering a new password
         } 
       } else if (option.toUpperCase().startsWith("M")) {
         //redirect to login page!
-        Login login = new Login();
+        Login login = new Login(home);
         login.retrieveUserInputDetails();
         break; // or return to default page
 
@@ -137,7 +138,7 @@ public class Registration extends Screen{
       }
       System.out.println();
     }
-    return currentUser;
+
   }
 
   //compare against existing emails in database to see if email for registering is taken already or not
@@ -153,7 +154,6 @@ public class Registration extends Screen{
       while (myReader.hasNextLine()) { //as long as you can keep reading the file, grab the details
 
         String line = myReader.nextLine();
-        System.out.println(line);
         String[] detailsArray = line.split(",");
         try{
           userID = Integer.parseInt(detailsArray[0]);
@@ -176,6 +176,7 @@ public class Registration extends Screen{
   }
 
   public void printWelcome(){
+    System.out.print("\033[H\033[2J"); // clears screen
     System.out.println("\n*******************************************************");
     System.out.println("            Welcome to the registration page :)            ");
     System.out.println("                   Sign up now FOR FREE!                  ");
@@ -285,17 +286,5 @@ public class Registration extends Screen{
     } else {
       return null;
     }
-  }
-
-  @Override
-  protected void chooseOption() {
-    // TODO Auto-generated method stub
-    
-  }
-
-  @Override
-  public void print() {
-    // TODO Auto-generated method stub
-    
   }
 }

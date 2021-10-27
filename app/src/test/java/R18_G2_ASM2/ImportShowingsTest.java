@@ -3,7 +3,6 @@ package R18_G2_ASM2;
 import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.*;
 
-import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.HashMap;
 
@@ -15,17 +14,10 @@ public class ImportShowingsTest {
   
   private static HashMap<Integer,Cinema> cinemas;
   private static HashMap<Integer,Movie> movies;
-  private HashMap<Integer,Showing> showings;
   private HashMap<Integer,String> errors; 
 
   @BeforeAll static void initialSetup() {
     DataController.setBasePath("src/test/resources/");
-    movies = new HashMap<>();
-    movies.put(1, new Movie(1, null, null, null, null, null, null));
-    movies.put(30, new Movie(30, null, null, null, null, null, null));
-    movies.put(70, new Movie(70, null, null, null, null, null, null));
-    movies.put(10000, new Movie(10000, null, null, null, null, null, null));
-
     cinemas = new HashMap<>();
     cinemas.put(1, new Cinema(1, null));
     cinemas.put(2, new Cinema(2, null));
@@ -35,8 +27,12 @@ public class ImportShowingsTest {
   }
 
   @BeforeEach void refreshVariables() {
-    showings = new HashMap<>();
     errors = new HashMap<>();
+    movies = new HashMap<>();
+    movies.put(1, new Movie(1, null, null, null, null, null, null));
+    movies.put(30, new Movie(30, null, null, null, null, null, null));
+    movies.put(70, new Movie(70, null, null, null, null, null, null));
+    movies.put(10000, new Movie(10000, null, null, null, null, null, null));
   }
 
   @AfterEach void printErrors() {
@@ -46,43 +42,44 @@ public class ImportShowingsTest {
   @Test void importShowingsWithNoMatchingCinema() {
 
     try {
-      errors = DataController.importShowings(movies,cinemas,showings,"importShowingsWithNoMatchingCinema.csv");
+      errors = DataController.importShowings(movies,cinemas,"importShowingsWithNoMatchingCinema.csv");
     } catch (IOException e) {
     }
     assertEquals(7,errors.size());
-    assertEquals(2,showings.size());
+    assertEquals(2,movies.get(1).getShowings().size());
   }
 
   @Test void importShowingsWithNoMatchingMovie() {
 
     try {
-      errors = DataController.importShowings(movies,cinemas,showings,"importShowingsWithNoMatchingMovie.csv");
+      errors = DataController.importShowings(movies,cinemas,"importShowingsWithNoMatchingMovie.csv");
     } catch (IOException e) {
     }
 
     assertEquals(7,errors.size());
-    assertEquals(2,showings.size());
+    assertEquals(1,movies.get(1).getShowings().size());
+    assertEquals(1,movies.get(1).getShowings().size());
   }
 
   @Test void importShowingsWithInvalidIntegers() {
 
     try {
-      errors = DataController.importShowings(movies,cinemas,showings,"importShowingsWithInvalidIntegers.csv");
+      errors = DataController.importShowings(movies,cinemas,"importShowingsWithInvalidIntegers.csv");
     } catch (IOException e) {
     }
 
     assertEquals(4,errors.size());
-    assertEquals(1,showings.size());
+    assertEquals(1,movies.get(1).getShowings().size());
   }
 
   @Test void importShowingsNotEnoughFields() {
 
     try {
-      errors = DataController.importShowings(movies,cinemas,showings, "importShowingsNotEnoughFields.csv");
+      errors = DataController.importShowings(movies,cinemas, "importShowingsNotEnoughFields.csv");
     } catch (IOException e) {
     }
 
     assertEquals(3,errors.size());
-    assertEquals(6,showings.size());
+    assertEquals(6,movies.get(1).getShowings().size());
   }
 }

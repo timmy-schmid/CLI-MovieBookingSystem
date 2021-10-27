@@ -9,12 +9,13 @@ public class Login extends Screen {
   */
   private File userCsvFile;
   private static  String USER_FILE_NAME = "user1.csv";
-  private Scanner sc;
+  private HomeScreen home;
 
-  public Login() {
+  private int userID;
+
+  public Login(HomeScreen home) {
     userCsvFile = DataController.accessCSVFile(USER_FILE_NAME);
-    //System.out.println(userCsvFile.getAbsolutePath());
-    //System.out.println("FILE EXISTS?:" + userCsvFile.exists());
+    this.home = home;
   }
 
   public static void setUserFile(String name){
@@ -22,9 +23,8 @@ public class Login extends Screen {
   }
 
   @Override
-  public void run(Scanner sc) {
+  public void run() {
     try {
-      this.sc = sc;
       retrieveUserInputDetails();
     } catch (Exception e) {
 
@@ -37,6 +37,7 @@ public class Login extends Screen {
     //validate user details after retrieving input!!!
     String username = null;
     String password = null;
+    Scanner sc = new Scanner(System.in);
     while (true) {
       System.out.printf("Please enter your username: ");
 //      username = consoleReader.readLine();
@@ -53,8 +54,10 @@ public class Login extends Screen {
 
       int result = this.checkIfUserExists(username, password);
       if (result == 1){
-        System.out.println("Welcome back " + username + "!");
-        return;
+        //System.out.println("Welcome back " + username + "!");
+        User user = new User(userID, username, password);
+        home.setUser(user);
+        home.run();
         //Direct to next page!!!
       } else if (result == -1){
         int temp = 0;
@@ -83,7 +86,6 @@ public class Login extends Screen {
   }
 
   public int checkIfUserExists(String userEmail, String userPassword){
-    int userID = 1;
     String email = null;
     String real_password = null;
     int result = 0;
@@ -123,6 +125,7 @@ public class Login extends Screen {
   }
 
   public void printScreen(){
+    clearScreen();
     System.out.println("\n*******************************************************");
     System.out.println("            Welcome to the log in page :)            ");
     System.out.println("*******************************************************");

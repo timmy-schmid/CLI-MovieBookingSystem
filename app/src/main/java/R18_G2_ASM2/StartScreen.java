@@ -12,8 +12,8 @@ public class StartScreen extends Screen {
   public StartScreen(HomeScreen home) {
     super();
 
-    this.login = new Login();
-    this.reg = new Registration();
+    this.login = new Login(home);
+    this.reg = new Registration(home);
     this.home = home;
 
     options.add("1");
@@ -30,9 +30,8 @@ public class StartScreen extends Screen {
   }
 
   @Override
-  public void run(Scanner sc) {
-    this.reader = sc;
-    while (true) {
+  public void run() {
+    while (!goBack) {
       print();
       askforInput();
       chooseOption();
@@ -43,11 +42,11 @@ public class StartScreen extends Screen {
   public void chooseOption() {
 
     switch (selectedOption) {
-      case "1": login.run(reader);
+      case "1": login.run();
                 break;
-      case "2": reg.run(reader);
+      case "2": reg.run();
                 break;
-      case "3": home.run(reader);
+      case "3": home.run();
                 break;
       case "Q": case "q":
         out.print("SEE YOU NEXT TIME! :)\n");
@@ -59,7 +58,7 @@ public class StartScreen extends Screen {
 
   @Override
   public void print() {
-
+    clearScreen();
     printHeader();
 
     printOptionsText();

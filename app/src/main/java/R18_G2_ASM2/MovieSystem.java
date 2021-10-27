@@ -16,7 +16,7 @@ public class MovieSystem {
 
   private HashMap<Integer,Movie> movies = new HashMap<>();
   private HashMap<Integer,Cinema> cinemas = new HashMap<>();
-  private HashMap<Integer,Showing> showings = new HashMap<>();
+
   User currentUser = null;
 
   private Scanner sc;
@@ -38,73 +38,11 @@ public class MovieSystem {
 
   public void run() {
 
-    HomeScreen home = new HomeScreen(showings);
+    HomeScreen home = new HomeScreen(movies);
     StartScreen startScreen = new StartScreen(home);
 
-    startScreen.run(sc);
+    startScreen.run();
   }
-
-
-
-  /*
-  while (true) {
-    printStartScreen();
-    Registration reg = null;
-      reg = new Registration();
-    String selection = parseInput("qQ", 3);
-
-    if (selection.equals("1")) {
-     try {
-      Login login = new Login();
-      login.retrieveUserInputDetails();
-      } catch (Exception e) {
-        out.println(e.getStackTrace());
-      }
-    } else if (selection.equals("2")) {
-      try {
-        currentUser = reg.retrieveUserInputDetails();
-      } catch (Exception e) {
-        out.println(e.getStackTrace());
-      }
-    } else if (selection.equals("3")) {
-      importMovieData();
-      Showing.getAllMovieShowings(showings);
-      printShowingsScreen();
-
-      if (currentUser != null) {
-        selection = parseInput("Qq",showings.size());
-   
-      } else {
-        selection = parseInput("Qq",showings.size());
-      }
-      if (selection.equals("q") || selection.equals("Q")) {
-        quit();
-        return;
-      } else {
-
-        int movieId = Integer.parseInt(selection);
-        printMovieScreen(movies.get(movieId));
-
-        selection = parseInput("bB",0);
-        
-      }
-
-
-    } else if (selection.equals("q") || selection.equals("Q")) {
-      quit();
-      break;
-    }
-  }*/
-    /*
-      User tim = new User(1, "tim@gmail.com", "TestOne12!@");
-      BookingTicket t = new BookingTicket(showings.get(2), tim);
-      t.run();
-
-      movies.get(1).toString(s);
-      Showing.getSingleMovieShowings(showings, s, movies.get(1));
-      out.println(s);
-  */
-
 
   //parses either an integer selection OR a single character specified by pattern
   public String parseInput(String pattern, int max) {
@@ -156,7 +94,7 @@ public class MovieSystem {
     } 
 
     try {
-      DataController.importShowings(movies,cinemas, showings, SHOWINGS_FILE_NAME);
+      DataController.importShowings(movies,cinemas, SHOWINGS_FILE_NAME);
     } catch (IOException e) {
       out.println("Error reading file: " + SHOWINGS_FILE_NAME);
     } 
@@ -216,8 +154,8 @@ public class MovieSystem {
     s.append(ANSI_RESET); 
     MovieSystem.printBar(s);
 
-    m.printMovieDetails(s);
-    Showing.getSingleMovieShowings(showings,s, m);
+    m.printMovieDetails();
+    //Showing.getSingleMovieShowings(showings, m);
 
     s.append("\nIf you would like to go back press " + wrapColour("B"));
       

@@ -14,7 +14,7 @@ public abstract class Screen {
   public static final String ANSI_UNAVAIL = "\u001B[34m";
 
   public static final String ANSI_RESET = "\u001B[0m";
-  public static final String ANSI_CLEAR = "\u001B[0m";
+  public static final String ANSI_CLEAR = "\033[H\033[2J";
 
   public static final int NO_INT_OPTION = -1;
 
@@ -23,11 +23,11 @@ public abstract class Screen {
   protected ArrayList<String> options;
   protected int intOption = NO_INT_OPTION;
   protected int maxInputInt;
+  protected boolean goBack;
 
   protected String title;
   protected PrintStream out;
   protected String selectedOption;
-  protected Scanner reader;
 
   public String getTitle() { return title; }
 
@@ -46,12 +46,14 @@ public abstract class Screen {
 
   }
 
-  public abstract void run(Scanner sc);
+  public abstract void run();
 
   public abstract void print();
 
 
   protected void askforInput() {
+
+    Scanner reader = new Scanner(System.in);
 
     printUserInputText ();
 
@@ -67,6 +69,8 @@ public abstract class Screen {
           printInvalidSelectionText();
           continue;
         }
+        intOption = inputInt;
+
       // if not int, checks against valid options.
       } catch (NumberFormatException e) {
         if (!options.contains(line)) {
@@ -77,6 +81,7 @@ public abstract class Screen {
       selectedOption = line; // if input is successful.
       break;
     }
+    //reader.close();
   }
 
   protected void printOptionsText () {
@@ -104,8 +109,8 @@ public abstract class Screen {
 
   }
 
-  protected void clearScreen() {
-    out.println(ANSI_CLEAR);
+  public void clearScreen() {
+    out.print(ANSI_CLEAR);
   }
 
   public static String formatANSI (String toFormat, String ANSICommand) {

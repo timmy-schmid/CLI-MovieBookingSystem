@@ -13,7 +13,7 @@ import java.util.List;
 import java.util.Locale;
 
 
-public class Showing {
+public class Showing implements Comparable<Showing> {
   private int showingId;
   private Movie movie;
   private Cinema cinema;
@@ -49,7 +49,6 @@ public class Showing {
     return true;
   }
 
-
   public Movie getMovie() {
     return movie;
   }
@@ -57,6 +56,11 @@ public class Showing {
   public Cinema getCinema() {
     return cinema;
   }
+
+  public Calendar getShowingTime() {
+    return showingTime;
+  }
+
   public String getShowingTimeFormatted() {
     SimpleDateFormat formatter = new SimpleDateFormat("EEE dd MMM - K:mma",Locale.ENGLISH);
 
@@ -131,19 +135,17 @@ public int middleSeatBooked(){
         return comp;
     }
   }
+
   public void showAllSeats(){
     movieSeat.showAllSeats();
   }
-  public static int getSingleMovieShowings(HashMap<Integer,Showing> showings,StringBuilder s, Movie m) {
+  public static int getSingleMovieShowings(HashMap<Integer,Showing> showings, Movie m) {
 
-
-    s.append("UPCOMING SESSIONS:\n");
+    StringBuilder s = new StringBuilder();
     s.append("-----------------------------------------\n");
     s.append("ID  TIME                 CINEMA\n");
     s.append("-----------------------------------------\n");
 
-
-  
     List<Showing> showingsByTime = new ArrayList<>(showings.values());
     Collections.sort(showingsByTime, new SortMovieByShowingTime());
 
@@ -157,6 +159,7 @@ public int middleSeatBooked(){
           count++;
         }
     }
+    System.out.println(s);
     return count;
   }
 
@@ -215,6 +218,11 @@ public int middleSeatBooked(){
     return count;
   }
 
+  @Override
+  public int compareTo(Showing b) {
+    return Long.compare(this.getShowingTime().getTimeInMillis(), b.getShowingTime().getTimeInMillis());
+  }
+
   public static Calendar getNextMonday (Calendar c) {
     Calendar nextMon = Calendar.getInstance(AEST, Locale.ENGLISH);
     nextMon.setTime(c.getTime());
@@ -222,7 +230,6 @@ public int middleSeatBooked(){
     nextMon.add(Calendar.DATE,7);
     return nextMon;
   }
-
 
 }
 

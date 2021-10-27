@@ -17,7 +17,8 @@ import java.io.FileReader;
 class RegistrationTest {
   Registration reg;
   private final ByteArrayOutputStream outContent = new ByteArrayOutputStream(); //for testing printing statements
-  private final PrintStream originalOutput = System.out;    
+  private final PrintStream originalOutput = System.out;
+  private HomeScreen home = new HomeScreen(null);
 
   @BeforeAll static void setPath() {
     DataController.setBasePath("src/test/resources/");
@@ -26,7 +27,7 @@ class RegistrationTest {
   @BeforeEach
   public void setUp() {
     Registration.setUserFile("userTest.csv");
-    reg = new Registration();
+    reg = new Registration(home);
     //set up streams
     System.setOut(new PrintStream(outContent));
   }
@@ -100,7 +101,7 @@ class RegistrationTest {
 
   @Test void testUserFileNotFound(){
     Registration.setUserFile("UNKNOWN.csv");
-    reg = new Registration();
+    reg = new Registration(home);
 
     System.out.println("DO I GET HERE1");
     int result = reg.checkIfUserExists("username@gmail.com");
@@ -114,7 +115,7 @@ class RegistrationTest {
 
   @Test void nullUserFile(){
     Registration.setUserFile(null);
-    reg = new Registration();
+    reg = new Registration(home);
     assertNull(Registration.getUserFile());
   }
   @Test void testValidReadingFile2(){ //user already exists
@@ -207,12 +208,12 @@ class RegistrationTest {
   // }
 
   @Test void testCancelRegistration() throws IOException {
-    String welcomeMsg = "\n*******************************************************\n" +
+    String welcomeMsg = "\033[H\033[2J\n*******************************************************\n" +
     "            Welcome to the registration page :)            \n" +
     "                   Sign up now FOR FREE!                  \n"+
     "*******************************************************\n";
     String optionMsg = "\n1. ENTER Y TO CONTINUE REGISTERING\n"+
-    "2. ENTER N TO CANCEL AND GO BACK TO HOME PAGE\n" +
+    "2. ENTER N TO CANCEL AND GO BACK\n" +
     "3. ALREADY A MEMBER WITH US? ENTER M TO LOGIN~\n";
     String Option = "\nEnter option: ";
 
@@ -224,7 +225,7 @@ class RegistrationTest {
     ByteArrayInputStream in = new ByteArrayInputStream(inputMessage.getBytes());
     System.setIn(in);
     reg.retrieveUserInputDetails();
-    assertEquals(outContent.toString(), expectedOut);
+    assertEquals(expectedOut,outContent.toString());
   }
 
   //.NoSuchElementException: No line found --> ERROR MSG :((
@@ -350,12 +351,12 @@ class RegistrationTest {
   }
   
   @Test void testFailCancelRegistration() throws IOException { //first wrong input then correct input
-    String welcomeMsg = "\n*******************************************************\n" +
+    String welcomeMsg = "\033[H\033[2J\n*******************************************************\n" +
     "            Welcome to the registration page :)            \n" +
     "                   Sign up now FOR FREE!                  \n"+
     "*******************************************************\n";
     String optionMsg = "\n1. ENTER Y TO CONTINUE REGISTERING\n"+
-    "2. ENTER N TO CANCEL AND GO BACK TO HOME PAGE\n" +
+    "2. ENTER N TO CANCEL AND GO BACK\n" +
     "3. ALREADY A MEMBER WITH US? ENTER M TO LOGIN~\n";
     String yNOption = "\nEnter option: ";
 
@@ -373,7 +374,7 @@ class RegistrationTest {
   }
 
   @Test void printValidWelcomeScreen(){
-    String welcomeMsg = "\n*******************************************************\n" +
+    String welcomeMsg = "\033[H\033[2J\n*******************************************************\n" +
     "            Welcome to the registration page :)            \n" +
     "                   Sign up now FOR FREE!                  "+
     "\n*******************************************************\n\n";
