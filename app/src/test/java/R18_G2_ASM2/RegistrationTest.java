@@ -106,7 +106,7 @@ class RegistrationTest {
   }
 
    @Test void testValidGiftCardNumber(){
-    String input = "1111111111111116GC";
+    String input = "11111111111116GC";
     assertTrue(reg.checkGiftCardNumber(input));
   }
 

@@ -66,14 +66,14 @@ public class TransactionTest {
     assertNotNull(t2);
   }
 
-  @Test void canGetFiles(){
-
-  }
   @Test void canPrintScreen(){
     String screenMsg = "\n*******************************************************\n" +
     "            Welcome to the payment page :)            \n" +
-    "           Please enter your details below!                  \n"+
-    "*******************************************************\n\n";
+    "           Movie to book details           \n"+
+    "*******************************************************\n\n" +
+    "Number of tickets: \n" + 
+    "Total Amount: \n\n";
+
     t.printScreen();
     assertEquals(outContent.toString(), screenMsg);
   }
@@ -89,18 +89,19 @@ public class TransactionTest {
   }
 
   @Test void continueToPayWithCard(){
-    String optionMsg = "Please enter an option below~\n" +
-                      "\nENTER 1 TO PAY WITH CARD~\n" + "ENTER 2 TO CANCEL TRANSACTION~\n" +
-                      "\nEnter option: ";
+    String optionMsg = "Please select a payment method:\n" +
+                      "\n1 - Credit Card\n"+ "2 - Gift Card\n" + 
+                      "C - Cancel Transaction\n" +
+                      "\nUser Input: ";
 
-    String msg = "\n*******************************************************\n"+
-    "PROCEEDING TO PAY WITH CARD~ in 3..2..1..\n" + 
-    "*******************************************************\n\n";
+    // String msg = "\n*******************************************************\n"+
+    // "PROCEEDING TO PAY WITH CARD~ in 3..2..1..\n" + 
+    // "*******************************************************\n\n";
 
-    String expectedOut = optionMsg + msg;
+    String expectedOut = optionMsg;//+ msg;
 
     String inputMessage = "1\n";
-    boolean expected = true;
+    String expected = "1";
 
     ByteArrayOutputStream outContent = new ByteArrayOutputStream();
     System.setOut(new PrintStream(outContent));
@@ -109,25 +110,22 @@ public class TransactionTest {
 
     System.setIn(in);
 
-    boolean result = t.printOptions(-1);
+    String result = t.printOptions(-1);
     assertEquals(expected, result);
     assertEquals(outContent.toString(), expectedOut);
   }
 
   @Test void continueToPayWithCard2(){
-    String optionMsg = "Please enter an option below~\n" +
-                      "\nENTER 1 TO PAY WITH CARD~\n" + "ENTER 2 TO CANCEL TRANSACTION~\n" +
-                      "\nEnter option: ";
-    String msg = "\n*******************************************************\n" + "OH NO, please enter a valid command"+
-    "\n*******************************************************\n";
-    String msg2 = "\n*******************************************************\n"+
-    "PROCEEDING TO PAY WITH CARD~ in 3..2..1..\n" + 
-    "*******************************************************\n\n";
+    String optionMsg = "Please select a payment method:\n" +
+                        "\n1 - Credit Card\n"+ "2 - Gift Card\n" + 
+                        "C - Cancel Transaction\n" +
+                        "\nUser Input: ";
 
-    String expectedOut = optionMsg + msg + msg2;
+    String msg = "Please enter a valid command: ";
+    String expectedOut = optionMsg + msg;
 
     String inputMessage = "lala\n1\n";
-    boolean expected = true;
+    String expected = "1";
 
     ByteArrayOutputStream outContent = new ByteArrayOutputStream();
     System.setOut(new PrintStream(outContent));
@@ -136,18 +134,18 @@ public class TransactionTest {
 
     System.setIn(in);
 
-    boolean result = t.printOptions(-1);
+    String result = t.printOptions(-1);
     assertEquals(expected, result);
     assertEquals(outContent.toString(), expectedOut);
   }
 
 
   @Test void testCancelTransaction(){
-    boolean expected = false;
+    String expected = "cancel";
     String msg = "\n*******************************************************\n"+
     "     CANCELLING TRANSACTION + REDIRECTING YOU BACK\n               TO HOME PAGE~ in 3..2..1..\n"+
     "*******************************************************\n\n";
-    boolean result = t.printOptions(0);
+    String result = t.printOptions(0);
     assertEquals(expected, result);
     assertEquals(outContent.toString(), msg);
   }
@@ -165,14 +163,14 @@ public class TransactionTest {
   }
 
   @Test void testValidGiftCard(){
-   String result = t.checkIfGiftCardExists("1111111111111116GC");
+   String result = t.checkIfGiftCardExists("11111111111116GC");
     assertEquals(result, "found");
   }
 
   @Test void testInvalidGiftCard(){
-    String result = t.checkIfGiftCardExists("11342416GC");
-     assertEquals(result, "invalid number");
-   }
+  String result = t.checkIfGiftCardExists("11342416GC");
+    assertEquals(result, "invalid number");
+  }
 
   // @Test void testInvalidGiftCardDetails(){
   //   String msg = "Please enter your gift card number: " +
