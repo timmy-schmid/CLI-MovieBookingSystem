@@ -2,19 +2,19 @@ package R18_G2_ASM2;
 import java.io.*;
 
 import java.util.Scanner;
-
-
-public class Login {
+public class Login extends Screen {
   /*
   This class: prints screen for when user clicks: 'Log in' and direct them to type their username
   and password
   */
   private File userCsvFile;
+  private HomeScreen home;
   private static String USER_FILE_NAME = "newUserDetails2.csv";
   private User user;
 
-  public Login() {
+  public Login(HomeScreen home) {
     userCsvFile = DataController.accessCSVFile(USER_FILE_NAME);
+    this.home = home;
     this.user = null;
   }
 
@@ -22,20 +22,29 @@ public class Login {
     USER_FILE_NAME = name;
   }
 
+  @Override
+  public void run() {
+    try {
+      retrieveUserInputDetails();
+    } catch (Exception e) {
+
+    }
+  }
   public User getUser(){
     return this.user;
   }
   public User retrieveUserInputDetails() throws IOException{
   // public void retrieveUserInputDetails() throws IOException{
     this.printScreen();
-    Scanner scan = new Scanner(System.in);
+
     //validate user details after retrieving input!!!
     String username = null;
     String password = null;
+    Scanner sc = new Scanner(System.in);
     while (true) {
       System.out.printf("Please enter your username: ");
 //      username = consoleReader.readLine();
-      username = scan.nextLine();
+      username = sc.nextLine();
       Console con = System.console();
       if (con != null) {
         char[] pwd = con.readPassword("Please enter your password: ");
@@ -43,13 +52,14 @@ public class Login {
         System.out.printf("PASSWORD LINE 100: [%s]\n", password);
       } else {
         System.out.printf("Please enter your password: ");
-        password = scan.nextLine();
+        password = sc.nextLine();
       }
 
       int result = this.checkIfUserExists2(username, password);
       if (result == 1){
-        System.out.println("\nWelcome back " + this.getUser().getNickname() + "!");
-        return this.getUser();
+        //System.out.println("Welcome back " + username + "!");
+        home.setUser(user);
+        home.run();
         //Direct to next page!!!
       } else if (result == -1){
         int temp = 0;
@@ -123,6 +133,7 @@ public class Login {
   }
 
   public void printScreen(){
+    clearScreen();
     System.out.println("\n*******************************************************");
     System.out.println("            Welcome to the log in page :)            ");
     System.out.println("*******************************************************");
@@ -140,6 +151,18 @@ public class Login {
     Scanner scan = new Scanner(System.in);
     textinput = scan.nextLine();
     return textinput;
+  }
+
+  @Override
+  protected void chooseOption() {
+    // TODO Auto-generated method stub
+    
+  }
+
+  @Override
+  public void print() {
+    // TODO Auto-generated method stub
+    
   }
 }
 //class PasswordField {

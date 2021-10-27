@@ -176,7 +176,7 @@ public class MovieSeat{
         // mdf.print();
         // File movieSeat = new File("src/test/resources/"+ "SeatMapTest.csv");
     
-        MovieSeat seatMap = new MovieSeat(new Showing(2, new Movie(1,"77", null, null, null, null,null), new Cinema(1, Screen.SILVER), null));
+        MovieSeat seatMap = new MovieSeat(new Showing(2, new Movie(1,"77", null, null, null, null,null), new Cinema(1, MovieClass.SILVER), null));
         DataFrame<String> newFrame = seatMap.readFromDatabase();
         seatMap.writeToDatabase();
         // newFrame.print();
