@@ -18,7 +18,7 @@ public class BookingTicket {
     }
 
     public void run(){
-       while(this.checkFullorNot()){
+       while(!this.checkFullorNot()){
            this.bookingShowingSection();
            this.bookingASeat();
             this.askForBooking();
@@ -31,7 +31,7 @@ public class BookingTicket {
     }
     
     public boolean checkFullorNot(){
-        if(!showing.isShowingFull()){
+        if(showing.isShowingFull()){
             System.out.println("No empty seat for the current show :(");
         }
         return showing.isShowingFull();
