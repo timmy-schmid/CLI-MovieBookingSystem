@@ -26,6 +26,7 @@ public class BookingTicket {
     }
 
     public void run(){
+        System.out.println("works?");
         count = 0;
         Scanner scan = new Scanner(System.in);
         while(true){
