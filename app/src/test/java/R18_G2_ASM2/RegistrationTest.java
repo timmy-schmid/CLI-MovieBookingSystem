@@ -29,7 +29,6 @@ class RegistrationTest {
     home = new HomeScreen(null);
     reg = new Registration(home);
     Registration.setUserFile("newUserDetailsTest2.csv");
-
     // reg.setUserFile("src/test/resources/newUserDetailsTest2.csv");
 
     //set up streams
