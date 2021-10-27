@@ -1,6 +1,7 @@
 package R18_G2_ASM2;
 
 import java.util.*;
+import java.io.*;
 
 
 import java.io.BufferedReader;
@@ -84,7 +85,7 @@ public class Transaction {
   // get total amount of all tickets from booking ticket/list of tickets? to compare against gift card num/credit card
 
   // TODO: autogenerate a unique transaction ID for each user
-  public void proceedPayment(){ //card details fill out
+  public void proceedPayment() throws IOException { //card details fill out
     this.printScreen();
     this.askForUserDetails();
   }
@@ -141,7 +142,7 @@ public class Transaction {
     return returnMsg;
   }
   
-  public void askForUserDetails(){
+  public void askForUserDetails() throws IOException {
     String msg = this.printOptions(-1);
     Scanner scan = new Scanner(System.in);
     if (msg.equals("1")){ //credit card
@@ -376,7 +377,7 @@ public class Transaction {
     
   }
 
-  public int askForCreditCardDetails(String cardNumber, String csvNumber,boolean userStatus){
+  public int askForCreditCardDetails(String cardNumber, String csvNumber,boolean userStatus) throws IOException {
     Scanner scan = new Scanner(System.in);
     if (userStatus == true){ //saved before
       System.out.println("\nPrinting user's card details below (saved before)!");
@@ -386,6 +387,48 @@ public class Transaction {
       this.getFinalMsg();
       return 1;
     } else if (userStatus == false){
+      String name = null;
+      String number = null;
+      Scanner sc = new Scanner(System.in);
+      while (true) {
+        System.out.printf("Please enter your credit card name: ");
+        name = sc.nextLine();
+        Console con = System.console();
+        if (con != null) {
+          char[] num = con.readPassword("Please enter your credit card number: ");
+          number = new String(num);
+          System.out.printf("NUMBER LINE 100: [%s]\n", number);
+        } else {
+          System.out.printf("Please enter your credit card number: ");
+          number = sc.nextLine();
+        }
+        boolean result = this.checkCreditCardInfo(name, number);
+        if (result == true){
+          System.out.println("Match!Process to next stage!");
+//        home.setUser(user);
+//        home.run();
+          //Direct to next page!!!
+        } else if (result == false){
+          System.out.println("Not Match!");
+          int temp = 0;
+          while (temp == 0) {
+            String textinput = this.nextOption();
+            if (textinput.equals("1")) {
+              temp = 1;
+            } else if (textinput.equals("2")) {
+              System.out.println("Back to default page--default screen");
+              temp = 2;
+            } else {
+              System.out.println("Invalid input, please choose agian!");
+            }
+          }
+          if (temp == 1) {
+            continue;
+          } else if (temp == 2) {
+            break;
+          }
+        }
+      }
       System.out.printf("\nDo you want to save your card details to your account? (Y/N): ");
       String option2 = scan.nextLine();
       String result = this.checkAutoFillOption(option2);
@@ -403,6 +446,19 @@ public class Transaction {
       }
     }
     return 0;
+  }
+
+  public String nextOption() throws IOException{
+    System.out.printf("\nInvalid credit name or number, please select from the following:\n");
+    System.out.println("1. CONTINUE USING CREDIT CARD");
+    System.out.println("2. CANCEL");
+
+//    ConsoleReader consoleReader = new ConsoleReader();
+    String textinput = null;
+//    textinput = consoleReader.readLine();
+    Scanner scan = new Scanner(System.in);
+    textinput = scan.nextLine();
+    return textinput;
   }
 
   public boolean getFinalMsg(){
@@ -424,6 +480,15 @@ public class Transaction {
       } else {
         System.out.printf("Please enter a valid input: ");
       }
+    }
+  }
+
+  public boolean checkCreditCardInfo(String name, String number) {
+    ParseJson parseJson = new ParseJson();
+    if (parseJson.matchCard(name, number)) {
+      return true;
+    } else {
+      return false;
     }
   }
 
