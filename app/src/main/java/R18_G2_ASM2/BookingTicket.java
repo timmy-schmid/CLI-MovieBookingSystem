@@ -33,9 +33,6 @@ public class BookingTicket {
             this.askForBooking();
             System.out.println(count);
             for(int i =0; i<count; i++){
-                System.out.println(i);
-                System.out.println(count);
-                System.out.println("works?");
                 this.bookingShowingSection();
                 this.bookingASeat();
                 if(!this.checkFullorNot()){
@@ -160,6 +157,7 @@ public class BookingTicket {
             System.out.println("4-All");
             System.out.println("Cancel-cancel\n");
             String str = scan.next();
+            System.out.println("works? From line 163?");
             if(str.equals("1")){
                 this.showing.getMovieSeat().showFrontSeats();
                 break;
@@ -170,9 +168,8 @@ public class BookingTicket {
                 this.showing.getMovieSeat().showRearSeats();
                 break;
             }else if(str.equals("4")){
-                System.out.println("works?");
                 this.showing.getMovieSeat().showAllSeats();
-                System.out.println("works?");
+                System.out.println("works? From line 175?");
                 break;
             }else if(str.equals("Cancel")){
                 this.cancelBooking();
@@ -255,5 +252,6 @@ public class BookingTicket {
         count = 0;
         indexofarray = 0;
         System.out.println("Successfully cancel.");
+        this.printBookingMessage();
     }
 }
