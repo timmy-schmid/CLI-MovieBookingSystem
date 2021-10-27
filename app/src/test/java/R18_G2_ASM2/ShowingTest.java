@@ -32,7 +32,7 @@ class ShowingTest{
          
        Calendar calendar1 = Calendar.getInstance();
        calendar1.setTime(date1);
-       show = new Showing(2, new Movie(1,"77", null, null, null, null,null), new Cinema(1, Screen.SILVER), calendar1);
+       show = new Showing(2, new Movie(1,"77", null, null, null, null,null), new Cinema(1, MovieClass.SILVER), calendar1);
     }
 
 

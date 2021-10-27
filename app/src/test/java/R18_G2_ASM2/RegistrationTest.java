@@ -17,7 +17,8 @@ import java.io.FileReader;
 class RegistrationTest {
   Registration reg;
   private final ByteArrayOutputStream outContent = new ByteArrayOutputStream(); //for testing printing statements
-  private final PrintStream originalOutput = System.out;    
+  private final PrintStream originalOutput = System.out;
+  private HomeScreen home; 
 
   @BeforeAll static void setPath() {
     DataController.setBasePath("src/test/resources/");
@@ -25,8 +26,9 @@ class RegistrationTest {
 
   @BeforeEach
   public void setUp() {
+    home = new HomeScreen(null);
+    reg = new Registration(home);
     Registration.setUserFile("newUserDetailsTest2.csv");
-    reg = new Registration();
     // reg.setUserFile("src/test/resources/newUserDetailsTest2.csv");
 
     //set up streams
@@ -123,7 +125,7 @@ class RegistrationTest {
   }
 
   @Test void nullUserFile(){
-    Registration reg = new Registration();
+    Registration reg = new Registration(home);
     reg.setUserFile(null);
     assertNull(Registration.getUserFile());
   }
@@ -221,12 +223,12 @@ class RegistrationTest {
   // }
 
   @Test void testCancelRegistration() throws IOException {
-    String welcomeMsg = "\n*******************************************************\n" +
+    String welcomeMsg = "\033[H\033[2J\n*******************************************************\n" +
     "            Welcome to the registration page :)            \n" +
     "                   Sign up now FOR FREE!                  \n"+
     "*******************************************************\n";
     String optionMsg = "\n1. ENTER Y TO CONTINUE REGISTERING\n"+
-    "2. ENTER N TO CANCEL AND GO BACK TO HOME PAGE\n" +
+    "2. ENTER N TO CANCEL AND GO BACK\n" +
     "3. ALREADY A MEMBER WITH US? ENTER M TO LOGIN~\n";
     String Option = "\nEnter option: ";
 
@@ -365,12 +367,12 @@ class RegistrationTest {
   }
   
   @Test void testFailCancelRegistration() throws IOException { //first wrong input then correct input
-    String welcomeMsg = "\n*******************************************************\n" +
+    String welcomeMsg = "\033[H\033[2J\n*******************************************************\n" +
     "            Welcome to the registration page :)            \n" +
     "                   Sign up now FOR FREE!                  \n"+
     "*******************************************************\n";
     String optionMsg = "\n1. ENTER Y TO CONTINUE REGISTERING\n"+
-    "2. ENTER N TO CANCEL AND GO BACK TO HOME PAGE\n" +
+    "2. ENTER N TO CANCEL AND GO BACK\n" +
     "3. ALREADY A MEMBER WITH US? ENTER M TO LOGIN~\n";
     String yNOption = "\nEnter option: ";
 
@@ -389,7 +391,7 @@ class RegistrationTest {
   }
 
   @Test void printValidWelcomeScreen(){
-    String welcomeMsg = "\n*******************************************************\n" +
+    String welcomeMsg = "\033[H\033[2J\n*******************************************************\n" +
     "            Welcome to the registration page :)            \n" +
     "                   Sign up now FOR FREE!                  "+
     "\n*******************************************************\n\n";

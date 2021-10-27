@@ -19,22 +19,24 @@ public class BookingTicket {
     }
 
     public void run(){
-         count = 0;
-       while(Ct == 1){
-           if(this.checkFullorNot()){
+        System.out.println("DO I GET HERE1");
+      System.out.println("DO I GET HERE1");
+       while(this.checkFullorNot()){
            this.bookingShowingSection();
            this.bookingASeat();
-            this.askForBooking();}else {
-               //return to the default page
-               break;
-           }
+            this.askForBooking();
+            if (Ct == 2){
+                // go back to the default user page
+                this.printBookingMessage();
+                break;
+            }
         }
     }
-
     public boolean checkFullorNot(){
         if(!showing.isShowingFull()){
             System.out.println("No empty seat for the current show :(");
         }
+        System.out.println("DO I GET HERE2");
         return showing.isShowingFull();
     }
 

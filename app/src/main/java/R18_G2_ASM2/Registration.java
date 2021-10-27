@@ -10,7 +10,7 @@ import java.io.FileWriter;
 import java.util.Scanner;
 import java.io.*;
 
-public class Registration extends UserFields{
+public class Registration extends UserFields {
   /*
   This class: prints screen for when user clicks: 'To Register'
   and creates a new user account for them
@@ -21,13 +21,15 @@ public class Registration extends UserFields{
   1. when a user first registers, they are prompted to enter their email, password + phone number
   */
   private File userCsvFile;
-  private static  String USER_FILE_NAME = "newUserDetails2.csv";
+  private static String USER_FILE_NAME = "newUserDetails2.csv";
+  HomeScreen home;
 
   private String userCsvFile2; //writing to...
-  public Registration() {
+  public Registration(HomeScreen home) {
+    this.home = home;
 
     this.userCsvFile = DataController.accessCSVFile(USER_FILE_NAME);
-    this.userCsvFile2 = this.userCsvFile.getAbsolutePath(); //str version
+    //this.userCsvFile2 = this.userCsvFile.getAbsolutePath(); //str version -Tim this throws a NULLPointerError for me
     
     // System.out.printf("LINE 31: REGISTRATION: this.userCsvFile2 = [%s]\n", this.userCsvFile2);
   }
@@ -43,17 +45,24 @@ public class Registration extends UserFields{
     USER_FILE_NAME = name;
   }
 
+  public void run() {
+    try {
+      retrieveUserInputDetails3();
+    } catch (IOException e) {
+      e.printStackTrace();
+    }
+  }
+
   //sprint 2 --> new after meeting update:
-  public User retrieveUserInputDetails3() throws IOException { //return a USER object?
+  public void retrieveUserInputDetails3() throws IOException { //return a USER object?
     this.printWelcome();
-    Scanner scan = new Scanner(System.in);
     User currentUser = null;
   
     System.out.println("1. ENTER Y TO CONTINUE REGISTERING\n"+
-    "2. ENTER N TO CANCEL AND GO BACK TO HOME PAGE\n" +
+    "2. ENTER N TO CANCEL AND GO BACK\n" +
     "3. ALREADY A MEMBER WITH US? ENTER M TO LOGIN~");
     System.out.printf("\nEnter option: ");
-
+    Scanner scan = new Scanner(System.in);
     while (true){
       String option = scan.nextLine();
       if (option.toUpperCase().startsWith("N") == true){
@@ -122,16 +131,19 @@ public class Registration extends UserFields{
         if (returnResult == true && returnResult2 == true) {
           currentUser = this.createAccount3(nickname, email, phoneNumber, password);
         
+          /*
           String resultOption = this.nextOption();
           if (resultOption == null){
             System.out.println("\nINVALID OPTION SELECTED~");
-          }
+          }*/
+          home.setUser(currentUser);
+          home.run();
           break;
         //else: keep entering a new password
         } 
       } else if (option.toUpperCase().startsWith("M")) {
         //redirect to login page!
-        Login login = new Login();
+        Login login = new Login(home);
         login.retrieveUserInputDetails();
         break; // or return to default page
 
@@ -140,10 +152,11 @@ public class Registration extends UserFields{
       }
       System.out.println();
     }
-    return currentUser;
+
   }
  
   public void printWelcome(){
+    System.out.print("\033[H\033[2J"); // clears screen
     System.out.println("\n*******************************************************");
     System.out.println("            Welcome to the registration page :)            ");
     System.out.println("                   Sign up now FOR FREE!                  ");

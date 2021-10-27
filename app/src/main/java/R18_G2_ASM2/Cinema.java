@@ -4,10 +4,10 @@ public class Cinema {
 
   private int id;
   //private int capacity; (this can be calculated in Showing.java)
-  Screen cinemaScreen;
+  MovieClass cinemaScreen;
 
 
-  public Cinema (int id, Screen cinemaScreen){
+  public Cinema (int id, MovieClass cinemaScreen){
     this.id = id;
     this.cinemaScreen = cinemaScreen;
   }
@@ -16,7 +16,7 @@ public class Cinema {
     return id;
   }
 
-  public Screen getScreen() {
+  public MovieClass getScreen() {
     return cinemaScreen;
 
   }

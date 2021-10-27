@@ -1,14 +1,11 @@
 package R18_G2_ASM2;
 
 import java.io.ByteArrayInputStream;
-import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.PrintStream;
 import java.util.HashMap;
 import java.util.Scanner;
 public class MovieSystem {
-
-  private static String resourceAbsPath;
 
   private String MOVIES_FILE_NAME = "movie.csv";
   private String CINEMAS_FILE_NAME = "cinema.csv";
@@ -19,9 +16,8 @@ public class MovieSystem {
 
   private HashMap<Integer,Movie> movies = new HashMap<>();
   private HashMap<Integer,Cinema> cinemas = new HashMap<>();
-  private HashMap<Integer,Showing> showings = new HashMap<>();
-  User currentUser = null;
 
+  User currentUser = null;
 
   private Scanner sc;
   private PrintStream out;
@@ -29,17 +25,24 @@ public class MovieSystem {
   public MovieSystem(ByteArrayInputStream in, PrintStream out) {
     this.sc = new Scanner(in);
     this.out = out;
-    resourceAbsPath = System.getProperty("user.dir");
+
+    importMovieData();
   }
 
   public MovieSystem() {
     this.sc = new Scanner(System.in);
     this.out = System.out;
-    resourceAbsPath = System.getProperty("user.dir");
+
+    importMovieData();
   }
 
   public void run() {
 
+    HomeScreen home = new HomeScreen(movies);
+    StartScreen startScreen = new StartScreen(home);
+
+    startScreen.run();
+  /* //OLD CODE
   while (true) {
     printStartScreen();
     Registration reg = null;
@@ -67,20 +70,9 @@ public class MovieSystem {
 
       if (currentUser != null) {
         selection = parseInput("Qq",showings.size());
-        /*
-        if (selection.equals("E") || selection.equals("E")) {
-          editUser();
-        }*/
+
       } else {
         selection = parseInput("Qq",showings.size());
-        /*
-        if (selection.equals("R") || selection.equals("r")) {
-          try {
-            currentUser = reg.retrieveUserInputDetails();
-          } catch (Exception e) {
-            out.println(e.getStackTrace());
-          }
-        } */
       }
       if (selection.equals("q") || selection.equals("Q")) {
         quit();
@@ -108,19 +100,8 @@ public class MovieSystem {
     else if (selection.equals("q") || selection.equals("Q")) {
       quit();
       break;
-    }
+    }*/
   }
-}
-    /*
-      User tim = new User(1, "tim@gmail.com", "TestOne12!@");
-      BookingTicket t = new BookingTicket(showings.get(2), tim);
-      t.run();
-
-      movies.get(1).toString(s);
-      Showing.getSingleMovieShowings(showings, s, movies.get(1));
-      out.println(s);
-  */
-
 
   //parses either an integer selection OR a single character specified by pattern
   public String parseInput(String pattern, int max) {
@@ -172,7 +153,7 @@ public class MovieSystem {
     } 
 
     try {
-      DataController.importShowings(movies,cinemas, showings, SHOWINGS_FILE_NAME);
+      DataController.importShowings(movies,cinemas, SHOWINGS_FILE_NAME);
     } catch (IOException e) {
       out.println("Error reading file: " + SHOWINGS_FILE_NAME);
     } 
@@ -221,7 +202,6 @@ public class MovieSystem {
     s.append(String.format("   %s - to log out and quit\n\n", wrapColour("Q")));
 
     out.println(s);
-
   }
 
   public void printMovieScreen(Movie m) {
@@ -235,8 +215,8 @@ public class MovieSystem {
     s.append(ANSI_RESET); 
     MovieSystem.printBar(s);
 
-    m.printMovieDetails(s);
-    Showing.getSingleMovieShowings(showings,s, m);
+    m.printMovieDetails();
+    //Showing.getSingleMovieShowings(showings, m);
 
     s.append("\nIf you would like to go back press " + wrapColour("B"));
       
