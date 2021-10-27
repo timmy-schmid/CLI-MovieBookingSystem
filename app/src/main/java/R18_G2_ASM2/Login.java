@@ -68,10 +68,6 @@ public class Login extends Screen {
           if (textinput.equals("1")) {
             temp = 1;
           } else if (textinput.equals("2")) {
-            System.out
-                .println("Please answer the following questions: --To be add in the user.csv");
-            temp = 2;
-          } else if (textinput.equals("3")) {
             System.out.println("Back to default page--Tim part default screen");
             temp = 2;
           } else {
