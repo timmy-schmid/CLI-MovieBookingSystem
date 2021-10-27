@@ -29,7 +29,7 @@ public class Registration extends UserFields {
     this.home = home;
 
     this.userCsvFile = DataController.accessCSVFile(USER_FILE_NAME);
-    this.userCsvFile2 = this.userCsvFile.getAbsolutePath(); //str version
+    //this.userCsvFile2 = this.userCsvFile.getAbsolutePath(); //str version -Tim this throws a NULLPointerError for me
     
     // System.out.printf("LINE 31: REGISTRATION: this.userCsvFile2 = [%s]\n", this.userCsvFile2);
   }

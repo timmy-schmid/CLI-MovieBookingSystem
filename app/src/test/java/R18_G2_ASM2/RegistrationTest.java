@@ -18,7 +18,7 @@ class RegistrationTest {
   Registration reg;
   private final ByteArrayOutputStream outContent = new ByteArrayOutputStream(); //for testing printing statements
   private final PrintStream originalOutput = System.out;
-  private HomeScreen home = new HomeScreen(null);
+  private HomeScreen home; 
 
   @BeforeAll static void setPath() {
     DataController.setBasePath("src/test/resources/");
@@ -26,7 +26,7 @@ class RegistrationTest {
 
   @BeforeEach
   public void setUp() {
-
+    home = new HomeScreen(null);
     reg = new Registration(home);
     Registration.setUserFile("newUserDetailsTest2.csv");
 
