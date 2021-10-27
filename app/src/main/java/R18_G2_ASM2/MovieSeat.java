@@ -20,10 +20,7 @@ public class MovieSeat{
     private int totalRearSeat;
     public MovieSeat(Showing showing) throws IOException{
         this.showing = showing;
-        ///Users/timmy/Library/Mobile Documents/com~apple~CloudDocs/Uni/SOFT2412/Assignments/R18_G2_ASM2/app/src/test/resources/movieSeatsMap/1-1-2.csv
-        ///Users/timmy/Library/Mobile Documents/com~apple~CloudDocs/Uni/SOFT2412/Assignments/R18_G2_ASM2/app/src/main/resources/movieSeatsMap/1-1-2.csv
         movieSeat = DataController.accessCSVFile("movieSeatsMap/"+ String.valueOf(showing.getMovie().getId())+"-"+ String.valueOf(showing.getCinema().getId())+"-"+String.valueOf(showing.getShowingId())+".csv");
-        //System.out.println("MOVIE SEAT PATH:" + movieSeat.getAbsolutePath());
         if (!movieSeat.exists()){
             try {
                 movieSeat.createNewFile();

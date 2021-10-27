@@ -22,7 +22,7 @@ public class StartScreenTest {
   @BeforeAll static void setup() {
     mockHomeScreen = mock(HomeScreen.class);
     actualOut = new ByteArrayOutputStream();
-    System.setOut( new PrintStream(actualOut));
+    System.setOut(new PrintStream(actualOut));
   }
   
   @BeforeEach void resetSystem() {

@@ -33,7 +33,7 @@ public class Showing implements Comparable<Showing> {
     // this.movieSeat = new MovieSeat(this); //handle Io-Exception
 
     // initialise seatMap based on cinema type
-    
+    setMovieSeat();
     seatsBooked = new HashMap<>();
     seatsBooked.put(SeatLocation.REAR,0);
     seatsBooked.put(SeatLocation.MIDDLE,0);

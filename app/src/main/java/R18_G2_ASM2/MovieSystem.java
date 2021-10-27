@@ -32,16 +32,23 @@ public class MovieSystem {
   public MovieSystem() {
     this.sc = new Scanner(System.in);
     this.out = System.out;
-
     importMovieData();
   }
 
   public void run() {
 
-    HomeScreen home = new HomeScreen(movies);
-    StartScreen startScreen = new StartScreen(home);
+    User u = new User(1,"tim","pwd");
+    Showing s = movies.get(5).getShowingsBeforeNextMonday().get(0);
+    s.showAllSeats();
+    System.out.println("Seats left: " + s.totalSeatsLeft() + " seats left");
+    System.out.println("Session time: " + s.getShowingTimeFormatted() );
+    BookingTicket book = new BookingTicket(s,u);
+    book.run();
 
-    startScreen.run();
+    //HomeScreen home = new HomeScreen(movies);
+    //StartScreen startScreen = new StartScreen(home);
+
+    //startScreen.run();
   }
 
   public void importMovieData() {
