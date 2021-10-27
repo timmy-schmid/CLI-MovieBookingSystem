@@ -27,7 +27,7 @@ public class MovieSeat{
         if (!movieSeat.exists()){
             try {
                 movieSeat.createNewFile();
-                seatMap = FileTools.readFromCsv(new File("src/main/datasets/movieSeatsMap/"+showing.getCinema().cinemaScreen.toString()+".csv"));
+                seatMap = FileTools.readFromCsv(new File("app/src/main/resources/movieSeatsMap/"+showing.getCinema().cinemaScreen.toString()+".csv"));
                 writeToDatabase();
             } catch (IOException e) {
                 e.printStackTrace();
