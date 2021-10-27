@@ -10,7 +10,7 @@ public class Login {
   and password
   */
   private File userCsvFile;
-  private static  String USER_FILE_NAME = "newUserDetails2.csv";
+  private static String USER_FILE_NAME = "newUserDetails2.csv";
   private User user;
 
   public Login() {
