@@ -18,13 +18,7 @@ public class Registration extends UserFields{
 
   This class registers a new user to become a customer by creating a new account for them.
 
-  --> looks at file user1.csv (say e.g. those people who made an account but haven't booked yet so no card details stored?)
-
-  --> user.csv file (contains card details, remembers those who have booked tickets before - details saved in system)
-
-  VERSION update: removed additional options after signing in and only directed to home page.
-
-  1. when a user first registers, they are prompted to enter their email, password + card number + phone number
+  1. when a user first registers, they are prompted to enter their email, password + phone number
   */
   private File userCsvFile;
   private static  String USER_FILE_NAME = "newUserDetails2.csv";
@@ -33,14 +27,17 @@ public class Registration extends UserFields{
   public Registration() {
 
     this.userCsvFile = DataController.accessCSVFile(USER_FILE_NAME);
-
-    //"app/src/main/datasets/user1.csv";
-    // this.userCsvFile2 = "/Users/annasu/Downloads/USYD2021/SEMESTER_2/SOFT2412/ASSIGNMENT-2-NEW/R18_G2_ASM2/app/src/main/datasets/newUserDetails2.csv";
-    this.userCsvFile2= this.userCsvFile.getName();
+    this.userCsvFile2 = this.userCsvFile.getAbsolutePath(); //str version
+    
+    // System.out.printf("LINE 31: REGISTRATION: this.userCsvFile2 = [%s]\n", this.userCsvFile2);
   }
   
   public static String getUserFile(){
     return USER_FILE_NAME;
+  }
+
+  public String getUserCsvFile(){
+    return this.userCsvFile2;
   }
   public static void setUserFile(String name){
     USER_FILE_NAME = name;
@@ -95,9 +92,12 @@ public class Registration extends UserFields{
               returnResult = true;
               break;
             } 
-          } else if (result == -1){ //entered value (that should be unique) already exists in db
-            // System.out.println("The supplied details contain info that already exists in our system. Please re-enter again: ");
           }
+
+          
+          // } else if (result == -1){ //entered value (that should be unique) already exists in db
+          //   // System.out.println("The supplied details contain info that already exists in our system. Please re-enter again: ");
+          // }
           System.out.println();
         }
 
@@ -213,27 +213,16 @@ public class Registration extends UserFields{
   public int writeUserDetailsToFile3(String nickname, String email, String phoneNumber, String password){
     int id = -1;
     try {
-      System.out.printf("LINE 228 IN REGISTRATION: ABOUT TO WRITE TO FILE: [%s]\n", USER_FILE_NAME);
-      // BufferedReader myReader = new BufferedReader(new FileReader(USER_FILE_NAME));
+      System.out.printf("LINE 228 IN REGISTRATION: ABOUT TO WRITE TO FILE: [%s]\n", this.userCsvFile2);
       Scanner myReader = new Scanner(this.userCsvFile);
       String currentLine = "";
       String lastLine = "";
       
       //if file exists and theres data inside
-      int line = 0;
-      // while ((currentLine = myReader.readLine()) != null){
-      //   // if (currentLine.trim().length() > 0) {
-      //     lastLine = currentLine;
-      //     line+=1;
-      //   // }
-      // }
       while (myReader.hasNextLine()){
         currentLine = myReader.nextLine();
         lastLine = currentLine;
-        line+=1;
       }
-
-      System.out.println("LINE243: last line ============= " + lastLine);
       myReader.close();
       //extract last number ID from row, then add 1.
       //(can't write to USER_FILE_NAME for some reason)
@@ -244,7 +233,7 @@ public class Registration extends UserFields{
 
         id = Integer.parseInt(lastLine.split(",")[0]);
         myWriter.write("\n"+String.valueOf(id+1)+","+nickname+","+email+","+phoneNumber+","+password+",F");
-        System.out.printf("LINE 259 IN REGISTRATION: WRITING TO FILE: [%s]\n", "\n"+String.valueOf(id+1)+","+nickname+","+email+","+phoneNumber+","+password+",F");
+        System.out.printf("LINE 233 IN REGISTRATION: WRITING TO FILE: [%s]\n", "\n"+String.valueOf(id+1)+","+nickname+","+email+","+phoneNumber+","+password+",F");
         id+=1;
 
       } catch(NumberFormatException e){
@@ -254,7 +243,7 @@ public class Registration extends UserFields{
       // System.out.println("LINE 266---------------------------------");
     } catch (FileNotFoundException e){
       //if reading file doesn't exist, write to file path     
-      // System.out.println("LINE 270---------------------------------");
+      System.out.printf("FILE NOT FOUND ERROR: %s!\n", USER_FILE_NAME);
 
       try {
         FileWriter myWriter = new FileWriter(this.userCsvFile2); //for appending to existing file
