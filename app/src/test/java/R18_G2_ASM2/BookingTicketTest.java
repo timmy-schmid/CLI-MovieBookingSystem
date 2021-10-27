@@ -25,6 +25,8 @@ public class BookingTicketTest {
 
     @BeforeEach
     public void setUp() throws IOException{
+        testMovie = new Movie(2, null, null, null, null, null, null);
+        testCinema = new Cinema(2, MovieClass.GOLD);
         testcal = Calendar.getInstance();
         testActor.add("some name1");
         testActor.add("some name2");
