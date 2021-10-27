@@ -21,6 +21,12 @@ public class TransactionTest {
   private User userA;
   private User userB;
 
+  private File gFile;
+  private File gFile2;
+
+  private File tFile;
+  private File tFile2;
+
   private final ByteArrayOutputStream outContent = new ByteArrayOutputStream(); //for testing printing statements
   private final PrintStream originalOutput = System.out;    
 
@@ -30,9 +36,10 @@ public class TransactionTest {
 
   @BeforeEach
   public void setUp() {
-    User userA = new User(6, "Anna", "anna@yahoo.com","0412345881", "Lalala1234");
-   
-    User userB = new User(7, "helen", "hhh@gmail.com", "0423456719", "Asdf1234!*");
+
+    userA = new User(6, "Anna", "anna@yahoo.com","0412345881", "Lalala1234");
+  
+    userB = new User(7, "helen", "hhh@gmail.com", "0423456719", "Asdf1234!*");
 
     userB.setAutoFillStatus(true);
 
@@ -40,23 +47,34 @@ public class TransactionTest {
     t2 = new Transaction(userB); //autofill option
     System.setOut(new PrintStream(outContent));
 
+    gFile = DataController.accessCSVFile("giftCardsTest.csv");    
+    gFile2 = DataController.accessCSVFile("giftCardsTest.csv");    
+
+    tFile = DataController.accessCSVFile("cardTemp.csv");    
+    tFile2 = DataController.accessCSVFile("cardTemp2.csv");    
+
     t.setUserFile("newUserDetailsTest2.csv");
     t2.setUserFile("newUserDetailsTest2.csv");
 
-    t.setGiftCardsFile("giftCardsTest.csv");
-    t2.setGiftCardsFile("giftCardsTest.csv");
+    t.setGiftCardsFile(gFile);
+    t2.setGiftCardsFile(gFile2);
 
-    t.setTempFileName("temp.csv");
-    t.setTempFile2Name("temp2.csv");
-    t2.setTempFileName("temp.csv");
-    t2.setTempFile2Name("temp2.csv");
+    t.setTempFile(tFile);
+    t.setTempFile2(tFile2);
+    t2.setTempFile(tFile);
+    t2.setTempFile2(tFile2);
   }
+
   @AfterEach
   public void tearDown(){ 
     userA = null;
     userB = null;
     t = null;
     t2 = null;
+    gFile = null;
+    gFile2 = null;
+    tFile = null;
+    tFile2 = null;
     //restoreStreams
     System.setOut(originalOutput);
   }
@@ -69,7 +87,7 @@ public class TransactionTest {
   @Test void canPrintScreen(){
     String screenMsg = "\n*******************************************************\n" +
     "            Welcome to the payment page :)            \n" +
-    "           Movie to book details           \n"+
+    "               Movie to book details               \n"+
     "*******************************************************\n\n" +
     "Number of tickets: \n" + 
     "Total Amount: \n\n";
@@ -88,20 +106,16 @@ public class TransactionTest {
     assertEquals("invalid", autoFillMsg);
   }
 
-  @Test void continueToPayWithCard(){
+  @Test void continueToPayWithGiftCard(){
     String optionMsg = "Please select a payment method:\n" +
                       "\n1 - Credit Card\n"+ "2 - Gift Card\n" + 
                       "C - Cancel Transaction\n" +
                       "\nUser Input: ";
 
-    // String msg = "\n*******************************************************\n"+
-    // "PROCEEDING TO PAY WITH CARD~ in 3..2..1..\n" + 
-    // "*******************************************************\n\n";
-
     String expectedOut = optionMsg;//+ msg;
 
-    String inputMessage = "1\n";
-    String expected = "1";
+    String inputMessage = "2\n";
+    String expected = "2";
 
     ByteArrayOutputStream outContent = new ByteArrayOutputStream();
     System.setOut(new PrintStream(outContent));
@@ -163,15 +177,18 @@ public class TransactionTest {
   }
 
   @Test void testValidGiftCard(){
-   String result = t.checkIfGiftCardExists("11111111111116GC");
+    String result = t.checkIfGiftCardExists("11111111111116GC");
     assertEquals(result, "found");
   }
 
   @Test void testInvalidGiftCard(){
-  String result = t.checkIfGiftCardExists("11342416GC");
+    String result = t.checkIfGiftCardExists("11342416GC");
     assertEquals(result, "invalid number");
   }
 
+  @Test void testPayCreditCard(){
+
+  }
   // @Test void testInvalidGiftCardDetails(){
   //   String msg = "Please enter your gift card number: " +
   //               ""
@@ -180,27 +197,133 @@ public class TransactionTest {
 
   //gift card csv file not found ??????????
 
-  // @Test void validGiftCardStatusUpdate() throws IOException{
-  //   //assert reading file (T --> F for specific number)
-  //   String status = "";
+  @Test void validGiftCardStatusUpdate() throws IOException{
+    //assert reading file (T --> F for specific number)
+    String status = "";    
+    String currentLine = "";
+    String lastLine = "";
+    BufferedReader myReader = new BufferedReader(new FileReader(t.getGiftCardFileName()));
+    //read file before overwriting
+    while ((currentLine = myReader.readLine()) != null){
+      lastLine = currentLine;
+      if (lastLine.split(",")[0].equals("11111111111115GC")){
+        status = lastLine.split(",")[1];
+        break;
+      }
+    }
+    myReader.close();
 
-  //   String message = t.updateGiftCardStatus("GC1111111111111115");
-  //   assertEquals(message, "first time ok");
-  //   String currentLine = "";
-  //   String lastLine = "";
-  //   BufferedReader myReader = new BufferedReader(new FileReader(t.getGiftCardFileName()));
-  // //   System.out.println("t.giftcardssfilename = " + t.getGiftCardFileName());
-  //   while ((currentLine = myReader.readLine()) != null){
-  //     lastLine = currentLine;
-  //     if (lastLine.split(",")[0].equals("GC1111111111111115")){
-  //       status = lastLine.split(",")[1];
-  //       break;
-  //     }
-  //   }
-  //   myReader.close();
-  //   // int id = id = Integer.parseInt(lastLine.split(",")[0]);
-  //   // assertEquals(lastLine, String.valueOf(id) + ",benji,"+ username + ",0404040123,"+pwd+",F");
-  //   assertEquals(status, "F");
-  // //   assertEquals(outContent.toString(), "lala");
-  // }
+    String message = t.updateGiftCardStatus("11111111111115GC");
+
+    if (status.equals("T")){
+      assertEquals(message, "first time ok"); //first time run (T-->F)
+    } else {
+
+      assertEquals(message, "not redeemable"); //next time read, already changed
+    }
+  }
+
+
+  @Test void giftCardNotRedeemable(){ //valid card number in system
+    String msg = "Please enter your gift card number: ";
+    String msg2 = "Please select from the following: \n" +
+                  "\n1. Enter another gift card\n2. Go back to pay with credit card" +
+                  "\n3. Cancel payment\n" +
+                  "\nEnter option: "; 
+
+    String expectedOut = msg + msg2;
+    String inputMessage = "11111111111115GC\n3";
+
+    ByteArrayOutputStream outContent = new ByteArrayOutputStream();
+    System.setOut(new PrintStream(outContent));
+
+    ByteArrayInputStream in = new ByteArrayInputStream(inputMessage.getBytes());
+
+    System.setIn(in);
+
+    int returnNumber = t.askForGiftCardDetails();
+    assert(returnNumber == 3); //cancel transaction
+  }
+
+  @Test void giftCardNotRedeemable2(){ 
+    String msg = "Please enter your gift card number: ";
+    String msg2 = "Please select from the following: \n" +
+                  "\n1. Enter another gift card\n2. Go back to pay with credit card" +
+                  "\n3. Cancel payment\n" +
+                  "\nEnter option: "; 
+
+    String expectedOut = msg + msg2 + "Line 149: please re-enter a valid option: \n";
+    String inputMessage = "11111111111116GC\n8\n2";
+
+    ByteArrayOutputStream outContent = new ByteArrayOutputStream();
+    System.setOut(new PrintStream(outContent));
+
+    ByteArrayInputStream in = new ByteArrayInputStream(inputMessage.getBytes());
+
+    System.setIn(in);
+
+    int returnNumber = t.askForGiftCardDetails();
+    assert(returnNumber == 2); //cancel transaction
+    assertEquals(outContent.toString(), expectedOut);
+  }
+
+  @Test void giftCardNotInvalid(){ //invalid card number + wrong input supplied
+    String msg = "Please enter your gift card number: ";
+    String expectedOut = msg + "The gift card number you have provided does not match the details provided in our system. Please try again.\n\n";
+    String inputMessage = "lalala015GC";
+
+    ByteArrayOutputStream outContent = new ByteArrayOutputStream();
+    System.setOut(new PrintStream(outContent));
+
+    ByteArrayInputStream in = new ByteArrayInputStream(inputMessage.getBytes());
+
+    System.setIn(in);
+
+    int returnNumber = t.askForGiftCardDetails();
+    assert(returnNumber == -1); //cancel transaction
+  }
+
+  @Test void testFinalMessage(){
+    String msg = "Select from the following: \n" +
+                  "F - Finalise transaction\nC - Cancel transaction\n" +
+                  "\nUser Input: ";
+    
+    String inputMessage = "F";
+    String msg2 = "\nTransaction Successful!\n" +
+                  "Please see your receipt below to present at the cinema: \n\n\n\n";
+
+    String expectedOut = msg+msg2;
+    ByteArrayOutputStream outContent = new ByteArrayOutputStream();
+    System.setOut(new PrintStream(outContent));
+
+    ByteArrayInputStream in = new ByteArrayInputStream(inputMessage.getBytes());
+
+    System.setIn(in);
+    
+    boolean result = t2.getFinalMsg();
+    assert(result == true);
+    assertEquals(outContent.toString(), expectedOut);
+  }
+
+  @Test void testFinalMessage2(){
+    String msg = "Select from the following: \n" +
+                  "F - Finalise transaction\nC - Cancel transaction\n" +
+                  "\nUser Input: ";
+    
+    String inputMessage = "lala\nC";
+    String msg2 = "Please enter a valid input: " +
+                  "\nLINE 422: Transaction cancelled!\n";
+
+    String expectedOut = msg+msg2;
+    ByteArrayOutputStream outContent = new ByteArrayOutputStream();
+    System.setOut(new PrintStream(outContent));
+
+    ByteArrayInputStream in = new ByteArrayInputStream(inputMessage.getBytes());
+
+    System.setIn(in);
+    
+    boolean result = t2.getFinalMsg();
+    assert(result == false);
+    assertEquals(outContent.toString(), expectedOut);
+  }
 }

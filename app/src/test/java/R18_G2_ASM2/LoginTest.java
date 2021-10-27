@@ -26,7 +26,6 @@ class LoginTest {
   private final ByteArrayOutputStream outContent = new ByteArrayOutputStream();
   private final PrintStream originalOutput = System.out;
 
-
   @BeforeAll public static void setPath() {
     DataController.setBasePath("src/test/resources/");
   }
@@ -35,9 +34,6 @@ class LoginTest {
   public void setUp() {
     Login.setUserFile("newUserDetailsTest2.csv");
     login = new Login();
-    // login.setUserFile(new File("app/src/test/resources/userTest.csv"));
-//    login.setUserFile(new File("/Users/robingo/Desktop/usyd yr 2 s2/soft2412/asm2/R18_G2_ASM2/app/src/main/datasets/user1.csv"));
-    // login.setUserFile("app/src/test/resources/newUserDetailsTest2.csv"); //new File("app/src/test/resources/newUserDetailsTest2.csv"));
 
     System.setOut(new PrintStream(outContent));
   }
@@ -53,6 +49,11 @@ class LoginTest {
   public void LoginNotNull(){
     Login login = new Login();
     assertNotNull(login);
+  }
+
+  @Test
+  public void userNull(){
+    assertNull(login.getUser());
   }
 
   // @Test
