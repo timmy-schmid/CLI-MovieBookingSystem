@@ -10,6 +10,7 @@ public class BookingTicket {
     private User user;
     private boolean successBooking = false;
     private Integer Ct =1;
+    private int count;
 
 
     public BookingTicket(Showing showing, User user){
@@ -18,17 +19,18 @@ public class BookingTicket {
     }
 
     public void run(){
-       while(this.checkFullorNot()){
+         count = 0;
+       while(Ct == 1){
+           if(this.checkFullorNot()){
            this.bookingShowingSection();
            this.bookingASeat();
-            this.askForBooking();
-            if (Ct == 2){
-                // go back to the default user page
-                this.printBookingMessage();
-                break;
-            }
+            this.askForBooking();}else {
+               //return to the default page
+               break;
+           }
         }
     }
+
     public boolean checkFullorNot(){
         if(!showing.isShowingFull()){
             System.out.println("No empty seat for the current show :(");
