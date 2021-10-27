@@ -10,19 +10,23 @@ public class Login {
   and password
   */
   private File userCsvFile;
-  private static  String USER_FILE_NAME = "user1.csv";
+  private static String USER_FILE_NAME = "newUserDetails2.csv";
+  private User user;
 
   public Login() {
     userCsvFile = DataController.accessCSVFile(USER_FILE_NAME);
-    //System.out.println(userCsvFile.getAbsolutePath());
-    //System.out.println("FILE EXISTS?:" + userCsvFile.exists());
+    this.user = null;
   }
 
   public static void setUserFile(String name){
     USER_FILE_NAME = name;
   }
 
-  public void retrieveUserInputDetails() throws IOException{
+  public User getUser(){
+    return this.user;
+  }
+  public User retrieveUserInputDetails() throws IOException{
+  // public void retrieveUserInputDetails() throws IOException{
     this.printScreen();
     Scanner scan = new Scanner(System.in);
     //validate user details after retrieving input!!!
@@ -36,16 +40,16 @@ public class Login {
       if (con != null) {
         char[] pwd = con.readPassword("Please enter your password: ");
         password = new String(pwd);
-        //System.out.printf("PASSWORD LINE 100: [%s]\n", password);
+        System.out.printf("PASSWORD LINE 100: [%s]\n", password);
       } else {
         System.out.printf("Please enter your password: ");
         password = scan.nextLine();
       }
 
-      int result = this.checkIfUserExists(username, password);
+      int result = this.checkIfUserExists2(username, password);
       if (result == 1){
-        System.out.println("Welcome back " + username + "!");
-        return;
+        System.out.println("\nWelcome back " + username + "!");
+        return this.getUser();
         //Direct to next page!!!
       } else if (result == -1){
         int temp = 0;
@@ -71,45 +75,93 @@ public class Login {
         }
       }
     }
+
+    System.out.printf("USER DETAILS LINE 77 :, user number: %s\n", this.getUser().getPhoneNumber());
+    return this.getUser();
   }
 
-  public int checkIfUserExists(String userEmail, String userPassword){
+  // //sprint 1 version --> use checkIfUserExists2() ???????
+  // public int checkIfUserExists(String userEmail, String userPassword){
+  //   int userID = 1;
+  //   String email = null;
+  //   String realPassword = null;
+  //   int result = 0;
+
+  //   try {
+  //     Scanner myReader = new Scanner(userCsvFile);
+  //     while (myReader.hasNextLine()) { //as long as you can keep reading the file, grab the details
+  //       String line = myReader.nextLine();
+  //       String[] detailsArray = line.split(",");
+  //       try{
+  //         userID = Integer.parseInt(detailsArray[0]);
+  //       } catch(NumberFormatException e){
+  //         e.printStackTrace();
+  //         break;
+  //       }
+  //       // email = detailsArray[1];
+  //       // realPassword = detailsArray[2];
+  //       email = detailsArray[2];
+  //       realPassword = detailsArray[4];
+  //       if (userEmail.equals(email)){
+  //         if (realPassword.equals(userPassword)) {
+  //           result = 1;
+  //           break;
+  //         }
+  //         break;
+  //       }
+  //       else {
+  //         result = -1;
+  //       }
+  //     }
+  //     else {
+  //       result = -1;
+  //     }
+  //       myReader.close();
+  //     } catch (FileNotFoundException e) {
+  //       System.out.println(USER_FILE_NAME + " was not found.");
+  //     }
+  //   return result;
+  // }
+
+  //sprint 2 version: edit (added more fields to csv file)
+  //create a user object + return it??
+  public int checkIfUserExists2(String userEmail, String userPassword){
     int userID = 1;
     String email = null;
-    String real_password = null;
+    String realPassword = null;
     int result = 0;
 
-      try {
-        Scanner myReader = new Scanner(userCsvFile);
-
-        while (myReader.hasNextLine()) { //as long as you can keep reading the file, grab the details
-          String line = myReader.nextLine();
-          String[] detailsArray = line.split(",");
-          try{
-            userID = Integer.parseInt(detailsArray[0]);
-          } catch(NumberFormatException e){
-            e.printStackTrace();
-            break;
-          }
-          email = detailsArray[1];
-          real_password = detailsArray[2];
-          if (userEmail.equals(email)){
-            if (real_password.equals(userPassword)) {
-              result = 1;
+    try {
+      Scanner myReader = new Scanner(userCsvFile);
+      while (myReader.hasNextLine()) { //as long as you can keep reading the file, grab the details
+        String line = myReader.nextLine();
+        String[] detailsArray = line.split(",");
+        try{
+          userID = Integer.parseInt(detailsArray[0]);
+        } catch(NumberFormatException e){
+          e.printStackTrace();
+          break;
+        }
+        email = detailsArray[2];
+        realPassword = detailsArray[4];
+        if (userEmail.equals(email)){
+          if (realPassword.equals(userPassword)) {
+            result = 1;          
+            this.user = new User(Integer.parseInt(detailsArray[0]), detailsArray[1], detailsArray[2], detailsArray[3],detailsArray[4]);
+            if (detailsArray[5].equals("T")){
+              user.setAutoFillStatus(true);
               break;
             }
-            else {
-              result = -1;
-            }
-          }
-          else {
+          } else {
             result = -1;
           }
+        } else {
+          result = -1;
         }
-        myReader.close();
-      } catch (FileNotFoundException e) {
-        System.out.println(USER_FILE_NAME + " was not found.");
       }
+    } catch (FileNotFoundException e) {
+      System.out.println("LINE 163: "+USER_FILE_NAME+"  FILE NOT FOUND!!!");
+    }
     return result;
   }
 
@@ -124,6 +176,7 @@ public class Login {
     System.out.printf("\nInvalid username or password, please select from the following:\n");
     System.out.println("1. CONTINUE LOGGING IN");
     System.out.println("2. CANCEL");
+
 //    ConsoleReader consoleReader = new ConsoleReader();
     String textinput = null;
 //    textinput = consoleReader.readLine();

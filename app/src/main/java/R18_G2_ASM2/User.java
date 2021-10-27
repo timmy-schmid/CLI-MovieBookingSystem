@@ -6,15 +6,29 @@ import java.util.List;
 
 import R18_G2_ASM2.UserFields;
 
+
+/*
+
+ADD user status: save card details for next time
+
+*/
 public class User extends UserFields {
 
   private int ID;
+  private String nickname;
+  private String phoneNumber;
   private String email; //used to represent the unique username
   private String password;
   private LinkedHashMap<Movie,String> filterMovie;
   private LinkedHashMap<Person,Integer> ticket = new LinkedHashMap<>();
   private String ticketMessage = "";
   private double totalPriceMutiplier = 0;
+
+  private boolean autoFill;
+  private GiftCard giftCard;
+  private Card creditCard;
+
+  private String cardNumber;
 
   public User(int ID, String email, String password){
     this.ID = ID;
@@ -24,11 +38,52 @@ public class User extends UserFields {
     ticket.put(Person.Student,0);
     ticket.put(Person.Senior,0);
     ticket.put(Person.Adult,0);
+
+    this.autoFill = false; //default, then prompt user during transaction stage to update
+  }
+
+  // TO BE REMOVED!!!!! SPRINT 2 TUES MEETING --> NEW UPDATW
+  public User(int ID, String nickname, String email, String phoneNumber, String password, Card creditCard, GiftCard userGiftCard){ //extra fields added
+    this.ID = ID;
+    this.nickname = nickname;
+    this.email = email;
+    this.phoneNumber = phoneNumber;
+    this.password = password;
+    this.creditCard = creditCard;
+    this.giftCard = userGiftCard;
+
+    ticket.put(Person.Child,0);
+    ticket.put(Person.Student,0);
+    ticket.put(Person.Senior,0);
+    ticket.put(Person.Adult,0);
+
+    this.autoFill = false; //default, then prompt user during transaction stage to update
+  }
+
+
+  //current new version - sprint 2
+  public User(int ID, String nickname, String email, String phoneNumber, String password){ //extra fields added
+    this.ID = ID;
+    this.nickname = nickname;
+    this.email = email;
+    this.phoneNumber = phoneNumber;
+    this.password = password;
+
+    ticket.put(Person.Child,0);
+    ticket.put(Person.Student,0);
+    ticket.put(Person.Senior,0);
+    ticket.put(Person.Adult,0);
+    this.cardNumber = null;
+    this.autoFill = false; //default, then prompt user during transaction stage to update
   }
 
   //getter methods below ~
   public int getID(){
     return this.ID;
+  }
+
+  public String getNicknameName(){
+    return this.nickname;
   }
   public String getEmail(){
     return this.email;
@@ -37,6 +92,25 @@ public class User extends UserFields {
     return this.password;
   }
 
+  public String getPhoneNumber(){
+    return this.phoneNumber;
+  }
+
+  public boolean getAutoFillStatus(){
+    return this.autoFill;
+  }
+
+  // public Card getCreditCard(){
+  //   return this.creditCard;
+  // }
+
+  // public GiftCard getGiftCard(){
+  //   return this.giftCard;
+  // }
+  
+  public String getCardNumber(){
+    return this.cardNumber;
+  }
   //setter methods: e.g. for changing login details ...
   //validate to ensure values to be set to are valid
   public void setID(int ID){
@@ -58,6 +132,15 @@ public class User extends UserFields {
       this.password = newPassword;
     }
   }
+
+  public void setAutoFillStatus(boolean newStatus){
+    this.autoFill = newStatus;
+  }
+
+  public void setCardNumber(String number){
+    this.cardNumber = number;
+  }
+
 
   //rename maybe bookingTicket --> bookTicket? OR nahh
   public void bookingTicket(Person person, int num){
