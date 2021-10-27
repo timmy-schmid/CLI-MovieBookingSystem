@@ -163,7 +163,7 @@ public class TransactionTest {
   }
 
   @Test void testValidGiftCard(){
-   String result = t.checkIfGiftCardExists("1111111111111116GC");
+   String result = t.checkIfGiftCardExists("11111111111116GC");
     assertEquals(result, "found");
   }
 
