@@ -67,8 +67,14 @@ public class Transaction {
   public void printScreen(){ //hi-fi ui of user transaction screen
     System.out.println("\n*******************************************************");
     System.out.println("            Welcome to the payment page :)            ");
-    System.out.println("           Please enter your details below!                  ");
+    // System.out.println("           Please enter your details below!                  ");
+    // System.out.println("*******************************************************\n");
+
+    // System.out.println("\n*******************************************************");
+    System.out.println("           Movie to book details           ");
     System.out.println("*******************************************************\n");
+    System.out.println("Number of tickets: ");
+     System.out.println("Total Amount: \n");
 
   }
 
@@ -98,52 +104,50 @@ public class Transaction {
 
   //return a user object??
 
-  public boolean printOptions(int num){ //boolean userAutoFillStatus){ //print prompt to save if user hasn't changed status yet else don't show
+  public String printOptions(int num){ //boolean userAutoFillStatus){ //print prompt to save if user hasn't changed status yet else don't show
+    String returnMsg = "";
     if (num == 0){ //direct straight to cancelling
       System.out.println("\n*******************************************************");
       System.out.println("     CANCELLING TRANSACTION + REDIRECTING YOU BACK\n               TO HOME PAGE~ in 3..2..1..");
       System.out.println("*******************************************************\n");
-      return false;
+      return "cancel";
     } 
 
-    System.out.println("Please enter an option below~");
-    System.out.println("\nENTER 1 TO PAY WITH CARD~\n"+ "ENTER 2 TO CANCEL TRANSACTION~"); //or TO CANCEL TRANSACTION, PRESS [C]
-    System.out.printf("\nEnter option: ");
+    System.out.println("Please select a payment method:");
+    System.out.println("\n1 - Credit Card\n"+ "2 - Gift Card\n" + "C - Cancel Transaction"); //or TO CANCEL TRANSACTION, PRESS [C]
+    System.out.printf("\nUser Input: ");
 
     Scanner scan = new Scanner(System.in);
     String option = null;
-    boolean continueToPay = false;
     while (true){
       option = scan.nextLine();
-      System.out.println("\n*******************************************************");
       
       if (option.equals("1")){
-        System.out.println("PROCEEDING TO PAY WITH CARD~ in 3..2..1..");
-        continueToPay = true;
+        returnMsg = "1";
         break;
-      } else if (option.equals("2")){ //or go back to booking page??
-        System.out.println("     CANCELLING TRANSACTION + REDIRECTING YOU BACK\n               TO HOME PAGE~ in 3..2..1..");
+      } else if (option.equals("2")){
+        returnMsg = "2";
+        break;
+
+      } else if (option.toLowerCase().equals("c")){ //or go back to booking page??
+        // System.out.println("     CANCELLING TRANSACTION + REDIRECTING YOU BACK\n               TO HOME PAGE~ in 3..2..1..");
+        returnMsg = "cancel";
         break;
       } else { //invalid command entered
-        System.out.printf("OH NO, please enter a valid command");
+        System.out.printf("Please enter a valid command: ");
       }
-      System.out.println("\n*******************************************************");
     }
-    System.out.println("*******************************************************\n");
-
-    return continueToPay;
+    return returnMsg;
   }
   
   public void askForUserDetails(){
-    boolean continueToPay = this.printOptions(-1);
+    String msg = this.printOptions(-1);
     Scanner scan = new Scanner(System.in);
-    if (continueToPay == true){
+    if (msg.equals("1")){ //credit card
       // if autofill option of user isn't true, prompt user to enter card details
-      int res = this.askAutoFillCardDetails();
-      
-      if (res == -1 && this.getCustomer().getAutoFillStatus() == true){
+      if (this.getCustomer().getAutoFillStatus() == true){
         this.askForCreditCardDetails(null, null, true);
-      } else if (res == -1 && this.getCustomer().getAutoFillStatus() == false){ //user wants to pay w credit card but no auto fill, prompt for input 
+      } else { //user wants to pay w credit card but no auto fill, prompt for input 
 
         System.out.printf("\nPlease enter your card number: ");
         String cNumber = scan.nextLine();
@@ -152,52 +156,50 @@ public class Transaction {
          // TODOOOOOOOOO: validate cNumber with robin's reading credit_cards.json function...
 
         this.askForCreditCardDetails(cNumber, csvNumber, false);       
-      } else {
-        while (true){
-          if (res == 2){
-            int returnResult = this.askForGiftCardDetails();
-            if (returnResult == 0){
-              break;
-            }
-            if (returnResult == 2){
-              System.out.println("LINE 132:::::: pay remaining with credit card");
-              break;
-            } else if (returnResult == 3){
-              this.printOptions(0);
-              break;
-            }
-          }
+      }
+    } else if (msg.equals("2")){ //gift card
+      while (true){
+        int returnResult = this.askForGiftCardDetails();
+        if (returnResult == 0){
+          this.getFinalMsg();
+          break;
+        }
+        if (returnResult == 2){
+          System.out.println("LINE 132:::::: pay remaining with credit card");
+          break;
+        } else if (returnResult == 3){
+          this.printOptions(0);
+          break;
         }
       }
     }
-    System.out.println("*******************************************************\n\n");
   }
 
   //return: returnNum: int (either continue to ask to enter details or print details if auto filled already)
-  public int askAutoFillCardDetails(){
-    Scanner scan = new Scanner(System.in);
-    String cardOption = null;
+  // public int askAutoFillCardDetails(){
+  //   Scanner scan = new Scanner(System.in);
+  //   String cardOption = null;
 
-    int returnNum = -1;
+  //   int returnNum = -1;
 
-    String start = "W";
-    while (true){
-      System.out.printf("%shich card would you like to use? (credit/gift): ", start);
-      //since gift card --> 1 time use, only ask below msg if credit card selected?
-      cardOption = scan.nextLine();
-      if (cardOption.equals("credit")){
-        break;
-      } else if (cardOption.equals("gift")){
-        returnNum = 2;
-        break;
-      }
-      start = "\nPlease re-enter: W";
-    }
-    System.out.printf("\nLINE 169: USER INPUT = [%s]\n", cardOption);
-    System.out.printf("\nLINE 170: returnNum = [%s]\n", returnNum);
+  //   String start = "W";
+  //   while (true){
+  //     System.out.printf("%shich card would you like to use? (credit/gift): ", start);
+  //     //since gift card --> 1 time use, only ask below msg if credit card selected?
+  //     cardOption = scan.nextLine();
+  //     if (cardOption.equals("credit")){
+  //       break;
+  //     } else if (cardOption.equals("gift")){
+  //       returnNum = 2;
+  //       break;
+  //     }
+  //     start = "\nPlease re-enter: W";
+  //   }
+  //   System.out.printf("\nLINE 169: USER INPUT = [%s]\n", cardOption);
+  //   System.out.printf("\nLINE 170: returnNum = [%s]\n", returnNum);
 
-    return returnNum;
-  }
+  //   return returnNum;
+  // }
 
   //first check if they select gift card --> then check if valid, if not return immediately + print msg. Otherwise, continue to check autoFill status
   // if user selects credit card, skip gift card number/status + search for autoFill status
@@ -347,7 +349,7 @@ public class Transaction {
       //if it is redeemable but not enough money ask to pay with credit card remaining
       if (returnMsg.equals("not redeemable")){
         System.out.println("Please select from the following: ");
-        System.out.printf("1. Enter another gift card\n2. Go back to pay with credit card"+
+        System.out.printf("\n1. Enter another gift card\n2. Go back to pay with credit card"+
         "\n3. Cancel payment\n"+"\nEnter option: ");
         while (true) {
           int option = scan.nextInt();
@@ -362,7 +364,7 @@ public class Transaction {
           }
         }
       } else if (returnMsg.equals("first time ok")){
-        System.out.println("\nTRANSACTION COMPLETE (Y/N): ");
+        // System.out.println("\nTRANSACTION COMPLETE (Y/N): ");
         return 0; //ok
       }
     } 
@@ -380,10 +382,10 @@ public class Transaction {
       System.out.printf("Name: %s\n", this.getCustomer().getNickname());
       System.out.printf("Card number provided: %s\n", this.getCustomer().getCardNumber());
       System.out.println("Are the details above correct? OR would you like to update your card details? (Y/N): ");
-      System.out.println("\nTRANSACTION COMPLETE");
+      this.getFinalMsg();
       return 1;
     } else if (userStatus == false){
-      System.out.printf("\nWould you like to save your card details for next time? (Y/N): ");
+      System.out.printf("\nDo you want to save your card details to your account? (Y/N): ");
       String option2 = scan.nextLine();
       String result = this.checkAutoFillOption(option2);
       if (result.equals("yes")){
@@ -393,10 +395,39 @@ public class Transaction {
         this.getCustomer().setAutoFillStatus(true);
         this.getCustomer().setCardNumber(cardNumber);
 
-        System.out.println("TRANSACTION COMPLETE :)");
+        // System.out.println("TRANSACTION COMPLETE :)");
+        this.getFinalMsg();
         return 1;
+      } else {
+        this.getFinalMsg();
       }
     }
     return 0;
+  }
+
+  public boolean getFinalMsg(){
+    Scanner scan = new Scanner(System.in);
+    System.out.println("Select from the following: ");
+    System.out.println("F - Finalise transaction\nC - Cancel transaction");
+    System.out.printf("\nUser Input: ");
+
+    while (true) {
+      String option = scan.nextLine();
+      if (option.equals("F")){
+        System.out.println("\nTransaction Successful!");
+        System.out.println("Please see your receipt below to present at the cinema: \n\n\n");
+        //movie name, time, cinema + seats
+        return true;
+      } else if (option.equals("C")){
+        System.out.println("\nLINE 424: Transaction cancelled!");
+        return false;
+      } else {
+        System.out.println("Please enter a valid input.");
+      }
+    }
+  }
+
+  public void printReceipt(){
+
   }
 }
