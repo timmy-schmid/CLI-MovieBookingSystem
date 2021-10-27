@@ -3,9 +3,11 @@
  */
 package R18_G2_ASM2;
 
+import java.io.IOException;
 
 public class App {
-    public static void main(String[] args) {
+    public static void main(String[] args) throws IOException
+    {
         MovieSystem system = new MovieSystem();
         system.run();
     }

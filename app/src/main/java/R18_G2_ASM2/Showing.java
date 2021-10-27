@@ -139,6 +139,27 @@ public int middleSeatBooked(){
   public void showAllSeats(){
     movieSeat.showAllSeats();
   }
+
+  public void showFrontSeats(){
+    movieSeat.showFrontSeats();
+  }
+
+  public void showMiddleSeats(){
+    movieSeat.showMiddleSeats();
+  }
+
+  public void showRearSeats(){
+    movieSeat.showRearSeats();
+  }
+
+  public boolean bookSeat(char rowLetter, int colNum) throws IOException{
+    return movieSeat.bookSeat(rowLetter, colNum);
+  }
+
+  public boolean cancelReservation(char rowLetter, int colNum) throws IOException{
+    return movieSeat.cancelReservation(rowLetter, colNum);
+  }
+  
   public static int getSingleMovieShowings(HashMap<Integer,Showing> showings, Movie m) {
 
     StringBuilder s = new StringBuilder();

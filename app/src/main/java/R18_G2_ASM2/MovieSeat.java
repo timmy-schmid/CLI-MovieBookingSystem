@@ -2,9 +2,12 @@ package R18_G2_ASM2;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.Arrays;
+import java.util.List;
 
 import R18_G2_ASM2.SeatDataTools.DataFrame;
 import R18_G2_ASM2.SeatDataTools.FileTools;
+import R18_G2_ASM2.SeatDataTools.MovieDataFrame;
 
 public class MovieSeat{
     private Showing showing;
@@ -67,10 +70,10 @@ public class MovieSeat{
         if (Character.getNumericValue(rowLetter)-10 >25 || Character.getNumericValue(rowLetter)-10 < 0){
             throw new IllegalArgumentException();
         }
-        else if (seatMap.getValue(Character.getNumericValue(rowLetter)-10, String.valueOf(colNum+1)).equals("Reserved")){
+        else if (seatMap.getValue(Character.getNumericValue(rowLetter)-10, String.valueOf(colNum)).equals("Reserved")){
             return false;
         }
-        seatMap.setValue(Character.getNumericValue(rowLetter)-10, String.valueOf(colNum+1), "Reserved");
+        seatMap.setValue(Character.getNumericValue(rowLetter)-10, String.valueOf(colNum), "Reserved");
         writeToDatabase();
         return true;
     }
@@ -79,10 +82,10 @@ public class MovieSeat{
         if (Character.getNumericValue(rowLetter)-10 >25 || Character.getNumericValue(rowLetter)-10 < 0){
             throw new IllegalArgumentException();
         }
-        else if (seatMap.getValue(Character.getNumericValue(rowLetter)-10, String.valueOf(colNum+1)).equals("Available")){
+        else if (seatMap.getValue(Character.getNumericValue(rowLetter)-10, String.valueOf(colNum)).equals("Available")){
             return false;
         }
-        seatMap.setValue(Character.getNumericValue(rowLetter)-10, String.valueOf(colNum+1), "Available");
+        seatMap.setValue(Character.getNumericValue(rowLetter)-10, String.valueOf(colNum), "Available");
         writeToDatabase();
         return true;
     }
@@ -151,6 +154,49 @@ public class MovieSeat{
         return totalFrontSeat+totalMiddleSeat+totalRearSeat-totalSeatsBooked();
     }
 
+
+    public static void main(String[] args) throws IOException{
+        List<String> colNames;
+        // colNames = Arrays.asList("col_1", "col_2", "col_3", "col_4", "col_5", "col_6", "col_7");
+        colNames = Arrays.asList("1", "2", "3", "4", "5", "6", "7");
+        String[][] data = { { "Available", "Available",  "Available", "Available", "Available", "Available", "Available" },
+                { "Reserved", "Available", "Available", "Available", "Available", "Available", "Available"},
+                { "Available", "Available", "Available", "Reserved", "Available" , "Available", "Available"},
+                { "Available", "Available", "Available", "Reserved", "Reserved" , "Available", "Available"},
+                { "Available", "Available", "Available", "Available", "Reserved" , "Available", "Available"},
+                { "Available", "Available", "Available", "Available", "Reserved" , "Available", "Available"}};
+        MovieDataFrame filmAvailable = new MovieDataFrame(colNames, data);
+        // filmAvailable.print(0,4);
+    
+        // System.out.println(filmAvailable.getRow(1).getValues());
+    
+    
+        System.out.println("\033[1;93;45m"+ "hello"+"\033[m");
+    
+        // mdf.print();
+        // File movieSeat = new File("src/test/resources/"+ "SeatMapTest.csv");
+    
+        MovieSeat seatMap = new MovieSeat(new Showing(2, new Movie(1,"77", null, null, null, null,null), new Cinema(1, Screen.SILVER), null));
+        DataFrame<String> newFrame = seatMap.readFromDatabase();
+        seatMap.writeToDatabase();
+        // newFrame.print();
+
+        seatMap.bookSeat('D', 5);
+
+        seatMap.showFrontSeats();
+        seatMap.showMiddleSeats();
+        seatMap.showRearSeats();
+
+        seatMap.showAllSeats();
+        seatMap.cancelReservation('D', 5);
+        System.out.println(seatMap.cancelReservation('A', 1));
+        seatMap.showAllSeats();
+
+        System.out.println("Front seats booked: "+seatMap.frontSeatBooked());
+        System.out.println("Middle seats booked: "+seatMap.middleSeatBooked());
+        System.out.println("Total seats left: "+seatMap.totalSeatsLeft());
+        System.out.println("Total seats booked: "+seatMap.totalSeatsBooked());
+    }
 
     
 }

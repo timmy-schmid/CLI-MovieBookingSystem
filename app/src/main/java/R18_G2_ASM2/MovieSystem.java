@@ -42,6 +42,65 @@ public class MovieSystem {
     StartScreen startScreen = new StartScreen(home);
 
     startScreen.run();
+  /* //OLD CODE
+  while (true) {
+    printStartScreen();
+    Registration reg = null;
+      reg = new Registration();
+    String selection = parseInput("qQ", 4);
+
+    if (selection.equals("1")) {
+     try {
+      Login login = new Login();
+      currentUser = login.retrieveUserInputDetails();
+      } catch (Exception e) {
+        out.println(e.getStackTrace());
+      }
+    } else if (selection.equals("2")) {
+      try {
+        currentUser = reg.retrieveUserInputDetails3();
+
+      } catch (Exception e) {
+        out.println(e.getStackTrace());
+      }
+    } else if (selection.equals("3")) {
+      importMovieData();
+      Showing.getAllMovieShowings(showings);
+      printShowingsScreen();
+
+      if (currentUser != null) {
+        selection = parseInput("Qq",showings.size());
+
+      } else {
+        selection = parseInput("Qq",showings.size());
+      }
+      if (selection.equals("q") || selection.equals("Q")) {
+        quit();
+        return;
+      } else {
+
+        int movieId = Integer.parseInt(selection);
+        printMovieScreen(movies.get(movieId));
+
+        selection = parseInput("bB",0);
+        
+      }
+
+
+    } else if (selection.equals("4")){ //added for testing purposes
+      if (currentUser != null) {
+        Transaction t = new Transaction(currentUser);
+        t.proceedPayment();
+      } else {
+        System.out.println("\nPlease login or register before heading here~\n");
+      }
+
+    }
+    
+    else if (selection.equals("q") || selection.equals("Q")) {
+      quit();
+      break;
+    }*/
   }
 
   //parses either an integer selection OR a single character specified by pattern
@@ -110,6 +169,8 @@ public class MovieSystem {
     s.append("1 - Log In\n");
     s.append("2 - Register\n");
     s.append("3 - View upcoming showings\n");  
+    //proceed to booking --> direct to transaction page
+    s.append("4 - Direct to transaction page\n"); //testing purposes (move later?)
     s.append("Q - Quit\n");
 
     out.println(s);    
@@ -124,7 +185,7 @@ public class MovieSystem {
 
 
     if (currentUser != null) {
-      s.append(String.format("Welcome, %s,\n",currentUser.getEmail()));
+      s.append(String.format("Welcome, %s,\n",currentUser.getNickname()));
     } else {
       s.append(String.format("Welcome,\n"));
     }

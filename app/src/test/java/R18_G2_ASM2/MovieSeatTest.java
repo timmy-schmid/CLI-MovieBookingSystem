@@ -64,12 +64,12 @@ class MovieSeatTest{
         //DataFrame<String> newFrame = seatMap.readFromDatabase();
         // newFrame.print();
 
-        assertEquals(true, seatMap.bookSeat('A', 0)); 
-        assertEquals(true, seatMap.cancelReservation('A', 0));
-        assertEquals(true, seatMap.bookSeat('D', 6));
-        assertEquals(false, seatMap.bookSeat('D', 6));
-        assertEquals(true, seatMap.cancelReservation('D', 6));
-        assertEquals(false, seatMap.cancelReservation('D', 6));
+        assertEquals(true, seatMap.bookSeat('A', 1)); 
+        assertEquals(true, seatMap.cancelReservation('A', 1));
+        assertEquals(true, seatMap.bookSeat('D', 7));
+        assertEquals(false, seatMap.bookSeat('D', 7));
+        assertEquals(true, seatMap.cancelReservation('D', 7));
+        assertEquals(false, seatMap.cancelReservation('D', 7));
         seatMap.bookSeat('D', 5);
         // seatMap.getSeatMap().print();
         // seatMap.cancelReservation('A', 0);
@@ -121,11 +121,11 @@ class MovieSeatTest{
             //thrown = true;
         //}
         show.setMovieSeatForTest();
-        assertEquals(7, show.totalSeatsBooked());
-        assertEquals(35, show.totalSeatsLeft());
+        assertEquals(6, show.totalSeatsBooked());
+        assertEquals(36, show.totalSeatsLeft());
         assertEquals(1, show.frontSeatBooked());
         assertEquals(1, show.middleSeatBooked());
-        assertEquals(5, show.rearSeatBooked());
+        assertEquals(4, show.rearSeatBooked());
         assertFalse(show.isSeatEmpty());
         assertFalse(show.isShowingFull());
 
