@@ -30,7 +30,11 @@ public class BookingTicket {
         Scanner scan = new Scanner(System.in);
         while(true){
             this.askForBooking();
+            System.out.println(count);
             for(int i =0; i<count; i++){
+                System.out.println(i);
+                System.out.println(count);
+                System.out.println("works?");
                 this.bookingShowingSection();
                 this.bookingASeat();
                 if(!this.checkFullorNot()){
@@ -165,7 +169,9 @@ public class BookingTicket {
                 this.showing.getMovieSeat().showRearSeats();
                 break;
             }else if(str.equals("4")){
+                System.out.println("works?");
                 this.showing.getMovieSeat().showAllSeats();
+                System.out.println("works?");
                 break;
             }else if(str.equals("Cancel")){
                 this.cancelBooking();
