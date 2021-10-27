@@ -1,8 +1,6 @@
 package R18_G2_ASM2;
 
-import java.util.ArrayList;
-import java.util.Locale;
-import java.util.Scanner;
+import java.util.*;
 
 public class BookingTicket {
     private final double price = 50;
@@ -10,24 +8,40 @@ public class BookingTicket {
     private User user;
     private boolean successBooking = false;
     private Integer Ct =1;
-    private int count;
+    private int count = 0;
+    private int indexofarray = 0;
+    // cancel preparation;
+    private char[] rowLetters = new char[1000];
+    private int[] colNum = new int[1000];
+    private LinkedHashMap<Person,Integer> bookPerson = new LinkedHashMap<>();
 
 
     public BookingTicket(Showing showing, User user){
         this.showing = showing;
         this.user = user;
+        this.bookPerson.put(Person.Child,0);
+        this.bookPerson.put(Person.Senior,0);
+        this.bookPerson.put(Person.Student,0);
+        this.bookPerson.put(Person.Adult,0);
     }
 
     public void run(){
-        System.out.println("DO I GET HERE1");
-      System.out.println("DO I GET HERE1");
-       while(this.checkFullorNot()){
-           this.bookingShowingSection();
-           this.bookingASeat();
+        count = 0;
+        Scanner scan = new Scanner(System.in);
+        while(true){
             this.askForBooking();
-            if (Ct == 2){
-                // go back to the default user page
+            for(int i =0; i<count; i++){
+                this.bookingShowingSection();
+                this.bookingASeat();
+                if(!this.checkFullorNot()){
+                    break;
+                }
+            }
+            System.out.println("Do you want to continue? Y for booking and other input for end");
+            String str = scan.next();
+            if(str.equals("Y")){}else{
                 this.printBookingMessage();
+                //return the default page
                 break;
             }
         }
@@ -45,10 +59,11 @@ public class BookingTicket {
         Scanner scan = new Scanner(System.in);
         while(Ct == 1) {
             System.out.println("Select type of ticket you want to book: ");
-            System.out.println("1. Child -$\n" +
-                    "2. Student -$\n" +
-                    "3. Adult - $$\n" +
-                    "4. Senior - $\n");
+            System.out.println("1 - Child -$\n" +
+                    "2 - Student -$\n" +
+                    "3 - Adult - $$\n" +
+                    "4 -Senior - $\n"+"" +
+                    "C - Cancel");
             while (true) {
                 String num = scan.next();
                 if (num.equals("1")) {
@@ -72,12 +87,13 @@ public class BookingTicket {
             while (true) {
                 Integer numperson = scan.nextInt();
                 if (numperson > 0) {
+                    this.bookPerson.replace(bookingType,numperson);
                     this.bookingTicketForPersons(bookingType, numperson);
+                    count += numperson;
                     this.user.AddTicketMessage();
                     break;
                 } else {
                     System.out.println("Invalid input,please try again: ");
-                    break;
                 }
             }
             Ct =this.Continue();
@@ -88,18 +104,18 @@ public class BookingTicket {
     public int Continue(){
         Scanner scan = new Scanner(System.in);
         while(true){
-            System.out.println("1. Continue\n" +
-                    "2. End\n");
+            System.out.println("1-Continue\n" +
+                    "2-End Adding Person\n"+"C-Cancel\n");
             String str = scan.next();
 
             if(str.equals("1")){return 1;}
             else if(str.equals("2")){
                 return 2;
+            }else if(str.equals("C")){
+                this.cancelBooking();
             }
             else {
-                System.out.println("Invalid input,please try again: ");
-                return 3;
-        }
+                System.out.println("Invalid input,please try again: ");}
         }
     }
 
@@ -132,7 +148,7 @@ public class BookingTicket {
             System.out.println("2-Middle");
             System.out.println("3-Rear");
             System.out.println("4-All");
-            System.out.println("Q-quit\n");
+            System.out.println("Cancel-cancel\n");
             String str = scan.next();
             if(str.equals("1")){
                 this.showing.getMovieSeat().showFrontSeats();
@@ -146,8 +162,8 @@ public class BookingTicket {
             }else if(str.equals("4")){
                 this.showing.getMovieSeat().showAllSeats();
                 break;
-            }else if(str.equals("Q")){
-                // return exit;
+            }else if(str.equals("Cancel")){
+                this.cancelBooking();
                 break;
             }else{
                 System.out.println("Invaild input, please try again.");
@@ -159,11 +175,10 @@ public class BookingTicket {
     public void bookingASeat(){
         Scanner scan = new Scanner(System.in);
         int col = 0;
-        char[] row = null;
         char rowLetter = 'Z';
         while (true){
             System.out.println("The row you chosen: ");
-            row = scan.next().toUpperCase().toCharArray();
+            char[] row = scan.next().toUpperCase().toCharArray();
             if(row.length == 1){
                 rowLetter = row[0];
                 System.out.println("The column you chosen: ");
@@ -172,19 +187,30 @@ public class BookingTicket {
                     if(!this.bookingTicketForSeat(rowLetter,col)){
                         throw new Exception();
                     }
+                    rowLetters[indexofarray] = rowLetter;
+                    colNum[indexofarray] = col;
+                    indexofarray++;
                 }catch (Exception e){
                     System.out.println("Invalid input, please try again.");
-                    System.out.println("Do you want to continue? [Y/N]");
+                    System.out.println("Do you want to continue? [Y/N]\n"+"C -cancel\n");
                     char[] mes = scan.next().toUpperCase().toCharArray();
                     if(mes[0] == 'N'){
                         //return to the default page
-                        break;}}
+                        break;}else if (mes[0] == 'C'){
+                        //return to the default page -> how to do that?
+                        this.cancelBooking();
+                        break;
+                    }}
             }else{
                 System.out.println("Invalid message, please try again.");
-                System.out.println("Do you want to continue? [Y/N]");
+                System.out.println("Do you want to continue? [Y/N]\n"+"C -cancel\n");
                 char[] mes = scan.next().toUpperCase().toCharArray();
                 if(mes[0] == 'N'){
                     //return to the user default page
+                    break;
+                }else if (mes[0] == 'C'){
+                    //return to the default page -> how to do that?
+                    this.cancelBooking();
                     break;
                 }
             }
@@ -199,7 +225,23 @@ public class BookingTicket {
         try{
         this.showing.getMovieSeat().cancelReservation(row,col);}
         catch (Exception e){
-            System.out.println("Invalid message, please try again.");
+            System.out.println("Invalid message cancel seat for show, please try again.");
         }
+    }
+
+    public void cancelBooking(){
+        for(Person key:bookPerson.keySet()) {
+            this.cancellingBookingForPerson(key, bookPerson.get(key));
+            bookPerson.replace(key,0);
+        }
+        if(indexofarray != 0){
+            for(int i = 0; i<indexofarray+1;i++){
+                this.cancelSeatForShow(rowLetters[i],colNum[i]);
+                rowLetters[i] = 'z';
+                colNum[i] = 0; }
+        }
+        count = 0;
+        indexofarray = 0;
+        System.out.println("Successfully cancel.");
     }
 }
