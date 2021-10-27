@@ -33,6 +33,7 @@ public class BookingTicket {
             this.askForBooking();
             System.out.println(count);
             for(int i =0; i<count; i++){
+                System.out.println("Do it line 35");
                 this.bookingShowingSection();
                 System.out.println("Do it line 37");
                 this.bookingASeat();
