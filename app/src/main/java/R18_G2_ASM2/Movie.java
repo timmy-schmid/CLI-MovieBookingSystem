@@ -165,7 +165,7 @@ public class Movie {
 
     ArrayList<Movie> sortedMovies = new ArrayList<>(movies.values());
     Collections.sort(sortedMovies, new SortMoviesByTitle());
-
+    ArrayList<Movie> filteredMovies = new ArrayList<>();
     int count = 1;
     int padding = 55; //TODO make a constant
 
@@ -174,6 +174,7 @@ public class Movie {
       for (Showing showing: movie.getShowingsBeforeNextMonday()) {
         //prints title on 1st showing
         if (showCounter == 1) {
+          filteredMovies.add(movie);
           //String currId = Screen.formatANSI(String.valueOf(currShowing.getMovie().getId()),Screen.ANSI_USER_OPTION);
           s.append(String.format("\n%-4s",count));
           // cuts name if over certain length to allow clean formatting.
@@ -202,7 +203,7 @@ public class Movie {
       }*/
     }
     System.out.println(s);
-    return sortedMovies;
+    return filteredMovies;
   }
 
   public int printMovieShowings() {

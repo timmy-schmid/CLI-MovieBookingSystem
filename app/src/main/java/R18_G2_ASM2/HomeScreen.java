@@ -54,7 +54,7 @@ public class HomeScreen extends Screen {
   protected void chooseOption() {
 
     if (intOption != NO_INT_OPTION) {
-      movScreen = new MovieScreen(moviesSorted.get(intOption));
+      movScreen = new MovieScreen(moviesSorted.get(intOption-1));
       movScreen.run();
       intOption = NO_INT_OPTION;
     } else {
@@ -93,9 +93,10 @@ public class HomeScreen extends Screen {
   @Override
   public void print() {
     clearScreen();
-    System.out.print("Current Date & Time: OCT 27 - THU 9:57PM\n");  // TODO make dynamic time
+    //System.out.print("Current Date & Time: OCT 27 - THU 9:57PM\n");  // TODO make dynamic time
     
     moviesSorted = Movie.printAllShowings(movies);
+    maxInputInt = moviesSorted.size();
 
     printHeader();
 
@@ -107,7 +108,7 @@ public class HomeScreen extends Screen {
 
     printOptionsText();
 
-    System.out.print(formatANSI("[ID]",ANSI_USER_OPTION) +" - To see further details about a particular movie (listed below)\n");
+    System.out.print(formatANSI("[ID]",ANSI_USER_OPTION) +" - To see further details about a particular movie (listed above)\n");
     
     System.out.print(formatANSI("[G|S|B]",ANSI_USER_OPTION) +
               " - To filter showings by " +
