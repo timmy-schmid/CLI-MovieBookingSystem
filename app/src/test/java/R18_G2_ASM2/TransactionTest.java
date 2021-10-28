@@ -89,8 +89,8 @@ public class TransactionTest {
     "            Welcome to the payment page :)            \n" +
     "               Movie to book details               \n"+
     "*******************************************************\n\n" +
-    "Number of tickets: \n" + 
-    "Total Amount: \n\n";
+    "Number of tickets:";
+    // "Total Amount: \n\n";
 
     t.printScreen();
     assertEquals(outContent.toString(), screenMsg);
@@ -246,7 +246,7 @@ public class TransactionTest {
   }
 
   @Test void giftCardNotRedeemable2(){ 
-    String msg = "Please enter your gift card number: ";
+    String msg = "Please enter your gift card number: "+"The number you have entered is no longer available.\n\n";
     String msg2 = "Please select from the following: \n" +
                   "\n1. Enter another gift card\n2. Go back to pay with credit card" +
                   "\n3. Cancel payment\n" +

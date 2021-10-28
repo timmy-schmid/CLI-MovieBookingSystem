@@ -1,5 +1,6 @@
 package R18_G2_ASM2;
 
+import java.io.IOException;
 import java.util.ArrayList;
 public class MovieScreen extends Screen {
 
@@ -43,6 +44,11 @@ public class MovieScreen extends Screen {
     if (intOption != NO_INT_OPTION) {
       BookingTicket book = new BookingTicket(showings.get(intOption-1),user);
       book.run();
+      // try {
+      //   Transaction t = new Transaction(user);
+      //   t.run();
+      // } catch (IOException e) { e.printStackTrace();}
+      // System.out.println("LINE 48:::::::::: MOVIESCREEN CLASS~~~~~~~~~~~~~~~~~~~~");
       intOption = NO_INT_OPTION;
     } else {
       switch (selectedOption) {

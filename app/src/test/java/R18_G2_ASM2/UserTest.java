@@ -13,55 +13,64 @@ class UserTest {
   User userB;
   User userC;
 
+  @BeforeEach
+  public void setUp() {
+
+    userA = new User(1, "bob", "bob@gmail.com", "0488881188", "abc123Axd#!");
+    userB = new User(5, "hola", "hello@gmail.com", "0488881122" ,"oHxd124!xh");
+
+    userC = new User(-1, null, null, null, null);
+  }
+
+  @AfterEach
+  public void tearDown(){ 
+    userA = null;
+    userB = null;
+    userC = null;
+  }
+
   @Test void testNotNullUsers(){
-    User userA = new User(-1, "bob@gmail.com", "abc123Axd#!");
-    User userB = new User(5, "hello@gmail.com", "oHxd124!xh");
-    User userC = new User(-1, null, null);
     assertNotNull(userA);
     assertNotNull(userB);
     assertNotNull(userC);
   }
   @Test void testCanGetPassword(){
-    User userB = new User(5, "hello@gmail.com", "oHxd124!xh");
     String res = "oHxd124!xh";
     assertEquals(res, userB.getPassword());
   }
 
   //testing setting methods work
   @Test void testCanSetEmail(){
-    User userB = new User(5, "hello@gmail.com", "oHxd124!xh");
     String newEmail = "hollo@gmail.com";
     userB.setEmail(newEmail);
     assertEquals(userB.getEmail(), newEmail);
   }
 
   @Test void testCantSetEmail(){
-    User userB = new User(5, "hello@gmail.com", "oHxd124!xh");
     String newEmail = "holaAmigos";
     userB.setEmail(newEmail);
     assertNotEquals(userB.getEmail(), newEmail);
   }
 
   @Test void testCanSetPassword(){
-    User userB = new User(5, "hello@gmail.com", "oHxd124!xh");
     String newPassword = "BobTheBuilder1";
     userB.setPassword(newPassword);
     assertEquals(userB.getPassword(), newPassword);
   }
 
   @Test void testCantSetPassword(){
-    User userB = new User(5, "hello@gmail.com", "oHxd124!xh");
     String newPassword = "holaAmigos";
     userB.setPassword(newPassword);
     assertNotEquals(userB.getPassword(), newPassword);
   }
 
   @Test void testCanGetUserID(){
-    User userB = new User(5, "hello@gmail.com", "oHxd124!xh");
     assertEquals(5, userB.getID());
   }
+
+  // // test failed: IllegalFormatConversionException
+
   @Test void testBookingTicket(){
-    User userB = new User(5, "hello@gmail.com", "oHxd124!xh");
     userB.bookingTicket(Person.Child,1);
     assertEquals(0.5,userB.getTotalPrice());
   }

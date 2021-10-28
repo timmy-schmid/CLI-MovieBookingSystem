@@ -25,19 +25,8 @@ public class User extends UserFields {
   private double totalPriceMutiplier = 0;
 
   private boolean autoFill;
+  private String cardName;
   private String cardNumber;
-
-  public User(int ID, String email, String password){
-    this.ID = ID;
-    this.email = email;
-    this.password = password;
-    ticket.put(Person.Child,0);
-    ticket.put(Person.Student,0);
-    ticket.put(Person.Senior,0);
-    ticket.put(Person.Adult,0);
-
-    this.autoFill = false; //default, then prompt user during transaction stage to update
-  }
 
   //current new version - sprint 2
   public User(int ID, String nickname, String email, String phoneNumber, String password){ //extra fields added
@@ -51,6 +40,8 @@ public class User extends UserFields {
     ticket.put(Person.Student,0);
     ticket.put(Person.Senior,0);
     ticket.put(Person.Adult,0);
+
+    this.cardName = null;
     this.cardNumber = null;
     this.autoFill = false; //default, then prompt user during transaction stage to update
   }
@@ -76,6 +67,10 @@ public class User extends UserFields {
 
   public boolean getAutoFillStatus(){
     return this.autoFill;
+  }
+
+  public String getCardName(){
+    return this.cardName;
   }
 
   public String getCardNumber(){
@@ -118,10 +113,13 @@ public class User extends UserFields {
     this.autoFill = newStatus;
   }
 
+  public void setCardName(String name){
+    this.cardName = name;
+  }
+
   public void setCardNumber(String number){
     this.cardNumber = number;
   }
-
 
   //rename maybe bookingTicket --> bookTicket? OR nahh
   public void bookingTicket(Person person, int num){
@@ -144,6 +142,7 @@ public class User extends UserFields {
     totalPriceMutiplier = 0;
     for(Person key: ticket.keySet()){
       totalPriceMutiplier += key.getValue()*ticket.get(key);
+      // System.out.printf("USER: totalpricemultipler: %d\n", totalPriceMutiplier);
     }
   }
   public double getTotalPrice(){

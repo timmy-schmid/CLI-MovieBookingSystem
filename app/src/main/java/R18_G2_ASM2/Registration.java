@@ -250,7 +250,7 @@ public class Registration extends UserFields {
 
         id = Integer.parseInt(lastLine.split(",")[0]);
         myWriter.write("\n"+String.valueOf(id+1)+","+nickname+","+email+","+phoneNumber+","+password+",F");
-        System.out.printf("LINE 233 IN REGISTRATION: WRITING TO FILE: [%s]\n", "\n"+String.valueOf(id+1)+","+nickname+","+email+","+phoneNumber+","+password+",F");
+        // System.out.printf("LINE 233 IN REGISTRATION: WRITING TO FILE: [%s]\n", "\n"+String.valueOf(id+1)+","+nickname+","+email+","+phoneNumber+","+password+",F");
         id+=1;
 
       } catch(NumberFormatException e){

@@ -10,7 +10,8 @@ import java.io.ByteArrayOutputStream;
 import java.io.PrintStream;
 
 public class EditInformationTest{
-    private User testUser = new User(277,"abcdhsa@gmail.com","123Qwertyui");
+    private User testUser = new User(1, "bob", "bob@gmail.com", "0488881188", "abc123Axd#!");
+
     private EditInformation editInformation = new EditInformation(testUser);
 
     @Test
