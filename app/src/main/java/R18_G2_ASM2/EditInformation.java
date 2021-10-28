@@ -76,12 +76,44 @@ public class EditInformation extends UserFields {
     }
 
     public void editEmail(){
-        boolean Success = false;
-        boolean wantToContinue = true;
+        //version one
+//        boolean Success = false;
+//        boolean wantToContinue = true;
+//        System.out.println("\nYour current username is: " + userChanged.getEmail());
+//        Scanner scan = new Scanner(System.in);
+//        System.out.println("The new username: ");
+//        while(!Success && wantToContinue){
+//            String option = scan.next();
+//            if(option.equals(this.userChanged.getEmail())){
+//                System.out.println("Please enter a new username");
+//            }
+//            else if(this.validateUser(option)){
+//                if (this.checkIfUserExists(option) == 1){
+//                    this.setUserEmail(option);
+//                    Success = true;
+//                    System.out.println("Success\n");
+//                }else{
+//                    System.out.println("The username already exists!\n");
+//                }
+//            }
+//            else {
+//                System.out.println("Invalid Username :( Please use gmail, hotmail or yahoo email address.");
+//                System.out.println("Do you wanna try again? (Y/N): \n");
+//                if(option.equals("Y")){} else if(option.equals("N")){
+//                    wantToContinue = false;
+//                }else{
+//                    System.out.println("Invalid input. Please choose from Y or N: \n");
+//                }
+//            }
+//        }
+//        if(wantToContinue == false){
+//            this.nextOption();
+//        }
+
         System.out.println("\nYour current username is: " + userChanged.getEmail());
         Scanner scan = new Scanner(System.in);
-        System.out.println("The new username: ");
-        while(!Success && wantToContinue){
+        while(true){
+            System.out.println("The new username: ");
             String option = scan.next();
             if(option.equals(this.userChanged.getEmail())){
                 System.out.println("Please enter a new username");
@@ -89,8 +121,8 @@ public class EditInformation extends UserFields {
             else if(this.validateUser(option)){
                 if (this.checkIfUserExists(option) == 1){
                     this.setUserEmail(option);
-                    Success = true;
                     System.out.println("Success\n");
+                    break;
                 }else{
                     System.out.println("The username already exists!\n");
                 }
@@ -99,16 +131,14 @@ public class EditInformation extends UserFields {
                 System.out.println("Invalid Username :( Please use gmail, hotmail or yahoo email address.");
                 System.out.println("Do you wanna try again? (Y/N): \n");
                 if(option.equals("Y")){} else if(option.equals("N")){
-                    wantToContinue = false;
+                    break;
                 }else{
                     System.out.println("Invalid input. Please choose from Y or N: \n");
                 }
             }
         }
-        if(wantToContinue == false){
-            this.nextOption();
-        }
     }
+
 
     public void editPassword(){
         Scanner scan = new Scanner(System.in);
@@ -140,31 +170,57 @@ public class EditInformation extends UserFields {
     }
 
         //newly added - Anna (editNickname, editPhoneNumber)
+    //change the logic - Ke
     public void editNickname(){
+//        Scanner scan = new Scanner(System.in);
+//        boolean Success = false;
+//        boolean wantToContinue = true;
+//        while (!Success && wantToContinue) {
+//            System.out.println("Security check, please enter your old name: ");
+//            String nickname = scan.nextLine();
+//            if (nickname.equals(this.userChanged.getNickname())) {
+//                System.out.println("New nickname: ");
+//                this.setUserNickname(nickname);
+//                Success = true;
+//            } else {
+//                System.out.println("The name you have entered is invalid, please check it again");
+//            }
+//            System.out.println("Do you wanna try again? (Y/N)\n");
+//            String option = scan.nextLine();
+//            if(option.equals("Y")){} else if(option.equals("N")){
+//                wantToContinue = false;
+//            }else{
+//                System.out.println("Invalid input. Please choose from Y or N.\n");
+//            }
+//        }
+//        if(!wantToContinue){
+//            this.nextOption();
+//        }
+
         Scanner scan = new Scanner(System.in);
-        boolean Success = false;
-        boolean wantToContinue = true;
-        while (!Success && wantToContinue) {
+        while (true) {
             System.out.println("Security check, please enter your old name: ");
             String nickname = scan.nextLine();
             if (nickname.equals(this.userChanged.getNickname())) {
                 System.out.println("New nickname: ");
-                this.setUserNickname(nickname);
-                Success = true;
+                String newnickname = scan.next();
+                this.setUserNickname(newnickname);
+                System.out.println("Your nickname now is "+this.userChanged.getNickname());
+                break;
             } else {
                 System.out.println("The name you have entered is invalid, please check it again");
             }
             System.out.println("Do you wanna try again? (Y/N)\n");
             String option = scan.nextLine();
-            if(option.equals("Y")){} else if(option.equals("N")){
-                wantToContinue = false;
+            if(option.equals("Y")){
+            } else if(option.equals("N")){
+                break;
             }else{
                 System.out.println("Invalid input. Please choose from Y or N.\n");
             }
         }
-        if(!wantToContinue){
-            this.nextOption();
-        }
+        this.nextOption();
+
     }
 
     public void editPhoneNumber(){
