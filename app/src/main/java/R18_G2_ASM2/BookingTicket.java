@@ -14,6 +14,8 @@ public class BookingTicket {
     private char[] rowLetters = new char[1000];
     private int[] colNum = new int[1000];
     private LinkedHashMap<Person,Integer> bookPerson = new LinkedHashMap<>();
+    private boolean cancelBook = false;
+    // cancel is true
 
 
     public BookingTicket(Showing showing, User user){
@@ -32,17 +34,23 @@ public class BookingTicket {
     }
 
     public void run(){
-        System.out.println("works?");
         count = 0;
         Scanner scan = new Scanner(System.in);
         while(true){
+            this.cancelBook = false;
             this.askForBooking();
-            System.out.println(count);
+            if(this.cancelBook){
+                break;
+            }
             for(int i =0; i<count; i++){
-                System.out.println("Do it line 35");
                 this.bookingShowingSection();
-                System.out.println("Do it line 37");
+                if (this.cancelBook){
+                    break;
+                }
                 this.bookingASeat();
+                if (this.cancelBook){
+                    break;
+                }
                 if(!this.checkFullorNot()){
                     this.cancelBooking();
                     break;
@@ -89,28 +97,36 @@ public class BookingTicket {
                 } else if (num.equals("4")) {
                     bookingType = Person.Senior;
                     break;
+                } else if (num.equals("C")) {
+                   this.cancelBooking();
+                   this.cancelBook = true;
+                    break;
                 } else {
                     System.out.println("Invalid input,please try again");
                 }
             }
-
-            System.out.println("Select number of tickets: ");
-            while (true) {
-                Integer numperson = scan.nextInt();
-                if (numperson > 0) {
-                    this.bookPerson.replace(bookingType,numperson);
-                    this.bookingTicketForPersons(bookingType, numperson);
-                    count += numperson;
-                    this.user.AddTicketMessage();
-                    break;
-                } else {
-                    System.out.println("Invalid input,please try again: ");
+            if(!cancelBook){
+                System.out.println("Select number of tickets: ");
+                while (true) {
+                    Integer numperson = scan.nextInt();
+                    if (numperson > 0) {
+                        this.bookPerson.replace(bookingType,numperson);
+                        this.bookingTicketForPersons(bookingType, numperson);
+                        count += numperson;
+                        this.user.AddTicketMessage();
+                        break;
+                    } else {
+                        System.out.println("Invalid input,please try again: ");
+                    }
                 }
-            }
 
-            Ct =this.Continue();
-            if(Ct == 2){
-                Ct = 1;
+                Ct =this.Continue();
+                if(Ct == 2 ){
+                    Ct = 1;
+                    break;
+                }
+
+            }else{
                 break;
             }
         }
@@ -129,6 +145,7 @@ public class BookingTicket {
                 return 2;
             }else if(str.equals("C")){
                 this.cancelBooking();
+                this.cancelBook =true;
             }
             else {
                 System.out.println("Invalid input,please try again: ");}
@@ -151,7 +168,7 @@ public class BookingTicket {
         return this.showing.getMovieSeat().bookSeat(rowLetter,col);
         }
         catch (Exception e){
-            System.out.println("error message");
+            System.out.println("error message something wrong in the bookseat");
             return false;
         }
     }
@@ -159,11 +176,11 @@ public class BookingTicket {
     public void bookingShowingSection(){
         Scanner scan = new Scanner(System.in);
         while(true){
-            System.out.println("Which area you wanna choose?");
-            System.out.println("1-Front");
-            System.out.println("2-Middle");
-            System.out.println("3-Rear");
-            System.out.println("4-All");
+            System.out.println("Which area you wanna choose? --in total Left : " + this.showing.getMovieSeat().totalSeatsLeft());
+            System.out.println("1-Front "+"Already be booked: " +Integer.toString(this.showing.getMovieSeat().frontSeatBooked()));
+            System.out.println("2-Middle"+"Already be booked: "+Integer.toString(this.showing.getMovieSeat().middleSeatBooked()));
+            System.out.println("3-Rear  "+"Already be booked: "+Integer.toString(this.showing.getMovieSeat().rearSeatBooked()));
+            System.out.println("4-All   "+"Already be booked: "+Integer.toString(this.showing.getMovieSeat().totalSeatsBooked()));
             System.out.println("Cancel-cancel\n");
             String str = scan.next();
             if(str.equals("1")){
@@ -180,6 +197,7 @@ public class BookingTicket {
                 break;
             }else if(str.equals("Cancel")){
                 this.cancelBooking();
+                this.cancelBook = true;
                 break;
             }else{
                 System.out.println("Invaild input, please try again.");
@@ -215,6 +233,7 @@ public class BookingTicket {
                         break;}else if (mes[0] == 'C'){
                         // return to the welcome page -> how to deal with that?
                         this.cancelBooking();
+                        this.cancelBook = true;
                         break;
                     }}
             }else{
@@ -246,6 +265,7 @@ public class BookingTicket {
     }
 
     public void cancelBooking(){
+        this.printBookingMessage();
         for(Person key:bookPerson.keySet()) {
             this.cancellingBookingForPerson(key, bookPerson.get(key));
             bookPerson.replace(key,0);
@@ -260,6 +280,5 @@ public class BookingTicket {
         indexofarray = 0;
         System.out.println("Successfully cancel.");
         // return to the welcome page ->
-        this.printBookingMessage();
     }
 }
