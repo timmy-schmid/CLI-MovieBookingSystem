@@ -215,7 +215,12 @@ public class BookingTicket {
         Scanner scan = new Scanner(System.in);
         int col = 0;
         char rowLetter = 'Z';
+        boolean ct = false;
         while (true){
+            if(ct){
+                ct = false;
+                break;
+            }
             System.out.println("The row you chosen: ");
             char[] row = scan.next().toUpperCase().toCharArray();
             if(row.length == 1){
@@ -239,6 +244,7 @@ public class BookingTicket {
                         // return to the welcome page -> how to deal with that?
                         this.cancelBooking();
                         this.cancelBook = true;
+                        ct = true;
                         break;
                     }
                 }
@@ -265,6 +271,7 @@ public class BookingTicket {
         this.showing.getMovieSeat().cancelReservation(row,col);}
         catch (Exception e){
             System.out.println("Invalid message cancel seat for show, please try again.");
+            e.printStackTrace();
         }
     }
 
