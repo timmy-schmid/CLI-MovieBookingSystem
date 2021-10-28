@@ -60,29 +60,28 @@ public class EditInformationTest{
 
         }catch (Exception e){ e.printStackTrace();}
     }
+    @Test
+    public void testgiveChoice(){
+        try{
+            ByteArrayOutputStream outContent = new ByteArrayOutputStream();
+            System.setOut(new PrintStream(outContent));
+            String a = "\nsjafdnsa\n";
+            ByteArrayInputStream inContent = new ByteArrayInputStream(a.getBytes());
+            System.setIn(inContent);
+            editInformation.giveChoice();
+            String output = "Edit and Update Your Information\n"+"*******************************************************\n"+"PLEASE CHOOSE FORM THE FOLLOWING                         \n"+"*******************************************************\n\n" +
+                    "1 - Edit Nickname\n" +
+                    "2 - Edit Email\n" +
+                    "3 - Edit Phone Number\n" +
+                    "4 - Edit Password\n" +
+                    "5 - Return to the user page\n" +
+                    "\n" +
+                    "User input: \n" +
+                    "Invalid order :( Please try again\n";
+            assertEquals(outContent.toString(),output);
 
-
-    // @Test
-    // public void testgiveChoice(){
-    //     try{
-    //         ByteArrayOutputStream outContent = new ByteArrayOutputStream();
-    //         System.setOut(new PrintStream(outContent));
-    //         String a = "\nsjafdnsa\n";
-    //         ByteArrayInputStream inContent = new ByteArrayInputStream(a.getBytes());
-    //         System.setIn(inContent);
-    //         editInformation.giveChoice();
-    //         String output = "Edit and Update Your Information\n"+"*******************************************************\n"+"PLEASE CHOOSE FORM THE FOLLOWING                         \n"+"*******************************************************\n\n" +
-    //                 "1 - Edit Email\n" +
-    //                 "2 - Edit Email\n" +
-    //                 "3 - Edit Phone Number\n" +
-    //                 "4 - Edit Password\n" +
-    //                 "5 - Return to the user page\n"+
-    //                 "\nUser input: \n" +
-    //                 "Invalid order :( Please try again\n";
-    //         assertEquals(outContent.toString(),output);
-
-    //     }catch (Exception e){ e.printStackTrace();}
-    // }
+        }catch (Exception e){ e.printStackTrace();}
+    }
 
     // @Test
     // public void testwriteUserForFile(){

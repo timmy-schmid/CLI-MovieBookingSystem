@@ -15,7 +15,7 @@ public class Login {
   public Login(HomeScreen home) {
     userCsvFile = DataController.accessCSVFile(USER_FILE_NAME);
     if (userCsvFile != null) {
-      System.out.println(userCsvFile.getPath());
+      //System.out.println(userCsvFile.getPath());
     }
     this.home = home;
     this.user = null;
@@ -113,12 +113,13 @@ public class Login {
         realPassword = detailsArray[4];
         if (userEmail.equals(email)){
           if (realPassword.equals(userPassword)) {
+            System.out.println("do i get here");
             result = 1;          
             this.user = new User(Integer.parseInt(detailsArray[0]), detailsArray[1], detailsArray[2], detailsArray[3],detailsArray[4]);
             if (detailsArray[5].equals("T")){
               user.setAutoFillStatus(true);
-              break;
             }
+            break;
           } else {
             result = -1;
           }
