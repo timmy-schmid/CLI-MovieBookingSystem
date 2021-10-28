@@ -25,22 +25,21 @@ public class Registration extends UserFields {
   HomeScreen home;
 
   private String userCsvFile2; //writing to...
+
   public Registration(HomeScreen home) {
     this.home = home;
 
     this.userCsvFile = DataController.accessCSVFile(USER_FILE_NAME);
-    //this.userCsvFile2 = this.userCsvFile.getAbsolutePath(); //str version -Tim this throws a NULLPointerError for me
-    
-    // System.out.printf("LINE 31: REGISTRATION: this.userCsvFile2 = [%s]\n", this.userCsvFile2);
+    // this.userCsvFile2 = this.userCsvFile.getAbsolutePath(); //str version -Tim this throws a NULLPointerError for me    
   }
   
   public static String getUserFile(){
     return USER_FILE_NAME;
   }
 
-  public String getUserCsvFile(){
-    return this.userCsvFile2;
-  }
+  // public String getUserCsvFile(){
+  //   return this.userCsvFile2;
+  // }
   public static void setUserFile(String name){
     USER_FILE_NAME = name;
   }

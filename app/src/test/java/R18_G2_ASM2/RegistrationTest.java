@@ -29,7 +29,6 @@ class RegistrationTest {
     home = new HomeScreen(null);
     reg = new Registration(home);
     Registration.setUserFile("newUserDetailsTest2.csv");
-    // reg.setUserFile("src/test/resources/newUserDetailsTest2.csv");
 
     //set up streams
     System.setOut(new PrintStream(outContent));
@@ -37,6 +36,7 @@ class RegistrationTest {
   @AfterEach
   public void tearDown(){ 
     reg = null;
+    home = null;
     //restoreStreams
     System.setOut(originalOutput);
   }
@@ -221,7 +221,7 @@ class RegistrationTest {
   //   reg.writeUserDetailsToFile3("benji", username, "0401234400", pwd);
   //   assertEquals(outContent.toString(), "FILE NOT FOUND ERROR: " + reg.getUserCsvFile() +"!\n");
   // }
-
+ 
   @Test void testCancelRegistration() throws IOException {
     String welcomeMsg = "\033[H\033[2J\n*******************************************************\n" +
     "            Welcome to the registration page :)            \n" +
