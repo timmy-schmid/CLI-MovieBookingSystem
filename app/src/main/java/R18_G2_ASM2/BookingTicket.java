@@ -51,6 +51,7 @@ public class BookingTicket {
                 if (this.cancelBook){
                     break;
                 }
+                System.out.println(count-i-1);
                 if(!this.checkFullorNot()){
                     this.cancelBooking();
                     break;
@@ -179,11 +180,11 @@ public class BookingTicket {
     public void bookingShowingSection(){
         Scanner scan = new Scanner(System.in);
         while(true){
-            System.out.println("Which area you wanna choose? --in total Left : " + this.showing.getMovieSeat().totalSeatsLeft());
-            System.out.println("1-Front "+"Already be booked: " +Integer.toString(this.showing.getMovieSeat().frontSeatBooked()));
-            System.out.println("2-Middle"+"Already be booked: "+Integer.toString(this.showing.getMovieSeat().middleSeatBooked()));
-            System.out.println("3-Rear  "+"Already be booked: "+Integer.toString(this.showing.getMovieSeat().rearSeatBooked()));
-            System.out.println("4-All   "+"Already be booked: "+Integer.toString(this.showing.getMovieSeat().totalSeatsBooked()));
+            System.out.println("Please choose the section --in total Left : " + this.showing.getMovieSeat().totalSeatsLeft());
+            System.out.println("1-Front        "+"Already be booked: " +Integer.toString(this.showing.getMovieSeat().frontSeatBooked()));
+            System.out.println("2-Middle       "+"Already be booked: "+Integer.toString(this.showing.getMovieSeat().middleSeatBooked()));
+            System.out.println("3-Rear         "+"Already be booked: "+Integer.toString(this.showing.getMovieSeat().rearSeatBooked()));
+            System.out.println("4-All          "+"Already be booked: "+Integer.toString(this.showing.getMovieSeat().totalSeatsBooked()));
             System.out.println("Cancel-cancel\n");
             String str = scan.next();
             if(str.equals("1")){
@@ -221,34 +222,33 @@ public class BookingTicket {
                 System.out.println("The column you chosen: ");
                 try{
                     col = scan.nextInt();
-                    if(!this.bookingTicketForSeat(rowLetter,col)){
+                    boolean sc = this.bookingTicketForSeat(rowLetter,col);
+                    if(!sc){
                         throw new Exception();
                     }
                     rowLetters[indexofarray] = rowLetter;
                     colNum[indexofarray] = col;
                     indexofarray++;
+                    break;
                 }catch (Exception e){
                     System.out.println("Invalid input, please try again.");
-                    System.out.println("Do you want to continue? [Y/N]\n"+"C -cancel\n");
+                    System.out.println("Do you want to continue? [Y/C]\n"+"C -cancel\n");
                     char[] mes = scan.next().toUpperCase().toCharArray();
-                    if(mes[0] == 'N'){
-                        // return to the welcome page -> how to deal with that?
-                        break;}else if (mes[0] == 'C'){
+                    if(mes[0] == 'C'){
                         // return to the welcome page -> how to deal with that?
                         this.cancelBooking();
                         this.cancelBook = true;
                         break;
-                    }}
+                    }
+                }
             }else{
                 System.out.println("Invalid message, please try again.");
                 System.out.println("Do you want to continue? [Y/N]\n"+"C -cancel\n");
                 char[] mes = scan.next().toUpperCase().toCharArray();
-                if(mes[0] == 'N'){
-                    // return to the welcome page -> how to deal with that?
-                    break;
-                }else if (mes[0] == 'C'){
+                if(mes[0] == 'C'){
                     // return to the welcome page -> how to deal with that?
                     this.cancelBooking();
+                    this.cancelBook = true;
                     break;
                 }
             }
