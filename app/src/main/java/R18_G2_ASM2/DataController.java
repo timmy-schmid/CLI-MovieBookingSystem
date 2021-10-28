@@ -43,19 +43,22 @@ public class DataController {
     if (Files.exists(Paths.get(basepath))) { // checks gradle dir v1
       path = basepath + resource;
       f = new File(path);
+      //System.out.println("src: ABS PATH to copy to: "+ f.getAbsoluteFile().toPath());
     } else if (Files.exists(Paths.get("app/" + basepath))) { // checks gradle dir v2
       path = "app/" + basepath + resource;
       f = new File(path);
+      //System.out.println("app: ABS PATH to copy to: "+ f.getAbsoluteFile().toPath());
+
     } else {
       // if not Gradle, must be .jar. Check to to see if db files exist.
       // The path of the jar file is located.
       try {
         String parentPath = new File(DataController.class.getProtectionDomain().getCodeSource().getLocation().toURI().getPath()).getParent();
         f = new File(parentPath + "/" + resource);
+        //System.out.println(".JAR ABS PATH to copy to: "+ f.getAbsoluteFile().toPath());
       } catch (URISyntaxException e) {
         e.printStackTrace();
       }
-      
       //If there is no db file, we copy the resource contents from the .jar to create a new db file.
       if (!f.exists()) {
         InputStream in = DataController.class.getClassLoader().getResourceAsStream(resource);

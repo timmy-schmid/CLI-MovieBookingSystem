@@ -72,9 +72,11 @@ public class EditInformationTest{
             System.setIn(inContent);
             editInformation.giveChoice();
             String output = "Edit and Update Your Information\n"+"*******************************************************\n"+"PLEASE CHOOSE FORM THE FOLLOWING                         \n"+"*******************************************************\n\n" +
-                    "1 - Edit Email\n" +
-                    "2 - Edit Password\n" +
-                    "3- return to the user page\n" +
+                    "1 - Edit Nickname\n" +
+                    "2 - Edit Email\n" +
+                    "3 - Edit Phone Number\n" +
+                    "4 - Edit Password\n" +
+                    "5 - Return to the user page\n" +
                     "\n" +
                     "User input: \n" +
                     "Invalid order :( Please try again\n";

@@ -14,6 +14,9 @@ public class Login {
 
   public Login(HomeScreen home) {
     userCsvFile = DataController.accessCSVFile(USER_FILE_NAME);
+    if (userCsvFile != null) {
+      System.out.println(userCsvFile.getPath());
+    }
     this.home = home;
     this.user = null;
   }
@@ -97,6 +100,8 @@ public class Login {
       Scanner myReader = new Scanner(userCsvFile);
       while (myReader.hasNextLine()) { //as long as you can keep reading the file, grab the details
         String line = myReader.nextLine();
+
+        System.out.println(line);
         String[] detailsArray = line.split(",");
         try{
           userID = Integer.parseInt(detailsArray[0]);
