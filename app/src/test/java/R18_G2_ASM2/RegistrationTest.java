@@ -20,6 +20,7 @@ class RegistrationTest {
   private final PrintStream originalOutput = System.out;
   private HomeScreen home; 
 
+  private File userFile;
   @BeforeAll static void setPath() {
     DataController.setBasePath("src/test/resources/");
   }
@@ -28,9 +29,12 @@ class RegistrationTest {
   public void setUp() {
     home = new HomeScreen(null);
     reg = new Registration(home);
-    Registration.setUserFile("newUserDetailsTest.csv");
-
+    // Registration.setUserFile("newUserDetailsTest.csv");
+    userFile = DataController.accessCSVFile("newUserDetailsTest.csv");    
+    
     //set up streams
+    reg.setUserFile("newUserDetailsTest.csv");
+    // reg.setUserFile2(userFile);
     System.setOut(new PrintStream(outContent));
   }
   @AfterEach
