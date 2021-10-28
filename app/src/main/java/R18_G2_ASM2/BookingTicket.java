@@ -18,6 +18,12 @@ public class BookingTicket {
 
     public BookingTicket(Showing showing, User user){
         this.showing = showing;
+        try {
+            this.showing.setMovieSeatForTest();
+        }catch (Exception e){
+            System.out.println("aaaa");
+        }
+
         this.user = user;
         this.bookPerson.put(Person.Child,0);
         this.bookPerson.put(Person.Senior,0);
@@ -38,10 +44,11 @@ public class BookingTicket {
                 System.out.println("Do it line 37");
                 this.bookingASeat();
                 if(!this.checkFullorNot()){
+                    this.cancelBooking();
                     break;
                 }
             }
-            System.out.println("Do you want to continue? Y for booking and other input for end");
+            System.out.println("Do you want to continue? Y for booking and other input for exit");
             String str = scan.next();
             if(str.equals("Y")){}else{
                 this.printBookingMessage();
@@ -51,7 +58,7 @@ public class BookingTicket {
     }
 
     public boolean checkFullorNot(){
-        if(!showing.isShowingFull()){
+        if(showing.isShowingFull()){
             System.out.println("No empty seat for the current show :(");
         }
         return showing.isShowingFull();
@@ -158,7 +165,6 @@ public class BookingTicket {
             System.out.println("4-All");
             System.out.println("Cancel-cancel\n");
             String str = scan.next();
-            System.out.println("works? From line 163?");
             if(str.equals("1")){
                 this.showing.getMovieSeat().showFrontSeats();
                 break;
@@ -170,7 +176,6 @@ public class BookingTicket {
                 break;
             }else if(str.equals("4")){
                 this.showing.getMovieSeat().showAllSeats();
-                System.out.println("works? From line 175?");
                 break;
             }else if(str.equals("Cancel")){
                 this.cancelBooking();
