@@ -32,29 +32,36 @@ public class EditInformation extends UserFields {
     public void setUserFile(File name){
         this.userCsvFile = name;
     }
+    //rename this to run
     public void giveChoice(){
         this.Welcome();
         Scanner scan = new Scanner(System.in);
-        System.out.println("1 - Edit Nickname\n" +
-                           "2 - Edit Email\n" +
-                           "3 - Edit Phone Number\n" +
-                           "4 - Edit Password\n" +
-                           "5 - Return to the user page\n");
-        System.out.println("User input: ");
-        String option = scan.nextLine();
-    
-        if (option.equals("1")) {
-            this.editNickname();
-        } else if (option.equals("2")) {
-            this.editEmail();
-        } else if (option.equals("3")) {
-            this.editPhoneNumber();;
-        } else if (option.equals("4")) {
-            this.editPassword();;
-        } else if (option.equals("5")) {
-            this.returnUserPage();
-        } else{
-            System.out.println("Invalid order :( Please try again");
+        while(true){
+            System.out.println("1 - Edit Nickname\n" +
+                               "2 - Edit Email\n" +
+                               "3 - Edit Phone Number\n" +
+                               "4 - Edit Password\n" +
+                               "5 - Return to the user page\n");
+            System.out.println("User input: ");
+            String option = scan.nextLine();
+            if (option.equals("1")) {
+                this.editNickname();
+                break;
+            } else if (option.equals("2")) {
+                this.editEmail();
+                break;
+            } else if (option.equals("3")) {
+                this.editPhoneNumber();
+                break;
+            } else if (option.equals("4")) {
+                this.editPassword();
+                break;
+            } else if (option.equals("5")) {
+//                this.returnUserPage();
+                break;
+            } else{
+                System.out.println("Invalid order :( Please try again");
+            }
         }
     }
 
