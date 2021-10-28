@@ -20,12 +20,6 @@ public class BookingTicket {
 
     public BookingTicket(Showing showing, User user){
         this.showing = showing;
-        try {
-            this.showing.setMovieSeatForTest();
-        }catch (Exception e){
-            System.out.println("aaaa");
-        }
-
         this.user = user;
         this.bookPerson.put(Person.Child,0);
         this.bookPerson.put(Person.Senior,0);
