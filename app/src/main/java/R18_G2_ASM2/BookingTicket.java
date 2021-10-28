@@ -45,13 +45,15 @@ public class BookingTicket {
             for(int i =0; i<count; i++){
                 this.bookingShowingSection();
                 if (this.cancelBook){
+                    this.cancelBook =false;
                     break;
                 }
                 this.bookingASeat();
                 if (this.cancelBook){
+                    this.cancelBook =false;
                     break;
                 }
-                System.out.println(count-i-1);
+                System.out.println("Left times to choose"+ Integer.toString(count-i-1));
                 if(!this.checkFullorNot()){
                     this.cancelBooking();
                     break;
@@ -225,6 +227,7 @@ public class BookingTicket {
                     if(!sc){
                         throw new Exception();
                     }
+                    System.out.println("Line23 does it reach there?");
                     rowLetters[indexofarray] = rowLetter;
                     colNum[indexofarray] = col;
                     indexofarray++;
