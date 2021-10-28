@@ -28,7 +28,7 @@ class RegistrationTest {
   public void setUp() {
     home = new HomeScreen(null);
     reg = new Registration(home);
-    Registration.setUserFile("newUserDetailsTest2.csv");
+    Registration.setUserFile("newUserDetailsTest.csv");
 
     //set up streams
     System.setOut(new PrintStream(outContent));

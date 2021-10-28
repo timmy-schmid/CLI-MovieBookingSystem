@@ -53,8 +53,8 @@ public class TransactionTest {
     tFile = DataController.accessCSVFile("cardTemp.csv");    
     tFile2 = DataController.accessCSVFile("cardTemp2.csv");    
 
-    t.setUserFile("newUserDetailsTest2.csv");
-    t2.setUserFile("newUserDetailsTest2.csv");
+    t.setUserFile("newUserDetailsTest.csv");
+    t2.setUserFile("newUserDetailsTest.csv");
 
     t.setGiftCardsFile(gFile);
     t2.setGiftCardsFile(gFile2);
