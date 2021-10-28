@@ -20,6 +20,13 @@ public class Movie {
   private List<String> cast;
   private ArrayList<Showing> showings;
 
+  public static final String ANSI_BRONZE = "\033[38;2;176;141;87;m";
+  public static final String ANSI_SILVER = "\033[38;2;170;169;173;m";
+  public static final String ANSI_GOLD = "\033[38;2;212;175;55;m";
+
+  public static final String ANSI_RESET = "\u001B[0m";
+
+
   private static final TimeZone AEST = TimeZone.getTimeZone("Australia/Sydney");
 
   public Movie (int id, String name, List<String> cast, Classification classification,
@@ -183,15 +190,15 @@ public class Movie {
             truncatedName = truncatedName.substring(0,47) + "...";
           }
           s.append(String.format("%-51s", truncatedName));
-          s.append(String.format("%s",showing.getShowingTimeShort()));
+          s.append(String.format("%s",formatByClass(showing,showing.getShowingTimeShort())));
           count++;
         } else {
           // wraps the showing time to next row  if more than 3 long.
           if (Math.floorMod(showCounter,3) == 0) { //TODO get rid of these magic number 3
             s.append(String.format(",\n%" + padding + "s", " "));
-            s.append(String.format("%s",showing.getShowingTimeShort()));
+            s.append(String.format("%s",formatByClass(showing,showing.getShowingTimeShort())));
           } else {
-            s.append(String.format(", %s",showing.getShowingTimeShort()));
+            s.append(String.format(", %s",formatByClass(showing,showing.getShowingTimeShort())));
           }
         }
         showCounter++; 
@@ -224,9 +231,16 @@ public class Movie {
     return count;
   }
 
-
-
-
+  public static String formatByClass (Showing showing, String s) {
+    if (showing.getCinema().getScreen() == MovieClass.BRONZE) {
+      s = ANSI_BRONZE + s + ANSI_RESET;
+    } else if (showing.getCinema().getScreen() == MovieClass.SILVER) {
+      s = ANSI_SILVER + s + ANSI_RESET;
+    } else if (showing.getCinema().getScreen() == MovieClass.GOLD) {
+      s = ANSI_GOLD + s + ANSI_RESET;
+    }
+    return s;
+  }
 
   public static Calendar getNextMonday (Calendar c) {
     Calendar nextMon = Calendar.getInstance(AEST, Locale.ENGLISH);
