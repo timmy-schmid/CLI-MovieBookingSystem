@@ -20,6 +20,7 @@ public class BookingTicket {
 
     public BookingTicket(Showing showing, User user){
         this.showing = showing;
+
         this.user = user;
         this.bookPerson.put(Person.Child,0);
         this.bookPerson.put(Person.Senior,0);
