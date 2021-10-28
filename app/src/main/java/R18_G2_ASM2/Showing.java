@@ -23,7 +23,7 @@ public class Showing implements Comparable<Showing> {
 
   //private  Map<String, Boolean> seatMap;
   private  Map<SeatLocation, Integer> seatsBooked; 
-  private MovieSeat movieSeat;
+  private MovieSeat movieSeat = new MovieSeat(this);
 
   public Showing (int showingId, Movie movie, Cinema cinema, Calendar showingTime) throws IOException {
     this.showingId = showingId;
