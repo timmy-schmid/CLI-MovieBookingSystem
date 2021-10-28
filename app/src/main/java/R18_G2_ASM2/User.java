@@ -25,9 +25,6 @@ public class User extends UserFields {
   private double totalPriceMutiplier = 0;
 
   private boolean autoFill;
-  // private GiftCard giftCard;
-  // private Card creditCard;
-
   private String cardNumber;
 
   public User(int ID, String email, String password){
@@ -41,23 +38,6 @@ public class User extends UserFields {
 
     this.autoFill = false; //default, then prompt user during transaction stage to update
   }
-
-  // public User(int ID, String nickname, String email, String phoneNumber, String password, Card creditCard, GiftCard userGiftCard){ //extra fields added
-  //   this.ID = ID;
-  //   this.nickname = nickname;
-  //   this.email = email;
-  //   this.phoneNumber = phoneNumber;
-  //   this.password = password;
-  //   this.creditCard = creditCard;
-  //   this.giftCard = userGiftCard;
-
-  //   ticket.put(Person.Child,0);
-  //   ticket.put(Person.Student,0);
-  //   ticket.put(Person.Senior,0);
-  //   ticket.put(Person.Adult,0);
-
-  //   this.autoFill = false; //default, then prompt user during transaction stage to update
-  // }
 
   //current new version - sprint 2
   public User(int ID, String nickname, String email, String phoneNumber, String password){ //extra fields added
@@ -109,10 +89,21 @@ public class User extends UserFields {
     }
   }
 
+  public void setNickname(String nickname){
+    if (nickname != null && !nickname.equals("")) {
+      this.nickname = nickname;
+    }
+  }
   //only set email if its valid
   public void setEmail(String email){
     if (this.validateUser(email) == true){
       this.email = email;
+    }
+  }
+
+  public void setPhoneNumber(String phoneNumber){
+    if (this.isValidPassword(phoneNumber) == true){
+      this.phoneNumber = phoneNumber;
     }
   }
 
