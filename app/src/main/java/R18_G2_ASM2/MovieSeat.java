@@ -21,6 +21,11 @@ public class MovieSeat{
     public MovieSeat(Showing showing) throws IOException{
         this.showing = showing;
         movieSeat = DataController.accessCSVFile("movieSeatsMap/"+ String.valueOf(showing.getMovie().getId())+"-"+ String.valueOf(showing.getCinema().getId())+"-"+String.valueOf(showing.getShowingId())+".csv");
+        //create dir first if does not exist!
+        if (!movieSeat.getParentFile().exists()) {
+          movieSeat.getParentFile().mkdirs();
+        }
+        
         if (!movieSeat.exists()){
             try {
                 movieSeat.createNewFile();

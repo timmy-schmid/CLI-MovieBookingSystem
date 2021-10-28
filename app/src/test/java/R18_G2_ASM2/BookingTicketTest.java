@@ -36,7 +36,6 @@ public class BookingTicketTest {
         testBookingTicket = new BookingTicket(aShow,testUser);
     }
 
-
     @Test
     public void testPrintBookingMessage(){
         try{
