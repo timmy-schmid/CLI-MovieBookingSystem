@@ -32,7 +32,7 @@ public class EditInformation extends UserFields {
     public void setUserFile(File name){
         this.userCsvFile = name;
     }
-    //rename this to run
+
     public void giveChoice(){
         this.Welcome();
         Scanner scan = new Scanner(System.in);
