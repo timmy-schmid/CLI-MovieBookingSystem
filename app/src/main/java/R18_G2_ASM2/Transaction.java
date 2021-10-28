@@ -1,6 +1,7 @@
 package R18_G2_ASM2;
 
 import java.util.*;
+import java.io.*;
 
 
 import java.io.BufferedReader;
@@ -41,18 +42,25 @@ public class Transaction {
   public Transaction(User customer){
     this.customer = customer;
 
-    userCsvFile = DataController.accessCSVFile(USER_FILE_NAME);
-    tempFile = DataController.accessCSVFile(TEMP_FILE_NAME);
-    tempFile2 = DataController.accessCSVFile(TEMP_FILE_2_NAME);
-    giftCardsFile = DataController.accessCSVFile(GIFT_CARD_FILE_NAME);
+    this.userCsvFile = DataController.accessCSVFile(USER_FILE_NAME);
+    this.tempFile = DataController.accessCSVFile(TEMP_FILE_NAME);
+    this.tempFile2 = DataController.accessCSVFile(TEMP_FILE_2_NAME);
+    this.giftCardsFile = DataController.accessCSVFile(GIFT_CARD_FILE_NAME);
+
+    this.USER_FILE_NAME = this.userCsvFile.getAbsolutePath(); //str version
+    this.TEMP_FILE_NAME = this.tempFile.getAbsolutePath();
+    this.TEMP_FILE_2_NAME = this.tempFile2.getAbsolutePath();
+    this.GIFT_CARD_FILE_NAME = this.giftCardsFile.getAbsolutePath();
+
   }
 
   public static void setUserFile(String name){
     USER_FILE_NAME = name;
   }
 
-  public void setGiftCardsFile(String name) {
-    GIFT_CARD_FILE_NAME = name;
+  public void setGiftCardsFile(File file) {
+    this.giftCardsFile = file;
+    this.GIFT_CARD_FILE_NAME = file.getAbsolutePath();
   }
 
   public User getCustomer(){
@@ -67,22 +75,17 @@ public class Transaction {
   public void printScreen(){ //hi-fi ui of user transaction screen
     System.out.println("\n*******************************************************");
     System.out.println("            Welcome to the payment page :)            ");
-    // System.out.println("           Please enter your details below!                  ");
-    // System.out.println("*******************************************************\n");
-
-    // System.out.println("\n*******************************************************");
-    System.out.println("           Movie to book details           ");
+    System.out.println("               Movie to book details               ");
     System.out.println("*******************************************************\n");
     System.out.println("Number of tickets: ");
-     System.out.println("Total Amount: \n");
-
+    System.out.println("Total Amount: \n"); //this.getCustomer().getTotalPrice();
   }
 
   //run()
   // get total amount of all tickets from booking ticket/list of tickets? to compare against gift card num/credit card
 
   // TODO: autogenerate a unique transaction ID for each user
-  public void proceedPayment(){ //card details fill out
+  public void proceedPayment() throws IOException { //card details fill out
     this.printScreen();
     this.askForUserDetails();
   }
@@ -130,7 +133,6 @@ public class Transaction {
         break;
 
       } else if (option.toLowerCase().equals("c")){ //or go back to booking page??
-        // System.out.println("     CANCELLING TRANSACTION + REDIRECTING YOU BACK\n               TO HOME PAGE~ in 3..2..1..");
         returnMsg = "cancel";
         break;
       } else { //invalid command entered
@@ -140,7 +142,7 @@ public class Transaction {
     return returnMsg;
   }
   
-  public void askForUserDetails(){
+  public void askForUserDetails() throws IOException {
     String msg = this.printOptions(-1);
     Scanner scan = new Scanner(System.in);
     if (msg.equals("1")){ //credit card
@@ -165,7 +167,7 @@ public class Transaction {
           break;
         }
         if (returnResult == 2){
-          System.out.println("LINE 132:::::: pay remaining with credit card");
+          System.out.println("LINE 166: pay remaining with credit card");
           break;
         } else if (returnResult == 3){
           this.printOptions(0);
@@ -236,7 +238,8 @@ public class Transaction {
   // if it isn't, return value saying you cant use this gift card number anymore
 
   public String updateGiftCardStatus(String userInputGNumber){ //overwrites existing gift cards in file by changing the reedemble status of the gift card so it can no longer be used for next time
-    String msg = "not redeemable";;
+    String msg = "not redeemable";
+    // System.out.printf("LINE 238: USERGIFTCARDFILE = %s\n", this.getGiftCardFileName());
     try {
       File f = this.giftCardsFile;
       Scanner myReader = new Scanner(f);
@@ -266,11 +269,11 @@ public class Transaction {
       e.printStackTrace();
     }
 
-    if(msg.equals("not redeemable")){
-      System.out.println("LINE 254: OH NO! The gift card number you have entered is no longer redeemable. Please enter another or go back to pay with credit card.");
-    }
+    // if(msg.equals("not redeemable")){
+    //   System.out.println("LINE 254: OH NO! The gift card number you have entered is no longer redeemable. Please enter another or go back to pay with credit card.");
+    // }
 
-    System.out.printf("LINE271::::::::::: msg = [%s]\n", msg);
+    // System.out.printf("LINE271::::::::::: msg = [%s]\n", msg);
     return msg;
   }
 
@@ -296,8 +299,8 @@ public class Transaction {
     return msg;
   }
 
-  public static String getUserFileName() {
-    return USER_FILE_NAME;
+  public String getUserFileName() { //static
+    return this.USER_FILE_NAME;
   }
 
   public File getUserCsvFile() {
@@ -316,25 +319,26 @@ public class Transaction {
     return tempFile2;
   }
 
-  public static String getGiftCardFileName() {
-    return GIFT_CARD_FILE_NAME;
+  public String getGiftCardFileName() { //static
+    return this.GIFT_CARD_FILE_NAME;
   }
 
-  public static String getTempFile2Name() {
-    return TEMP_FILE_2_NAME;
+  public String getTempFile2Name() { //static
+    return this.TEMP_FILE_2_NAME;
   }
 
-  public void setTempFileName(String name) {
-    TEMP_FILE_NAME = name;
+  public void setTempFile(File file) {
+    this.tempFile = file;
+    this.TEMP_FILE_NAME = file.getAbsolutePath();
   }
 
-  public void setTempFile2Name(String name) {
-    TEMP_FILE_2_NAME = name;
+  public void setTempFile2(File file) {
+    this.tempFile2= file;
+    this.TEMP_FILE_2_NAME = file.getAbsolutePath();
   }
 
-
-  public static String getTempFileName() {
-    return TEMP_FILE_NAME;
+  public String getTempFileName() { //static
+    return this.TEMP_FILE_NAME;
   }
 
   public int askForGiftCardDetails(){
@@ -364,18 +368,16 @@ public class Transaction {
           }
         }
       } else if (returnMsg.equals("first time ok")){
-        // System.out.println("\nTRANSACTION COMPLETE (Y/N): ");
         return 0; //ok
       }
     } 
     //invalid number
-    //re-loop this
     System.out.println("The gift card number you have provided does not match the details provided in our system. Please try again.\n");
     return -1;
     
   }
 
-  public int askForCreditCardDetails(String cardNumber, String csvNumber,boolean userStatus){
+  public int askForCreditCardDetails(String cardNumber, String csvNumber,boolean userStatus) throws IOException {
     Scanner scan = new Scanner(System.in);
     if (userStatus == true){ //saved before
       System.out.println("\nPrinting user's card details below (saved before)!");
@@ -385,6 +387,48 @@ public class Transaction {
       this.getFinalMsg();
       return 1;
     } else if (userStatus == false){
+      String name = null;
+      String number = null;
+      Scanner sc = new Scanner(System.in);
+      while (true) {
+        System.out.printf("Please enter your credit card name: ");
+        name = sc.nextLine();
+        Console con = System.console();
+        if (con != null) {
+          char[] num = con.readPassword("Please enter your credit card number: ");
+          number = new String(num);
+          System.out.printf("NUMBER LINE 100: [%s]\n", number);
+        } else {
+          System.out.printf("Please enter your credit card number: ");
+          number = sc.nextLine();
+        }
+        boolean result = this.checkCreditCardInfo(name, number);
+        if (result == true){
+          System.out.println("Match!Process to next stage!");
+//        home.setUser(user);
+//        home.run();
+          //Direct to next page!!!
+        } else if (result == false){
+          System.out.println("Not Match!");
+          int temp = 0;
+          while (temp == 0) {
+            String textinput = this.nextOption();
+            if (textinput.equals("1")) {
+              temp = 1;
+            } else if (textinput.equals("2")) {
+              System.out.println("Back to default page--default screen");
+              temp = 2;
+            } else {
+              System.out.println("Invalid input, please choose agian!");
+            }
+          }
+          if (temp == 1) {
+            continue;
+          } else if (temp == 2) {
+            break;
+          }
+        }
+      }
       System.out.printf("\nDo you want to save your card details to your account? (Y/N): ");
       String option2 = scan.nextLine();
       String result = this.checkAutoFillOption(option2);
@@ -395,7 +439,6 @@ public class Transaction {
         this.getCustomer().setAutoFillStatus(true);
         this.getCustomer().setCardNumber(cardNumber);
 
-        // System.out.println("TRANSACTION COMPLETE :)");
         this.getFinalMsg();
         return 1;
       } else {
@@ -403,6 +446,19 @@ public class Transaction {
       }
     }
     return 0;
+  }
+
+  public String nextOption() throws IOException{
+    System.out.printf("\nInvalid credit name or number, please select from the following:\n");
+    System.out.println("1. CONTINUE USING CREDIT CARD");
+    System.out.println("2. CANCEL");
+
+//    ConsoleReader consoleReader = new ConsoleReader();
+    String textinput = null;
+//    textinput = consoleReader.readLine();
+    Scanner scan = new Scanner(System.in);
+    textinput = scan.nextLine();
+    return textinput;
   }
 
   public boolean getFinalMsg(){
@@ -419,11 +475,20 @@ public class Transaction {
         //movie name, time, cinema + seats
         return true;
       } else if (option.equals("C")){
-        System.out.println("\nLINE 424: Transaction cancelled!");
+        System.out.println("\nLINE 422: Transaction cancelled!");
         return false;
       } else {
-        System.out.println("Please enter a valid input.");
+        System.out.printf("Please enter a valid input: ");
       }
+    }
+  }
+
+  public boolean checkCreditCardInfo(String name, String number) {
+    ParseJson parseJson = new ParseJson();
+    if (parseJson.matchCard(name, number)) {
+      return true;
+    } else {
+      return false;
     }
   }
 
