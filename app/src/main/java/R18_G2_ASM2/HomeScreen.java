@@ -56,6 +56,7 @@ public class HomeScreen extends Screen {
     if (intOption != NO_INT_OPTION) {
       movScreen = new MovieScreen(moviesSorted.get(intOption));
       movScreen.run();
+      intOption = NO_INT_OPTION;
     } else {
       switch (selectedOption) {
         case "L": case "l":
