@@ -54,7 +54,7 @@ public class HomeScreen extends Screen {
   protected void chooseOption() {
 
     if (intOption != NO_INT_OPTION) {
-      movScreen = new MovieScreen(moviesSorted.get(intOption-1));
+      movScreen = new MovieScreen(this,moviesSorted.get(intOption-1));
       movScreen.run();
       intOption = NO_INT_OPTION;
     } else {
