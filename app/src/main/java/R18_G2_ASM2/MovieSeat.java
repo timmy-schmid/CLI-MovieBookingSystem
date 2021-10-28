@@ -29,7 +29,7 @@ public class MovieSeat{
         if (!movieSeat.exists()){
             try {
                 movieSeat.createNewFile();
-                seatMap = FileTools.readFromCsv(new File("app/src/main/resources/movieSeatsMap/"+showing.getCinema().cinemaScreen.toString()+".csv"));
+                seatMap = FileTools.readFromCsv(DataController.accessCSVFile("movieSeatsMap/"+showing.getCinema().cinemaScreen.toString()+".csv"));
                 writeToDatabase();
             } catch (IOException e) {
                 e.printStackTrace();
@@ -45,7 +45,7 @@ public class MovieSeat{
 
     public MovieSeat(Showing showing, boolean isUnderTest) throws IOException{
         this.showing = showing;
-
+        movieSeat = DataController.accessCSVFile("movieSeatsMap/"+ String.valueOf(showing.getMovie().getId())+"-"+ String.valueOf(showing.getCinema().getId())+"-"+String.valueOf(showing.getShowingId())+".csv");
         movieSeat = new File("src/test/resources/"+ "SeatMapTest.csv");
 
         seatMap = readFromDatabase();
@@ -178,10 +178,10 @@ public class MovieSeat{
         // mdf.print();
         // File movieSeat = new File("src/test/resources/"+ "SeatMapTest.csv");
     
-        MovieSeat seatMap = new MovieSeat(new Showing(2, new Movie(1,"77", null, null, null, null,null), new Cinema(1, MovieClass.SILVER), null));
-        DataFrame<String> newFrame = seatMap.readFromDatabase();
+        MovieSeat seatMap = new MovieSeat(new Showing(3, new Movie(1,"77", null, null, null, null,null), new Cinema(1, MovieClass.SILVER), null));
         seatMap.writeToDatabase();
         // newFrame.print();
+        System.out.println(seatMap.totalSeatsLeft()==0);
 
         seatMap.bookSeat('D', 5);
 
@@ -198,6 +198,9 @@ public class MovieSeat{
         System.out.println("Middle seats booked: "+seatMap.middleSeatBooked());
         System.out.println("Total seats left: "+seatMap.totalSeatsLeft());
         System.out.println("Total seats booked: "+seatMap.totalSeatsBooked());
+
+
+
     }
 
     

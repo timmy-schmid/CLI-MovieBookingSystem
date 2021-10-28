@@ -118,16 +118,16 @@ public class BookingTicket {
                         System.out.println("Invalid input,please try again: ");
                     }
                 }
-
-                Ct =this.Continue();
-                if(Ct == 2 ){
-                    Ct = 1;
+                if(this.cancelBook){
                     break;
+                }else{
+                    Ct =this.Continue();
+                    if(Ct == 2 || Ct == -1 ){
+                        Ct = 1;
+                        break;
+                    }
                 }
-
-            }else{
-                break;
-            }
+            }else{break;}
         }
     }
 
@@ -135,6 +135,9 @@ public class BookingTicket {
     public int Continue(){
         Scanner scan = new Scanner(System.in);
         while(true){
+            if(this.cancelBook){
+                return -1;
+            }
             System.out.println("1-Continue\n" +
                     "2-End Adding Person\n"+"C-Cancel\n");
             String str = scan.next();
