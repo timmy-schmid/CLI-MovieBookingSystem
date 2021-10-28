@@ -38,10 +38,11 @@ public class BookingTicket {
                 System.out.println("Do it line 37");
                 this.bookingASeat();
                 if(!this.checkFullorNot()){
+                    this.cancelBooking();
                     break;
                 }
             }
-            System.out.println("Do you want to continue? Y for booking and other input for end");
+            System.out.println("Do you want to continue? Y for booking and other input for exit");
             String str = scan.next();
             if(str.equals("Y")){}else{
                 this.printBookingMessage();
@@ -170,6 +171,7 @@ public class BookingTicket {
                 this.showing.getMovieSeat().showRearSeats();
                 break;
             }else if(str.equals("4")){
+                System.out.println("works? From line 174?");
                 this.showing.getMovieSeat().showAllSeats();
                 System.out.println("works? From line 175?");
                 break;
