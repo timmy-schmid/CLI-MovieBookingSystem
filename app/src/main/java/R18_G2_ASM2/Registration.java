@@ -44,6 +44,10 @@ public class Registration extends UserFields {
     USER_FILE_NAME = name;
   }
 
+  public void setUserFile2(File file) {
+    this.userCsvFile= file;
+    this.userCsvFile2 = file.getAbsolutePath();
+  }
   public void run() {
     try {
       retrieveUserInputDetails3();
@@ -225,7 +229,8 @@ public class Registration extends UserFields {
   public int writeUserDetailsToFile3(String nickname, String email, String phoneNumber, String password){
     int id = -1;
     try {
-      System.out.printf("LINE 228 IN REGISTRATION: ABOUT TO WRITE TO FILE: [%s]\n", this.userCsvFile2);
+      // System.out.printf("LINE 228 IN REGISTRATION: ABOUT TO WRITE TO FILE: [%s]\n", this.userCsvFile2);
+      this.userCsvFile2 = this.userCsvFile.getAbsolutePath();
       Scanner myReader = new Scanner(this.userCsvFile);
       String currentLine = "";
       String lastLine = "";
