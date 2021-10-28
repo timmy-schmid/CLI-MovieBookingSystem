@@ -27,6 +27,7 @@ public class User extends UserFields {
   private boolean autoFill;
   private String cardName;
   private String cardNumber;
+  private String cvvNumber;
 
   //current new version - sprint 2
   public User(int ID, String nickname, String email, String phoneNumber, String password){ //extra fields added
@@ -43,6 +44,7 @@ public class User extends UserFields {
 
     this.cardName = null;
     this.cardNumber = null;
+    this.cvvNumber = null;
     this.autoFill = false; //default, then prompt user during transaction stage to update
   }
 
@@ -76,6 +78,11 @@ public class User extends UserFields {
   public String getCardNumber(){
     return this.cardNumber;
   }
+
+  public String getCvvNumber(){
+    return this.cvvNumber;
+  }
+
   //setter methods: e.g. for changing login details ...
   //validate to ensure values to be set to are valid
   public void setID(int ID){
@@ -124,6 +131,10 @@ public class User extends UserFields {
     if (this.isValidCardNumber(number)){
       this.cardNumber = number;
     }
+  }
+
+  public void setCvvNumber(String cvvNumber){ //validate length of this (? = 3)
+    this.cvvNumber = cvvNumber;
   }
 
   //rename maybe bookingTicket --> bookTicket? OR nahh

@@ -153,10 +153,10 @@ public class Transaction {
 
         System.out.printf("\nPlease enter your card number: ");
         String cNumber = scan.nextLine();
-        System.out.printf("Please enter your csv number: ");
-        String csvNumber = scan.nextLine();
+        System.out.printf("Please enter your cvv number: ");
+        String cvvNumber = scan.nextLine();
 
-        this.askForCreditCardDetails(cNumber, csvNumber, false);       
+        this.askForCreditCardDetails(cNumber, cvvNumber, false);       
       }
     } else if (msg.equals("2")){ //gift card
       while (true){
@@ -349,13 +349,14 @@ public class Transaction {
     
   }
 
-  public int askForCreditCardDetails(String cardNumber, String csvNumber,boolean userStatus) throws IOException {
+  public int askForCreditCardDetails(String cardNumber, String cvvNumber,boolean userStatus) throws IOException {
     Scanner scan = new Scanner(System.in);
     if (userStatus == true){ //saved before
       System.out.println("\nPrinting user's card details below (saved before)!");
+
       System.out.printf("Name: %s\n", this.getCustomer().getCardName());
       System.out.printf("Card number provided: %s\n", this.getCustomer().getCardNumber());
-      System.out.println("Are the details above correct? OR would you like to update your card details? (Y/N): ");
+      System.out.println("\nAre the details above correct? OR would you like to update your card details? (Y/N): ");
       this.getFinalMsg();
       return 1;
     } else if (userStatus == false){
@@ -377,6 +378,7 @@ public class Transaction {
         boolean result = this.checkCreditCardInfo(name, number);
         if (result == true){
           System.out.println("Match found! Proceeding to next stage!");
+          break;
 //        home.setUser(user);
 //        home.run();
           //Direct to next page!!!
@@ -388,10 +390,10 @@ public class Transaction {
             if (textinput.equals("1")) {
               temp = 1;
             } else if (textinput.equals("2")) {
-              System.out.println("Back to default page--default screen");
+              System.out.println("Back to default page!");
               temp = 2;
             } else {
-              System.out.println("Invalid input, please choose agian!");
+              System.out.println("Invalid input, please choose again!");
             }
           }
           if (temp == 1) {
@@ -420,17 +422,18 @@ public class Transaction {
     return 0;
   }
 
-  public String nextOption() throws IOException{
+  public String nextOption() {
     System.out.printf("\nInvalid credit name or number, please select from the following:\n");
     System.out.println("1. CONTINUE USING CREDIT CARD");
     System.out.println("2. CANCEL");
 
-//    ConsoleReader consoleReader = new ConsoleReader();
-    String textinput = null;
+    //    ConsoleReader consoleReader = new ConsoleReader();
 //    textinput = consoleReader.readLine();
+
+    String textInput = null;
     Scanner scan = new Scanner(System.in);
-    textinput = scan.nextLine();
-    return textinput;
+    textInput = scan.nextLine(); 
+    return textInput;
   }
 
   public boolean getFinalMsg(){
@@ -441,14 +444,14 @@ public class Transaction {
 
     while (true) {
       String option = scan.nextLine();
-      if (option.equals("F")){
+      if (option.toLowerCase().equals("f")){
         System.out.println("\nTransaction Successful!");
         System.out.println("Please see your receipt below to present at the cinema: \n\n\n");
         // this.printReceipt();
         //movie name, time, cinema + seats
         return true;
-      } else if (option.equals("C")){
-        System.out.println("\nLINE 422: Transaction cancelled!");
+      } else if (option.toLowerCase().equals("c")){
+        System.out.println("\nLINE 455: Transaction cancelled!");
         return false;
       } else {
         System.out.printf("Please enter a valid input: ");
@@ -465,8 +468,8 @@ public class Transaction {
     }
   }
 
-  public void printReceipt(){
-    System.out.println(this.getCustomer().getTicketMessage());
-    //booking ticket
-  }
+  // public void printReceipt(){
+  //   System.out.println(this.getCustomer().getTicketMessage());
+  //   //booking ticket
+  // }
 }
