@@ -11,9 +11,10 @@ public class MovieScreen extends Screen {
   Movie movie;
   HomeScreen home;
 
-  public MovieScreen(Movie movie) {
+  public MovieScreen(HomeScreen home, Movie movie) {
     super();
     this.movie = movie;
+    this.home = home;
     this.login = new Login(home);
     this.reg = new Registration(home);
     this.showings = movie.getShowingsBeforeNextMonday();

@@ -113,7 +113,6 @@ public class Login {
         realPassword = detailsArray[4];
         if (userEmail.equals(email)){
           if (realPassword.equals(userPassword)) {
-            System.out.println("do i get here");
             result = 1;          
             this.user = new User(Integer.parseInt(detailsArray[0]), detailsArray[1], detailsArray[2], detailsArray[3],detailsArray[4]);
             if (detailsArray[5].equals("T")){
