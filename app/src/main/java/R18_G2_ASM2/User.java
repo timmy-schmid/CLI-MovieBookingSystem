@@ -102,11 +102,14 @@ public class User extends UserFields {
   }
 
   public void setPhoneNumber(String phoneNumber){
-    if (this.isValidPassword(phoneNumber) == true){
+    if (this.isValidPhoneNumber(phoneNumber) == true){
       this.phoneNumber = phoneNumber;
     }
   }
 
+  public boolean isValidPhoneNumber(String newPhoneNumber){
+   return true;
+  }
   //only set password if its valid
   public void setPassword(String newPassword){
     if (this.isValidPassword(newPassword) == true){
