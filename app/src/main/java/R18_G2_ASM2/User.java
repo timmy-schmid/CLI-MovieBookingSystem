@@ -156,7 +156,7 @@ public class User extends UserFields {
   public void AddTicketMessage(){
     ticketMessage = "";
     for(Person key: ticket.keySet()){
-      ticketMessage = (ticketMessage+"--"+key+"----"+Integer.toString(ticket.get(key))+"\n");
+      ticketMessage = (ticketMessage+key+"-----"+Integer.toString(ticket.get(key))+"\n");
     }
   }
   public void totalPrice(){
