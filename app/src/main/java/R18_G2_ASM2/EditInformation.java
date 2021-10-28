@@ -76,12 +76,44 @@ public class EditInformation extends UserFields {
     }
 
     public void editEmail(){
-        boolean Success = false;
-        boolean wantToContinue = true;
+        //version one
+//        boolean Success = false;
+//        boolean wantToContinue = true;
+//        System.out.println("\nYour current username is: " + userChanged.getEmail());
+//        Scanner scan = new Scanner(System.in);
+//        System.out.println("The new username: ");
+//        while(!Success && wantToContinue){
+//            String option = scan.next();
+//            if(option.equals(this.userChanged.getEmail())){
+//                System.out.println("Please enter a new username");
+//            }
+//            else if(this.validateUser(option)){
+//                if (this.checkIfUserExists(option) == 1){
+//                    this.setUserEmail(option);
+//                    Success = true;
+//                    System.out.println("Success\n");
+//                }else{
+//                    System.out.println("The username already exists!\n");
+//                }
+//            }
+//            else {
+//                System.out.println("Invalid Username :( Please use gmail, hotmail or yahoo email address.");
+//                System.out.println("Do you wanna try again? (Y/N): \n");
+//                if(option.equals("Y")){} else if(option.equals("N")){
+//                    wantToContinue = false;
+//                }else{
+//                    System.out.println("Invalid input. Please choose from Y or N: \n");
+//                }
+//            }
+//        }
+//        if(wantToContinue == false){
+//            this.nextOption();
+//        }
+
         System.out.println("\nYour current username is: " + userChanged.getEmail());
         Scanner scan = new Scanner(System.in);
-        System.out.println("The new username: ");
-        while(!Success && wantToContinue){
+        while(true){
+            System.out.println("The new username: ");
             String option = scan.next();
             if(option.equals(this.userChanged.getEmail())){
                 System.out.println("Please enter a new username");
@@ -89,8 +121,8 @@ public class EditInformation extends UserFields {
             else if(this.validateUser(option)){
                 if (this.checkIfUserExists(option) == 1){
                     this.setUserEmail(option);
-                    Success = true;
                     System.out.println("Success\n");
+                    break;
                 }else{
                     System.out.println("The username already exists!\n");
                 }
@@ -99,16 +131,14 @@ public class EditInformation extends UserFields {
                 System.out.println("Invalid Username :( Please use gmail, hotmail or yahoo email address.");
                 System.out.println("Do you wanna try again? (Y/N): \n");
                 if(option.equals("Y")){} else if(option.equals("N")){
-                    wantToContinue = false;
+                    break;
                 }else{
                     System.out.println("Invalid input. Please choose from Y or N: \n");
                 }
             }
         }
-        if(wantToContinue == false){
-            this.nextOption();
-        }
     }
+
 
     public void editPassword(){
         Scanner scan = new Scanner(System.in);
