@@ -172,6 +172,7 @@ public class EditInformation extends UserFields {
         //newly added - Anna (editNickname, editPhoneNumber)
     //change the logic - Ke
     public void editNickname(){
+        //version 1
 //        Scanner scan = new Scanner(System.in);
 //        boolean Success = false;
 //        boolean wantToContinue = true;
@@ -219,35 +220,64 @@ public class EditInformation extends UserFields {
                 System.out.println("Invalid input. Please choose from Y or N.\n");
             }
         }
-        this.nextOption();
+        this.returnUserPage();
 
     }
 
     public void editPhoneNumber(){
+        //version 1
+//        Scanner scan = new Scanner(System.in);
+//        boolean Success = false;
+//        boolean wantToContinue = true;
+//        while (!Success && wantToContinue) {
+//            System.out.println("Security check, please enter your old phone number: ");
+//            String phoneNumber = scan.nextLine();
+//            if (phoneNumber.equals(this.userChanged.getPhoneNumber())) {
+//                System.out.println("New phone number: ");
+//                this.setUserPhoneNumber(phoneNumber);
+//                Success = true;
+//            } else {
+//                System.out.println("The number you have entered is invalid, please check it again");
+//            }
+//            System.out.println("Do you wanna try again? (Y/N)\n");
+//            String option = scan.nextLine();
+//            if(option.equals("Y")){} else if(option.equals("N")){
+//                wantToContinue = false;
+//            }else{
+//                System.out.println("Invalid input. Please choose from Y or N.\n");
+//            }
+//        }
+//        if(!wantToContinue){
+//            this.nextOption();
+//        }
+
         Scanner scan = new Scanner(System.in);
         boolean Success = false;
         boolean wantToContinue = true;
-        while (!Success && wantToContinue) {
+        while (true) {
             System.out.println("Security check, please enter your old phone number: ");
             String phoneNumber = scan.nextLine();
             if (phoneNumber.equals(this.userChanged.getPhoneNumber())) {
                 System.out.println("New phone number: ");
+                String newpN = scan.next();
                 this.setUserPhoneNumber(phoneNumber);
-                Success = true;
+                System.out.println("The current phone number: " + this.userChanged.getPhoneNumber());
+                break;
             } else {
                 System.out.println("The number you have entered is invalid, please check it again");
             }
             System.out.println("Do you wanna try again? (Y/N)\n");
             String option = scan.nextLine();
-            if(option.equals("Y")){} else if(option.equals("N")){
-                wantToContinue = false;
+            if(option.equals("Y")){
+
+            } else if(option.equals("N")){
+                break;
             }else{
                 System.out.println("Invalid input. Please choose from Y or N.\n");
             }
         }
-        if(!wantToContinue){
-            this.nextOption();
-        }
+
+            this.returnUserPage();
     }
 
 
@@ -310,7 +340,6 @@ public class EditInformation extends UserFields {
 
     public void returnUserPage(){
         System.out.println("Return to the User default page...\n");
-//        this.giveChoice();
     }
 
     public void writeUsertoFile(User user, File file) {
