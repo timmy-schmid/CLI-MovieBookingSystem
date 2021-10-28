@@ -31,9 +31,8 @@ public class MovieSystemTest {
   @BeforeEach void resetSystem() {
     actualOut = new ByteArrayOutputStream();
     actualOutPrint = new PrintStream(actualOut);
-
   }
-
+  /* TODO move these tests somewhere else
   @Test void parseInputTestInvalidChars() {
 
     mockIn = new ByteArrayInputStream("b\n@\nt\nA\na\n".getBytes());
@@ -67,7 +66,7 @@ public class MovieSystemTest {
                    "User Input:" +                    
                    "Invalid selection. Please try again.\n\n" + //10a input
                    "User Input:");    
-  }
+  }*/
 
   @Test void quitTest() {
     mockIn = new ByteArrayInputStream("".getBytes());

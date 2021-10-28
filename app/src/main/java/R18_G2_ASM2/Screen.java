@@ -1,6 +1,5 @@
 package R18_G2_ASM2;
 
-import java.io.PrintStream;
 import java.util.ArrayList;
 import java.util.Scanner;
 
@@ -26,34 +25,29 @@ public abstract class Screen {
   protected boolean goBack;
 
   protected String title;
-  protected PrintStream out;
   protected String selectedOption;
 
   public String getTitle() { return title; }
 
   protected abstract void chooseOption();
-  //public abstract void chooseOption(int option);
-
 
   public Screen() {
-    this.out = System.out;
     options = new ArrayList<>();
   }
 
-  public Screen(PrintStream out) {
-    this.out = out;
-    options = new ArrayList<>();
-
+  public void run() {
+    while (!goBack) {
+      print();
+      askforInput();
+      chooseOption();
+    }
   }
-
-  public abstract void run();
 
   public abstract void print();
 
-
   protected void askforInput() {
 
-    Scanner reader = new Scanner(System.in);
+    Scanner reader = new Scanner(System.in); //TODO how do I close this?
 
     printUserInputText ();
 
@@ -85,15 +79,15 @@ public abstract class Screen {
   }
 
   protected void printOptionsText () {
-    out.print("Please choose from the following options:\n\n");
+    System.out.print("Please choose from the following options:\n\n");
   }
 
   protected void printUserInputText () {
-    out.print("User Input:");
+    System.out.print("User Input:");
   }
 
   protected void printInvalidSelectionText () {
-    out.println("Invalid selection. Please try again.\n");
+    System.out.println("Invalid selection. Please try again.\n");
     printUserInputText ();
   }
 
@@ -101,16 +95,16 @@ public abstract class Screen {
 
     int padding = (SCREEN_WIDTH - title.length()) / 2;
 
-    out.print("*********************************************");
-    out.print("*********************************************\n");
-    out.printf("%" + padding + "s" + title + "\n"," ");
-    out.print("*********************************************");
-    out.print("*********************************************\n");
+    System.out.print("*********************************************");
+    System.out.print("*********************************************\n");
+    System.out.printf("%" + padding + "s" + title + "\n"," ");
+    System.out.print("*********************************************");
+    System.out.print("*********************************************\n");
 
   }
 
   public void clearScreen() {
-    out.print(ANSI_CLEAR);
+    System.out.print(ANSI_CLEAR);
   }
 
   public static String formatANSI (String toFormat, String ANSICommand) {

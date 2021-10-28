@@ -2,7 +2,6 @@ package R18_G2_ASM2;
 
 import java.util.ArrayList;
 import java.util.HashMap;
-
 public class HomeScreen extends Screen {
 
   private static User user;
@@ -51,15 +50,6 @@ public class HomeScreen extends Screen {
   }
 
   @Override
-  public void run() {
-    while (!goBack) {
-      print();
-      askforInput();
-      chooseOption();
-    }
-  }
-
-  @Override
   protected void chooseOption() {
 
 
@@ -90,7 +80,7 @@ public class HomeScreen extends Screen {
           // TODO add std filter
           break;
         case "Q": case "q":
-          out.print("SEE YOU NEXT TIME! :)\n");
+          System.out.print("SEE YOU NEXT TIME! :)\n");
           System.exit(0);
           break;
         default: throw new IllegalArgumentException("Critical error - invalid selection passed validation");
@@ -101,37 +91,37 @@ public class HomeScreen extends Screen {
   @Override
   public void print() {
     clearScreen();
-    out.print("Current Date & Time: OCT 27 - THU 9:57PM\n");  // TODO make dynamic time
+    System.out.print("Current Date & Time: OCT 27 - THU 9:57PM\n");  // TODO make dynamic time
     
     moviesSorted = Movie.printAllShowings(movies);
 
     printHeader();
 
     if (user == null) {
-      out.print ("Welcome guest,\n\n");
+      System.out.print ("Welcome guest,\n\n");
     } else {
-      out.printf("Welcome back %s,\n\n", user.getEmail());
+      System.out.printf("Welcome back %s,\n\n", user.getEmail());
     }
 
     printOptionsText();
 
-    out.print(formatANSI("[ID]",ANSI_USER_OPTION) +" - To see further details about a particular movie (listed below)\n");
+    System.out.print(formatANSI("[ID]",ANSI_USER_OPTION) +" - To see further details about a particular movie (listed below)\n");
     
-    out.print(formatANSI("[G|S|B]",ANSI_USER_OPTION) +
+    System.out.print(formatANSI("[G|S|B]",ANSI_USER_OPTION) +
               " - To filter showings by " +
               formatANSI("Gold",ANSI_GOLD) + ", " +
               formatANSI("Silver",ANSI_SILVER) + " or " +
               formatANSI("Bronze",ANSI_BRONZE) + " screens\n");
     
-              out.print(formatANSI("A",ANSI_USER_OPTION) + " - To display all showings for the coming week (default)\n");  
+              System.out.print(formatANSI("A",ANSI_USER_OPTION) + " - To display all showings for the coming week (default)\n");  
     
     if (user == null) {
-      out.print(formatANSI("R",ANSI_USER_OPTION) + " - To register an account (free)\n");
-      out.print(formatANSI("L",ANSI_USER_OPTION) + " - Already a member? Login\n");
-      out.print(formatANSI("Q",ANSI_USER_OPTION) + " - Quit\n\n");
+      System.out.print(formatANSI("R",ANSI_USER_OPTION) + " - To register an account (free)\n");
+      System.out.print(formatANSI("L",ANSI_USER_OPTION) + " - Already a member? Login\n");
+      System.out.print(formatANSI("Q",ANSI_USER_OPTION) + " - Quit\n\n");
     } else {
-      out.print(formatANSI("E",ANSI_USER_OPTION) + " - To edit your account details\n");
-      out.print(formatANSI("Q",ANSI_USER_OPTION) + " - Log out and Quit\n\n");
+      System.out.print(formatANSI("E",ANSI_USER_OPTION) + " - To edit your account details\n");
+      System.out.print(formatANSI("Q",ANSI_USER_OPTION) + " - Log out and Quit\n\n");
 
     }
   

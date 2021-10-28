@@ -2,7 +2,7 @@ package R18_G2_ASM2;
 import java.io.*;
 
 import java.util.Scanner;
-public class Login extends Screen {
+public class Login {
   /*
   This class: prints screen for when user clicks: 'Log in' and direct them to type their username
   and password
@@ -22,12 +22,11 @@ public class Login extends Screen {
     USER_FILE_NAME = name;
   }
 
-  @Override
   public void run() {
     try {
       retrieveUserInputDetails();
     } catch (Exception e) {
-
+      e.printStackTrace();
     }
   }
   public User getUser(){
@@ -129,8 +128,7 @@ public class Login extends Screen {
   }
 
   public void printScreen(){
-    clearScreen();
-    System.out.println("\n*******************************************************");
+    System.out.println("\033[H\033[2J\n*******************************************************");
     System.out.println("            Welcome to the log in page :)            ");
     System.out.println("*******************************************************");
   }
@@ -147,18 +145,6 @@ public class Login extends Screen {
     Scanner scan = new Scanner(System.in);
     textinput = scan.nextLine();
     return textinput;
-  }
-
-  @Override
-  protected void chooseOption() {
-    // TODO Auto-generated method stub
-    
-  }
-
-  @Override
-  public void print() {
-    // TODO Auto-generated method stub
-    
   }
 }
 //class PasswordField {
