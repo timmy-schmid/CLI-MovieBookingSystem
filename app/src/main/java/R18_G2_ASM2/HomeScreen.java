@@ -10,6 +10,7 @@ public class HomeScreen extends Screen {
   private Login login;
   private Registration reg;
   private MovieScreen movScreen;
+  private EditInformation edit;
 
   public HomeScreen(HashMap<Integer,Movie> movies) {
     super();
@@ -52,7 +53,6 @@ public class HomeScreen extends Screen {
   @Override
   protected void chooseOption() {
 
-
     if (intOption != NO_INT_OPTION) {
       movScreen = new MovieScreen(moviesSorted.get(intOption));
       movScreen.run();
@@ -65,7 +65,8 @@ public class HomeScreen extends Screen {
           reg.run();
           break;
         case "E": case "e":
-          // TODO add edit
+          edit = new EditInformation(user);
+          edit.run();
           break;
         case "G": case "g":
           // TODO add gold filter

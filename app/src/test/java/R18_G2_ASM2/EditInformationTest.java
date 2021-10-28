@@ -19,7 +19,7 @@ public class EditInformationTest{
             ByteArrayOutputStream outContent = new ByteArrayOutputStream();
             System.setOut(new PrintStream(outContent));
             editInformation.Welcome();
-            String output = "Edit and Update Your Information\n"+"*******************************************************\n"+"PLEASE CHOOSE FORM THE FOLLOWING                         \n"+"*******************************************************\n\n";
+            String output = "\033[H\033[2JEdit and Update Your Information\n"+"*******************************************************\n"+"PLEASE CHOOSE FORM THE FOLLOWING                         \n"+"*******************************************************\n\n";
             assertEquals(outContent.toString(),output);
 
         }catch (Exception e){ e.printStackTrace();}
@@ -68,8 +68,8 @@ public class EditInformationTest{
             String a = "\nsjafdnsa\n";
             ByteArrayInputStream inContent = new ByteArrayInputStream(a.getBytes());
             System.setIn(inContent);
-            editInformation.giveChoice();
-            String output = "Edit and Update Your Information\n"+"*******************************************************\n"+"PLEASE CHOOSE FORM THE FOLLOWING                         \n"+"*******************************************************\n\n" +
+            editInformation.run();
+            String output = "\033[H\033[2JEdit and Update Your Information\n"+"*******************************************************\n"+"PLEASE CHOOSE FORM THE FOLLOWING                         \n"+"*******************************************************\n\n" +
                     "1 - Edit Nickname\n" +
                     "2 - Edit Email\n" +
                     "3 - Edit Phone Number\n" +
