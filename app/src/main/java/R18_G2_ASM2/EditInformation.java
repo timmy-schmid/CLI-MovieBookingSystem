@@ -32,21 +32,29 @@ public class EditInformation extends UserFields {
     public void setUserFile(File name){
         this.userCsvFile = name;
     }
+
     public void giveChoice(){
         this.Welcome();
         Scanner scan = new Scanner(System.in);
-        System.out.println("1 - Edit Email\n" +
-                "2 - Edit Password\n" +
-                "3- return to the user page\n");
-        System.out.println("User input: ");
-        String option = scan.nextLine();
-        if(option.equals("1")){
-            this.editEmail();
-        }
-        else if(option.equals("2")){this.editPassword();}
-        else if(option.equals("3")){this.returnUserPage();}
-        else{
-            System.out.println("Invalid order :( Please try again");
+        while(true){
+            System.out.println("1 - Edit Email\n" +
+                    "2 - Edit Password\n" +
+                    "3- return to the user page\n");
+            System.out.println("User input: ");
+            String option = scan.next();
+            if(option.equals("1")){
+                this.editEmail();
+                break;
+            }
+            else if(option.equals("2")){
+                this.editPassword();
+                break;}
+            else if(option.equals("3")){
+                this.returnUserPage();
+                break;}
+            else{
+                System.out.println("Invalid order :( Please try again");
+            }
         }
 
     }
