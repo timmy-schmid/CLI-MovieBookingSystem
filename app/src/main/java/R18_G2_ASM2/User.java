@@ -91,23 +91,20 @@ public class User extends UserFields {
   }
   //only set email if its valid
   public void setEmail(String email){
-    if (this.validateUser(email) == true){
+    if (this.validateUser(email)){
       this.email = email;
     }
   }
 
   public void setPhoneNumber(String phoneNumber){
-    if (this.isValidPhoneNumber(phoneNumber) == true){
+    if (this.isValidPhoneNumber(phoneNumber)){
       this.phoneNumber = phoneNumber;
     }
   }
 
-  public boolean isValidPhoneNumber(String newPhoneNumber){
-   return true;
-  }
   //only set password if its valid
   public void setPassword(String newPassword){
-    if (this.isValidPassword(newPassword) == true){
+    if (this.isValidPassword(newPassword)){
       this.password = newPassword;
     }
   }
@@ -117,11 +114,16 @@ public class User extends UserFields {
   }
 
   public void setCardName(String name){
-    this.cardName = name;
+    if (name != null && !name.equals("")){
+      this.cardName = name;
+    }
   }
 
   public void setCardNumber(String number){
-    this.cardNumber = number;
+    //validate before setting
+    if (this.isValidCardNumber(number)){
+      this.cardNumber = number;
+    }
   }
 
   //rename maybe bookingTicket --> bookTicket? OR nahh

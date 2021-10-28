@@ -52,6 +52,39 @@ class UserTest {
     assertNotEquals(userB.getEmail(), newEmail);
   }
 
+  @Test void testCantGetCardNumber(){
+    String num = "C1234";
+    userB.setCardNumber(num);
+    assertNotEquals(userB.getCardNumber(), num);
+  }
+
+  @Test void testCanGetCardNameAndNumber(){
+    String num = "12345";
+    String name = "Anna";
+    userB.setCardName(name);
+    userB.setCardNumber(num);
+    assertEquals(userB.getCardNumber(), num);
+    assertEquals(userB.getCardName(), name);
+  }
+
+  @Test void testCanGetNickname(){
+    String name = "Anna";
+    userB.setNickname(name);
+    assertEquals(userB.getNickname(), name);
+  }
+
+  @Test void testCanSetPhoneNumber(){
+    String num = "0412345818";
+    userB.setPhoneNumber(num);
+    assertEquals(userB.getPhoneNumber(), num);
+  }
+
+  @Test void testCantSetPhoneNumber(){
+    String num = "041234512A818";
+    userB.setPhoneNumber(num);
+    assertNotEquals(userB.getPhoneNumber(), num);
+  }
+
   @Test void testCanSetPassword(){
     String newPassword = "BobTheBuilder1";
     userB.setPassword(newPassword);

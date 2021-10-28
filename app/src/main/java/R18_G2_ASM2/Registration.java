@@ -100,17 +100,15 @@ public class Registration extends UserFields {
           
           if (result == 1) { //all fields are valid
             boolean isValidEmail = this.validateUser(email);
-            if (isValidEmail){
+            boolean isValidPhoneNumber = this.isValidPhoneNumber(phoneNumber);
+            
+            if (isValidEmail && isValidPhoneNumber){
               returnResult = true;
               break;
             } 
           }
-
-          
-          // } else if (result == -1){ //entered value (that should be unique) already exists in db
-          //   // System.out.println("The supplied details contain info that already exists in our system. Please re-enter again: ");
-          // }
           System.out.println();
+          System.out.println("Please re-enter your details again.\n");
         }
 
         Scanner scan2 = new Scanner(System.in);

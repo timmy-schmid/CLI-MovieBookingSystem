@@ -35,7 +35,7 @@ public abstract class UserFields {
     }
   }
 
-  public boolean checkValidPhoneNumber(String phoneNumber){ //ensures only numbers <n> digits
+  public boolean isValidPhoneNumber(String phoneNumber){ //ensures only numbers <n> digits
     if (phoneNumber == null){
       return false;
     }
@@ -49,7 +49,7 @@ public abstract class UserFields {
       return false;
     }
   }
-  public boolean checkCardNumber(String number){ //did the user enter a correct card number that satisfies acceptance criteria?
+  public boolean isValidCardNumber(String number){ //did the user enter a correct card number that satisfies acceptance criteria?
     if (number == null){
       return false;
     }
@@ -64,7 +64,7 @@ public abstract class UserFields {
     }
   }
 
-  public boolean checkGiftCardNumber(String number){ //did the user enter a correct gift card number that satisfies acceptance criteria?
+  public boolean isValidGiftCardNumber(String number){ //did the user enter a correct gift card number that satisfies acceptance criteria?
     if (number == null){
       return false;
     }

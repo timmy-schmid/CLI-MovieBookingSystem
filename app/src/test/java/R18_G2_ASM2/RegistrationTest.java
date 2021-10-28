@@ -108,12 +108,12 @@ class RegistrationTest {
 
   @Test void testValidPhoneNumber(){
     String input = "0412279198";
-    assertTrue(reg.checkValidPhoneNumber(input));
+    assertTrue(reg.isValidPhoneNumber(input));
   }
 
    @Test void testValidGiftCardNumber(){
     String input = "11111111111116GC";
-    assertTrue(reg.checkGiftCardNumber(input));
+    assertTrue(reg.isValidGiftCardNumber(input));
   }
 
   // @Test void testUserFileNotFound(){
