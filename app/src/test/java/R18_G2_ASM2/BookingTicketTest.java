@@ -32,6 +32,7 @@ public class BookingTicketTest {
         testActor.add("some name2");
         testUser = new User(277,"abcdhsa@gmail.com","123Qwertyui");
         aShow = new Showing(1,testMovie,testCinema,testcal);
+        aShow.setMovieSeat();
         testBookingTicket = new BookingTicket(aShow,testUser);
     }
 

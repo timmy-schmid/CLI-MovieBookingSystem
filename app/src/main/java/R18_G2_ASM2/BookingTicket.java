@@ -18,9 +18,9 @@ public class BookingTicket {
     }
 
     public void run(){
-       while(!this.checkFullorNot()){
-           this.bookingShowingSection();
-           this.bookingASeat();
+        while(!this.checkFullorNot()){
+            this.bookingShowingSection();
+            this.bookingASeat();
             this.askForBooking();
             if (Ct == 2){
                 // go back to the default user page
