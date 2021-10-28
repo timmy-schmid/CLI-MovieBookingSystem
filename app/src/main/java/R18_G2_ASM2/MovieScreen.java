@@ -42,6 +42,7 @@ public class MovieScreen extends Screen {
     if (intOption != NO_INT_OPTION) {
       BookingTicket book = new BookingTicket(showings.get(intOption-1),user);
       book.run();
+      intOption = NO_INT_OPTION;
     } else {
       switch (selectedOption) {
         case "L": case "l":
