@@ -17,7 +17,7 @@ public class MovieScreen extends Screen {
     this.login = new Login(home);
     this.reg = new Registration(home);
     this.showings = movie.getShowingsBeforeNextMonday();
- 
+
     setUser(HomeScreen.getUser());
     title = movie.getName().toUpperCase(); //TODO create variable date
   }
