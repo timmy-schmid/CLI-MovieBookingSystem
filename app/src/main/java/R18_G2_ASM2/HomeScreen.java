@@ -41,9 +41,9 @@ public class HomeScreen extends Screen {
     
     options.add("Q"); options.add("q");
     options.add("A"); options.add("a");
-    options.add("G"); options.add("g");
-    options.add("S"); options.add("s");
-    options.add("B"); options.add("b");
+    //options.add("G"); options.add("g");
+    //options.add("S"); options.add("s");
+    //options.add("B"); options.add("b");
   }
 
   public static User getUser() {
@@ -109,14 +109,14 @@ public class HomeScreen extends Screen {
     printOptionsText();
 
     System.out.print(formatANSI("[ID]",ANSI_USER_OPTION) +" - To see further details about a particular movie (listed above)\n");
-    
+    /*
     System.out.print(formatANSI("[G|S|B]",ANSI_USER_OPTION) +
               " - To filter showings by " +
               formatANSI("Gold",ANSI_GOLD) + ", " +
               formatANSI("Silver",ANSI_SILVER) + " or " +
               formatANSI("Bronze",ANSI_BRONZE) + " screens\n");
     
-              System.out.print(formatANSI("A",ANSI_USER_OPTION) + " - To display all showings for the coming week (default)\n");  
+              System.out.print(formatANSI("A",ANSI_USER_OPTION) + " - To display all showings for the coming week (default)\n");*/
     
     if (user == null) {
       System.out.print(formatANSI("R",ANSI_USER_OPTION) + " - To register an account (free)\n");
