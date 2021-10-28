@@ -38,12 +38,9 @@ public class MovieScreen extends Screen {
 
   @Override
   protected void chooseOption() {   
-    System.out.println("OPTION:" + intOption);
-    System.out.println("MAX:"+maxInputInt);
-    System.out.println("Line:"+selectedOption);
-    System.out.println("goBack:"+goBack);
+
     if (intOption != NO_INT_OPTION) {
-      BookingTicket book = new BookingTicket(showings.get(intOption),user);
+      BookingTicket book = new BookingTicket(showings.get(intOption-1),user);
       book.run();
     } else {
       switch (selectedOption) {

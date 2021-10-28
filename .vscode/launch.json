@@ -6,6 +6,13 @@
   "configurations": [
     {
       "type": "java",
+      "name": "Launch MovieSeat",
+      "request": "launch",
+      "mainClass": "R18_G2_ASM2.MovieSeat",
+      "projectName": "app"
+    },
+    {
+      "type": "java",
       "name": "Launch Current File",
       "request": "launch",
       "mainClass": "${file}"
