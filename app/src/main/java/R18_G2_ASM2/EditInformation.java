@@ -35,20 +35,27 @@ public class EditInformation extends UserFields {
     public void giveChoice(){
         this.Welcome();
         Scanner scan = new Scanner(System.in);
-        System.out.println("1 - Edit Email\n" +
-                "2 - Edit Password\n" +
-                "3- return to the user page\n");
+        System.out.println("1 - Edit Nickname\n" +
+                           "2 - Edit Email\n" +
+                           "3 - Edit Phone Number\n" +
+                           "4 - Edit Password\n" +
+                           "5 - Return to the user page\n");
         System.out.println("User input: ");
         String option = scan.nextLine();
-        if(option.equals("1")){
+    
+        if (option.equals("1")) {
+            this.editNickname();
+        } else if (option.equals("2")) {
             this.editEmail();
-        }
-        else if(option.equals("2")){this.editPassword();}
-        else if(option.equals("3")){this.returnUserPage();}
-        else{
+        } else if (option.equals("3")) {
+            this.editPhoneNumber();;
+        } else if (option.equals("4")) {
+            this.editPassword();;
+        } else if (option.equals("5")) {
+            this.returnUserPage();
+        } else{
             System.out.println("Invalid order :( Please try again");
         }
-
     }
 
     public void Welcome(){
@@ -110,10 +117,11 @@ public class EditInformation extends UserFields {
                 System.out.println("The password is incorrect. Please check it again");
             }
             System.out.println("Do you wanna try again? (Y/N)\n");
-            if(pw.equals("Y")){}else if(pw.equals("N")){
+            String option = scan.nextLine();
+            if(option.equals("Y")){}else if(option.equals("N")){
                 wantToContinue = false;
             }else{
-                System.out.println("Invalid input.Please choose from Y or N\n");
+                System.out.println("Invalid input. Please choose from Y or N\n");
             }
         }
         if(!wantToContinue){
@@ -121,6 +129,66 @@ public class EditInformation extends UserFields {
         }
     }
 
+        //newly added - Anna (editNickname, editPhoneNumber)
+    public void editNickname(){
+        Scanner scan = new Scanner(System.in);
+        boolean Success = false;
+        boolean wantToContinue = true;
+        while (!Success && wantToContinue) {
+            System.out.println("Security check, please enter your old name: ");
+            String nickname = scan.nextLine();
+            if (nickname.equals(this.userChanged.getNickname())) {
+                System.out.println("New nickname: ");
+                this.setUserNickname(nickname);
+                Success = true;
+            } else {
+                System.out.println("The name you have entered is invalid, please check it again");
+            }
+            System.out.println("Do you wanna try again? (Y/N)\n");
+            String option = scan.nextLine();
+            if(option.equals("Y")){} else if(option.equals("N")){
+                wantToContinue = false;
+            }else{
+                System.out.println("Invalid input. Please choose from Y or N.\n");
+            }
+        }
+        if(!wantToContinue){
+            this.nextOption();
+        }
+    }
+
+    public void editPhoneNumber(){
+        Scanner scan = new Scanner(System.in);
+        boolean Success = false;
+        boolean wantToContinue = true;
+        while (!Success && wantToContinue) {
+            System.out.println("Security check, please enter your old phone number: ");
+            String phoneNumber = scan.nextLine();
+            if (phoneNumber.equals(this.userChanged.getPhoneNumber())) {
+                System.out.println("New phone number: ");
+                this.setUserPhoneNumber(phoneNumber);
+                Success = true;
+            } else {
+                System.out.println("The number you have entered is invalid, please check it again");
+            }
+            System.out.println("Do you wanna try again? (Y/N)\n");
+            String option = scan.nextLine();
+            if(option.equals("Y")){} else if(option.equals("N")){
+                wantToContinue = false;
+            }else{
+                System.out.println("Invalid input. Please choose from Y or N.\n");
+            }
+        }
+        if(!wantToContinue){
+            this.nextOption();
+        }
+    }
+
+
+    public void setUserNickname(String nickname){
+        this.userChanged.setNickname(nickname);
+        this.writeUsertoFile(this.userChanged,this.userCsvFile);
+    }
 
     public void setUserEmail(String email){
         this.userChanged.setEmail(email);
@@ -133,6 +201,11 @@ public class EditInformation extends UserFields {
         this.writeUsertoFile(this.userChanged,this.userCsvFile);
     }
 
+    //newly added - Anna
+    public void setUserPhoneNumber(String phoneNumber) {
+        this.userChanged.setPhoneNumber(phoneNumber);
+        this.writeUsertoFile(this.userChanged, this.userCsvFile);
+    }
 
     //same as the Registration method to check the duplicate user name
     public int checkIfUserExists(String userEmail){
@@ -152,7 +225,7 @@ public class EditInformation extends UserFields {
                     e.printStackTrace();
                     break;
                 }
-                email = detailsArray[1];
+                email = detailsArray[2];
                 if(userEmail.equals(email)){
                     result = -1;
                     break;
@@ -165,8 +238,6 @@ public class EditInformation extends UserFields {
     }
 
 
-
-
     public void nextOption(){
         System.out.println("Return to the Edit Option page...\n");
     }
@@ -176,7 +247,7 @@ public class EditInformation extends UserFields {
 //        this.giveChoice();
     }
 
-    public void writeUsertoFile(User user,File file) {
+    public void writeUsertoFile(User user, File file) {
         try {
             Scanner myReader = new Scanner(file);
             FileWriter myWriter = new FileWriter(tempFile);
@@ -188,9 +259,9 @@ public class EditInformation extends UserFields {
 
 
                     //updated to include phone num
-                    myWriter.write(arr[0]+","+arr[1]+","+
+                    myWriter.write(arr[0]+","+user.getNickname()+","+
                     
-                    user.getEmail()+"," + arr[3] + "," + user.getPassword() + "," + arr[5]);
+                    user.getEmail()+"," + user.getPhoneNumber() + "," + user.getPassword() + "," + arr[5]);
 
                 }else{
                     myWriter.write(str+"\n");

@@ -30,7 +30,7 @@ public class Registration extends UserFields {
     this.home = home;
 
     this.userCsvFile = DataController.accessCSVFile(USER_FILE_NAME);
-    // this.userCsvFile2 = this.userCsvFile.getAbsolutePath(); //str version -Tim this throws a NULLPointerError for me    
+    this.userCsvFile2 = this.userCsvFile.getAbsolutePath(); //str version -Tim this throws a NULLPointerError for me    
   }
   
   public static String getUserFile(){
@@ -78,7 +78,7 @@ public class Registration extends UserFields {
         boolean returnResult = false;
         boolean returnResult2 = false;
       
-        //TODO: validate email, phoneNumber
+        //TODO: validate phoneNumber is 10 digit num
         while (true) { 
           System.out.printf("Please enter a nickname: "); //[re-enter]
           nickname = scan.nextLine();

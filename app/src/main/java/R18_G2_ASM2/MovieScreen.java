@@ -71,7 +71,7 @@ public class MovieScreen extends Screen {
     System.out.print("Current Date & Time: OCT 27 - THU 9:57PM\n");  // TODO make dynamic time
     maxInputInt = movie.printMovieShowings();
     if (user != null) {
-      System.out.printf("Hi %s,\n\n", user.getEmail());
+      System.out.printf("Hi %s,\n\n", user.getNickname());
     }
 
     printOptionsText();

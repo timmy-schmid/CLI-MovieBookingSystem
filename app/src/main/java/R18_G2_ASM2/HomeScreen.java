@@ -100,7 +100,7 @@ public class HomeScreen extends Screen {
     if (user == null) {
       System.out.print ("Welcome guest,\n\n");
     } else {
-      System.out.printf("Welcome back %s,\n\n", user.getEmail());
+      System.out.printf("Welcome back %s,\n\n", user.getNickname());
     }
 
     printOptionsText();
