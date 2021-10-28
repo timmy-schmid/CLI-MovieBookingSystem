@@ -21,7 +21,7 @@ public class Registration extends UserFields {
   1. when a user first registers, they are prompted to enter their email, password + phone number
   */
   private File userCsvFile;
-  private static String USER_FILE_NAME = "newUserDetails2.csv";
+  private static String USER_FILE_NAME = "newUserDetails.csv";
   HomeScreen home;
 
   private String userCsvFile2; //writing to...
@@ -37,9 +37,6 @@ public class Registration extends UserFields {
     return USER_FILE_NAME;
   }
 
-  // public String getUserCsvFile(){
-  //   return this.userCsvFile2;
-  // }
   public static void setUserFile(String name){
     USER_FILE_NAME = name;
   }

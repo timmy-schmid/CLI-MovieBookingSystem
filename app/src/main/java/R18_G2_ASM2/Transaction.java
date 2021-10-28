@@ -34,7 +34,7 @@ public class Transaction {
   private File userCsvFile;
   private File giftCardsFile;
 
-  private static String USER_FILE_NAME = "newUserDetails2.csv";
+  private static String USER_FILE_NAME = "newUserDetails.csv";
   private static String TEMP_FILE_NAME = "cardTemp.csv";
   private static String TEMP_FILE_2_NAME = "cardTemp2.csv";
   private static String GIFT_CARD_FILE_NAME = "giftCards.csv";
@@ -155,7 +155,6 @@ public class Transaction {
         String cNumber = scan.nextLine();
         System.out.printf("Please enter your csv number: ");
         String csvNumber = scan.nextLine();
-         // TODOOOOOOOOO: validate cNumber with robin's reading credit_cards.json function...
 
         this.askForCreditCardDetails(cNumber, csvNumber, false);       
       }
@@ -177,38 +176,11 @@ public class Transaction {
     }
   }
 
-  //return: returnNum: int (either continue to ask to enter details or print details if auto filled already)
-  // public int askAutoFillCardDetails(){
-  //   Scanner scan = new Scanner(System.in);
-  //   String cardOption = null;
-
-  //   int returnNum = -1;
-
-  //   String start = "W";
-  //   while (true){
-  //     System.out.printf("%shich card would you like to use? (credit/gift): ", start);
-  //     //since gift card --> 1 time use, only ask below msg if credit card selected?
-  //     cardOption = scan.nextLine();
-  //     if (cardOption.equals("credit")){
-  //       break;
-  //     } else if (cardOption.equals("gift")){
-  //       returnNum = 2;
-  //       break;
-  //     }
-  //     start = "\nPlease re-enter: W";
-  //   }
-  //   System.out.printf("\nLINE 169: USER INPUT = [%s]\n", cardOption);
-  //   System.out.printf("\nLINE 170: returnNum = [%s]\n", returnNum);
-
-  //   return returnNum;
-  // }
-
   //first check if they select gift card --> then check if valid, if not return immediately + print msg. Otherwise, continue to check autoFill status
   // if user selects credit card, skip gift card number/status + search for autoFill status
 
   public void updateAutoFillStatus(){ //search for user in newUserDetails.csv file, modify default autoFillStatus false to true 
     try {
-//      File f = new File(this.userCsvFile); //this.userCsvFile
       File f = this.userCsvFile;
       Scanner myReader = new Scanner(f);
       FileWriter myWriter = new FileWriter(tempFile);

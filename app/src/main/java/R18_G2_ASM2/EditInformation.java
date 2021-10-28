@@ -14,7 +14,9 @@ public class EditInformation extends UserFields {
     and edit the information of it
     change the user.csv data including card details
      */
-    private File userCsvFile = new File("src/main/datasets/user1.csv");
+    // private File userCsvFile = new File("src/main/datasets/user1.csv");
+    private File userCsvFile = new File("src/main/datasets/newUserDetails.csv");
+
     private User userChanged;
     private File tempFile = new File("src/main/datasets/TempUser1.csv") ;
 
@@ -182,7 +184,14 @@ public class EditInformation extends UserFields {
                 String str = myReader.nextLine();
                 if (str.split(",")[0].equals(Integer.toString(user.getID()))){
                     String[] arr = str.split(",");
-                    myWriter.write(arr[0]+","+user.getEmail()+","+user.getPassword());
+                    // myWriter.write(arr[0]+","+user.getEmail()+","+user.getPassword());
+
+
+                    //updated to include phone num
+                    myWriter.write(arr[0]+","+arr[1]+","+
+                    
+                    user.getEmail()+"," + arr[3] + "," + user.getPassword() + "," + arr[5]);
+
                 }else{
                     myWriter.write(str+"\n");
                 }

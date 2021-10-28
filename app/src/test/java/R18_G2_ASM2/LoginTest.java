@@ -33,7 +33,7 @@ class LoginTest {
 
   @BeforeEach
   public void setUp() {
-    Login.setUserFile("newUserDetailsTest2.csv");
+    Login.setUserFile("newUserDetailsTest.csv");
     login = new Login(home);
 
     System.setOut(new PrintStream(outContent));
