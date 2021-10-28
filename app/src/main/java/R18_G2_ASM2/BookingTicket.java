@@ -42,6 +42,7 @@ public class BookingTicket {
             if(this.cancelBook){
                 break;
             }
+
             for(int i =0; i<count; i++){
                 this.bookingShowingSection();
                 if (this.cancelBook){
@@ -53,21 +54,25 @@ public class BookingTicket {
                     this.cancelBook =false;
                     break;
                 }
-                System.out.println("Left times to choose"+ Integer.toString(count-i-1));
-                if(!this.checkFullorNot()){
+                System.out.println("Left times to choose "+ Integer.toString(count-i-1));
+
+                if(this.checkFullorNot()){
                     this.cancelBooking();
                     break;
                 }
             }
-            System.out.println("Do you want to continue? Y for booking and other input for exit");
+
+            System.out.println("Do you want to continue? Y for opening a new booking for this movie and other input for saving the order and exit");
             String str = scan.next();
             if(str.equals("Y")){}else{
+                System.out.println("Your order is: ");
                 this.printBookingMessage();
                 break;
             }
         }
     }
 
+    // true for full
     public boolean checkFullorNot(){
         if(showing.isShowingFull()){
             System.out.println("No empty seat for the current show :(");
@@ -227,7 +232,6 @@ public class BookingTicket {
                     if(!sc){
                         throw new Exception();
                     }
-                    System.out.println("Line23 does it reach there?");
                     rowLetters[indexofarray] = rowLetter;
                     colNum[indexofarray] = col;
                     indexofarray++;
