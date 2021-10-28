@@ -68,7 +68,7 @@ public class EditInformationTest{
             String a = "\nsjafdnsa\n";
             ByteArrayInputStream inContent = new ByteArrayInputStream(a.getBytes());
             System.setIn(inContent);
-            editInformation.giveChoice();
+            editInformation.run();
             String output = "Edit and Update Your Information\n"+"*******************************************************\n"+"PLEASE CHOOSE FORM THE FOLLOWING                         \n"+"*******************************************************\n\n" +
                     "1 - Edit Nickname\n" +
                     "2 - Edit Email\n" +

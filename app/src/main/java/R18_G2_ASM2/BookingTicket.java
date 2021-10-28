@@ -79,7 +79,7 @@ public class BookingTicket {
         Person bookingType = null;
         Scanner scan = new Scanner(System.in);
         while(true) {
-            System.out.println("Select type of ticket you want to book: ");
+            System.out.println("\033[H\033[2JSelect type of ticket you want to book: ");
             System.out.println("1 - Child -$\n" +
                     "2 - Student -$\n" +
                     "3 - Adult - $$\n" +

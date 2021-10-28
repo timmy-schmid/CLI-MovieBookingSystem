@@ -147,10 +147,8 @@ public class MovieSystem {
 
 
   public void editUser() {
-
     EditInformation edit = new EditInformation(currentUser);
-    edit.giveChoice();
-
+    //edit.giveChoice();
   }
   
 

@@ -15,14 +15,18 @@ public class EditInformation extends UserFields {
     change the user.csv data including card details
      */
     // private File userCsvFile = new File("src/main/datasets/user1.csv");
-    private File userCsvFile = new File("src/main/datasets/newUserDetails.csv");
 
+    private static String USER_FILE_NAME = "newUserDetails.csv";
+    private static String TEMP_FILE_NAME = "TempUser1.csv";
+    private File userCsvFile;
     private User userChanged;
-    private File tempFile = new File("src/main/datasets/TempUser1.csv") ;
+    private File tempFile;
 
     // call from the default screen
     public EditInformation(User aUser){
         this.userChanged = aUser;
+        userCsvFile = DataController.accessCSVFile(USER_FILE_NAME);
+        tempFile = DataController.accessCSVFile(TEMP_FILE_NAME);
     }
 
     public File getUserFile(){
@@ -32,7 +36,7 @@ public class EditInformation extends UserFields {
     public void setUserFile(File name){
         this.userCsvFile = name;
     }
-    public void giveChoice(){
+    public void run(){
         this.Welcome();
         Scanner scan = new Scanner(System.in);
         System.out.println("1 - Edit Nickname\n" +
@@ -59,7 +63,7 @@ public class EditInformation extends UserFields {
     }
 
     public void Welcome(){
-        System.out.println("Edit and Update Your Information");
+        System.out.println("\033[H\033[2JEdit and Update Your Information");
         System.out.println("*******************************************************");
         System.out.println("PLEASE CHOOSE FORM THE FOLLOWING                         ");
         System.out.println("*******************************************************\n");
