@@ -18,6 +18,12 @@ public class BookingTicket {
 
     public BookingTicket(Showing showing, User user){
         this.showing = showing;
+        try {
+            this.showing.setMovieSeatForTest();
+        }catch (Exception e){
+            System.out.println("aaaa");
+        }
+
         this.user = user;
         this.bookPerson.put(Person.Child,0);
         this.bookPerson.put(Person.Senior,0);
@@ -160,7 +166,6 @@ public class BookingTicket {
             System.out.println("4-All");
             System.out.println("Cancel-cancel\n");
             String str = scan.next();
-            System.out.println("works? From line 163?");
             if(str.equals("1")){
                 this.showing.getMovieSeat().showFrontSeats();
                 break;
@@ -171,9 +176,7 @@ public class BookingTicket {
                 this.showing.getMovieSeat().showRearSeats();
                 break;
             }else if(str.equals("4")){
-                System.out.println("works? From line 174?");
                 this.showing.getMovieSeat().showAllSeats();
-                System.out.println("works? From line 175?");
                 break;
             }else if(str.equals("Cancel")){
                 this.cancelBooking();
