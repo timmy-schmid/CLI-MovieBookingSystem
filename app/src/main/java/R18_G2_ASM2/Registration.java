@@ -28,12 +28,7 @@ public class Registration extends UserFields {
 
   public Registration(HomeScreen home) {
     this.home = home;
-
     this.userCsvFile = DataController.accessCSVFile(USER_FILE_NAME);
-    if (userCsvFile != null) {
-      //System.out.println(userCsvFile.getPath());
-    }
-    //this.userCsvFile2 = this.userCsvFile.getAbsolutePath(); //str version -Tim this throws a NULLPointerError for me    
   }
   
   public static String getUserFile(){
@@ -44,10 +39,6 @@ public class Registration extends UserFields {
     USER_FILE_NAME = name;
   }
 
-  public void setUserFile2(File file) {
-    this.userCsvFile= file;
-    this.userCsvFile2 = file.getAbsolutePath();
-  }
   public void run() {
     try {
       retrieveUserInputDetails3();
@@ -176,7 +167,6 @@ public class Registration extends UserFields {
   
       //check file follows right format...
       try {
-        // File f = new File();
         Scanner myReader = new Scanner(this.userCsvFile);
         while (myReader.hasNextLine()) { //as long as you can keep reading the file, grab the details
           String line = myReader.nextLine();
@@ -227,7 +217,6 @@ public class Registration extends UserFields {
   public int writeUserDetailsToFile3(String nickname, String email, String phoneNumber, String password){
     int id = -1;
     try {
-      // System.out.printf("LINE 228 IN REGISTRATION: ABOUT TO WRITE TO FILE: [%s]\n", this.userCsvFile2);
       this.userCsvFile2 = this.userCsvFile.getAbsolutePath();
       Scanner myReader = new Scanner(this.userCsvFile);
       String currentLine = "";
@@ -244,21 +233,19 @@ public class Registration extends UserFields {
       FileWriter myWriter = new FileWriter(this.userCsvFile2, true); //for appending to existing file 
 
       try{
-      // FileWriter myWriter = new FileWriter(USER_FILE_NAME, true); //for appending to existing file
-
         id = Integer.parseInt(lastLine.split(",")[0]);
         myWriter.write("\n"+String.valueOf(id+1)+","+nickname+","+email+","+phoneNumber+","+password+",F");
-        // System.out.printf("LINE 233 IN REGISTRATION: WRITING TO FILE: [%s]\n", "\n"+String.valueOf(id+1)+","+nickname+","+email+","+phoneNumber+","+password+",F");
         id+=1;
 
       } catch(NumberFormatException e){
         e.printStackTrace();
       }
       myWriter.close();
-      // System.out.println("LINE 266---------------------------------");
+
+      // System.out.println("LINE 250: went here!!, filename = " +this.userCsvFile2);
     } catch (FileNotFoundException e){
       //if reading file doesn't exist, write to file path     
-      System.out.printf("FILE NOT FOUND ERROR: %s!\n", USER_FILE_NAME);
+      System.out.printf("FILE NOT FOUND ERROR: %s!\n", this.userCsvFile2);
 
       try {
         FileWriter myWriter = new FileWriter(this.userCsvFile2); //for appending to existing file

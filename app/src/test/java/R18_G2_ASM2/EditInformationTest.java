@@ -1,18 +1,23 @@
 package R18_G2_ASM2;
 
 import org.junit.jupiter.api.AfterAll;
-import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.*;
 
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
+import java.io.File;
 import java.io.PrintStream;
 
 public class EditInformationTest{
     private User testUser = new User(1, "bob", "bob@gmail.com", "0488881188", "abc123Axd#!");
 
     private EditInformation editInformation = new EditInformation(testUser);
+    private File testFile = new File("app/src/test/resources/newUserDetailsTest.csv");
+
+    public EditInformationTest(){
+        this.editInformation.setUserFile(testFile);
+    }
 
     @Test
     public void testWelcome(){
@@ -48,6 +53,10 @@ public class EditInformationTest{
     public void testUserPassowrd(){
         editInformation.setUserPassword("12345ABCed");
         assertEquals("12345ABCed",testUser.getPassword());
+    }
+    @Test
+    public void testCheckIfExist(){
+        assertEquals(1,editInformation.checkIfUserExists("hhh@gmail.com"));
     }
 
     @Test
@@ -98,6 +107,33 @@ public class EditInformationTest{
         }catch (Exception e){e.printStackTrace();}
     }
 
+    @Test
+    public void testInvalidEditPhoneNumber(){
+        try {
+            ByteArrayOutputStream outContent = new ByteArrayOutputStream();
+            System.setOut(new PrintStream(outContent));
+            String a = "\n123\n";
+            ByteArrayInputStream inContent = new ByteArrayInputStream(a.getBytes());
+            System.setIn(inContent);
+            editInformation.editNickname();
+            String output = ("Security check, please enter your old phone number: \n"+"The number you have entered is invalid, please check it again\n"+"Do you wanna try again? (Y/N)\n");
+            assertEquals(outContent.toString(),output);
+        }catch (Exception e){e.printStackTrace();}
+    }
+
+    @Test
+    public void testInvalidEmail(){
+        try {
+            ByteArrayOutputStream outContent = new ByteArrayOutputStream();
+            System.setOut(new PrintStream(outContent));
+            String a = testUser.getEmail();
+            ByteArrayInputStream inContent = new ByteArrayInputStream(a.getBytes());
+            System.setIn(inContent);
+            editInformation.editEmail();
+            String output = ("\nYour current username is: " + testUser.getEmail()+"\nThe new username: \n"+"Please enter a new username\n");
+            assertEquals(outContent.toString(),output);
+        }catch (Exception e){e.printStackTrace();}
+    }
 
     // @Test
     // public void testwriteUserForFile(){

@@ -29,12 +29,10 @@ class RegistrationTest {
   public void setUp() {
     home = new HomeScreen(null);
     reg = new Registration(home);
-    // Registration.setUserFile("newUserDetailsTest.csv");
     userFile = DataController.accessCSVFile("newUserDetailsTest.csv");    
     
     //set up streams
     reg.setUserFile("newUserDetailsTest.csv");
-    // reg.setUserFile2(userFile);
     System.setOut(new PrintStream(outContent));
   }
   @AfterEach
@@ -190,7 +188,6 @@ class RegistrationTest {
       myReader.close();
         int id = id = Integer.parseInt(lastLine.split(",")[0]);
 
-      // assertEquals(lastLine, String.valueOf(5) + ","+ "newUser@gmail.com" + ","+"NewPassword1");
       assertEquals(lastLine, String.valueOf(id) + ",newUser,newUser@gmail.com,0404189234,NewPassword1,F");
 
     } else {
@@ -198,32 +195,45 @@ class RegistrationTest {
     }
   }
 
-  // @Test void testCreateAccountWorks2() throws IOException{
-  //   reg.setUserFile("src/test/resources/newUserTest.csv");
-  //   int result = reg.checkIfUserExists("newUser@gmail.com");
-  //   if (result == -1){ //exists alrdy
-  //     return;
-  //   } else {
-  //     User newUser = reg.createAccount("newUser@gmail.com", "NewPassword1");
-  //     assertNotNull(newUser);
+  @Test void testCreateAccountWorks2() throws IOException{
+    reg.setUserFile("src/test/resources/newUserDetailsTest.csv");
+    int result = reg.checkIfUserExists3("newUser2@gmail.com", "0414189238");
+    if (result == -1){ //exists alrdy
+      String msg = "Email is taken already/exists in system. Please re-enter your details.\n";
 
-  //     BufferedReader myReader = new BufferedReader(new FileReader(reg.getUserFile()));
-  //     String currentLine = "";
-  //     String firstLine = "";
-  //     while ((currentLine = myReader.readLine()) != null){
-  //       firstLine = currentLine;
-  //       // break;
-  //     }
-  //     myReader.close();
-  //     assertEquals(firstLine, String.valueOf(1) + ","+ "newUser@gmail.com" + ","+"NewPassword1");
-  //   }
+        // ByteArrayInputStream in = new ByteArrayInputStream(inputMessage.getBytes());
+        // System.setIn(in);
+        // reg.retrieveUserInputDetails();
+        assertEquals(outContent.toString(), msg);
+
+      assertEquals(outContent.toString(), msg);
+    } else {
+      User newUser = reg.createAccount3("newUser2", "newUser2@gmail.com", "0414189238",
+      "NewPassword2");
+      assertNotNull(newUser);
+
+      BufferedReader myReader = new BufferedReader(new FileReader(reg.getUserFile()));
+      String currentLine = "";
+      String firstLine = "";
+      while ((currentLine = myReader.readLine()) != null){
+        firstLine = currentLine;
+        // break;
+      }
+      myReader.close();
+      int id = id = Integer.parseInt(firstLine.split(",")[0]);
+      assertEquals(firstLine, String.valueOf(id) + ",newUser2,newUser2@gmail.com,0414189238,NewPassword2,F");
+    }
+  }
+
   // @Test void testWriteToFileFails(){ //should still validate inside function or just outside?
+
   //   String username = "benjilala1@hotmail.com";
   //   String pwd = "Blahblahblah3";
+  //   userFile = DataController.accessCSVFile("UNKNOWN.csv");    
   //   reg.setUserFile("src/test/resources/UNKNOWN.csv");
 
   //   reg.writeUserDetailsToFile3("benji", username, "0401234400", pwd);
-  //   assertEquals(outContent.toString(), "FILE NOT FOUND ERROR: " + reg.getUserCsvFile() +"!\n");
+  //   assertEquals(outContent.toString(), "FILE NOT FOUND ERROR: " + reg.getUserFile() +"!\n");
   // }
  
   @Test void testCancelRegistration() throws IOException {
