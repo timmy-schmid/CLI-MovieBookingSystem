@@ -143,36 +143,36 @@ public class Transaction {
   }
   
   public void askForUserDetails() throws IOException {
-    String msg = this.printOptions(-1);
-    Scanner scan = new Scanner(System.in);
-    if (msg.equals("1")){ //credit card
-      // if autofill option of user isn't true, prompt user to enter card details
-      if (this.getCustomer().getAutoFillStatus() == true){
-        this.askForCreditCardDetails(null, null, true);
-      } else { //user wants to pay w credit card but no auto fill, prompt for input 
-
-        System.out.printf("\nPlease enter your card number: ");
-        String cNumber = scan.nextLine();
-        System.out.printf("Please enter your cvv number: ");
-        String cvvNumber = scan.nextLine();
-
-        this.askForCreditCardDetails(cNumber, cvvNumber, false);       
-      }
-    } else if (msg.equals("2")){ //gift card
-      while (true){
-        int returnResult = this.askForGiftCardDetails();
-        if (returnResult == 0){
-          this.getFinalMsg();
-          break;
-        } else if (returnResult == 2){
-          System.out.println("LINE 171: pay remaining with credit card");
-          break;
-        } else if (returnResult == 3){
-          this.printOptions(0);
-          break;
-        }
-      }
-    }
+//    String msg = this.printOptions(-1);
+//    Scanner scan = new Scanner(System.in);
+//    if (msg.equals("1")){ //credit card
+//      // if autofill option of user isn't true, prompt user to enter card details
+//      if (this.getCustomer().getAutoFillStatus() == true){
+//        this.askForCreditCardDetails(null, null, true);
+//      } else { //user wants to pay w credit card but no auto fill, prompt for input
+//
+//        System.out.printf("\nPlease enter your card number: ");
+//        String cNumber = scan.nextLine();
+//        System.out.printf("Please enter your cvv number: ");
+//        String cvvNumber = scan.nextLine();
+//
+//        this.askForCreditCardDetails(cNumber, cvvNumber, false);
+//      }
+//    } else if (msg.equals("2")){ //gift card
+//      while (true){
+//        int returnResult = this.askForGiftCardDetails();
+//        if (returnResult == 0){
+//          this.getFinalMsg();
+//          break;
+//        } else if (returnResult == 2){
+//          System.out.println("LINE 171: pay remaining with credit card");
+//          break;
+//        } else if (returnResult == 3){
+//          this.printOptions(0);
+//          break;
+//        }
+//      }
+//    }
   }
 
   //first check if they select gift card --> then check if valid, if not return immediately + print msg. Otherwise, continue to check autoFill status
@@ -359,66 +359,67 @@ public class Transaction {
       System.out.println("\nAre the details above correct? OR would you like to update your card details? (Y/N): ");
       this.getFinalMsg();
       return 1;
-    } else if (userStatus == false){
-      String name = null;
-      String number = null;
-      Scanner sc = new Scanner(System.in);
-      while (true) {
-        System.out.printf("Please enter your credit card name: ");
-        name = sc.nextLine();
-        Console con = System.console();
-        if (con != null) {
-          char[] num = con.readPassword("Please enter your credit card number: ");
-          number = new String(num);
-          System.out.printf("NUMBER LINE 100: [%s]\n", number);
-        } else {
-          System.out.printf("Please enter your credit card number: ");
-          number = sc.nextLine();
-        }
-        boolean result = this.checkCreditCardInfo(name, number);
-        if (result == true){
-          System.out.println("Match found! Proceeding to next stage!");
-          break;
-//        home.setUser(user);
-//        home.run();
-          //Direct to next page!!!
-        } else if (result == false){
-          System.out.println("Not Match!");
-          int temp = 0;
-          while (temp == 0) {
-            String textinput = this.nextOption();
-            if (textinput.equals("1")) {
-              temp = 1;
-            } else if (textinput.equals("2")) {
-              System.out.println("Back to default page!");
-              temp = 2;
-            } else {
-              System.out.println("Invalid input, please choose again!");
-            }
-          }
-          if (temp == 1) {
-            continue;
-          } else if (temp == 2) {
-            break;
-          }
-        }
-      }
-      System.out.printf("\nDo you want to save your card details to your account? (Y/N): ");
-      String option2 = scan.nextLine();
-      String result = this.checkAutoFillOption(option2);
-      if (result.equals("yes")){
-        //search for user in newUserDetails.csv file, modify default false to true
-        System.out.println("ABOUT TO UPDATE USER DETAILS IN FILE LINE 121 ~~~~~~~~~~~~~~");
-        this.updateAutoFillStatus();
-        this.getCustomer().setAutoFillStatus(true);
-        this.getCustomer().setCardName(name);
-        this.getCustomer().setCardNumber(cardNumber);
-        this.getFinalMsg();
-        return 1;
-      } else {
-        this.getFinalMsg();
-      }
     }
+//    else if (userStatus == false){
+//      String name = null;
+//      String number = null;
+//      Scanner sc = new Scanner(System.in);
+//      while (true) {
+//        System.out.printf("Please enter your credit card name: ");
+//        name = sc.nextLine();
+//        Console con = System.console();
+//        if (con != null) {
+//          char[] num = con.readPassword("Please enter your credit card number: ");
+//          number = new String(num);
+//          System.out.printf("NUMBER LINE 100: [%s]\n", number);
+//        } else {
+//          System.out.printf("Please enter your credit card number: ");
+//          number = sc.nextLine();
+//        }
+//        boolean result = this.checkCreditCardInfo(name, number);
+//        if (result == true){
+//          System.out.println("Match found! Proceeding to next stage!");
+//          break;
+////        home.setUser(user);
+////        home.run();
+//          //Direct to next page!!!
+//        } else if (result == false){
+//          System.out.println("Not Match!");
+//          int temp = 0;
+//          while (temp == 0) {
+//            String textinput = this.nextOption();
+//            if (textinput.equals("1")) {
+//              temp = 1;
+//            } else if (textinput.equals("2")) {
+//              System.out.println("Back to default page!");
+//              temp = 2;
+//            } else {
+//              System.out.println("Invalid input, please choose again!");
+//            }
+//          }
+//          if (temp == 1) {
+//            continue;
+//          } else if (temp == 2) {
+//            break;
+//          }
+//        }
+//      }
+//      System.out.printf("\nDo you want to save your card details to your account? (Y/N): ");
+//      String option2 = scan.nextLine();
+//      String result = this.checkAutoFillOption(option2);
+//      if (result.equals("yes")){
+//        //search for user in newUserDetails.csv file, modify default false to true
+//        System.out.println("ABOUT TO UPDATE USER DETAILS IN FILE LINE 121 ~~~~~~~~~~~~~~");
+//        this.updateAutoFillStatus();
+//        this.getCustomer().setAutoFillStatus(true);
+//        this.getCustomer().setCardName(name);
+//        this.getCustomer().setCardNumber(cardNumber);
+//        this.getFinalMsg();
+//        return 1;
+//      } else {
+//        this.getFinalMsg();
+//      }
+//    }
     return 0;
   }
 
