@@ -67,10 +67,15 @@ public class ParseJson {
   }
 
   //  # add into corresponding file
-//  ParseJson t = new ParseJson();
-//        if (t.matchCard("Julie", "5690")) {
+//  ParseJson parseJson = new ParseJson();
+//      parseJson.retrieveCardDetails();
+//      if (parseJson.matchCard("Julie", "56907")) {
+//    System.out.println("**********************");
 //    System.out.println("Match!");
+//    System.out.println("**********************");
 //  } else {
+//    System.out.println("**********************");
 //    System.out.println("Not Match!");
-//  };
+//    System.out.println("**********************");
+//  }
 }
