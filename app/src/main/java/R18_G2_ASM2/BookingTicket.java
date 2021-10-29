@@ -135,25 +135,29 @@ public class BookingTicket {
     }
 
     public int Continue(){
-        Scanner scan = new Scanner(System.in);
-        while(true){
-            if(this.cancelBook){
-                return -1;
-            }
-            System.out.println("1-Continue\n" +
-                    "2-End Adding Person\n"+"C-Cancel\n");
-            String str = scan.next();
+      Scanner scan = new Scanner(System.in);
+      while(true){
 
-            if(str.equals("1")){return 1;}
-            else if(str.equals("2")){
-                return 2;
-            }else if(str.equals("C")){
-                this.cancelBooking();
-                this.cancelBook =true;
-            }
-            else {
-                System.out.println("Invalid input,please try again: ");}
+        if(this.cancelBook){
+          return -1;
         }
+        System.out.println("1-Continue\n" +
+                "2-End Adding Person\n"+"C-Cancel\n");
+        
+        while (scan.hasNext()) {
+          String str = scan.next();
+
+          if(str.equals("1")){return 1;}
+          else if(str.equals("2")){
+              return 2;
+          } else if(str.equals("C")){
+              this.cancelBooking();
+              this.cancelBook = true;
+              break;
+          } else {
+            System.out.println("Invalid input,please try again: ");}
+          }
+        } 
     }
 
     public void printBookingMessage(){

@@ -63,13 +63,13 @@ public class Showing implements Comparable<Showing> {
 
   public String getShowingTimeFormatted() {
     SimpleDateFormat formatter = new SimpleDateFormat("EEE dd MMM - K:mma",Locale.ENGLISH);
-
+    formatter.setTimeZone(AEST);
     return formatter.format(showingTime.getTime()).toUpperCase();
   }
 
   public String getShowingTimeShort() {
     SimpleDateFormat formatter = new SimpleDateFormat("EEE K:mma",Locale.ENGLISH);
-
+    formatter.setTimeZone(AEST);
     return formatter.format(showingTime.getTime()).toUpperCase();
   }
   

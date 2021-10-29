@@ -29,6 +29,10 @@ public class EditInformation extends UserFields {
         tempFile = DataController.accessCSVFile(TEMP_FILE_NAME);
     }
 
+    public void setUserFileName(String s){
+      USER_FILE_NAME = s;
+  }
+
     public File getUserFile(){
         return this.userCsvFile;
     }
@@ -39,7 +43,7 @@ public class EditInformation extends UserFields {
     public void run(){
         this.Welcome();
         Scanner scan = new Scanner(System.in);
-        while(true){
+        while(scan.hasNextLine()){
             System.out.println("1 - Edit Nickname\n" +
                                "2 - Edit Email\n" +
                                "3 - Edit Phone Number\n" +
@@ -199,7 +203,7 @@ public class EditInformation extends UserFields {
 //        }
 
         Scanner scan = new Scanner(System.in);
-        while (true) {
+        while (scan.hasNextLine()) {
             System.out.println("Security check, please enter your old name: ");
             String nickname = scan.nextLine();
             if (nickname.equals(this.userChanged.getNickname())) {

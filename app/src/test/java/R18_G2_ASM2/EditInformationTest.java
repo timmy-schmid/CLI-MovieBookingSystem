@@ -1,23 +1,33 @@
 package R18_G2_ASM2;
 
 import org.junit.jupiter.api.AfterAll;
+import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.*;
 
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
-import java.io.File;
 import java.io.PrintStream;
 
 public class EditInformationTest{
     private User testUser = new User(1, "bob", "bob@gmail.com", "0488881188", "abc123Axd#!");
 
     private EditInformation editInformation = new EditInformation(testUser);
-    private File testFile = new File("app/src/test/resources/newUserDetailsTest.csv");
+    //private File testFile = new File("app/src/test/resources/newUserDetailsTest.csv");
 
-    public EditInformationTest(){
-        this.editInformation.setUserFile(testFile);
+    //public EditInformationTest(){
+        //this.editInformation.setUserFile(testFile);
+    //}
+
+    @BeforeAll static void importData() {
+      DataController.setBasePath("src/test/resources/");
     }
+
+    @BeforeEach void resetFile() {
+      editInformation.setUserFileName("newUserDetailsTest.csv");
+    }
+
 
     @Test
     public void testWelcome(){
@@ -98,7 +108,7 @@ public class EditInformationTest{
         try {
             ByteArrayOutputStream outContent = new ByteArrayOutputStream();
             System.setOut(new PrintStream(outContent));
-            String a = "\nsjafdnsa\n";
+            String a = "sjafdnsa\n";
             ByteArrayInputStream inContent = new ByteArrayInputStream(a.getBytes());
             System.setIn(inContent);
             editInformation.editNickname();
