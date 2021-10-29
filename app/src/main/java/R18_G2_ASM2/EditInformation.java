@@ -43,13 +43,13 @@ public class EditInformation extends UserFields {
     public void run(){
         this.Welcome();
         Scanner scan = new Scanner(System.in);
+        System.out.println("1 - Edit Nickname\n" +
+                "2 - Edit Email\n" +
+                "3 - Edit Phone Number\n" +
+                "4 - Edit Password\n" +
+                "5 - Return to the user page\n");
+        System.out.println("User input: ");
         while(scan.hasNextLine()){
-            System.out.println("1 - Edit Nickname\n" +
-                               "2 - Edit Email\n" +
-                               "3 - Edit Phone Number\n" +
-                               "4 - Edit Password\n" +
-                               "5 - Return to the user page\n");
-            System.out.println("User input: ");
             String option = scan.nextLine();
             if (option.equals("1")) {
                 this.editNickname();
@@ -69,6 +69,12 @@ public class EditInformation extends UserFields {
             } else{
                 System.out.println("Invalid order :( Please try again");
             }
+            System.out.println("1 - Edit Nickname\n" +
+                    "2 - Edit Email\n" +
+                    "3 - Edit Phone Number\n" +
+                    "4 - Edit Password\n" +
+                    "5 - Return to the user page\n");
+            System.out.println("User input: ");
         }
     }
 
