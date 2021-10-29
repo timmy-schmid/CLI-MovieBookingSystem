@@ -1,23 +1,33 @@
 package R18_G2_ASM2;
 
 import org.junit.jupiter.api.AfterAll;
+import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.*;
 
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
-import java.io.File;
 import java.io.PrintStream;
 
 public class EditInformationTest{
     private User testUser = new User(1, "bob", "bob@gmail.com", "0488881188", "abc123Axd#!");
 
     private EditInformation editInformation = new EditInformation(testUser);
-    private File testFile = new File("app/src/test/resources/newUserDetailsTest.csv");
+    //private File testFile = new File("app/src/test/resources/newUserDetailsTest.csv");
 
-    public EditInformationTest(){
-        this.editInformation.setUserFile(testFile);
+    //public EditInformationTest(){
+        //this.editInformation.setUserFile(testFile);
+    //}
+
+    @BeforeAll static void importData() {
+      DataController.setBasePath("src/test/resources/");
     }
+
+    @BeforeEach void resetFile() {
+      editInformation.setUserFileName("newUserDetailsTest.csv");
+    }
+
 
     @Test
     public void testWelcome(){
@@ -56,7 +66,7 @@ public class EditInformationTest{
     }
     @Test
     public void testCheckIfExist(){
-        assertEquals(1,editInformation.checkIfUserExists("hhh@gmail.com"));
+        assertEquals(-1,editInformation.checkIfUserExists("hhh@gmail.com"));
     }
 
     @Test
@@ -75,7 +85,7 @@ public class EditInformationTest{
         try{
             ByteArrayOutputStream outContent = new ByteArrayOutputStream();
             System.setOut(new PrintStream(outContent));
-            String a = "\nsjafdnsa\n";
+            String a = "sjafdnsa\n";
             ByteArrayInputStream inContent = new ByteArrayInputStream(a.getBytes());
             System.setIn(inContent);
             editInformation.run();
@@ -98,11 +108,11 @@ public class EditInformationTest{
         try {
             ByteArrayOutputStream outContent = new ByteArrayOutputStream();
             System.setOut(new PrintStream(outContent));
-            String a = "\nsjafdnsa\n";
+            String a = "sjafdnsa\n";
             ByteArrayInputStream inContent = new ByteArrayInputStream(a.getBytes());
             System.setIn(inContent);
             editInformation.editNickname();
-            String output = ("Security check, please enter your old name: \n"+"The name you have entered is invalid, please check it again\n"+"Do you wanna try again? (Y/N)\n");
+            String output = ("Security check, please enter your old name: \n"+"The name you have entered is invalid, please check it again\n"+"Return to the User default page...\n\n");
             assertEquals(outContent.toString(),output);
         }catch (Exception e){e.printStackTrace();}
     }
@@ -112,11 +122,11 @@ public class EditInformationTest{
         try {
             ByteArrayOutputStream outContent = new ByteArrayOutputStream();
             System.setOut(new PrintStream(outContent));
-            String a = "\n123\n";
+            String a = "123\n";
             ByteArrayInputStream inContent = new ByteArrayInputStream(a.getBytes());
             System.setIn(inContent);
-            editInformation.editNickname();
-            String output = ("Security check, please enter your old phone number: \n"+"The number you have entered is invalid, please check it again\n"+"Do you wanna try again? (Y/N)\n");
+            editInformation.editPhoneNumber();
+            String output = ("Security check, please enter your old phone number: \n"+"The number you have entered is invalid, please check it again\n"+"Return to the User default page...\n\n");
             assertEquals(outContent.toString(),output);
         }catch (Exception e){e.printStackTrace();}
     }

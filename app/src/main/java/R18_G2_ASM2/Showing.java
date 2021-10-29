@@ -2,14 +2,11 @@ package R18_G2_ASM2;
 
 import java.io.IOException;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
 import java.util.Calendar;
-import java.util.Collections;
 import java.util.Comparator;
 import java.util.Map;
 import java.util.TimeZone;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Locale;
 
 
@@ -21,7 +18,6 @@ public class Showing implements Comparable<Showing> {
 
   private static final TimeZone AEST = TimeZone.getTimeZone("Australia/Sydney");
 
-  //private  Map<String, Boolean> seatMap;
   private  Map<SeatLocation, Integer> seatsBooked; 
   private MovieSeat movieSeat;
 
@@ -43,7 +39,7 @@ public class Showing implements Comparable<Showing> {
   public int getShowingId() {
     return showingId;
   }
-  //add tests
+
   public boolean setShowingTime(int year, int month, int date, int hourOfDay, int minute) {
     this.showingTime.set(year, month, date, hourOfDay, minute);
     return true;
@@ -63,13 +59,13 @@ public class Showing implements Comparable<Showing> {
 
   public String getShowingTimeFormatted() {
     SimpleDateFormat formatter = new SimpleDateFormat("EEE dd MMM - K:mma",Locale.ENGLISH);
-
+    formatter.setTimeZone(AEST);
     return formatter.format(showingTime.getTime()).toUpperCase();
   }
 
   public String getShowingTimeShort() {
     SimpleDateFormat formatter = new SimpleDateFormat("EEE K:mma",Locale.ENGLISH);
-
+    formatter.setTimeZone(AEST);
     return formatter.format(showingTime.getTime()).toUpperCase();
   }
   
@@ -160,96 +156,9 @@ public int middleSeatBooked(){
     return movieSeat.cancelReservation(rowLetter, colNum);
   }
   
-  public static int getSingleMovieShowings(HashMap<Integer,Showing> showings, Movie m) {
-
-    StringBuilder s = new StringBuilder();
-    s.append("-----------------------------------------\n");
-    s.append("ID  TIME                 CINEMA\n");
-    s.append("-----------------------------------------\n");
-
-    List<Showing> showingsByTime = new ArrayList<>(showings.values());
-    Collections.sort(showingsByTime, new SortMovieByShowingTime());
-
-    int count = 0;
-    for (Showing currShowing : showingsByTime) {
-        if(currShowing.getMovie().getId() == m.getId() &&
-           currShowing.showingTime.after(Calendar.getInstance(AEST,Locale.ENGLISH))) {
-          s.append(String.format("%-4s",count+1));
-          s.append(String.format("%-21s",currShowing.getShowingTimeFormatted()));
-          s.append(String.format("%s - %s CLASS\n",currShowing.getCinema().getId(),currShowing.getCinema().getScreen().name()));
-          count++;
-        }
-    }
-    System.out.println(s);
-    return count;
-  }
-
-  public static int getAllMovieShowings(HashMap<Integer,Showing> showings) {
-    
-    StringBuilder s = new StringBuilder();
-    s.append("------------------------------------------------------------------------------------------\n");
-    s.append("ID  MOVIE                                              TIMES\n");
-    s.append("------------------------------------------------------------------------------------------");
-    
-
-    List<Showing> sortedShowings = new ArrayList<>(showings.values());
-    Collections.sort(sortedShowings, new SortMoviesByTitleThenShowingTime());
-
-    int count = 0;
-    int currTitle = 0;
-    int lastTitle = -1;
-    int padding = 55;
-    int sessionCounter = 0;
-
-    for (Showing currShowing : sortedShowings) {
-      currTitle = currShowing.movie.getId();
-      if (currShowing.showingTime.after(Calendar.getInstance(AEST,Locale.ENGLISH)) &&
-          currShowing.showingTime.before(getNextMonday(currShowing.showingTime))) {
-        
-        if (lastTitle != currTitle) {
-
-          
-          //String currId = Screen.formatANSI(String.valueOf(currShowing.getMovie().getId()),Screen.ANSI_USER_OPTION);
-
-          s.append(String.format("\n%-4s",currShowing.getMovie().getId()));
-
-          String currName = currShowing.getMovie().getName();
-
-          if (currName.length() > 47) {
-            currName = currName.substring(0,47) + "...";
-          }
-          s.append(String.format("%-51s", currName));
-          s.append(String.format("%s",currShowing.getShowingTimeShort()));
-          sessionCounter = 1;
-          count++;
-        } else {
-          if (Math.floorMod(sessionCounter,3) == 0) {
-            s.append(String.format(",\n%" + padding + "s", " "));
-            s.append(String.format("%s",currShowing.getShowingTimeShort()));
-          } else {
-            s.append(String.format(", %s",currShowing.getShowingTimeShort()));
-          }
-          sessionCounter++;
-        }
-        lastTitle = currTitle;
-
-      }
-    }
-    System.out.println(s);
-    return count;
-  }
-
   @Override
   public int compareTo(Showing b) {
     return Long.compare(this.getShowingTime().getTimeInMillis(), b.getShowingTime().getTimeInMillis());
-  }
-
-  public static Calendar getNextMonday (Calendar c) {
-    Calendar nextMon = Calendar.getInstance(AEST, Locale.ENGLISH);
-    nextMon.setTime(c.getTime());
-    nextMon.set(Calendar.DAY_OF_WEEK, Calendar.MONDAY);
-    nextMon.add(Calendar.DATE,7);
-    return nextMon;
   }
 
 }

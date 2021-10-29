@@ -29,6 +29,10 @@ public class EditInformation extends UserFields {
         tempFile = DataController.accessCSVFile(TEMP_FILE_NAME);
     }
 
+    public void setUserFileName(String s){
+      USER_FILE_NAME = s;
+  }
+
     public File getUserFile(){
         return this.userCsvFile;
     }
@@ -39,7 +43,7 @@ public class EditInformation extends UserFields {
     public void run(){
         this.Welcome();
         Scanner scan = new Scanner(System.in);
-        while(true){
+        while(scan.hasNextLine()){
             System.out.println("1 - Edit Nickname\n" +
                                "2 - Edit Email\n" +
                                "3 - Edit Phone Number\n" +
@@ -112,7 +116,7 @@ public class EditInformation extends UserFields {
 
         System.out.println("\nYour current username is: " + userChanged.getEmail());
         Scanner scan = new Scanner(System.in);
-        while(true){
+        while(scan.hasNext()){
             System.out.println("The new username: ");
             String option = scan.next();
             if(option.equals(this.userChanged.getEmail())){
@@ -199,8 +203,9 @@ public class EditInformation extends UserFields {
 //        }
 
         Scanner scan = new Scanner(System.in);
-        while (true) {
-            System.out.println("Security check, please enter your old name: ");
+        while (scan.hasNextLine()) {
+          System.out.println("Security check, please enter your old name: ");
+
             String nickname = scan.nextLine();
             if (nickname.equals(this.userChanged.getNickname())) {
                 System.out.println("New nickname: ");
@@ -211,7 +216,9 @@ public class EditInformation extends UserFields {
             } else {
                 System.out.println("The name you have entered is invalid, please check it again");
             }
-            System.out.println("Do you wanna try again? (Y/N)\n");
+        }
+        while (scan.hasNextLine()) {
+          System.out.println("Do you wanna try again? (Y/N)\n");
             String option = scan.nextLine();
             if(option.equals("Y")){
             } else if(option.equals("N")){
@@ -254,7 +261,7 @@ public class EditInformation extends UserFields {
         Scanner scan = new Scanner(System.in);
         boolean Success = false;
         boolean wantToContinue = true;
-        while (true) {
+        while (scan.hasNext()) {
             System.out.println("Security check, please enter your old phone number: ");
             String phoneNumber = scan.nextLine();
             if (phoneNumber.equals(this.userChanged.getPhoneNumber())) {
@@ -266,6 +273,8 @@ public class EditInformation extends UserFields {
             } else {
                 System.out.println("The number you have entered is invalid, please check it again");
             }
+        }
+        while (scan.hasNext()) {
             System.out.println("Do you wanna try again? (Y/N)\n");
             String option = scan.nextLine();
             if(option.equals("Y")){
@@ -276,9 +285,10 @@ public class EditInformation extends UserFields {
                 System.out.println("Invalid input. Please choose from Y or N.\n");
             }
         }
+      
 
             this.returnUserPage();
-    }
+      }
 
 
     public void setUserNickname(String nickname){
@@ -356,12 +366,12 @@ public class EditInformation extends UserFields {
                     //updated to include phone num
                     myWriter.write(arr[0]+","+user.getNickname()+","+
                     
-                    user.getEmail()+"," + user.getPhoneNumber() + "," + user.getPassword() + "," + arr[5]);
+                    user.getEmail()+"," + user.getPhoneNumber() + "," + user.getPassword() + "," + arr[5]+"\n");
 
-                }else{
+                } else {
                     myWriter.write(str+"\n");
                 }
-                }
+            }
             myWriter.close();
             myReader.close();
             } catch (FileNotFoundException e) {

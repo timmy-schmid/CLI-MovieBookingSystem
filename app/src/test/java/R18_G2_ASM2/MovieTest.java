@@ -56,7 +56,7 @@ public class MovieTest {
 
     ArrayList<Calendar> releaseDate= new ArrayList<>();
     for (int i = 0; i < 6; i++ ) {
-      releaseDate.add(Calendar.getInstance(AEST, Locale.ENGLISH));
+      releaseDate.add(Calendar.getInstance(Locale.ENGLISH));
       releaseDate.get(i).set(2021, 9, i+1);
     }
     movies.put(1, new Movie(1,"Mov 1",cast1,Classification.G,dir1,"synop 1",releaseDate.get(0)));
@@ -122,9 +122,9 @@ public class MovieTest {
     String expected = "-----------------------------------------\n" +
     "ID  TIME                 CINEMA\n" +
     "-----------------------------------------\n" +
-    "1   " + df2.format(showingTime.get(0).getTime()).toUpperCase() + "  1 - BRONZE CLASS\n" +
-    "2   " + df2.format(showingTime.get(1).getTime()).toUpperCase() + "  1 - SILVER CLASS\n" +
-    "3   " + df2.format(showingTime.get(2).getTime()).toUpperCase() + " 1 - SILVER CLASS\n\n";
+    "1   " + String.format("%-21s",df2.format(showingTime.get(0).getTime()).toUpperCase()) + "1 - BRONZE CLASS\n" +
+    "2   " + String.format("%-21s",df2.format(showingTime.get(1).getTime()).toUpperCase()) + "1 - SILVER CLASS\n" +
+    "3   " + String.format("%-21s",df2.format(showingTime.get(2).getTime()).toUpperCase()) + "1 - SILVER CLASS\n\n";
 
     assertEquals(expected,actualOut.toString());
 
