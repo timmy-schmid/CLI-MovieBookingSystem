@@ -59,7 +59,7 @@ class LoginTest {
 
    @Test
    public void testValidUsername(){
-     String username = "timmy@gmail.com";
+     String username = "hhh@gmail.com";
      String password = "Asdf1234!*";
      // int result = login.checkIfUserExists(username, password);
      int result = login.checkIfUserExists2(username, password);
