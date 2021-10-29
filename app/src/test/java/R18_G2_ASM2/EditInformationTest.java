@@ -108,6 +108,20 @@ public class EditInformationTest{
     }
 
     @Test
+    public void testInvalidEditPhoneNumber(){
+        try {
+            ByteArrayOutputStream outContent = new ByteArrayOutputStream();
+            System.setOut(new PrintStream(outContent));
+            String a = "\n123\n";
+            ByteArrayInputStream inContent = new ByteArrayInputStream(a.getBytes());
+            System.setIn(inContent);
+            editInformation.editNickname();
+            String output = ("Security check, please enter your old phone number: \n"+"The number you have entered is invalid, please check it again\n"+"Do you wanna try again? (Y/N)\n");
+            assertEquals(outContent.toString(),output);
+        }catch (Exception e){e.printStackTrace();}
+    }
+
+    @Test
     public void testInvalidEmail(){
         try {
             ByteArrayOutputStream outContent = new ByteArrayOutputStream();
