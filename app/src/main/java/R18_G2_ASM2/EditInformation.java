@@ -44,10 +44,10 @@ public class EditInformation extends UserFields {
         this.Welcome();
         Scanner scan = new Scanner(System.in);
         System.out.println("1 - Edit Nickname\n" +
-                "2 - Edit Email\n" +
-                "3 - Edit Phone Number\n" +
-                "4 - Edit Password\n" +
-                "5 - Return to the user page\n");
+                            "2 - Edit Email\n" +
+                            "3 - Edit Phone Number\n" +
+                            "4 - Edit Password\n" +
+                            "5 - Return to the user page\n");
         System.out.println("User input: ");
         while(scan.hasNextLine()){
             String option = scan.nextLine();
@@ -69,12 +69,6 @@ public class EditInformation extends UserFields {
             } else{
                 System.out.println("Invalid order :( Please try again");
             }
-            System.out.println("1 - Edit Nickname\n" +
-                    "2 - Edit Email\n" +
-                    "3 - Edit Phone Number\n" +
-                    "4 - Edit Password\n" +
-                    "5 - Return to the user page\n");
-            System.out.println("User input: ");
         }
     }
 
@@ -122,8 +116,8 @@ public class EditInformation extends UserFields {
 
         System.out.println("\nYour current username is: " + userChanged.getEmail());
         Scanner scan = new Scanner(System.in);
+        System.out.println("The new username: ");
         while(scan.hasNext()){
-            System.out.println("The new username: ");
             String option = scan.next();
             if(option.equals(this.userChanged.getEmail())){
                 System.out.println("Please enter a new username");
@@ -159,6 +153,7 @@ public class EditInformation extends UserFields {
             String pw = scan.nextLine();
             if (pw.equals(this.userChanged.getPassword())) {
                 System.out.println("New password: ");
+                pw = scan.nextLine();
                 if(this.isValidPassword(pw)){
                     this.setUserPassword(pw);
                     Success = true;
@@ -166,13 +161,14 @@ public class EditInformation extends UserFields {
             } else {
                 System.out.println("The password is incorrect. Please check it again");
             }
+            /*
             System.out.println("Do you wanna try again? (Y/N)\n");
             String option = scan.nextLine();
             if(option.equals("Y")){}else if(option.equals("N")){
                 wantToContinue = false;
             }else{
                 System.out.println("Invalid input. Please choose from Y or N\n");
-            }
+            }*/
         }
         if(!wantToContinue){
             this.nextOption();
@@ -209,9 +205,8 @@ public class EditInformation extends UserFields {
 //        }
 
         Scanner scan = new Scanner(System.in);
+        System.out.println("Security check, please enter your old name: ");
         while (scan.hasNextLine()) {
-          System.out.println("Security check, please enter your old name: ");
-
             String nickname = scan.nextLine();
             if (nickname.equals(this.userChanged.getNickname())) {
                 System.out.println("New nickname: ");
@@ -223,18 +218,18 @@ public class EditInformation extends UserFields {
                 System.out.println("The name you have entered is invalid, please check it again");
             }
         }
+        /*
+        System.out.println("Do you wanna try again? (Y/N)\n");
         while (scan.hasNextLine()) {
-          System.out.println("Do you wanna try again? (Y/N)\n");
             String option = scan.nextLine();
-            if(option.equals("Y")){
+            if(option.equals("Y")) {
             } else if(option.equals("N")){
                 break;
             }else{
                 System.out.println("Invalid input. Please choose from Y or N.\n");
             }
-        }
+        }*/
         this.returnUserPage();
-
     }
 
     public void editPhoneNumber(){
@@ -267,8 +262,9 @@ public class EditInformation extends UserFields {
         Scanner scan = new Scanner(System.in);
         boolean Success = false;
         boolean wantToContinue = true;
-        while (scan.hasNext()) {
-            System.out.println("Security check, please enter your old phone number: ");
+
+        System.out.println("Security check, please enter your old phone number: ");
+        while (scan.hasNextLine()) {
             String phoneNumber = scan.nextLine();
             if (phoneNumber.equals(this.userChanged.getPhoneNumber())) {
                 System.out.println("New phone number: ");
@@ -280,8 +276,9 @@ public class EditInformation extends UserFields {
                 System.out.println("The number you have entered is invalid, please check it again");
             }
         }
-        while (scan.hasNext()) {
-            System.out.println("Do you wanna try again? (Y/N)\n");
+        /*
+        System.out.println("Do you wanna try again? (Y/N)\n");
+        while (scan.hasNextLine()) {
             String option = scan.nextLine();
             if(option.equals("Y")){
 
@@ -290,7 +287,7 @@ public class EditInformation extends UserFields {
             }else{
                 System.out.println("Invalid input. Please choose from Y or N.\n");
             }
-        }
+        }*/
       
 
             this.returnUserPage();
