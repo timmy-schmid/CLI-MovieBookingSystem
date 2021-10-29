@@ -42,46 +42,7 @@ public class MovieSystemTest {
     movSystem.quit();
     assertEquals("SEE YOU NEXT TIME! :)\n",actualOut.toString()); 
   }
-  /* TODO fix this test.
-  @Test void printMovieScreenTest() {
-    mockIn = new ByteArrayInputStream("".getBytes());
-    movSystem = new MovieSystem(mockIn, actualOutPrint);
-
-    ArrayList<String> testCast = new ArrayList<>();
-
-    testCast.add("actor one");
-    testCast.add("actor two");
-
-    ArrayList<String> testDirector = new ArrayList<>();
-    testDirector.add("director");
-
-    Calendar releaseDate = Calendar.getInstance(AEST,Locale.ENGLISH);
-    releaseDate.set(2021,11,20);
-
-    Movie testMovie = new Movie(10,"Some Movie", testCast,Classification.PG,testDirector,"some movie description",releaseDate);
-
-    String screen = "\033[H\033[2J" +
-                    "*********************************************************" +
-                    "**************************************\n" +
-                    "\u001B[33m" +
-                    "                                   SOME MOVIE\n" +
-                    "\u001B[0m" +
-                    "*********************************************************" +
-                    "**************************************\n" +
-                    "SYNOPSIS: some movie description\n\n" +
-                    "CLASSIFICATION: PG\n" +
-                    "RELEASE DATE: 20/12/21\n" +
-                    "DIRECTORS: director\n" +
-                    "CAST: actor one, actor two\n" +
-                    "UPCOMING SESSIONS:\n" +
-                    "-----------------------------------------\n" +
-                    "ID  TIME                 CINEMA\n" +
-                    "-----------------------------------------\n\n" +
-                    "If you would like to go back press \u001B[34mB\u001B[0m\n";
-
-    movSystem.printMovieScreen(testMovie);
-    assertEquals(screen,actualOut.toString()); 
-  }*/
+  
 /* TODO BROKEN TEST
   @Test void printStartScreenTest() {
     mockIn = new ByteArrayInputStream("".getBytes());
