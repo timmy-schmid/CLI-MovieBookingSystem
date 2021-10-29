@@ -366,12 +366,12 @@ public class EditInformation extends UserFields {
                     //updated to include phone num
                     myWriter.write(arr[0]+","+user.getNickname()+","+
                     
-                    user.getEmail()+"," + user.getPhoneNumber() + "," + user.getPassword() + "," + arr[5]);
+                    user.getEmail()+"," + user.getPhoneNumber() + "," + user.getPassword() + "," + arr[5]+"\n");
 
-                }else{
+                } else {
                     myWriter.write(str+"\n");
                 }
-                }
+            }
             myWriter.close();
             myReader.close();
             } catch (FileNotFoundException e) {

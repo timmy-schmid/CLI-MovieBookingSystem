@@ -66,7 +66,7 @@ public class EditInformationTest{
     }
     @Test
     public void testCheckIfExist(){
-        assertEquals(1,editInformation.checkIfUserExists("hhh@gmail.com"));
+        assertEquals(-1,editInformation.checkIfUserExists("hhh@gmail.com"));
     }
 
     @Test
