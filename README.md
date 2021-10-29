@@ -6,7 +6,14 @@ Our goal is to develop a movie ticket booking system for FancyCinemas, with the 
 
 TODO before running the program:
 
-Command to cleanly run program: first run "gradle build" to generate jar files, and run "java -jar app/build/libs/app-all.jar" to make the password masking work correctly.
+Command to cleanly run program: first run "gradle clean build" to generate jar files, and run "java -jar app/build/libs/app-all.jar" to make the password masking work correctly.
+
+TODO during sprint
+
+- Ensure you regularly check + update the status of subtasks when you've completed them.
+
+- Start writing the report
+
 
 ### COMMAND PROCESS
 
@@ -38,13 +45,4 @@ Check the build.gradle file for more details on plugins, dependencies used and t
 
 For more details on planning: check out https://miro.com/app/board/o9J_lqvhc8U=/
 
-
-Inspiration for more features to implement later on:
-
-- https://www.movietickets.com !!
-
-- https://in.bookmyshow.com/explore/movies !
-
-- https://www.hoyts.com.au
-
-- https://www.eventcinemas.com.au
+Sprint 2 update: https://miro.com/app/board/o9J_lyZ2s-c=/?fromRedirect=1

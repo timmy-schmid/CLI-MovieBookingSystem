@@ -25,19 +25,9 @@ public class User extends UserFields {
   private double totalPriceMutiplier = 0;
 
   private boolean autoFill;
+  private String cardName;
   private String cardNumber;
-
-  public User(int ID, String email, String password){
-    this.ID = ID;
-    this.email = email;
-    this.password = password;
-    ticket.put(Person.Child,0);
-    ticket.put(Person.Student,0);
-    ticket.put(Person.Senior,0);
-    ticket.put(Person.Adult,0);
-
-    this.autoFill = false; //default, then prompt user during transaction stage to update
-  }
+  private String cvvNumber;
 
   //current new version - sprint 2
   public User(int ID, String nickname, String email, String phoneNumber, String password){ //extra fields added
@@ -51,7 +41,10 @@ public class User extends UserFields {
     ticket.put(Person.Student,0);
     ticket.put(Person.Senior,0);
     ticket.put(Person.Adult,0);
+
+    this.cardName = null;
     this.cardNumber = null;
+    this.cvvNumber = null;
     this.autoFill = false; //default, then prompt user during transaction stage to update
   }
 
@@ -78,9 +71,18 @@ public class User extends UserFields {
     return this.autoFill;
   }
 
+  public String getCardName(){
+    return this.cardName;
+  }
+
   public String getCardNumber(){
     return this.cardNumber;
   }
+
+  public String getCvvNumber(){
+    return this.cvvNumber;
+  }
+
   //setter methods: e.g. for changing login details ...
   //validate to ensure values to be set to are valid
   public void setID(int ID){
@@ -96,23 +98,20 @@ public class User extends UserFields {
   }
   //only set email if its valid
   public void setEmail(String email){
-    if (this.validateUser(email) == true){
+    if (this.validateUser(email)){
       this.email = email;
     }
   }
 
   public void setPhoneNumber(String phoneNumber){
-    if (this.isValidPhoneNumber(phoneNumber) == true){
+    if (this.isValidPhoneNumber(phoneNumber)){
       this.phoneNumber = phoneNumber;
     }
   }
 
-  public boolean isValidPhoneNumber(String newPhoneNumber){
-   return true;
-  }
   //only set password if its valid
   public void setPassword(String newPassword){
-    if (this.isValidPassword(newPassword) == true){
+    if (this.isValidPassword(newPassword)){
       this.password = newPassword;
     }
   }
@@ -121,10 +120,22 @@ public class User extends UserFields {
     this.autoFill = newStatus;
   }
 
-  public void setCardNumber(String number){
-    this.cardNumber = number;
+  public void setCardName(String name){
+    if (name != null && !name.equals("")){
+      this.cardName = name;
+    }
   }
 
+  public void setCardNumber(String number){
+    //validate before setting
+    if (this.isValidCardNumber(number)){
+      this.cardNumber = number;
+    }
+  }
+
+  public void setCvvNumber(String cvvNumber){ //validate length of this (? = 3)
+    this.cvvNumber = cvvNumber;
+  }
 
   //rename maybe bookingTicket --> bookTicket? OR nahh
   public void bookingTicket(Person person, int num){
@@ -147,6 +158,7 @@ public class User extends UserFields {
     totalPriceMutiplier = 0;
     for(Person key: ticket.keySet()){
       totalPriceMutiplier += key.getValue()*ticket.get(key);
+      // System.out.printf("USER: totalpricemultipler: %d\n", totalPriceMutiplier);
     }
   }
   public double getTotalPrice(){
