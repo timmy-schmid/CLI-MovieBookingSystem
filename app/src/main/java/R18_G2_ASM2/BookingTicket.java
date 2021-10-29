@@ -134,7 +134,6 @@ public class BookingTicket {
         }
     }
 
-
     public int Continue(){
         Scanner scan = new Scanner(System.in);
         while(true){
@@ -166,7 +165,6 @@ public class BookingTicket {
     public void bookingTicketForPersons(Person person,int num){
         this.user.bookingTicket(person,num);
     }
-
 
     public boolean bookingTicketForSeat(char rowLetter, int col){
         try{

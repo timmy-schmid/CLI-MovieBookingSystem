@@ -20,7 +20,6 @@ import java.util.TimeZone;
 
 import javax.naming.directory.InvalidAttributeValueException;
 
-
 import java.util.Arrays;
 
 public class DataController {
@@ -255,7 +254,8 @@ public class DataController {
   public static HashMap<Integer, String> importShowings(Map<Integer,Movie> movies,
                              Map<Integer,Cinema> cinemas,
                              String filename) throws FileNotFoundException, IOException {
-                             HashMap<Integer, String> err = new HashMap<>();
+    
+                              HashMap<Integer, String> err = new HashMap<>();
   
     if (filename == null) throw new FileNotFoundException();
 
