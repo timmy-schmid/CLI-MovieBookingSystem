@@ -9,20 +9,24 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.TimeZone;
 
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 
 class ShowingTest{
+  final TimeZone AEST = TimeZone.getTimeZone("Australia/Sydney");
 
   @BeforeAll public static void setPath() {
     DataController.setBasePath("src/main/resources/");
+    
   }
 
     Showing show;
     @BeforeEach
     public void setUp() throws IOException{
         DateFormat df = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
+        df.setTimeZone(AEST);
         Date date1 = null;
         try {
             date1 = df.parse("2017-08-07 11:11:11");
