@@ -84,9 +84,25 @@ public class EditInformationTest{
         }catch (Exception e){ e.printStackTrace();}
     }
 
+    @Test
+    public void testInvalidEditNickname(){
+        try {
+            ByteArrayOutputStream outContent = new ByteArrayOutputStream();
+            System.setOut(new PrintStream(outContent));
+            String a = "\nsjafdnsa\n";
+            ByteArrayInputStream inContent = new ByteArrayInputStream(a.getBytes());
+            System.setIn(inContent);
+            editInformation.editNickname();
+            String output = ("Security check, please enter your old name: \n"+"The name you have entered is invalid, please check it again\n"+"Do you wanna try again? (Y/N)\n");
+            assertEquals(outContent.toString(),output);
+        }catch (Exception e){e.printStackTrace();}
+    }
+
+
     // @Test
     // public void testwriteUserForFile(){
     //     editInformation.writeUsertoFile(testUser,editInformation.getUserFile());
     // }
+
 
 }
