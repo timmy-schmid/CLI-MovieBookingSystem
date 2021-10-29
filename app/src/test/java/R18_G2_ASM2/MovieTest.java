@@ -124,7 +124,7 @@ public class MovieTest {
     "-----------------------------------------\n" +
     "1   " + df2.format(showingTime.get(0).getTime()).toUpperCase() + "  1 - BRONZE CLASS\n" +
     "2   " + df2.format(showingTime.get(1).getTime()).toUpperCase() + "  1 - SILVER CLASS\n" +
-    "3   " + df2.format(showingTime.get(2).getTime()).toUpperCase() + "  1 - SILVER CLASS\n\n";
+    "3   " + df2.format(showingTime.get(2).getTime()).toUpperCase() + " 1 - SILVER CLASS\n\n";
 
     assertEquals(expected,actualOut.toString());
 

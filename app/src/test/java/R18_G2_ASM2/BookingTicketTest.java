@@ -130,9 +130,9 @@ public class BookingTicketTest {
         }catch (Exception e){ e.printStackTrace();}
 
     }
-    @Test
-    public void testCheckFullorNot(){
-        assertEquals(aShow.isShowingFull(),testBookingTicket.checkFullorNot());}
+    // @Test
+    // public void testCheckFullorNot(){
+    //     assertEquals(aShow.isShowingFull(),testBookingTicket.checkFullorNot());}
 
     @Test
     public void testCancellingBookingForPerson(){
