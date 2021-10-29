@@ -44,8 +44,7 @@ public class BookingTicketTest {
             System.setOut(new PrintStream(outContent));
             testBookingTicket.printBookingMessage();
             String output = (testUser.getTicketMessage()+
-                    "\nTotal = "+testUser.getTotalPrice()*50+"\n"
-                    +"Successfully cancel");
+                    "\nTotal = "+testUser.getTotalPrice()*50+"\n");
             assertEquals(outContent.toString(),output);
         }
         catch (Exception e){ e.printStackTrace();
@@ -126,7 +125,7 @@ public class BookingTicketTest {
             ByteArrayInputStream inContent = new ByteArrayInputStream(a.getBytes());
             System.setIn(inContent);
             testBookingTicket.cancelSeatForShow('E',0);
-            assertEquals("Invalid message cancel seat for show, please try again.",outContent);
+            assertEquals("Invalid message cancel seat for show, please try again.\n",outContent);
 
         }catch (Exception e){ e.printStackTrace();}
 
