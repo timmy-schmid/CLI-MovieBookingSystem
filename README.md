@@ -2,18 +2,17 @@
 
 Our goal is to develop a movie ticket booking system for FancyCinemas, with the purpose of reducing waiting time for customers + providing them with the choice of viewing/booking movies online.
 
+### Sprint 2 
+
+- Our main focus for this sprint was to integrate booking tickets, card system implement and editing user's personal info into the movie system. 2 user stories that weren't completed in Sprint 1 were moved to this sprint.
+
 ### Important!!!
 
 TODO before running the program:
 
 Command to cleanly run program: first run "gradle clean build" to generate jar files, and run "java -jar app/build/libs/app-all.jar" to make the password masking work correctly.
 
-TODO during sprint
-
-- Ensure you regularly check + update the status of subtasks when you've completed them.
-
-- Start writing the report
-
+To check code coverage + build history, go here: http://139.180.183.109/job/SOFT2412ASS2/150/
 
 ### COMMAND PROCESS
 
@@ -43,6 +42,10 @@ Check the build.gradle file for more details on plugins, dependencies used and t
 - `gradle test JacocoTestReport` --> generates a report where you can see how much coverage you've done
 - `gradle javadoc` --> generates a set of HTML pages of API documentation
 
-For more details on planning: check out https://miro.com/app/board/o9J_lqvhc8U=/
 
-Sprint 2 update: https://miro.com/app/board/o9J_lyZ2s-c=/?fromRedirect=1
+### Tools used
+
+- Check miro for UML + HiFi UI diagrams: https://miro.com/app/board/o9J_lyZ2s-c=/?fromRedirect=1
+
+- Jira boards, backlogs + report: https://soft2412-r18g2.atlassian.net/jira/software/projects/A2/boards/1
+
