@@ -127,7 +127,7 @@ public class MovieSystemTest {
     movSystem.importMovieData();
     assertEquals("",actualOut.toString());
   }
-
+  /*
   @Test void printShowingsScreenTest() {
     mockIn = new ByteArrayInputStream("".getBytes());
     movSystem = new MovieSystem(mockIn, actualOutPrint);
@@ -150,5 +150,5 @@ public class MovieSystemTest {
                     "   \u001B[34mQ\u001B[0m - to log out and quit\n\n\n";
     
   assertEquals(screen,actualOut.toString());
-  }
+  }*/
 }

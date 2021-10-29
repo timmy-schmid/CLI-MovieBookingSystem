@@ -37,14 +37,6 @@ public class MovieSystem {
 
   public void run() {
 
-    // User u = new User(1,"tim","pwd");
-    // Showing s = movies.get(5).getShowingsBeforeNextMonday().get(0);
-    // s.showAllSeats();
-    // System.out.println("Seats left: " + s.totalSeatsLeft() + " seats left");
-    // System.out.println("Session time: " + s.getShowingTimeFormatted() );
-    // BookingTicket book = new BookingTicket(s,u);
-    // book.run();
-
     HomeScreen home = new HomeScreen(movies);
     StartScreen startScreen = new StartScreen(home);
 
@@ -69,92 +61,6 @@ public class MovieSystem {
     } catch (IOException e) {
       out.println("Error reading file: " + SHOWINGS_FILE_NAME);
     } 
-  }
-
-  public void printStartScreen() {
-
-    StringBuilder s = new StringBuilder();
-    s.append("******************************************************************\n");
-    s.append("\nWELCOME TO FANCY CINEMAS! PLEASE CHOOSE FROM THE FOLLOWING OPTIONS\n");
-    s.append("\n******************************************************************\n");
-
-    s.append("1 - Log In\n");
-    s.append("2 - Register\n");
-    s.append("3 - View upcoming showings\n");  
-    //proceed to booking --> direct to transaction page
-    s.append("4 - Direct to transaction page\n"); //testing purposes (move later?)
-    s.append("Q - Quit\n");
-
-    out.println(s);    
-  }
-
-  public void printShowingsScreen() {
-    StringBuilder s = new StringBuilder();
-
-    printBar(s);
-    s.append("                                       SHOWINGS PAGE\n");
-    printBar(s);
-
-
-    if (currentUser != null) {
-      s.append(String.format("Welcome, %s,\n",currentUser.getNickname()));
-    } else {
-      s.append(String.format("Welcome,\n"));
-    }
-
-    s.append("\nPlease select from the following options:\n");
-    s.append(String.format("  %s - to see further details about a particular movie (listed above).\n",wrapColour("[ID]")));
-
-    if (currentUser != null) {
-      //s.append(String.format("   %s - to edit account details\n", wrapColour("E")));
-    } else {
-      //s.append(String.format("   %s - to register an account\n", wrapColour("R")));
-    }
-  
-    s.append(String.format("   %s - to log out and quit\n\n", wrapColour("Q")));
-
-    out.println(s);
-  }
-
-  public void printMovieScreen(Movie m) {
-    StringBuilder s = new StringBuilder();
-
-    s.append("\033[H\033[2J"); //clears console
-
-    MovieSystem.printBar(s);
-    s.append(ANSI_YELLOW);
-    s.append(String.format("                                   %s\n",m.getName().toUpperCase()));
-    s.append(ANSI_RESET); 
-    MovieSystem.printBar(s);
-
-    m.printMovieDetails();
-    //Showing.getSingleMovieShowings(showings, m);
-
-    s.append("\nIf you would like to go back press " + wrapColour("B"));
-      
-    out.println(s);
-
-
-  }
-
-  public void quit() {
-    out.println("SEE YOU NEXT TIME! :)");   
-  }
-
-  private String wrapColour(String s) {
-    return ANSI_BLUE + s + ANSI_RESET;
-  }
-
-
-  public void editUser() {
-    EditInformation edit = new EditInformation(currentUser);
-    //edit.giveChoice();
-  }
-  
-
-  public static void printBar(StringBuilder s) {
-    s.append("*********************************************************");
-    s.append("**************************************\n");
   }
 
   public void setMovieDataFile(String name) {

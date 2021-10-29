@@ -366,7 +366,7 @@ public class EditInformation extends UserFields {
                     //updated to include phone num
                     myWriter.write(arr[0]+","+user.getNickname()+","+
                     
-                    user.getEmail()+"," + user.getPhoneNumber() + "," + user.getPassword() + "," + arr[5]);
+                    user.getEmail()+"," + user.getPhoneNumber() + "," + user.getPassword() + "," + arr[5] + "\n");
 
                 }else{
                     myWriter.write(str+"\n");
