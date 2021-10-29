@@ -132,7 +132,7 @@ public class BookingTicketTest {
     }
     @Test
     public void testCheckFullorNot(){
-        assertFalse(testBookingTicket.checkFullorNot());}
+        assertEquals(aShow.isShowingFull(),testBookingTicket.checkFullorNot());}
 
     @Test
     public void testCancellingBookingForPerson(){
