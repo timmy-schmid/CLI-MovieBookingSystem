@@ -34,6 +34,8 @@ public class Transaction {
   private File userCsvFile;
   private File giftCardsFile;
 
+  private final double price = 50; //50 before
+
   private static String USER_FILE_NAME = "newUserDetails.csv";
   private static String TEMP_FILE_NAME = "cardTemp.csv";
   private static String TEMP_FILE_2_NAME = "cardTemp2.csv";
@@ -67,25 +69,23 @@ public class Transaction {
     return this.customer;
   }
 
-  //TODO: print booking movie details:
-  // e.g. BOOK: WAR FOR THE PLANET OF THE APES | WED 27 OCT - 9:30 PM 4 - SILVER CLASS | 28/100
-  // Number of tickets: (n)
-  // Total Amount: $90.95 --> from Tim's transaction screen on miro
-
   public void printScreen(){ //hi-fi ui of user transaction screen
     System.out.println("\n*******************************************************");
     System.out.println("            Welcome to the payment page :)            ");
     System.out.println("               Movie to book details               ");
     System.out.println("*******************************************************\n");
-    System.out.println("Number of tickets: ");
-    System.out.println("Total Amount: \n"); //this.getCustomer().getTotalPrice();
-  }
+    System.out.printf("Number of tickets:");
+    // System.out.println(this.getCustomer().getTicketMessage()); //saves tickets from previous cancellation of booking tickets??
 
-  //run()
+    // System.out.println("Total amount: "+this.getCustomer().getTotalPrice()*price); //idk why price is wrong...
+  }
+  
   // get total amount of all tickets from booking ticket/list of tickets? to compare against gift card num/credit card
 
   // TODO: autogenerate a unique transaction ID for each user
-  public void proceedPayment() throws IOException { //card details fill out
+
+    //--> user's tickets details --> 
+  public void run() throws IOException { //card details fill out
     this.printScreen();
     this.askForUserDetails();
   }
@@ -153,10 +153,10 @@ public class Transaction {
 
         System.out.printf("\nPlease enter your card number: ");
         String cNumber = scan.nextLine();
-        System.out.printf("Please enter your csv number: ");
-        String csvNumber = scan.nextLine();
+        System.out.printf("Please enter your cvv number: ");
+        String cvvNumber = scan.nextLine();
 
-        this.askForCreditCardDetails(cNumber, csvNumber, false);       
+        this.askForCreditCardDetails(cNumber, cvvNumber, false);       
       }
     } else if (msg.equals("2")){ //gift card
       while (true){
@@ -164,9 +164,8 @@ public class Transaction {
         if (returnResult == 0){
           this.getFinalMsg();
           break;
-        }
-        if (returnResult == 2){
-          System.out.println("LINE 166: pay remaining with credit card");
+        } else if (returnResult == 2){
+          System.out.println("LINE 171: pay remaining with credit card");
           break;
         } else if (returnResult == 3){
           this.printOptions(0);
@@ -324,6 +323,7 @@ public class Transaction {
       String returnMsg = this.updateGiftCardStatus(num);
       //if it is redeemable but not enough money ask to pay with credit card remaining
       if (returnMsg.equals("not redeemable")){
+        System.out.println("The number you have entered is no longer available.\n");
         System.out.println("Please select from the following: ");
         System.out.printf("\n1. Enter another gift card\n2. Go back to pay with credit card"+
         "\n3. Cancel payment\n"+"\nEnter option: ");
@@ -349,13 +349,14 @@ public class Transaction {
     
   }
 
-  public int askForCreditCardDetails(String cardNumber, String csvNumber,boolean userStatus) throws IOException {
+  public int askForCreditCardDetails(String cardNumber, String cvvNumber,boolean userStatus) throws IOException {
     Scanner scan = new Scanner(System.in);
     if (userStatus == true){ //saved before
       System.out.println("\nPrinting user's card details below (saved before)!");
-      System.out.printf("Name: %s\n", this.getCustomer().getNickname());
+
+      System.out.printf("Name: %s\n", this.getCustomer().getCardName());
       System.out.printf("Card number provided: %s\n", this.getCustomer().getCardNumber());
-      System.out.println("Are the details above correct? OR would you like to update your card details? (Y/N): ");
+      System.out.println("\nAre the details above correct? OR would you like to update your card details? (Y/N): ");
       this.getFinalMsg();
       return 1;
     } else if (userStatus == false){
@@ -376,7 +377,8 @@ public class Transaction {
         }
         boolean result = this.checkCreditCardInfo(name, number);
         if (result == true){
-          System.out.println("Match!Process to next stage!");
+          System.out.println("Match found! Proceeding to next stage!");
+          break;
 //        home.setUser(user);
 //        home.run();
           //Direct to next page!!!
@@ -388,10 +390,10 @@ public class Transaction {
             if (textinput.equals("1")) {
               temp = 1;
             } else if (textinput.equals("2")) {
-              System.out.println("Back to default page--default screen");
+              System.out.println("Back to default page!");
               temp = 2;
             } else {
-              System.out.println("Invalid input, please choose agian!");
+              System.out.println("Invalid input, please choose again!");
             }
           }
           if (temp == 1) {
@@ -409,8 +411,8 @@ public class Transaction {
         System.out.println("ABOUT TO UPDATE USER DETAILS IN FILE LINE 121 ~~~~~~~~~~~~~~");
         this.updateAutoFillStatus();
         this.getCustomer().setAutoFillStatus(true);
+        this.getCustomer().setCardName(name);
         this.getCustomer().setCardNumber(cardNumber);
-
         this.getFinalMsg();
         return 1;
       } else {
@@ -420,17 +422,18 @@ public class Transaction {
     return 0;
   }
 
-  public String nextOption() throws IOException{
+  public String nextOption() {
     System.out.printf("\nInvalid credit name or number, please select from the following:\n");
     System.out.println("1. CONTINUE USING CREDIT CARD");
     System.out.println("2. CANCEL");
 
-//    ConsoleReader consoleReader = new ConsoleReader();
-    String textinput = null;
+    //    ConsoleReader consoleReader = new ConsoleReader();
 //    textinput = consoleReader.readLine();
+
+    String textInput = null;
     Scanner scan = new Scanner(System.in);
-    textinput = scan.nextLine();
-    return textinput;
+    textInput = scan.nextLine(); 
+    return textInput;
   }
 
   public boolean getFinalMsg(){
@@ -441,13 +444,14 @@ public class Transaction {
 
     while (true) {
       String option = scan.nextLine();
-      if (option.equals("F")){
+      if (option.toLowerCase().equals("f")){
         System.out.println("\nTransaction Successful!");
         System.out.println("Please see your receipt below to present at the cinema: \n\n\n");
+        // this.printReceipt();
         //movie name, time, cinema + seats
         return true;
-      } else if (option.equals("C")){
-        System.out.println("\nLINE 422: Transaction cancelled!");
+      } else if (option.toLowerCase().equals("c")){
+        System.out.println("\nLINE 455: Transaction cancelled!");
         return false;
       } else {
         System.out.printf("Please enter a valid input: ");
@@ -464,7 +468,8 @@ public class Transaction {
     }
   }
 
-  public void printReceipt(){
-
-  }
+  // public void printReceipt(){
+  //   System.out.println(this.getCustomer().getTicketMessage());
+  //   //booking ticket
+  // }
 }

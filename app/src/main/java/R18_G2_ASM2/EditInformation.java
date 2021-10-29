@@ -15,14 +15,18 @@ public class EditInformation extends UserFields {
     change the user.csv data including card details
      */
     // private File userCsvFile = new File("src/main/datasets/user1.csv");
-    private File userCsvFile = new File("src/main/datasets/newUserDetails.csv");
 
+    private static String USER_FILE_NAME = "newUserDetails.csv";
+    private static String TEMP_FILE_NAME = "TempUser1.csv";
+    private File userCsvFile;
     private User userChanged;
-    private File tempFile = new File("src/main/datasets/TempUser1.csv") ;
+    private File tempFile;
 
     // call from the default screen
     public EditInformation(User aUser){
         this.userChanged = aUser;
+        userCsvFile = DataController.accessCSVFile(USER_FILE_NAME);
+        tempFile = DataController.accessCSVFile(TEMP_FILE_NAME);
     }
 
     public File getUserFile(){
@@ -32,46 +36,84 @@ public class EditInformation extends UserFields {
     public void setUserFile(File name){
         this.userCsvFile = name;
     }
-    public void giveChoice(){
+    public void run(){
         this.Welcome();
         Scanner scan = new Scanner(System.in);
-        System.out.println("1 - Edit Nickname\n" +
-                           "2 - Edit Email\n" +
-                           "3 - Edit Phone Number\n" +
-                           "4 - Edit Password\n" +
-                           "5 - Return to the user page\n");
-        System.out.println("User input: ");
-        String option = scan.nextLine();
-    
-        if (option.equals("1")) {
-            this.editNickname();
-        } else if (option.equals("2")) {
-            this.editEmail();
-        } else if (option.equals("3")) {
-            this.editPhoneNumber();;
-        } else if (option.equals("4")) {
-            this.editPassword();;
-        } else if (option.equals("5")) {
-            this.returnUserPage();
-        } else{
-            System.out.println("Invalid order :( Please try again");
+        while(true){
+            System.out.println("1 - Edit Nickname\n" +
+                               "2 - Edit Email\n" +
+                               "3 - Edit Phone Number\n" +
+                               "4 - Edit Password\n" +
+                               "5 - Return to the user page\n");
+            System.out.println("User input: ");
+            String option = scan.nextLine();
+            if (option.equals("1")) {
+                this.editNickname();
+                break;
+            } else if (option.equals("2")) {
+                this.editEmail();
+                break;
+            } else if (option.equals("3")) {
+                this.editPhoneNumber();
+                break;
+            } else if (option.equals("4")) {
+                this.editPassword();
+                break;
+            } else if (option.equals("5")) {
+//                this.returnUserPage();
+                break;
+            } else{
+                System.out.println("Invalid order :( Please try again");
+            }
         }
     }
 
     public void Welcome(){
-        System.out.println("Edit and Update Your Information");
+        System.out.println("\033[H\033[2JEdit and Update Your Information");
         System.out.println("*******************************************************");
         System.out.println("PLEASE CHOOSE FORM THE FOLLOWING                         ");
         System.out.println("*******************************************************\n");
     }
 
     public void editEmail(){
-        boolean Success = false;
-        boolean wantToContinue = true;
+        //version one
+//        boolean Success = false;
+//        boolean wantToContinue = true;
+//        System.out.println("\nYour current username is: " + userChanged.getEmail());
+//        Scanner scan = new Scanner(System.in);
+//        System.out.println("The new username: ");
+//        while(!Success && wantToContinue){
+//            String option = scan.next();
+//            if(option.equals(this.userChanged.getEmail())){
+//                System.out.println("Please enter a new username");
+//            }
+//            else if(this.validateUser(option)){
+//                if (this.checkIfUserExists(option) == 1){
+//                    this.setUserEmail(option);
+//                    Success = true;
+//                    System.out.println("Success\n");
+//                }else{
+//                    System.out.println("The username already exists!\n");
+//                }
+//            }
+//            else {
+//                System.out.println("Invalid Username :( Please use gmail, hotmail or yahoo email address.");
+//                System.out.println("Do you wanna try again? (Y/N): \n");
+//                if(option.equals("Y")){} else if(option.equals("N")){
+//                    wantToContinue = false;
+//                }else{
+//                    System.out.println("Invalid input. Please choose from Y or N: \n");
+//                }
+//            }
+//        }
+//        if(wantToContinue == false){
+//            this.nextOption();
+//        }
+
         System.out.println("\nYour current username is: " + userChanged.getEmail());
         Scanner scan = new Scanner(System.in);
-        System.out.println("The new username: ");
-        while(!Success && wantToContinue){
+        while(true){
+            System.out.println("The new username: ");
             String option = scan.next();
             if(option.equals(this.userChanged.getEmail())){
                 System.out.println("Please enter a new username");
@@ -79,8 +121,8 @@ public class EditInformation extends UserFields {
             else if(this.validateUser(option)){
                 if (this.checkIfUserExists(option) == 1){
                     this.setUserEmail(option);
-                    Success = true;
                     System.out.println("Success\n");
+                    break;
                 }else{
                     System.out.println("The username already exists!\n");
                 }
@@ -89,16 +131,14 @@ public class EditInformation extends UserFields {
                 System.out.println("Invalid Username :( Please use gmail, hotmail or yahoo email address.");
                 System.out.println("Do you wanna try again? (Y/N): \n");
                 if(option.equals("Y")){} else if(option.equals("N")){
-                    wantToContinue = false;
+                    break;
                 }else{
                     System.out.println("Invalid input. Please choose from Y or N: \n");
                 }
             }
         }
-        if(wantToContinue == false){
-            this.nextOption();
-        }
     }
+
 
     public void editPassword(){
         Scanner scan = new Scanner(System.in);
@@ -130,58 +170,114 @@ public class EditInformation extends UserFields {
     }
 
         //newly added - Anna (editNickname, editPhoneNumber)
+    //change the logic - Ke
     public void editNickname(){
+        //version 1
+//        Scanner scan = new Scanner(System.in);
+//        boolean Success = false;
+//        boolean wantToContinue = true;
+//        while (!Success && wantToContinue) {
+//            System.out.println("Security check, please enter your old name: ");
+//            String nickname = scan.nextLine();
+//            if (nickname.equals(this.userChanged.getNickname())) {
+//                System.out.println("New nickname: ");
+//                this.setUserNickname(nickname);
+//                Success = true;
+//            } else {
+//                System.out.println("The name you have entered is invalid, please check it again");
+//            }
+//            System.out.println("Do you wanna try again? (Y/N)\n");
+//            String option = scan.nextLine();
+//            if(option.equals("Y")){} else if(option.equals("N")){
+//                wantToContinue = false;
+//            }else{
+//                System.out.println("Invalid input. Please choose from Y or N.\n");
+//            }
+//        }
+//        if(!wantToContinue){
+//            this.nextOption();
+//        }
+
         Scanner scan = new Scanner(System.in);
-        boolean Success = false;
-        boolean wantToContinue = true;
-        while (!Success && wantToContinue) {
+        while (true) {
             System.out.println("Security check, please enter your old name: ");
             String nickname = scan.nextLine();
             if (nickname.equals(this.userChanged.getNickname())) {
                 System.out.println("New nickname: ");
-                this.setUserNickname(nickname);
-                Success = true;
+                String newnickname = scan.next();
+                this.setUserNickname(newnickname);
+                System.out.println("Your nickname now is "+this.userChanged.getNickname());
+                break;
             } else {
                 System.out.println("The name you have entered is invalid, please check it again");
             }
             System.out.println("Do you wanna try again? (Y/N)\n");
             String option = scan.nextLine();
-            if(option.equals("Y")){} else if(option.equals("N")){
-                wantToContinue = false;
+            if(option.equals("Y")){
+            } else if(option.equals("N")){
+                break;
             }else{
                 System.out.println("Invalid input. Please choose from Y or N.\n");
             }
         }
-        if(!wantToContinue){
-            this.nextOption();
-        }
+        this.returnUserPage();
+
     }
 
     public void editPhoneNumber(){
+        //version 1
+//        Scanner scan = new Scanner(System.in);
+//        boolean Success = false;
+//        boolean wantToContinue = true;
+//        while (!Success && wantToContinue) {
+//            System.out.println("Security check, please enter your old phone number: ");
+//            String phoneNumber = scan.nextLine();
+//            if (phoneNumber.equals(this.userChanged.getPhoneNumber())) {
+//                System.out.println("New phone number: ");
+//                this.setUserPhoneNumber(phoneNumber);
+//                Success = true;
+//            } else {
+//                System.out.println("The number you have entered is invalid, please check it again");
+//            }
+//            System.out.println("Do you wanna try again? (Y/N)\n");
+//            String option = scan.nextLine();
+//            if(option.equals("Y")){} else if(option.equals("N")){
+//                wantToContinue = false;
+//            }else{
+//                System.out.println("Invalid input. Please choose from Y or N.\n");
+//            }
+//        }
+//        if(!wantToContinue){
+//            this.nextOption();
+//        }
+
         Scanner scan = new Scanner(System.in);
         boolean Success = false;
         boolean wantToContinue = true;
-        while (!Success && wantToContinue) {
+        while (true) {
             System.out.println("Security check, please enter your old phone number: ");
             String phoneNumber = scan.nextLine();
             if (phoneNumber.equals(this.userChanged.getPhoneNumber())) {
                 System.out.println("New phone number: ");
+                String newpN = scan.next();
                 this.setUserPhoneNumber(phoneNumber);
-                Success = true;
+                System.out.println("The current phone number: " + this.userChanged.getPhoneNumber());
+                break;
             } else {
                 System.out.println("The number you have entered is invalid, please check it again");
             }
             System.out.println("Do you wanna try again? (Y/N)\n");
             String option = scan.nextLine();
-            if(option.equals("Y")){} else if(option.equals("N")){
-                wantToContinue = false;
+            if(option.equals("Y")){
+
+            } else if(option.equals("N")){
+                break;
             }else{
                 System.out.println("Invalid input. Please choose from Y or N.\n");
             }
         }
-        if(!wantToContinue){
-            this.nextOption();
-        }
+
+            this.returnUserPage();
     }
 
 
@@ -244,7 +340,6 @@ public class EditInformation extends UserFields {
 
     public void returnUserPage(){
         System.out.println("Return to the User default page...\n");
-//        this.giveChoice();
     }
 
     public void writeUsertoFile(User user, File file) {

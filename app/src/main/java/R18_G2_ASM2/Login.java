@@ -51,7 +51,7 @@ public class Login {
       if (con != null) {
         char[] pwd = con.readPassword("Please enter your password: ");
         password = new String(pwd);
-        System.out.printf("PASSWORD LINE 100: [%s]\n", password);
+        //System.out.printf("PASSWORD LINE 100: [%s]\n", password);
       } else {
         System.out.printf("Please enter your password: ");
         password = sc.nextLine();
@@ -101,7 +101,7 @@ public class Login {
       while (myReader.hasNextLine()) { //as long as you can keep reading the file, grab the details
         String line = myReader.nextLine();
 
-        System.out.println(line);
+        //System.out.println(line);
         String[] detailsArray = line.split(",");
         try{
           userID = Integer.parseInt(detailsArray[0]);
@@ -113,7 +113,6 @@ public class Login {
         realPassword = detailsArray[4];
         if (userEmail.equals(email)){
           if (realPassword.equals(userPassword)) {
-            System.out.println("do i get here");
             result = 1;          
             this.user = new User(Integer.parseInt(detailsArray[0]), detailsArray[1], detailsArray[2], detailsArray[3],detailsArray[4]);
             if (detailsArray[5].equals("T")){

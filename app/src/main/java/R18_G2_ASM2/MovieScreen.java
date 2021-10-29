@@ -1,5 +1,6 @@
 package R18_G2_ASM2;
 
+import java.io.IOException;
 import java.util.ArrayList;
 public class MovieScreen extends Screen {
 
@@ -11,13 +12,14 @@ public class MovieScreen extends Screen {
   Movie movie;
   HomeScreen home;
 
-  public MovieScreen(Movie movie) {
+  public MovieScreen(HomeScreen home, Movie movie) {
     super();
     this.movie = movie;
+    this.home = home;
     this.login = new Login(home);
     this.reg = new Registration(home);
     this.showings = movie.getShowingsBeforeNextMonday();
- 
+
     setUser(HomeScreen.getUser());
     title = movie.getName().toUpperCase(); //TODO create variable date
   }
@@ -42,6 +44,12 @@ public class MovieScreen extends Screen {
     if (intOption != NO_INT_OPTION) {
       BookingTicket book = new BookingTicket(showings.get(intOption-1),user);
       book.run();
+      // try {
+      //   Transaction t = new Transaction(user);
+      //   t.run();
+      // } catch (IOException e) { e.printStackTrace();}
+      // System.out.println("LINE 48:::::::::: MOVIESCREEN CLASS~~~~~~~~~~~~~~~~~~~~");
+      intOption = NO_INT_OPTION;
     } else {
       switch (selectedOption) {
         case "L": case "l":
@@ -68,7 +76,7 @@ public class MovieScreen extends Screen {
 
     movie.printMovieDetails();
     System.out.print("UPCOMING SESSIONS:\n");
-    System.out.print("Current Date & Time: OCT 27 - THU 9:57PM\n");  // TODO make dynamic time
+    //System.out.print("Current Date & Time: OCT 27 - THU 9:57PM\n");  // TODO make dynamic time
     maxInputInt = movie.printMovieShowings();
     if (user != null) {
       System.out.printf("Hi %s,\n\n", user.getNickname());

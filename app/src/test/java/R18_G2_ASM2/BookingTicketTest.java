@@ -30,7 +30,8 @@ public class BookingTicketTest {
         testcal = Calendar.getInstance();
         testActor.add("some name1");
         testActor.add("some name2");
-        testUser = new User(277,"abcdhsa@gmail.com","123Qwertyui");
+        
+        testUser = new User(277, "lisa", "abcdhsa@gmail.com", "0411123432","123Qwertyui");
         aShow = new Showing(1,testMovie,testCinema,testcal);
         aShow.setMovieSeat();
         testBookingTicket = new BookingTicket(aShow,testUser);

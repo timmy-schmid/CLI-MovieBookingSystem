@@ -10,7 +10,8 @@ import java.io.ByteArrayOutputStream;
 import java.io.PrintStream;
 
 public class EditInformationTest{
-    private User testUser = new User(277,"abcdhsa@gmail.com","123Qwertyui");
+    private User testUser = new User(1, "bob", "bob@gmail.com", "0488881188", "abc123Axd#!");
+
     private EditInformation editInformation = new EditInformation(testUser);
 
     @Test
@@ -19,7 +20,7 @@ public class EditInformationTest{
             ByteArrayOutputStream outContent = new ByteArrayOutputStream();
             System.setOut(new PrintStream(outContent));
             editInformation.Welcome();
-            String output = "Edit and Update Your Information\n"+"*******************************************************\n"+"PLEASE CHOOSE FORM THE FOLLOWING                         \n"+"*******************************************************\n\n";
+            String output = "\033[H\033[2JEdit and Update Your Information\n"+"*******************************************************\n"+"PLEASE CHOOSE FORM THE FOLLOWING                         \n"+"*******************************************************\n\n";
             assertEquals(outContent.toString(),output);
 
         }catch (Exception e){ e.printStackTrace();}
@@ -68,8 +69,8 @@ public class EditInformationTest{
             String a = "\nsjafdnsa\n";
             ByteArrayInputStream inContent = new ByteArrayInputStream(a.getBytes());
             System.setIn(inContent);
-            editInformation.giveChoice();
-            String output = "Edit and Update Your Information\n"+"*******************************************************\n"+"PLEASE CHOOSE FORM THE FOLLOWING                         \n"+"*******************************************************\n\n" +
+            editInformation.run();
+            String output = "\033[H\033[2JEdit and Update Your Information\n"+"*******************************************************\n"+"PLEASE CHOOSE FORM THE FOLLOWING                         \n"+"*******************************************************\n\n" +
                     "1 - Edit Nickname\n" +
                     "2 - Edit Email\n" +
                     "3 - Edit Phone Number\n" +
@@ -83,9 +84,25 @@ public class EditInformationTest{
         }catch (Exception e){ e.printStackTrace();}
     }
 
+    @Test
+    public void testInvalidEditNickname(){
+        try {
+            ByteArrayOutputStream outContent = new ByteArrayOutputStream();
+            System.setOut(new PrintStream(outContent));
+            String a = "\nsjafdnsa\n";
+            ByteArrayInputStream inContent = new ByteArrayInputStream(a.getBytes());
+            System.setIn(inContent);
+            editInformation.editNickname();
+            String output = ("Security check, please enter your old name: \n"+"The name you have entered is invalid, please check it again\n"+"Do you wanna try again? (Y/N)\n");
+            assertEquals(outContent.toString(),output);
+        }catch (Exception e){e.printStackTrace();}
+    }
+
+
     // @Test
     // public void testwriteUserForFile(){
     //     editInformation.writeUsertoFile(testUser,editInformation.getUserFile());
     // }
+
 
 }

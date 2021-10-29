@@ -100,17 +100,15 @@ public class Registration extends UserFields {
           
           if (result == 1) { //all fields are valid
             boolean isValidEmail = this.validateUser(email);
-            if (isValidEmail){
+            boolean isValidPhoneNumber = this.isValidPhoneNumber(phoneNumber);
+            
+            if (isValidEmail && isValidPhoneNumber){
               returnResult = true;
               break;
             } 
           }
-
-          
-          // } else if (result == -1){ //entered value (that should be unique) already exists in db
-          //   // System.out.println("The supplied details contain info that already exists in our system. Please re-enter again: ");
-          // }
           System.out.println();
+          System.out.println("Please re-enter your details again.\n");
         }
 
         Scanner scan2 = new Scanner(System.in);
@@ -250,7 +248,7 @@ public class Registration extends UserFields {
 
         id = Integer.parseInt(lastLine.split(",")[0]);
         myWriter.write("\n"+String.valueOf(id+1)+","+nickname+","+email+","+phoneNumber+","+password+",F");
-        System.out.printf("LINE 233 IN REGISTRATION: WRITING TO FILE: [%s]\n", "\n"+String.valueOf(id+1)+","+nickname+","+email+","+phoneNumber+","+password+",F");
+        // System.out.printf("LINE 233 IN REGISTRATION: WRITING TO FILE: [%s]\n", "\n"+String.valueOf(id+1)+","+nickname+","+email+","+phoneNumber+","+password+",F");
         id+=1;
 
       } catch(NumberFormatException e){
