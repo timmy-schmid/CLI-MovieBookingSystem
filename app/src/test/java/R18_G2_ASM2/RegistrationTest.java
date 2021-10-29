@@ -149,7 +149,7 @@ class RegistrationTest {
       String lastLine = "";
       
       //after writing to file, read the last line and check it matches given details
-      BufferedReader myReader = new BufferedReader(new FileReader(reg.getUserFile()));
+      BufferedReader myReader = new BufferedReader(new FileReader(userFile));
       while ((currentLine = myReader.readLine()) != null){
         lastLine = currentLine;
       }

@@ -85,7 +85,7 @@ public class EditInformationTest{
         try{
             ByteArrayOutputStream outContent = new ByteArrayOutputStream();
             System.setOut(new PrintStream(outContent));
-            String a = "\nsjafdnsa\n";
+            String a = "sjafdnsa\n";
             ByteArrayInputStream inContent = new ByteArrayInputStream(a.getBytes());
             System.setIn(inContent);
             editInformation.run();
@@ -112,7 +112,7 @@ public class EditInformationTest{
             ByteArrayInputStream inContent = new ByteArrayInputStream(a.getBytes());
             System.setIn(inContent);
             editInformation.editNickname();
-            String output = ("Security check, please enter your old name: \n"+"The name you have entered is invalid, please check it again\n"+"Do you wanna try again? (Y/N)\n");
+            String output = ("Security check, please enter your old name: \n"+"The name you have entered is invalid, please check it again\n"+"Return to the User default page...\n\n");
             assertEquals(outContent.toString(),output);
         }catch (Exception e){e.printStackTrace();}
     }
@@ -122,11 +122,11 @@ public class EditInformationTest{
         try {
             ByteArrayOutputStream outContent = new ByteArrayOutputStream();
             System.setOut(new PrintStream(outContent));
-            String a = "\n123\n";
+            String a = "123\n";
             ByteArrayInputStream inContent = new ByteArrayInputStream(a.getBytes());
             System.setIn(inContent);
-            editInformation.editNickname();
-            String output = ("Security check, please enter your old phone number: \n"+"The number you have entered is invalid, please check it again\n"+"Do you wanna try again? (Y/N)\n");
+            editInformation.editPhoneNumber();
+            String output = ("Security check, please enter your old phone number: \n"+"The number you have entered is invalid, please check it again\n"+"Return to the User default page...\n\n");
             assertEquals(outContent.toString(),output);
         }catch (Exception e){e.printStackTrace();}
     }
