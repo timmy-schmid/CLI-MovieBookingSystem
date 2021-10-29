@@ -1,7 +1,6 @@
 package R18_G2_ASM2;
 
 import org.junit.jupiter.api.AfterAll;
-import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -14,11 +13,10 @@ public class EditInformationTest{
     private User testUser = new User(1, "bob", "bob@gmail.com", "0488881188", "abc123Axd#!");
 
     private EditInformation editInformation = new EditInformation(testUser);
+    private File testFile = new File("app/src/test/resources/newUserDetailsTest.csv");
 
-    @BeforeAll
-    public void setFilePath(){
-        File testFile =  new File("app/src/test/resources/newUserDetailsTest.csv");
-        editInformation.setUserFile(testFile);
+    public EditInformationTest(){
+        this.editInformation.setUserFile(testFile);
     }
 
     @Test
