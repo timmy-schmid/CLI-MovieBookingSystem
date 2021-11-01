@@ -76,7 +76,6 @@ public class Registration extends UserFields {
         boolean returnResult = false;
         boolean returnResult2 = false;
       
-        //TODO: validate phoneNumber is 10 digit num
         while (true) { 
           System.out.printf("Please enter a nickname: "); //[re-enter]
           nickname = scan.nextLine();

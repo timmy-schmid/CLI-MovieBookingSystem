@@ -8,7 +8,9 @@ import java.io.IOException;
 public class App {
     public static void main(String[] args) throws IOException
     {
-        MovieSystem system = new MovieSystem();
-        system.run();
+        // MovieSystem system = new MovieSystem();
+        // system.run();
+        UpdateGiftCardsScreen gcs = new UpdateGiftCardsScreen();
+        gcs.print();
     }
 }
