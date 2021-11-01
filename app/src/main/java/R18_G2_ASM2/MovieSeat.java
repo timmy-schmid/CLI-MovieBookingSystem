@@ -94,19 +94,23 @@ public class MovieSeat{
 
 
     public void showAllSeats(){
-        seatMap.print(0, seatMap.getRowCount()-1);
+        seatMap.print(frontRowNum-1, seatMap.getRowCount()-frontRowNum-1, seatMap.getRowCount()-1);
+        // seatMap.print(0, seatMap.getRowCount()-1);
     }
 
     public void showFrontSeats(){
-        seatMap.print(0, frontRowNum-1);
+        // seatMap.print(0, frontRowNum-1);
+        seatMap.print(frontRowNum-1, seatMap.getRowCount()-frontRowNum-1, seatMap.getRowCount()-1);
     }
 
     public void showMiddleSeats(){
-        seatMap.print(frontRowNum, seatMap.getRowCount()-frontRowNum-1);
+        // seatMap.print(frontRowNum, seatMap.getRowCount()-frontRowNum-1);
+        seatMap.print(frontRowNum-1, seatMap.getRowCount()-frontRowNum-1, seatMap.getRowCount()-1);
     }
 
     public void showRearSeats(){
-        seatMap.print(seatMap.getRowCount()-frontRowNum, seatMap.getRowCount()-1);
+        // seatMap.print(seatMap.getRowCount()-frontRowNum, seatMap.getRowCount()-1);
+        seatMap.print(frontRowNum-1, seatMap.getRowCount()-frontRowNum-1, seatMap.getRowCount()-1);
     }
 
     public int rearSeatBooked(){
@@ -157,51 +161,51 @@ public class MovieSeat{
     }
 
 
-    public static void main(String[] args) throws IOException{
-        List<String> colNames;
-        // colNames = Arrays.asList("col_1", "col_2", "col_3", "col_4", "col_5", "col_6", "col_7");
-        colNames = Arrays.asList("1", "2", "3", "4", "5", "6", "7");
-        String[][] data = { { "Available", "Available",  "Available", "Available", "Available", "Available", "Available" },
-                { "Reserved", "Available", "Available", "Available", "Available", "Available", "Available"},
-                { "Available", "Available", "Available", "Reserved", "Available" , "Available", "Available"},
-                { "Available", "Available", "Available", "Reserved", "Reserved" , "Available", "Available"},
-                { "Available", "Available", "Available", "Available", "Reserved" , "Available", "Available"},
-                { "Available", "Available", "Available", "Available", "Reserved" , "Available", "Available"}};
-        MovieDataFrame filmAvailable = new MovieDataFrame(colNames, data);
-        // filmAvailable.print(0,4);
+    // public static void main(String[] args) throws IOException{
+    //     List<String> colNames;
+    //     // colNames = Arrays.asList("col_1", "col_2", "col_3", "col_4", "col_5", "col_6", "col_7");
+    //     colNames = Arrays.asList("1", "2", "3", "4", "5", "6", "7");
+    //     String[][] data = { { "Available", "Available",  "Available", "Available", "Available", "Available", "Available" },
+    //             { "Reserved", "Available", "Available", "Available", "Available", "Available", "Available"},
+    //             { "Available", "Available", "Available", "Reserved", "Available" , "Available", "Available"},
+    //             { "Available", "Available", "Available", "Reserved", "Reserved" , "Available", "Available"},
+    //             { "Available", "Available", "Available", "Available", "Reserved" , "Available", "Available"},
+    //             { "Available", "Available", "Available", "Available", "Reserved" , "Available", "Available"}};
+    //     MovieDataFrame filmAvailable = new MovieDataFrame(colNames, data);
+    //     // filmAvailable.print(0,4);
     
-        // System.out.println(filmAvailable.getRow(1).getValues());
+    //     // System.out.println(filmAvailable.getRow(1).getValues());
     
     
-        System.out.println("\033[1;93;45m"+ "hello"+"\033[m");
+    //     System.out.println("\033[1;93;45m"+ "hello"+"\033[m");
     
-        // mdf.print();
-        // File movieSeat = new File("src/test/resources/"+ "SeatMapTest.csv");
+    //     // mdf.print();
+    //     // File movieSeat = new File("src/test/resources/"+ "SeatMapTest.csv");
     
-        MovieSeat seatMap = new MovieSeat(new Showing(2, new Movie(1,"77", null, null, null, null,null), new Cinema(1, MovieClass.SILVER), null));
-        seatMap.writeToDatabase();
-        // newFrame.print();
-        System.out.println(seatMap.totalSeatsLeft()==0);
+    //     MovieSeat seatMap = new MovieSeat(new Showing(2, new Movie(1,"77", null, null, null, null,null), new Cinema(1, MovieClass.SILVER), null));
+    //     seatMap.writeToDatabase();
+    //     // newFrame.print();
+    //     System.out.println(seatMap.totalSeatsLeft()==0);
 
-        seatMap.bookSeat('D', 5);
+    //     seatMap.bookSeat('D', 5);
 
-        seatMap.showFrontSeats();
-        seatMap.showMiddleSeats();
-        seatMap.showRearSeats();
+    //     seatMap.showFrontSeats();
+    //     seatMap.showMiddleSeats();
+    //     seatMap.showRearSeats();
 
-        seatMap.showAllSeats();
-        seatMap.cancelReservation('D', 5);
-        System.out.println(seatMap.cancelReservation('A', 1));
-        seatMap.showAllSeats();
+    //     seatMap.showAllSeats();
+    //     seatMap.cancelReservation('D', 5);
+    //     System.out.println(seatMap.cancelReservation('A', 1));
+    //     seatMap.showAllSeats();
 
-        System.out.println("Front seats booked: "+seatMap.frontSeatBooked());
-        System.out.println("Middle seats booked: "+seatMap.middleSeatBooked());
-        System.out.println("Total seats left: "+seatMap.totalSeatsLeft());
-        System.out.println("Total seats booked: "+seatMap.totalSeatsBooked());
+    //     System.out.println("Front seats booked: "+seatMap.frontSeatBooked());
+    //     System.out.println("Middle seats booked: "+seatMap.middleSeatBooked());
+    //     System.out.println("Total seats left: "+seatMap.totalSeatsLeft());
+    //     System.out.println("Total seats booked: "+seatMap.totalSeatsBooked());
 
 
 
-    }
+    // }
 
     
 }

@@ -35,12 +35,16 @@ public class MovieSystem {
     importMovieData();
   }
 
-  public void run() {
+  public void run() throws IOException {
 
-    HomeScreen home = new HomeScreen(movies);
-    StartScreen startScreen = new StartScreen(home);
+    // HomeScreen home = new HomeScreen(movies);
+    // StartScreen startScreen = new StartScreen(home);
 
-    startScreen.run();
+    // startScreen.run();
+    Showing show = new Showing(1, new Movie(1, null, null, null, null, null, null), new Cinema(1, MovieClass.GOLD), null);
+
+    BookingTicket bt = new BookingTicket(show, new User(1, "Nick", "123@gmail.com", "123123123", "00000"));
+    bt.run();
   }
 
   public void importMovieData() {
