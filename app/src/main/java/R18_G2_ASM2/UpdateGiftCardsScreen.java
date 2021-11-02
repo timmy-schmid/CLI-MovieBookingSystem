@@ -75,12 +75,15 @@ public class UpdateGiftCardsScreen extends Screen{
             this.nextOption();
             String nextOption = scan.nextLine();
             if(nextOption.equals("2")){
+              this.title = "REDIRECTING YOU BACK TO HOME PAGE~ in 3..2..1..";
+              this.printHeader();
               break;
             } else {
               System.out.printf("Please enter the gift card number to add: ");
             }
           }
         }
+        break;
       case "2": //loop later
         System.out.printf("Please enter the gift card number to update status of: ");
         while (true) {
@@ -90,12 +93,14 @@ public class UpdateGiftCardsScreen extends Screen{
             this.nextOption();
             String nextOption = scan.nextLine();
             if(nextOption.equals("2")){
+              this.title = "REDIRECTING YOU BACK TO HOME PAGE~ in 3..2..1..";
+              this.printHeader();
               break;
             }
           }
           // System.out.printf("Please enter the gift card number to update status of: ");
         }
-          // break;
+          break;
       case "3":
         this.title = "REDIRECTING YOU BACK TO HOME PAGE~ in 3..2..1..";
         this.printHeader();
@@ -144,7 +149,7 @@ public class UpdateGiftCardsScreen extends Screen{
   public int addNewGiftCard(String userInputGNumber){ //maybe move this to another class where you can access read/write functions to avoid redundancy 
     
     if (this.isValidGiftCardNumber(userInputGNumber) == false) {
-      System.out.printf("\n\nPlease re-enter a valid gift card number: ");
+      System.out.printf("\nPlease re-enter a valid gift card number: ");
       return -1;
     }
 
