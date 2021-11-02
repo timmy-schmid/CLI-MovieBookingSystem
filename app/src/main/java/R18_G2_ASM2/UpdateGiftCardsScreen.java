@@ -40,7 +40,6 @@ public class UpdateGiftCardsScreen extends Screen{
     tempFile2 = DataController.accessCSVFile(TEMP_FILE_2_NAME);
     giftCardsFile = DataController.accessCSVFile(GIFT_CARD_FILE_NAME);
     GIFT_CARD_FILE_NAME = giftCardsFile.getAbsolutePath();
-    
     TEMP_FILE_2_NAME = tempFile2.getAbsolutePath();
 
   }
@@ -52,15 +51,12 @@ public class UpdateGiftCardsScreen extends Screen{
 
   @Override
   public void print() {
-  // public void printScreen(){
     this.clearScreen();
     // if (user != null) {
     //   System.out.printf("Welcome %s to the update gift cards page. \n\n", user.getNickname());
     // }
-    // this.printHeader();
-    System.out.println("\033[H\033[2J\n*******************************************************");
-    System.out.println("LINE 21: welcome to the update gift cards screen page~");
-    System.out.println("*******************************************************");
+    this.title = "Welcome to the update gift cards screen page~";
+    this.printHeader();
     this.printOptions();
   }
 
@@ -69,29 +65,39 @@ public class UpdateGiftCardsScreen extends Screen{
     Scanner scan = new Scanner(System.in);
     String res = scan.nextLine();
     switch(res){ //selectedOption
-      case "1": //loop later
+      case "1":
         System.out.printf("Please enter the gift card number to add: ");
-
-        String gNum = scan.nextLine();
-        this.addNewGiftCard(gNum);
-        break;
+        while (true) {
+          String gNum = scan.nextLine();
+          int num = this.addNewGiftCard(gNum);
+          if (num == 1){
+            this.nextOption();
+            String nextOption = scan.nextLine();
+            if(nextOption.equals("2")){
+              break;
+            } else {
+              System.out.printf("Please enter the gift card number to add: ");
+            }
+          }
+        }
       case "2": //loop later
         System.out.printf("Please enter the gift card number to update status of: ");
         while (true) {
           String gNum2 = scan.nextLine();
-          int num = this.updateGiftCardStatus(gNum2);
-          if (num == 1){
+          int num2 = this.updateGiftCardStatus(gNum2);
+          if (num2 == 1){
             this.nextOption();
             String nextOption = scan.nextLine();
             if(nextOption.equals("2")){
               break;
             }
           }
-          System.out.printf("Please enter the gift card number to update status of: ");
+          // System.out.printf("Please enter the gift card number to update status of: ");
         }
-          break;
+          // break;
       case "3":
-        System.out.println("LINE 94: GOING bACK TO HOME PAGE~~~~~~~~~~~~~~");
+        this.title = "REDIRECTING YOU BACK TO HOME PAGE~ in 3..2..1..";
+        this.printHeader();
         break;
       
       default: throw new IllegalArgumentException("Critical error - invalid selection passed validation");
@@ -135,29 +141,25 @@ public class UpdateGiftCardsScreen extends Screen{
     }
   }
 
-  public  void addNewGiftCard(String userInputGNumber){ //maybe move this to another class where you can access read/write functions to avoid redundancy 
+  public int addNewGiftCard(String userInputGNumber){ //maybe move this to another class where you can access read/write functions to avoid redundancy 
     
     if (this.isValidGiftCardNumber(userInputGNumber) == false) {
-      System.out.println("\nPlease re-enter a valid gift card number.");
-      return;
+      System.out.printf("\n\nPlease re-enter a valid gift card number: ");
+      return -1;
     }
 
     try {
       Scanner myReader = new Scanner(giftCardsFile);
-
       String currentLine = "";
-      String lastLine = "";
       
-      //if file exists and theres data inside
       while (myReader.hasNextLine()){ 
         //check if number already exists
         currentLine = myReader.nextLine();
         String[] line = currentLine.split(",");
         if(line[0].equals(userInputGNumber)){
-          System.out.println("The number you have entered already exists. Please enter another valid gift card number.");
-          return;
+          System.out.printf("The number you have entered already exists. Please enter another valid gift card number: ");
+          return -1;
         }
-        lastLine = currentLine;
       }
       myReader.close();
       try {
@@ -171,9 +173,15 @@ public class UpdateGiftCardsScreen extends Screen{
     }  catch (FileNotFoundException e){
       System.out.printf("FILE NOT FOUND ERROR: %s!\n", giftCardsFile);
     }
+    return 1;
   }
 
   //same function from transaction class
+
+  // TODO: check if number entered doesn't exist in file!!!!!!----->>>>
+
+
+
   public  int updateGiftCardStatus(String userInputGNumber){ //overwrites existing gift cards in file by changing the reedemble status of the gift card so it can no longer be used for next time    
     if (this.isValidGiftCardNumber(userInputGNumber) == false) {
       System.out.printf("Please re-enter a valid gift card number: ");
