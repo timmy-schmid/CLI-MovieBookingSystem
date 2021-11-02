@@ -32,6 +32,7 @@ public class Login {
       e.printStackTrace();
     }
   }
+  
   public User getUser(){
     return this.user;
   }
