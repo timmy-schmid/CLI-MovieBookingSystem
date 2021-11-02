@@ -87,7 +87,7 @@ class SeatDataToolsTest{
 
         String[][] newData = {{"Available"},{"Reserved"}};
         MovieDataFrame newFilmAvailable = new MovieDataFrame(Arrays.asList("1"), newData);
-        newFilmAvailable.print(0, 0);
+        newFilmAvailable.print(0, 0, 0);
     }
 
     @Test
