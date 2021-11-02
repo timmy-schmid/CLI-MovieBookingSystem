@@ -35,7 +35,7 @@ public class UpdateGiftCardsScreen extends Screen{
 
   }
 
-  public UpdateGiftCardsScreen() {
+  public UpdateGiftCardsScreen(HomeScreen home) {
     this.home = home;
     tempFile2 = DataController.accessCSVFile(TEMP_FILE_2_NAME);
     giftCardsFile = DataController.accessCSVFile(GIFT_CARD_FILE_NAME);
@@ -58,6 +58,7 @@ public class UpdateGiftCardsScreen extends Screen{
     this.title = "Welcome to the update gift cards screen page~";
     this.printHeader();
     this.printOptions();
+    this.chooseOption();
   }
 
   @Override
@@ -112,16 +113,15 @@ public class UpdateGiftCardsScreen extends Screen{
                         "3. Cancel and go back to home page\n");
 
     this.printUserInputText();
-    String text = null;
-
-    this.chooseOption();
+    // String text = null;
+    // this.chooseOption();
   }
 
   public void nextOption(){
     System.out.println();
     this.printOptionsText();
     System.out.println("1. Continue\n" +
-                      "2  End and go back to home page\n");
+                      "2. End and go back to home page\n");
     this.printUserInputText();
   }
 
