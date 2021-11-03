@@ -198,7 +198,7 @@ class RegistrationTest {
 
       int newId = Customer.getLastUserIDFromCSV(USER_TESTFILE);
       Customer newUser = reg.createCustomer("newUser", "newUser@gmail.com", "0404189234",
-      "NewPassword1,CUSTOMER");
+      "NewPassword1");
 
       assertNotNull(newUser);
 
@@ -210,7 +210,7 @@ class RegistrationTest {
         // break;
       }
       myReader.close();
-      assertEquals(lastLine, String.valueOf(newId) + ",newUser,newUser@gmail.com,0404189234,NewPassword1,F");
+      assertEquals(lastLine, String.valueOf(newId) + ",newUser,newUser@gmail.com,0404189234,NewPassword1,F,CUSTOMER");
     } else {
       assert(result == 1);
     }
@@ -231,7 +231,7 @@ class RegistrationTest {
     } else {
       int lastID = User.getLastUserIDFromCSV(USER_TESTFILE);
       User newUser = reg.createCustomer("newUser2", "newUser2@gmail.com", "0414189238",
-      "NewPassword2,CUSTOMER");
+      "NewPassword2");
       assertNotNull(newUser);
 
       BufferedReader myReader = new BufferedReader(new FileReader(testFile));
@@ -242,7 +242,7 @@ class RegistrationTest {
         // break;
       }
       myReader.close();
-      assertEquals(firstLine, String.valueOf(lastID) + ",newUser2,newUser2@gmail.com,0414189238,NewPassword2,F");
+      assertEquals(firstLine, String.valueOf(lastID) + ",newUser2,newUser2@gmail.com,0414189238,NewPassword2,F,CUSTOMER");
     }
   }
 

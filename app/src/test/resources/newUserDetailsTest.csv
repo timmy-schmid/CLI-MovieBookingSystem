@@ -1,4 +1,4 @@
-1,bob,bob@gmail.com,0488881188,12345ABCed,F,CUSTOMER
+1,bob,bob@gmail.com,0488881188,12345ABCed,F
 2,harry,harrypotter@gmail.com,0422345679,Password123!*,F,CUSTOMER
 3,dan,dannie@gmail.com,0412345679,Asdf1234!*,F,CUSTOMER
 4,harry,hp@gmail.com,0433345639,Password123!*,F,STAFF
@@ -10,3 +10,5 @@
 10,timmy,staff@gmail.com,0498999161,Testone1234!,T,STAFF
 11,Tim,manager@gmail.com,0412266666,Testone1234!,F,MANAGER
 12,Basil,basilLeaves@gmail.com,0412278120,Asdf1234!*,T,CUSTOMER
+13,newUser2,newUser2@gmail.com,0414189238,NewPassword2,F,CUSTOMER
+14,newUser,newUser@gmail.com,0404189234,NewPassword1,F,CUSTOMER
