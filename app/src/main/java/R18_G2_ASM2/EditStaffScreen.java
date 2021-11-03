@@ -55,9 +55,9 @@ public class EditStaffScreen extends Screen{
         printHeader();
         System.out.println("Welcome "+mSystem.getUser().getNickname()+ "\n");
         printOptionsText();
-        System.out.print(formatANSI("1",ANSI_USER_OPTION)+"Add a new staff\n");
-        System.out.print(formatANSI("2",ANSI_USER_OPTION)+"Delete a current staff\n");
-        System.out.print(formatANSI("Q",ANSI_USER_OPTION)+"back to manager home page\n");
+        System.out.print(formatANSI("1",ANSI_USER_OPTION)+" - Add a new staff\n");
+        System.out.print(formatANSI("2",ANSI_USER_OPTION)+" - Delete a current staff\n");
+        System.out.print(formatANSI("Q",ANSI_USER_OPTION)+" - back to manager home page\n");
     }
 
 }
