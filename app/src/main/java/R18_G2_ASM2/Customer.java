@@ -16,7 +16,6 @@ public class Customer extends User {
   private String cardName;
   private String cardNumber;
   private String cvvNumber;
-  private List<String> pendingPaymentSeats;
   private Showing pendingPaymentShow;
 
 
@@ -32,8 +31,6 @@ public class Customer extends User {
     this.cardNumber = null;
     this.cvvNumber = null;
     this.autoFill = false; //default, then prompt user during transaction stage to update
-    this.pendingPaymentSeats = new ArrayList<>();
-
   }
   
   public boolean getAutoFillStatus(){
@@ -113,22 +110,10 @@ public class Customer extends User {
     return pendingPaymentShow;
   }
 
-  public void choosingPendingSeat(String seatNum){
-    pendingPaymentSeats.add(seatNum);
-  }
 
-  // public void completeTransaction(){
 
-  //   pendingPaymentSeats = new ArrayList<>();
-  // }
 
-  public void completeTransaction() throws NumberFormatException, IOException{
-    for (String s : pendingPaymentSeats){
-      String colNum = "";
-      if (s != null) {
-          colNum = s.replaceAll("[^0-9]", "");
-      }
-      pendingPaymentShow.cancelReservation(s.charAt(0), Integer.parseInt(colNum));
-    }
+  public void completeTransaction(){
+    pendingPaymentShow.completeTransaction();
   }
 }

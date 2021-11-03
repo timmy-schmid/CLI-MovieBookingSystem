@@ -1,5 +1,6 @@
 package R18_G2_ASM2;
 
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
@@ -154,6 +155,10 @@ public int middleSeatBooked(){
 
   public boolean cancelReservation(char rowLetter, int colNum) throws IOException{
     return movieSeat.cancelReservation(rowLetter, colNum);
+  }
+
+  public void completeTransaction(){
+    movieSeat.completeTransaction();
   }
   
   @Override

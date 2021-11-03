@@ -458,7 +458,7 @@ public class Transaction {
     return textInput;
   }
 
-  public boolean getFinalMsg() throws NumberFormatException, IOException{
+  public boolean getFinalMsg() {
     Scanner scan = new Scanner(System.in);
     System.out.println("Select from the following: ");
     System.out.println("F - Finalise transaction\nC - Cancel transaction");
