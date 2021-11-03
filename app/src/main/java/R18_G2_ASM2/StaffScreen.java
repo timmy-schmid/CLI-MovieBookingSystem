@@ -2,6 +2,8 @@ package R18_G2_ASM2;
 
 public class StaffScreen extends Screen{
   private EditStaffScreen editStaffScreen;
+  private StaffAddMovieScreen addMovieScreen;
+  private StaffDeleteMovieScreen deleteMovieScreen;
 
   public StaffScreen(MovieSystem mSystem) {
     super(mSystem);
@@ -23,8 +25,22 @@ public class StaffScreen extends Screen{
 
                 break;
       case "2": //TODO add functionality
+        addMovieScreen = new StaffAddMovieScreen();
+        try{
+          addMovieScreen.retriveMoiveInfo();
+
+        }catch (Exception e){
+          e.printStackTrace();
+        }
                 break;
       case "3": //TODO add functionality
+        deleteMovieScreen = new StaffDeleteMovieScreen();
+        try{
+          deleteMovieScreen.retriveMoiveInfo();
+
+        }catch (Exception e){
+          e.printStackTrace();
+        }
                 break;
       case "4"://TODO add functionality
       break;
@@ -56,7 +72,7 @@ public class StaffScreen extends Screen{
     if (mSystem.getUser().getUserType() == UserType.STAFF) {
       maxInputInt = 7;
     } else if (mSystem.getUser().getUserType() == UserType.MANAGER)  {
-      maxInputInt = 9;
+      maxInputInt = 8;
     } else {
       throw new IllegalArgumentException("Invalid user type for this screen");
     }
