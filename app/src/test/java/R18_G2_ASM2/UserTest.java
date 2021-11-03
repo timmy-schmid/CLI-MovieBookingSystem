@@ -9,17 +9,17 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.AfterEach;
 
 class UserTest {
-  User userA;
-  User userB;
-  User userC;
+  Customer userA;
+  Customer userB;
+  Customer userC;
 
   @BeforeEach
   public void setUp() {
 
-    userA = new User(1, "bob", "bob@gmail.com", "0488881188", "abc123Axd#!");
-    userB = new User(5, "hola", "hello@gmail.com", "0488881122" ,"oHxd124!xh");
+    userA = new Customer(1, "bob", "bob@gmail.com", "0488881188", "abc123Axd#!");
+    userB = new Customer(5, "hola", "hello@gmail.com", "0488881122" ,"oHxd124!xh");
 
-    userC = new User(-1, null, null, null, null);
+    userC = new Customer(-1, null, null, null, null);
   }
 
   @AfterEach

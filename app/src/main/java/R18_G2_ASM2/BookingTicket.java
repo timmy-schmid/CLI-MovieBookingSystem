@@ -5,7 +5,7 @@ import java.util.*;
 public class BookingTicket {
     private final double price = 50;
     private Showing showing;
-    private User user;
+    private Customer user;
     private boolean successBooking = false;
     private Integer Ct =1;
     private int count = 0;
@@ -18,9 +18,8 @@ public class BookingTicket {
     // cancel is true
 
 
-    public BookingTicket(Showing showing, User user){
+    public BookingTicket(Showing showing, Customer user){
         this.showing = showing;
-
         this.user = user;
         this.bookPerson.put(Person.Child,0);
         this.bookPerson.put(Person.Senior,0);

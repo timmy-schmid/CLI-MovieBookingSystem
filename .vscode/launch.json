@@ -22,7 +22,8 @@
       "name": "Launch App",
       "request": "launch",
       "mainClass": "R18_G2_ASM2.App",
-      "projectName": "app"
+      "projectName": "app",
+      "breakOnLoad": true
     }
   ]
 }

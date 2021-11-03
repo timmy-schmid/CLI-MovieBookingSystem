@@ -1,51 +1,63 @@
 package R18_G2_ASM2;
 
-import java.io.ByteArrayInputStream;
 import java.io.IOException;
+import java.io.InputStream;
 import java.io.PrintStream;
 import java.util.HashMap;
-import java.util.Scanner;
+
 public class MovieSystem {
 
   private String MOVIES_FILE_NAME = "movie.csv";
   private String CINEMAS_FILE_NAME = "cinema.csv";
   private String SHOWINGS_FILE_NAME = "showing.csv";
-  public static final String ANSI_BLUE = "\u001B[34m";
-  public static final String ANSI_RESET = "\u001B[0m";
-  public static final String ANSI_YELLOW = "\u001B[33m";
 
   private HashMap<Integer,Movie> movies = new HashMap<>();
   private HashMap<Integer,Cinema> cinemas = new HashMap<>();
 
-  User currentUser = null;
-
-  private Scanner sc;
+  User user;
   private PrintStream out;
   
-  public MovieSystem(ByteArrayInputStream in, PrintStream out) {
-    this.sc = new Scanner(in);
+  public MovieSystem(InputStream in, PrintStream out) {
     this.out = out;
-
+    this.user = new Guest();
     importMovieData();
   }
 
   public MovieSystem() {
-    this.sc = new Scanner(System.in);
-    this.out = System.out;
-    importMovieData();
+    this(System.in, System.out);
   }
 
-  public void run() throws IOException {
-
-    HomeScreen home = new HomeScreen(movies);
-    StartScreen startScreen = new StartScreen(home);
-
+  public void run() {
+    StartScreen startScreen = new StartScreen(this);
     startScreen.run();
-    //test booking ticket
-    // Showing show = new Showing(2, new Movie(1, null, null, null, null, null, null), new Cinema(1, MovieClass.GOLD), null);
+  }
 
-    // BookingTicket bt = new BookingTicket(show, new User(1, "Nick", "123@gmail.com", "123123123", "00000"));
-    // bt.run();
+  public HashMap<Integer,Movie> getMovies() {
+    return movies;
+  }
+
+  public HashMap<Integer,Cinema> getCinemas() {
+    return cinemas;
+  }
+
+  public User getUser() {
+    return user;
+  }
+
+  public void setUser(User user) {
+    this.user = user;
+  }
+
+  public void setMovieDataFile(String name) {
+    MOVIES_FILE_NAME = name;
+  }
+
+  public void setCinemaDataFile(String name) {
+    SHOWINGS_FILE_NAME = name;
+  }
+
+  public void setShowingDataFile(String name) {
+    CINEMAS_FILE_NAME = name;
   }
 
   public void importMovieData() {
@@ -68,17 +80,7 @@ public class MovieSystem {
     } 
   }
 
-  public void setMovieDataFile(String name) {
-    MOVIES_FILE_NAME = name;
-  }
 
-  public void setCinemaDataFile(String name) {
-    SHOWINGS_FILE_NAME = name;
-  }
-
-  public void setShowingDataFile(String name) {
-    CINEMAS_FILE_NAME = name;
-  }
 
 
 

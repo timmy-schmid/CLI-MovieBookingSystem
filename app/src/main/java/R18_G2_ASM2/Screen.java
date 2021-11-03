@@ -20,24 +20,35 @@ public abstract class Screen {
   public static final int SCREEN_WIDTH = 90;
 
   protected ArrayList<String> options;
-  protected int intOption = NO_INT_OPTION;
+  protected int intOption;
   protected int maxInputInt;
+  protected MovieSystem mSystem;
   protected boolean goBack;
-
   protected String title;
   protected String selectedOption;
 
-  public String getTitle() { return title; }
-
   protected abstract void chooseOption();
+  protected abstract void setOptions();
 
-  public Screen() {
+  public Screen(MovieSystem mSystem) {
+    if (mSystem == null) {
+      mSystem = new MovieSystem();
+    } else {
+      this.mSystem = mSystem;
+    }
+
+    this.intOption = NO_INT_OPTION;
+    this.maxInputInt = -1;
+    this.goBack = false;
+    this.title = "";
+    
     options = new ArrayList<>();
   }
 
   public void run() {
     while (!goBack) {
       print();
+      setOptions();
       askforInput();
       chooseOption();
     }
@@ -75,7 +86,6 @@ public abstract class Screen {
       selectedOption = line; // if input is successful.
       break;
     }
-    //reader.close();
   }
 
   protected void printOptionsText () {

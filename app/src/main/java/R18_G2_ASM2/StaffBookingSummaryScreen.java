@@ -41,12 +41,12 @@ public class StaffBookingSummaryScreen {
   }
 
   public void printBookingSummary() {
-    System.out.println("******************************************************************");
-    System.out.println("                     Booking Summary Report                       ");
-    System.out.println("******************************************************************");
-    System.out.println("------------------------------------------------------------------");
-    System.out.println("SHOWING ID                SEATS BOOKED                SEATS LEFT");
-    System.out.println("------------------------------------------------------------------");
+    System.out.println("**************************************************************************************************************************");
+    System.out.println("                                                  Booking Summary Report                                                  ");
+    System.out.println("**************************************************************************************************************************");
+    System.out.println("--------------------------------------------------------------------------------------------------------------------------");
+    System.out.println("MOVIE NAME                                              SHOWING ID                SEATS BOOKED                SEATS LEFT");
+    System.out.println("--------------------------------------------------------------------------------------------------------------------------");
   }
 
   public void importMovieData() {
@@ -110,11 +110,13 @@ public class StaffBookingSummaryScreen {
       Collections.sort(sortedShowings, new SortShowingById());
       for (Showing showing: sortedShowings) {
         if(count == 1) {
+          s.append(String.format("%-56s", showing.getMovie().getName()));
           s.append(String.format("%-26s", showing.getShowingId()));
           s.append(String.format("%-28s", showing.totalSeatsBooked()));
           s.append(String.format("%s", showing.totalSeatsLeft()));
         } else {
-          s.append(String.format("\n%-26s", showing.getShowingId()));
+          s.append(String.format("\n%-56s", showing.getMovie().getName()));
+          s.append(String.format("%-26s", showing.getShowingId()));
           s.append(String.format("%-28s", showing.totalSeatsBooked()));
           s.append(String.format("%s", showing.totalSeatsLeft()));
         }

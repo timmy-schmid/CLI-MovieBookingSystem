@@ -11,7 +11,7 @@ import java.io.ByteArrayOutputStream;
 import java.io.PrintStream;
 
 public class EditInformationTest{
-    private User testUser = new User(1, "bob", "bob@gmail.com", "0488881188", "abc123Axd#!");
+    private User testUser = new Customer(1, "bob", "bob@gmail.com", "0488881188", "abc123Axd#!");
 
     private EditInformation editInformation = new EditInformation(testUser);
     //private File testFile = new File("app/src/test/resources/newUserDetailsTest.csv");
