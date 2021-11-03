@@ -52,7 +52,7 @@ public abstract class User extends UserValidation {
   public UserType getUserType() {
     return this.userType;
   }
-
+  
   //setter methods: e.g. for changing login details ...
   //validate to ensure values to be set to are valid
   public void setID(int ID){

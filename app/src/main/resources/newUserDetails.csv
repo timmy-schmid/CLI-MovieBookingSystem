@@ -1,17 +1,3 @@
-<<<<<<< HEAD
-1,bob,bobbie@gmail.com,0412345678,Password123,F,customer
-2,harry,harrypotter@gmail.com,0422345679,Password123!*,F,customer
-3,dan,dannie@gmail.com,0412345679,Asdf1234!*,F,customer
-4,harry,hp@gmail.com,0433345639,Password123!*,F,customer
-5,lilly,lilyjones@gmail.com,0422345678,Lalala1234,F,customer
-6,Anna,anna@yahoo.com,0412345881,Lalala1234,F,customer
-7,helen,hhh@gmail.com,0423456719,Asdf1234!*,T,customer
-8,Anna,anna@gmail.com,0411111111,Asdf1234!*,F,customer 
-9,Inge,inge1@gmail.com,0412345999,Asdf1234!*,T,staff
-10,timmy,timmy2@gmail.com,0498999161,Testone1234!,T,manager
-11,Tim,bobbywho2@gmail.com,0412266666,Asdf1234!*,F,staff
-12,Jerry,jerryhill123@yahoo.com,0477777777,zigZag1234,F,customer
-=======
 1,bob,bobbie@gmail.com,0412345678,Password123,F,CUSTOMER
 2,harry,harrypotter@gmail.com,0422345679,Password123!*,F,CUSTOMER
 3,dan,dannie@gmail.com,0412345679,Asdf1234!*,F,CUSTOMER
@@ -22,5 +8,4 @@
 8,Anna,anna@gmail.com,0411111111,Asdf1234!*,F ,CUSTOMER
 9,Inge,inge1@gmail.com,0412345999,Asdf1234!*,T,CUSTOMER
 10,timmy,staff@gmail.com,0498999161,Testone1234!,T,STAFF
-11,Tim,manager@gmail.com,04122666666,Testone1234!,F,MANAGER
->>>>>>> c006efb416030ec49b520c3b9190bc0f028d9c72
+11,Tim,manager@gmail.com,0412266666,Testone1234!,F,MANAGER
