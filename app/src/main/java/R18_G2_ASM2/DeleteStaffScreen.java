@@ -20,17 +20,21 @@ public class DeleteStaffScreen {
     }
     public void run() {
         while(!goBack){
+            haveAuser = false;
             askForemail();
             if(haveAuser){
-                try{
-                deleteUserFromFile(nameToDelete);}
-                catch (Exception e){
-                    e.printStackTrace();
-                }
+                    deleteUserFromFile(nameToDelete);
+                    goBack = true;
+                    break;
             }
-            askForContinue();
         }
     };
+
+    public void  EmailnotExist(){
+        System.out.println("User don't exist\n");
+    }
+
+
     public void askForemail(){
         System.out.println("Please enter a staff email: ");
         Scanner scan =  new Scanner(System.in);
@@ -41,7 +45,7 @@ public class DeleteStaffScreen {
             try {
                 if(!checkinguser.validateUser(inputString)){
                     throw new Exception("1");
-                }if(checkinguser.doesUserExistInCSV(USER_FILE_NAME,inputString,"9000010000") == 1){
+                }if(checkinguser.doesUserExistInCSV(USER_FILE_NAME,inputString,"9000010000") != 1){
                     throw new Exception("2");
                 }
                 // if not correct format ask again;
@@ -50,13 +54,14 @@ public class DeleteStaffScreen {
                     InvaLidEmail();
                     continue;
                 }else if(e.getMessage().equals("2")){
-                    emailExist();
+                    EmailnotExist();
                     continue;
                 }
                 continue;
             }
-            // if the email is valid
-           nameToDelete = inputString;
+
+            nameToDelete = inputString;
+            haveAuser = true;
             break;
         }
         scan.close();
@@ -84,14 +89,12 @@ public class DeleteStaffScreen {
         scan.close();
     }
 
-    public void emailExist(){
-        System.out.println("Email address already exists\nPlease try again\n");
-    }
     public void InvaLidEmail(){
         System.out.println("Email address need to match the format\nPlease try again\n");
     }
 
-    public void deleteUserFromFile(String username) throws IOException {
+    public void deleteUserFromFile(String username) {
+        try{
         File userCsvFile = new File(USER_FILE_NAME);
         //temp file
         File oFile = File.createTempFile("tempUserForDelete",".csv");
@@ -105,11 +108,13 @@ public class DeleteStaffScreen {
         PrintWriter out = new PrintWriter(fos);
         String thisline;
 
-        int i =1;
+        int i =0;
 
         while ((thisline = inReader.readLine()) != null){
             String fields[] = thisline.split(",");
-            if (!fields[1].equals(username)){
+            System.out.println(fields);
+            if (!fields[3].equals(username)){
+                System.out.println(thisline);
                 out.println(thisline);
                 i++;
             }
@@ -122,6 +127,8 @@ public class DeleteStaffScreen {
 
 
 
+    }catch (Exception e){
+        e.printStackTrace();}
     }
 
 }
