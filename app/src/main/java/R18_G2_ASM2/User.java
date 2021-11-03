@@ -51,7 +51,12 @@ public abstract class User extends UserValidation {
   public UserType getUserType() {
     return this.userType;
   }
-  
+
+
+  public String getUserInformation(){
+    return(this.getID()+this.getEmail()+this.getNickname()+this.getPhoneNumber()+this.getUserType());
+  }
+
   //setter methods: e.g. for changing login details ...
   //validate to ensure values to be set to are valid
   public void setID(int ID){
@@ -59,6 +64,7 @@ public abstract class User extends UserValidation {
       this.ID = ID;
     }
   }
+
   public void setNickname(String nickname){
     if (nickname != null && !nickname.equals("")) {
       this.nickname = nickname;
@@ -163,4 +169,5 @@ public abstract class User extends UserValidation {
     }
     return id;
   }
+
 }
