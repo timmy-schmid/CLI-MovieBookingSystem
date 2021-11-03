@@ -19,21 +19,36 @@ public class EditStaffScreen extends Screen{
         super(mSystem);
         this.title = "Editing Staff";
         this.maxInputInt =2;
+        this.addingStaffScreen = new AddingStaffScreen(mSystem);
+        this.deleteStaffScreen = new DeleteStaffScreen(mSystem);
     }
 
     @Override
     protected void chooseOption(){
-        if(intOption != NO_INT_OPTION){
-
+        switch (selectedOption) {
+            case "1":
+                //AddingStaffScreen;
+                this.addingStaffScreen.run();
+                break;
+            case "2":
+                //AddingStaffScreen;
+                this.deleteStaffScreen.run();
+                break;
+            case "Q": case "q":
+                System.out.print("back to home page of staff");
+                goBack = true;
+                // break to the home page of staff
+                break;
+            default: throw new IllegalArgumentException("Critical error - invalid selection passed validation");
         }
     }
 
     @Override
     protected void setOptions() {
-        options = new ArrayList<>();
-        options.add("1");
-        options.add("2");
+        maxInputInt = 2;
+        options.add("Q");options.add("q");
     }
+
     @Override
     public void print(){
         clearScreen();
