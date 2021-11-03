@@ -1,23 +1,8 @@
 package R18_G2_ASM2;
-
-public class DeleteStaffScreen extends Screen{
-
-    public DeleteStaffScreen(MovieSystem mSystem) {
-        super(mSystem);
+public class DeleteStaffScreen {
+    private MovieSystem movieSystem;
+    public DeleteStaffScreen(MovieSystem movieSystem){
+        this.movieSystem = movieSystem;
     }
-
-    @Override
-    protected void chooseOption() {
-
-    }
-
-    @Override
-    protected void setOptions() {
-
-    }
-
-    @Override
-    public void print() {
-
-    }
+    public void run(){};
 }
