@@ -210,7 +210,7 @@ class RegistrationTest {
         // break;
       }
       myReader.close();
-      assertEquals(lastLine, String.valueOf(newId) + ",newUser,newUser@gmail.com,0404189234,NewPassword1,F");
+      assertEquals(lastLine, String.valueOf(newId) + ",newUser,newUser@gmail.com,0404189234,NewPassword1,F,CUSTOMER");
     } else {
       assert(result == 1);
     }
@@ -242,7 +242,7 @@ class RegistrationTest {
         // break;
       }
       myReader.close();
-      assertEquals(firstLine, String.valueOf(lastID) + ",newUser2,newUser2@gmail.com,0414189238,NewPassword2,F");
+      assertEquals(firstLine, String.valueOf(lastID) + ",newUser2,newUser2@gmail.com,0414189238,NewPassword2,F,CUSTOMER");
     }
   }
 

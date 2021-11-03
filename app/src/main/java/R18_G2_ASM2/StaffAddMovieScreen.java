@@ -37,6 +37,9 @@ public class StaffAddMovieScreen {
     String movieinfo = null;
 
     Scanner sc = new Scanner(System.in);
+    System.out.println("*************************************************************************");
+    System.out.println("                                ADD    MOVIE                             ");
+    System.out.println("*************************************************************************");
     System.out.printf("Please enter a movie title: ");
     title = sc.nextLine();
     System.out.printf("Please enter a movie synopsis: ");
@@ -143,7 +146,7 @@ public class StaffAddMovieScreen {
     System.out.println(movieinfo);
 //    writeToCsv(movieinfo, movieCsvFile);
     insertStringInFile(movieCsvFile, movies.size()+2, movieinfo);
-
+    System.out.println("Movie successfully entered!");
   }
 
   public void writeToCsv(String movieInfo, File output) throws IOException {
