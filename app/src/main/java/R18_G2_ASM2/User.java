@@ -1,4 +1,3 @@
-
 package R18_G2_ASM2;
 
 import java.io.File;
@@ -22,13 +21,13 @@ public abstract class User extends UserValidation {
 
   //current new version - sprint 3
   public User(int ID, String nickname, String email, String phoneNumber, String password){ //extra fields added
-  
+
     //TODO add null checks for args?
     /*
     if (nickname == null || email == null || phoneNumber == null || phoneNumber.equals("") || password == null || password .equals("")){
       throw new IllegalArgumentException("user cannot have missing fields");
     }*/
-    
+
     this.ID = ID;
     this.nickname = nickname;
     this.email = email;
@@ -57,6 +56,11 @@ public abstract class User extends UserValidation {
     return this.userType;
   }
 
+
+  public String getUserInformation(){
+    return(this.getID()+this.getEmail()+this.getNickname()+this.getPhoneNumber()+this.getUserType());
+  }
+
   //setter methods: e.g. for changing login details ...
   //validate to ensure values to be set to are valid
   public void setID(int ID){
@@ -64,6 +68,7 @@ public abstract class User extends UserValidation {
       this.ID = ID;
     }
   }
+
   public void setNickname(String nickname){
     if (nickname != null && !nickname.equals("")) {
       this.nickname = nickname;
@@ -96,37 +101,37 @@ public abstract class User extends UserValidation {
     userFile = DataController.accessCSVFile(fileName); //throws exception if fileName is not of form *.csv
 
     //check file follows right format...
-      Scanner myReader = new Scanner(userFile);
-      while (myReader.hasNextLine()) { //as long as you can keep reading the file, grab the details
-        String line = myReader.nextLine();
-        String[] detailsArray = line.split(",");
+    Scanner myReader = new Scanner(userFile);
+    while (myReader.hasNextLine()) { //as long as you can keep reading the file, grab the details
+      String line = myReader.nextLine();
+      String[] detailsArray = line.split(",");
 
-        //TODO more checks on bool? Maybe a validate file fntion.
+      //TODO more checks on bool? Maybe a validate file fntion.
 
-        //checks valid amount of fields otherwise movies to next line
-        if (detailsArray.length < 7) { 
-          continue;
-        }
-
-        //checks if valid ID, if not it will continue to next line
-        try{
-          Integer.parseInt(detailsArray[0]);
-        } catch(NumberFormatException e){
-          continue;
-        }
-
-        String email = detailsArray[2];
-        if(userEmail.equals(email)){
-          myReader.close();
-          return 1;
-        }
-        
-        String phoneNumber = detailsArray[3];
-        if(userPhoneNumber.equals(phoneNumber)){
-          myReader.close();
-          return 2;
-        }
+      //checks valid amount of fields otherwise movies to next line
+      if (detailsArray.length < 7) {
+        continue;
       }
+
+      //checks if valid ID, if not it will continue to next line
+      try{
+        Integer.parseInt(detailsArray[0]);
+      } catch(NumberFormatException e){
+        continue;
+      }
+
+      String email = detailsArray[2];
+      if(userEmail.equals(email)){
+        myReader.close();
+        return 1;
+      }
+
+      String phoneNumber = detailsArray[3];
+      if(userPhoneNumber.equals(phoneNumber)){
+        myReader.close();
+        return 2;
+      }
+    }
     myReader.close();
     return 0;
   }
@@ -141,13 +146,13 @@ public abstract class User extends UserValidation {
     userFile = DataController.accessCSVFile(fileName); //throws exception if fileName is not of form *.csv
 
     //Appends new user to the end of a file. If no file exists a new file is created
-    FileWriter myWriter = new FileWriter(userFile, true); //for appending to existing file 
+    FileWriter myWriter = new FileWriter(userFile, true); //for appending to existing file
     myWriter.write("\n"+String.valueOf(ID)+","+nickname+","+email+","+phoneNumber+","+password+",F" + "," + getUserType());
     myWriter.close();
   }
 
   public static int getLastUserIDFromCSV(String fileName) throws FileNotFoundException , IOException {
-    
+
     File userFile;
     userFile = DataController.accessCSVFile(fileName); //throws exception if fileName is not of form *.csv
 
