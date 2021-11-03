@@ -1,16 +1,11 @@
 package R18_G2_ASM2;
 
-import java.io.BufferedReader;
-import java.io.FileReader;
 import java.io.IOException;
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.FileWriter;
 
 import java.util.Scanner;
 import java.io.*;
 
-public class Registration extends UserFields {
+public class Registration {
   /*
   This class: prints screen for when user clicks: 'To Register'
   and creates a new user account for them
@@ -20,15 +15,12 @@ public class Registration extends UserFields {
 
   1. when a user first registers, they are prompted to enter their email, password + phone number
   */
-  private File userCsvFile;
   private static String USER_FILE_NAME = "newUserDetails.csv";
-  HomeScreen home;
+  private MovieSystem mSystem;
 
-  private String userCsvFile2; //writing to...
-
-  public Registration(HomeScreen home) {
-    this.home = home;
-    this.userCsvFile = DataController.accessCSVFile(USER_FILE_NAME);
+  public Registration(MovieSystem mSystem) {
+    this.mSystem = mSystem;
+    //this.userCsvFile = DataController.accessCSVFile(USER_FILE_NAME);
   }
   
   public static String getUserFile(){
@@ -41,23 +33,22 @@ public class Registration extends UserFields {
 
   public void run() {
     try {
-      retrieveUserInputDetails3();
+      retrieveUserInputDetails();
     } catch (IOException e) {
       e.printStackTrace();
     }
   }
 
-  //sprint 2 --> new after meeting update:
-  public void retrieveUserInputDetails3() throws IOException { //return a USER object?
-    this.printWelcome();
-    User currentUser = null;
-  
+  //sprint 3 --> refactored to new User System.
+  public void retrieveUserInputDetails() throws IOException {
+    this.printWelcome();  
     System.out.println("1. ENTER Y TO CONTINUE REGISTERING\n"+
     "2. ENTER N TO CANCEL AND GO BACK\n" +
     "3. ALREADY A MEMBER WITH US? ENTER M TO LOGIN~");
     System.out.printf("\nEnter option: ");
+
     Scanner scan = new Scanner(System.in);
-    while (true){
+    while (scan.hasNextLine()) {
       String option = scan.nextLine();
       if (option.toUpperCase().startsWith("N") == true){
         System.out.println("\n*******************************************************");
@@ -86,55 +77,52 @@ public class Registration extends UserFields {
           System.out.printf("\nPlease enter your phone number: "); 
           phoneNumber = scan.nextLine();
 
-          int result = this.checkIfUserExists3(email, phoneNumber);
-          
-          if (result == 1) { //all fields are valid
-            boolean isValidEmail = this.validateUser(email);
-            boolean isValidPhoneNumber = this.isValidPhoneNumber(phoneNumber);
-            
-            if (isValidEmail && isValidPhoneNumber){
-              returnResult = true;
+          //Validates if user exists and correct email + phone format.
+          int exists = User.doesUserExistInCSV(USER_FILE_NAME, email, phoneNumber);
+
+          if (exists == 1) {
+            System.out.println("email is taken already/exists in system.");
+          } else if (exists == 2) {
+            System.out.println("phone# is taken already/exists in system.");
+          } else if (exists == 0) {
+
+            if (User.validateUser(email) && User.isValidPhoneNumber(phoneNumber)) {
               break;
             } 
+          } else {
+            System.out.printf("Critical Error: could not check if user exists in the system. Aborting.\n");  
+            return;      
           }
           System.out.println();
           System.out.println("Please re-enter your details again.\n");
         }
 
-        Scanner scan2 = new Scanner(System.in);
-        while (true){
+        while (true) {
           Console con = System.console();
-          if (con != null) {
+          if (con != null) { //Password masking
             char[] pwd = con.readPassword("\nPlease enter your password: ");
             password = new String(pwd);
-          } else {
+          } else { //No- masking if console not avaliable
             System.out.print("\nPlease enter your password: ");
-            password = scan2.nextLine();
+            if (scan.hasNextLine()) {
+              password = scan.nextLine();
+            }
           }
-          boolean isValidPwd = this.isValidPassword(password);
-          if (isValidPwd) {
-            returnResult2 = true;
+          //validate pw
+          if (User.isValidPassword(password)) {
             break;
-          } //else, continue to enter a valid pwd
+          }
         }
 
         //user doesn't exist in system and creates a new acc
-        if (returnResult == true && returnResult2 == true) {
-          currentUser = this.createAccount3(nickname, email, phoneNumber, password);
+        mSystem.setUser(this.createCustomer(nickname, email, phoneNumber, password));
+        HomeScreen home = new HomeScreen(mSystem);
+        home.run();
+        break;
         
-          /*
-          String resultOption = this.nextOption();
-          if (resultOption == null){
-            System.out.println("\nINVALID OPTION SELECTED~");
-          }*/
-          home.setUser(currentUser);
-          home.run();
-          break;
-        //else: keep entering a new password
-        } 
       } else if (option.toUpperCase().startsWith("M")) {
         //redirect to login page!
-        Login login = new Login(home);
+        Login login = new Login(mSystem);
         login.retrieveUserInputDetails();
         break; // or return to default page
 
@@ -143,7 +131,6 @@ public class Registration extends UserFields {
       }
       System.out.println();
     }
-
   }
  
   public void printWelcome(){
@@ -154,113 +141,24 @@ public class Registration extends UserFields {
 
     System.out.println("*******************************************************\n");
   }
-
-  //sprint 2 --> new version after meeting update: 
-  public int checkIfUserExists3(String userEmail, String userPhoneNumber){
-      int userID = 1;
-      String email = null;
-      String phoneNumber = null;
-  
-      int result = 1;
-      String type = "";
-  
-      //check file follows right format...
-      try {
-        Scanner myReader = new Scanner(this.userCsvFile);
-        while (myReader.hasNextLine()) { //as long as you can keep reading the file, grab the details
-          String line = myReader.nextLine();
-          String[] detailsArray = line.split(",");
-          try{
-            userID = Integer.parseInt(detailsArray[0]);
-          } catch(NumberFormatException e){
-            e.printStackTrace();
-            break;
-          }
-          email = detailsArray[2];
-          if(userEmail.equals(email)){
-            result = -1;
-            type = "Email";
-            break;
-          }
-          phoneNumber = detailsArray[3];
-          if(userPhoneNumber.equals(phoneNumber)){
-            result = -1;
-            type = "Phone number";
-            break;
-          }
-        }
-        myReader.close();
-      } catch (FileNotFoundException e) {
-        System.out.println(USER_FILE_NAME + " was not found.");
-        return -2;
-      }
-      if (result == -1) {
-        System.out.printf("%s is taken already/exists in system. Please re-enter your details.\n", type);
-        return result;
-      }
-      return result;
-    }  
     
-  public User createAccount3(String nickname, String email, String phoneNumber, String password){
-    if (email == null || email.equals("") || phoneNumber == null || phoneNumber.equals("") || password == null || password .equals("")){
+  public Customer createCustomer(String nickname, String email, String phoneNumber, String password){
+    
+    Customer newCustomer = null;
+
+    if (nickname == null || email == null || phoneNumber == null || phoneNumber.equals("") || password == null || password .equals("")){
       return null;
     }
-    
-    int ID = this.writeUserDetailsToFile3(nickname, email, phoneNumber, password);
-
-    User returnUser = new User(ID, nickname, email, phoneNumber, password);  //creates a new user object
-    return returnUser;
-  }
-
-  //sprint 2 new version
-  public int writeUserDetailsToFile3(String nickname, String email, String phoneNumber, String password){
-    int id = -1;
     try {
-      this.userCsvFile2 = this.userCsvFile.getAbsolutePath();
-      Scanner myReader = new Scanner(this.userCsvFile);
-      String currentLine = "";
-      String lastLine = "";
-      
-      //if file exists and theres data inside
-      while (myReader.hasNextLine()){
-        currentLine = myReader.nextLine();
-        lastLine = currentLine;
-      }
-      myReader.close();
-      //extract last number ID from row, then add 1.
-      //(can't write to USER_FILE_NAME for some reason)
-      FileWriter myWriter = new FileWriter(this.userCsvFile2, true); //for appending to existing file 
-
-      try{
-        id = Integer.parseInt(lastLine.split(",")[0]);
-        myWriter.write("\n"+String.valueOf(id+1)+","+nickname+","+email+","+phoneNumber+","+password+",F");
-        id+=1;
-
-      } catch(NumberFormatException e){
-        e.printStackTrace();
-      }
-      myWriter.close();
-
-      // System.out.println("LINE 250: went here!!, filename = " +this.userCsvFile2);
-    } catch (FileNotFoundException e){
-      //if reading file doesn't exist, write to file path     
-      System.out.printf("FILE NOT FOUND ERROR: %s!\n", this.userCsvFile2);
-
-      try {
-        FileWriter myWriter = new FileWriter(this.userCsvFile2); //for appending to existing file
-        myWriter.write("\n"+String.valueOf(1)+","+nickname+","+email+","+phoneNumber+","+password+",F");
-
-        myWriter.close();
-      } catch (IOException ioe) {
-        ioe.printStackTrace();
-
-      }
+      newCustomer = new Customer(User.getLastUserIDFromCSV(USER_FILE_NAME), nickname, email, phoneNumber, password);
+      newCustomer.writeNewUserToCSV(USER_FILE_NAME);
     } catch (IOException e) {
-      e.printStackTrace();
+      System.out.println("Unable to create new User: " + e.getMessage());
+    } catch (IllegalArgumentException e) {
+      System.out.println("Unable to create new User: " + e.getMessage());
     }
-    return id;
+    return newCustomer;
   }
-
   //remove option of saving details...
   // edit: consider representing options with colour in terminal?
   public String nextOption(){

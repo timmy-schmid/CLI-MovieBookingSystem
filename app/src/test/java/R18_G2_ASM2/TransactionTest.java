@@ -18,8 +18,8 @@ public class TransactionTest {
   private Transaction t;
   private Transaction t2;
 
-  private User userA;
-  private User userB;
+  private Customer userA;
+  private Customer userB;
 
   private File gFile;
   private File gFile2;
@@ -39,9 +39,9 @@ public class TransactionTest {
   @BeforeEach
   public void setUp() {
 
-    userA = new User(6, "Anna", "anna@yahoo.com","0412345881", "Lalala1234");
+    userA = new Customer(6, "Anna", "anna@yahoo.com","0412345881", "Lalala1234");
   
-    userB = new User(7, "helen", "hhh@gmail.com", "0423456719", "Asdf1234!*");
+    userB = new Customer(7, "helen", "hhh@gmail.com", "0423456719", "Asdf1234!*");
 
     userB.setAutoFillStatus(true);
 
@@ -49,12 +49,14 @@ public class TransactionTest {
     t2 = new Transaction(userB); //autofill option
     System.setOut(new PrintStream(outContent));
 
-    gFile = DataController.accessCSVFile("giftCardsTest.csv");    
-    gFile2 = DataController.accessCSVFile("giftCardsTest.csv");    
-
-    tFile = DataController.accessCSVFile("cardTemp.csv");    
-    tFile2 = DataController.accessCSVFile("cardTemp2.csv");   
-    
+    try {
+      gFile = DataController.accessCSVFile("giftCardsTest.csv");    
+      gFile2 = DataController.accessCSVFile("giftCardsTest.csv");    
+      tFile = DataController.accessCSVFile("cardTemp.csv");    
+      tFile2 = DataController.accessCSVFile("cardTemp2.csv");   
+    } catch (FileNotFoundException e) {
+      assertEquals(true,false);
+    }
     // cFile = DataController.accessCSVFile("credit_cards.json");
 
     t.setUserFile("newUserDetailsTest.csv");

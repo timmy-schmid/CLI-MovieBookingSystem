@@ -112,11 +112,11 @@ public interface DataFrame<E> extends Iterable<DataVector<E>>
 	 * Prints the contents of this data frame to System.out using a default column
 	 * width
 	 */
-	public default void print(int shartRow, int endRow)
+	public default void print(int frontRow, int middleRow, int rearRow)
 	{
 		//System.out.println("\033[1;93;45mhello\033m");
 		// System.out.println("\033[1;93;45m"+formatMatrix(DEFAULT_FORMAT_WIDTH)+"\033m");
-		System.out.println(formatMatrix(DEFAULT_FORMAT_WIDTH, shartRow, endRow));
+		System.out.println(formatMatrix(DEFAULT_FORMAT_WIDTH, frontRow, middleRow, rearRow));
 	}
 
 	/**
@@ -128,7 +128,7 @@ public interface DataFrame<E> extends Iterable<DataVector<E>>
 	 * @param colWidth the number of character to use for a single column
 	 * @return a string representation of this data frame
 	 */
-	public default String formatMatrix(int colWidth, int startRow, int endRow)
+	public default String formatMatrix(int colWidth, int frontRow, int middleRow, int rearRow)
 	{
 		String fmt = "%-" + colWidth + "." + colWidth + "s";
 		StringBuilder sb = new StringBuilder();
@@ -146,19 +146,33 @@ public interface DataFrame<E> extends Iterable<DataVector<E>>
 			sb.append(String.format(Locale.ROOT, fmt, (char) (65+i)));
 			for (String colName : colNames)
 			{
-				if (i >= startRow && i <= endRow){
-					sb.append("\033[1;93;42m");
+				if (i >= 0 && i <= frontRow){
+					// sb.append("\033[1;93;46m");
+					sb.append("\033[1;93;101m");
+				}
+				// sb.append(" ");
+
+				else if (i >= frontRow && i <= middleRow){
+					// sb.append("\033[1;93;42m");
+					sb.append("\033[1;93;102m");
+				}
+				// sb.append(" ");
+
+				else if (i >= middleRow &&  i <= rearRow){
+					// sb.append("\033[1;93;44m");
+					sb.append("\033[1;93;104m");
 				}
 				sb.append(" ");
 				
 				if (getValue(i, colName).equals("Reserved")){
-					sb.append("\033[35m"+String.format(Locale.ROOT, fmt, getValue(i, colName))+"\033[0m");
+					sb.append("\033[1;30m" + String.format(Locale.ROOT, fmt, getValue(i, colName)) + "\033[0m");
 					// sb.append(String.format(Locale.ROOT, fmt, getValue(i, colName)));
 				}else{
-					sb.append(String.format(Locale.ROOT, fmt, getValue(i, colName)));
+					sb.append("\033[1;37m" + String.format(Locale.ROOT, fmt, getValue(i, colName)) + "\033[0m");
 				}
-				if (i <= endRow){
+				if (i <= rearRow){
 					sb.append("\033[0m");
+					// sb.append("\u001B[0m");
 				}
 				
 			}

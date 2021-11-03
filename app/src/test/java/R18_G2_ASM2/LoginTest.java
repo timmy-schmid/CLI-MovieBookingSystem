@@ -3,9 +3,6 @@ package R18_G2_ASM2;
 import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.*;
 
-import static org.mockito.Mockito.*;
-
-import java.util.*;
 import java.io.*;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.AfterEach;
@@ -13,19 +10,12 @@ import org.junit.jupiter.api.BeforeAll;
 
 import java.io.ByteArrayOutputStream;
 
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.IOException;
-
-import java.io.BufferedReader;
-import java.io.FileReader;
-
 class LoginTest {
 
   Login login;
   private final ByteArrayOutputStream outContent = new ByteArrayOutputStream();
   private final PrintStream originalOutput = System.out;
-  private HomeScreen home = new HomeScreen(null);
+  private MovieSystem movSystem = new MovieSystem();
 
   @BeforeAll public static void setPath() {
     DataController.setBasePath("src/test/resources/");
@@ -34,7 +24,7 @@ class LoginTest {
   @BeforeEach
   public void setUp() {
     Login.setUserFile("newUserDetailsTest.csv");
-    login = new Login(home);
+    login = new Login(movSystem);
 
     System.setOut(new PrintStream(outContent));
   }
@@ -48,13 +38,8 @@ class LoginTest {
 
   @Test
   public void LoginNotNull(){
-    Login login = new Login(home);
+    Login login = new Login(movSystem);
     assertNotNull(login);
-  }
-
-  @Test
-  public void userNull(){
-    assertNull(login.getUser());
   }
 
    @Test
@@ -92,7 +77,7 @@ class LoginTest {
 
   @Test
   public void testPrintScreen(){
-    Login login = new Login(home);
+    Login login = new Login(movSystem);
     String expected = "\033[H\033[2J\n*******************************************************\n" +
         "            Welcome to the log in page :)            \n" +
         "*******************************************************\n";
@@ -102,7 +87,7 @@ class LoginTest {
 
   @Test
   public void testNextOption() throws Exception{
-    Login login = new Login(home);
+    Login login = new Login(movSystem);
     String inputMessage = "1";
     String expected = "\nInvalid username or password, please select from the following:\n" +
         "1. CONTINUE LOGGING IN\n" +
