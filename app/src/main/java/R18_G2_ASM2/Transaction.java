@@ -28,7 +28,7 @@ public class Transaction {
   private File giftCardsFile;
 
   private final double price = 50;
-  private final double giftCardTotalAmount = 100;
+  private final double giftCardTotalAmount = 50; //100?
 
   private static String USER_FILE_NAME = "newUserDetails.csv";
   private static String TEMP_FILE_NAME = "cardTemp.csv";
@@ -154,7 +154,7 @@ public class Transaction {
          this.getFinalMsg();
          break;
        } else if (returnResult == 2){
-         System.out.println("LINE 171: pay remaining with credit card");
+         System.out.println("LINE 157: pay remaining amount with credit card");
          this.askForCreditCardDetails(this.getCustomer().getAutoFillStatus());
          break;
        } else if (returnResult == 3){
@@ -177,10 +177,15 @@ public class Transaction {
       while (myReader.hasNextLine()){
         String line = myReader.nextLine();
         //find matching customer result
-        if(line.split(",")[2].equals(this.getCustomer().getEmail())
-        && line.split(",")[5].equals("F")){ //update as 'T'
+        String[] detailsArray = line.split(",");
+        if(detailsArray[2].equals(this.getCustomer().getEmail())
+        && detailsArray[5].equals("F")){ //update as 'T'
          //update as 'T'
-          myWriter.write(line.substring(0, line.length()-1) +"T");
+          // myWriter.write(line.substring(0, line.length()-1) +"T");
+          myWriter.write(detailsArray[0]+","+detailsArray[1] +
+          "," + detailsArray[2] + "," + detailsArray[3] + "," + 
+          detailsArray[4] + ",T," + detailsArray[6]);
+          
         } else {
           myWriter.write(line+"\n");
         }
@@ -401,7 +406,7 @@ public class Transaction {
         //validates if card number exists in credit_cards.json file
         boolean result = this.checkCreditCardInfo(name, number);
         if (result == true){
-          System.out.println("Match found! Proceeding to next stage!");
+          // System.out.println("Match found! Proceeding to next stage!");
           break;
   //        home.setUser(user);
   //        home.run();
@@ -429,21 +434,7 @@ public class Transaction {
       }
       this.setUserCardDetails(this.getCustomer(), name, number, true);
       this.getFinalMsg();
-      // if (temp == 2) {System.out.printf("\nDo you want to save your card details to your account? (Y/N): ");
-      // }
-      // String option2 = scan.nextLine();
-      // String result = this.checkAutoFillOption(option2);
-      // if (result.equals("yes")){
-      //   //search for user in newUserDetails.csv file, modify default false to true
-      //   System.out.println("ABOUT TO UPDATE USER DETAILS IN FILE LINE 121 ~~~~~~~~~~~~~~");
-      //   this.updateAutoFillStatus();
-      //   this.setUserCardDetails(this.getCustomer(), name, number);
-      //   this.getFinalMsg();
-      //   return 1;
-      // } else {
-      //   this.getFinalMsg();
-      // }
-   }
+    }
     return 0;
   }
 
@@ -476,6 +467,7 @@ public class Transaction {
     while (true) {
       String option = scan.nextLine();
       if (option.toLowerCase().equals("f")){
+        if (this.getCustomer().getAutoFillStatus() == false){
           System.out.printf("\nDo you want to save your card details to your account for next time? (Y/N): ");
           
           String option2 = scan.nextLine();
@@ -488,7 +480,7 @@ public class Transaction {
           } else {
             this.setUserCardDetails(this.getCustomer(), null, null, false); //revert back to og
           }
-
+        }
         System.out.println("\nTransaction Successful!");
         System.out.println("Please see your receipt below to present at the cinema: \n\n\n");
         // this.printReceipt();
