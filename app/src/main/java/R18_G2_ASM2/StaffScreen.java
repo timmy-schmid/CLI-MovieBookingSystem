@@ -16,6 +16,10 @@ public class StaffScreen extends Screen{
   protected void chooseOption() {
     switch (selectedOption) {
       case "1": //TODO add functionality
+                //to update gift card status
+                UpdateGiftCardsScreen gcs = new UpdateGiftCardsScreen(mSystem);
+                gcs.print();
+
                 break;
       case "2": //TODO add functionality
                 break;

@@ -198,7 +198,7 @@ class RegistrationTest {
 
       int newId = Customer.getLastUserIDFromCSV(USER_TESTFILE);
       Customer newUser = reg.createCustomer("newUser", "newUser@gmail.com", "0404189234",
-      "NewPassword1");
+      "NewPassword1,CUSTOMER");
 
       assertNotNull(newUser);
 
@@ -231,7 +231,7 @@ class RegistrationTest {
     } else {
       int lastID = User.getLastUserIDFromCSV(USER_TESTFILE);
       User newUser = reg.createCustomer("newUser2", "newUser2@gmail.com", "0414189238",
-      "NewPassword2");
+      "NewPassword2,CUSTOMER");
       assertNotNull(newUser);
 
       BufferedReader myReader = new BufferedReader(new FileReader(testFile));
