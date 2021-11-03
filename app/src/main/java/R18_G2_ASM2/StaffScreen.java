@@ -54,9 +54,6 @@ public class StaffScreen extends Screen{
         editStaffScreen = new EditStaffScreen(mSystem);
         editStaffScreen.run();
       break;
-      // not sure about the editing user page;
-//      case "9": //TODO add functionality
-//      break;
       case "Q": case "q":
         System.out.print("SEE YOU NEXT TIME! :)\n");
         System.exit(0);
@@ -95,7 +92,7 @@ public class StaffScreen extends Screen{
 
     if (mSystem.getUser().getUserType() == UserType.MANAGER) {
       System.out.print(formatANSI("7",ANSI_USER_OPTION) + " - Generate a cancelled transactions report\n");  
-      System.out.print(formatANSI("8",ANSI_USER_OPTION) + " - Edit a new staff member\n");
+      System.out.print(formatANSI("8",ANSI_USER_OPTION) + " - Edit staff member\n");
 //      System.out.print(formatANSI("9",ANSI_USER_OPTION) + " - Remove an existing staff member\n");
     }
     System.out.print(formatANSI("Q",ANSI_USER_OPTION) + " - Quit and logout.\n\n");
