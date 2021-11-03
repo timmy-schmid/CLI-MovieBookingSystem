@@ -19,8 +19,6 @@ public class EditStaffScreen extends Screen{
         super(mSystem);
         this.title = "Editing Staff";
         this.maxInputInt =2;
-        this.addingStaffScreen = new AddingStaffScreen(mSystem);
-        this.deleteStaffScreen = new DeleteStaffScreen(mSystem);
     }
 
     @Override
@@ -28,10 +26,12 @@ public class EditStaffScreen extends Screen{
         switch (selectedOption) {
             case "1":
                 //AddingStaffScreen;
+                this.addingStaffScreen = new AddingStaffScreen(mSystem);
                 this.addingStaffScreen.run();
                 break;
             case "2":
                 //AddingStaffScreen;
+                this.deleteStaffScreen = new DeleteStaffScreen(mSystem);
                 this.deleteStaffScreen.run();
                 break;
             case "Q": case "q":

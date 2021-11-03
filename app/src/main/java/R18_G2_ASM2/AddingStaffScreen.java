@@ -52,7 +52,7 @@ public class AddingStaffScreen{
             askForName();
             askForPassWord();
             askForPhone();
-            scan.close();
+           // scan.close();
             changeCheckingUserId();
             try {
                 checkinguser.writeNewUserToCSV(USER_FILE_NAME);
