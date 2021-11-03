@@ -23,11 +23,34 @@ public class User extends UserFields {
   private LinkedHashMap<Person,Integer> ticket = new LinkedHashMap<>();
   private String ticketMessage = "";
   private double totalPriceMutiplier = 0;
+  private UserType type;
 
   private boolean autoFill;
   private String cardName;
   private String cardNumber;
   private String cvvNumber;
+
+
+  // sprint 3 adding user type
+  public User(int ID, String nickname, String email, String phoneNumber, String password,UserType type){ //extra fields added
+    this.ID = ID;
+    this.nickname = nickname;
+    this.email = email;
+    this.phoneNumber = phoneNumber;
+    this.password = password;
+    this.type = type;
+
+    ticket.put(Person.Child,0);
+    ticket.put(Person.Student,0);
+    ticket.put(Person.Senior,0);
+    ticket.put(Person.Adult,0);
+
+    this.cardName = null;
+    this.cardNumber = null;
+    this.cvvNumber = null;
+    this.autoFill = false; //default, then prompt user during transaction stage to update
+  }
+
 
   //current new version - sprint 2
   public User(int ID, String nickname, String email, String phoneNumber, String password){ //extra fields added
@@ -83,8 +106,15 @@ public class User extends UserFields {
     return this.cvvNumber;
   }
 
+  // new getter method for user type
+  public UserType getType(){return this.type;}
+
+  //new setter method for user type
+  public void setUserType(UserType type){this.type = type;}
+
   //setter methods: e.g. for changing login details ...
   //validate to ensure values to be set to are valid
+
   public void setID(int ID){
     if (ID >= 0){
       this.ID = ID;
