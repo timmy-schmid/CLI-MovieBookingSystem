@@ -94,19 +94,23 @@ public class MovieSeat{
 
 
     public void showAllSeats(){
-        seatMap.print(0, seatMap.getRowCount()-1);
+        seatMap.print(frontRowNum-1, seatMap.getRowCount()-frontRowNum-1, seatMap.getRowCount()-1);
+        // seatMap.print(0, seatMap.getRowCount()-1);
     }
 
     public void showFrontSeats(){
-        seatMap.print(0, frontRowNum-1);
+        // seatMap.print(0, frontRowNum-1);
+        seatMap.print(frontRowNum-1, seatMap.getRowCount()-frontRowNum-1, seatMap.getRowCount()-1);
     }
 
     public void showMiddleSeats(){
-        seatMap.print(frontRowNum, seatMap.getRowCount()-frontRowNum-1);
+        // seatMap.print(frontRowNum, seatMap.getRowCount()-frontRowNum-1);
+        seatMap.print(frontRowNum-1, seatMap.getRowCount()-frontRowNum-1, seatMap.getRowCount()-1);
     }
 
     public void showRearSeats(){
-        seatMap.print(seatMap.getRowCount()-frontRowNum, seatMap.getRowCount()-1);
+        // seatMap.print(seatMap.getRowCount()-frontRowNum, seatMap.getRowCount()-1);
+        seatMap.print(frontRowNum-1, seatMap.getRowCount()-frontRowNum-1, seatMap.getRowCount()-1);
     }
 
     public int rearSeatBooked(){
