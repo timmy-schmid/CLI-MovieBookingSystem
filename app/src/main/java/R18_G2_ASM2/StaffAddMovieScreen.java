@@ -3,13 +3,10 @@ package R18_G2_ASM2;
 import java.util.*;
 import java.io.*;
 
-
 import java.io.BufferedReader;
-import java.io.FileReader;
 import java.io.IOException;
 import java.io.File;
 import java.io.FileNotFoundException;
-import java.io.FileWriter;
 
 public class StaffAddMovieScreen {
   private HashMap<Integer,Movie> movies = new HashMap<>();
@@ -18,8 +15,13 @@ public class StaffAddMovieScreen {
   private static String MOVIES_FILE_NAME = "movie.csv";
 
   public StaffAddMovieScreen() {
-    movieCsvFile = DataController.accessCSVFile(MOVIES_FILE_NAME);
-    importMovieData();
+    try {
+      movieCsvFile = DataController.accessCSVFile(MOVIES_FILE_NAME);
+      importMovieData();
+    } catch (FileNotFoundException e) {
+      System.out.println("Unable to edit User: " + e.getMessage());
+      return;
+    }
   }
 
   public void retriveMoiveInfo() throws Exception {
