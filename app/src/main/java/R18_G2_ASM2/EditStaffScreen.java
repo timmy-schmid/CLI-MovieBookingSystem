@@ -53,7 +53,7 @@ public class EditStaffScreen extends Screen{
     public void print(){
         clearScreen();
         printHeader();
-        System.out.println("Welcome %s\n",mSystem.getUser().getNickname());
+        System.out.println("Welcome "+mSystem.getUser().getNickname()+ "\n");
         printOptionsText();
         System.out.print(formatANSI("1",ANSI_USER_OPTION)+"Add a new staff\n");
         System.out.print(formatANSI("2",ANSI_USER_OPTION)+"Delete a current staff\n");
