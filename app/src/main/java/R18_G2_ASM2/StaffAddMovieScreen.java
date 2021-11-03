@@ -2,6 +2,11 @@ package R18_G2_ASM2;
 
 import java.util.*;
 import java.io.*;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Locale;
+import java.util.TimeZone;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -13,6 +18,8 @@ public class StaffAddMovieScreen {
   private PrintStream outt;
   private File movieCsvFile;
   private static String MOVIES_FILE_NAME = "movie.csv";
+  private static final SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd",Locale.ENGLISH);
+  private static final TimeZone AEST = TimeZone.getTimeZone("Australia/Sydney");
 
   public StaffAddMovieScreen() {
     try {
@@ -29,7 +36,7 @@ public class StaffAddMovieScreen {
     String title = null;
     String synopsis = null;
     String classification = null;
-    String releaseDate = null;
+    String releaseDateInput = null;
     String actor = "";
     String option = null;
     String director = "";
@@ -49,13 +56,25 @@ public class StaffAddMovieScreen {
       classification = sc.nextLine();
       if(!(classification.equals("G") || classification.equals("PG")
           || classification.equals("M") || classification.equals("MA") || classification.equals("R"))) {
-        System.out.printf("Invalid input, please try again!");
+        System.out.println("Invalid input, please try again!");
       } else {
         break;
       }
     }
-    System.out.printf("Please enter a release date <dd-mm-yy>: ");
-    releaseDate = sc.nextLine();
+
+    while(true) {
+      System.out.printf("Please enter a release date <yy-mm-dd>: ");
+      releaseDateInput = sc.nextLine();
+      Calendar releaseDate = Calendar.getInstance(AEST,Locale.ENGLISH);
+      try {
+        releaseDate.setTime(formatter.parse(releaseDateInput));
+        break;
+      } catch (ParseException e) {
+        System.out.println("Invalid input, please try again! ");
+        continue;
+      }
+    }
+
     while(true) {
       if(count == 1) {
         System.out.printf("Please enter an actor: ");
@@ -141,8 +160,8 @@ public class StaffAddMovieScreen {
       }
     }
 
-//    movieinfo = (movies.size() + 1) + "," + title + "," + actor + "," + classification + "," + director + "," + synopsis + "," + releaseDate;
-    movieinfo = title + "," + actor + "," + classification + "," + director + "," + synopsis + "," + releaseDate;
+//    movieinfo = (movies.size() + 1) + "," + title + "," + actor + "," + classification + "," + director + "," + synopsis + "," + releaseDateInput;
+    movieinfo = title + "," + actor + "," + classification + "," + director + "," + synopsis + "," + releaseDateInput;
     System.out.println(movieinfo);
 //    writeToCsv(movieinfo, movieCsvFile);
     insertStringInFile(movieCsvFile, movies.size()+2, movieinfo);
