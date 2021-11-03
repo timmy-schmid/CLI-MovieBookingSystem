@@ -27,7 +27,7 @@ public class ParseJson {
 //      System.out.println(number);
       creditCards.put(name, number);
     }
-    System.out.println(creditCards);
+    // System.out.println(creditCards);
   }
 
   public boolean matchCard(String name, String number) {

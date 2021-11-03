@@ -2,9 +2,9 @@
 
 Our goal is to develop a movie ticket booking system for FancyCinemas, with the purpose of reducing waiting time for customers + providing them with the choice of viewing/booking movies online.
 
-### Sprint 2 
+### Sprint 3
 
-- Our main focus for this sprint was to integrate booking tickets, card system implement and editing user's personal info into the movie system. 2 user stories that weren't completed in Sprint 1 were moved to this sprint.
+- Our main focus for this sprint was to integrate booking tickets, transaction and different user roles together. Reports were generated for staff and managers.
 
 ### Important!!!
 

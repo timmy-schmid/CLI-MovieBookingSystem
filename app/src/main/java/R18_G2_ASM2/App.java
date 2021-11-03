@@ -10,5 +10,10 @@ public class App {
     {
         MovieSystem system = new MovieSystem();
         system.run();
+        // Customer user = new Customer(9, "Inge", "inge1@gmail.com", "0412345999", "Asdf1234!*");
+        // Transaction t = new Transaction(user);
+        // t.run();
+        // UpdateGiftCardsScreen gcs = new UpdateGiftCardsScreen(null);
+        // gcs.print();
     }
 }
