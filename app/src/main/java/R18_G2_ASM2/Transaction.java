@@ -1,10 +1,11 @@
 package R18_G2_ASM2;
 
 import java.util.*;
-import java.io.IOException;
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.FileWriter;
+// import java.io.IOException;
+// import java.io.File;
+// import java.io.FileNotFoundException;
+// import java.io.FileWriter;
+import java.io.*;
 
 /*
 CSV FORMAT: <userID, nickname, email, phoneNumber, password, giftCard, reedemableStatus, autoFillStatus,userType>
@@ -446,7 +447,7 @@ public class Transaction {
     return 0;
   }
 
-  public void setUserCardDetails(User user, String name, String cardNumber, boolean newStatus){
+  public void setUserCardDetails(Customer user, String name, String cardNumber, boolean newStatus){
     user.setAutoFillStatus(newStatus);
     user.setCardName(name);
     user.setCardNumber(cardNumber);

@@ -13,9 +13,9 @@ import java.util.regex.Pattern;
 
 
 public class UpdateGiftCardsScreen extends Screen{
-  private static User user;
+  private static User user; //staff or manager
   
-  HomeScreen home;
+  // HomeScreen home;
   private static File giftCardsFile;
   private static String GIFT_CARD_FILE_NAME = "giftCards.csv";
 
@@ -24,24 +24,40 @@ public class UpdateGiftCardsScreen extends Screen{
 
 
   //when staff functions page shows up and option 1 inputted --> direct to this page 
-  public UpdateGiftCardsScreen(HomeScreen home, User user) {
+  // public UpdateGiftCardsScreen(HomeScreen home, User user) {
+  public UpdateGiftCardsScreen (MovieSystem mSystem){
+    super(mSystem);
     user = user;
-    this.home = home;
-    tempFile2 = DataController.accessCSVFile(TEMP_FILE_2_NAME);
-    this.giftCardsFile = DataController.accessCSVFile(GIFT_CARD_FILE_NAME);
-    this.GIFT_CARD_FILE_NAME = giftCardsFile.getAbsolutePath();
-    
-    this.TEMP_FILE_2_NAME = tempFile2.getAbsolutePath();
-
+    // this.home = home;
+    try {
+      tempFile2 = DataController.accessCSVFile(TEMP_FILE_2_NAME);
+      this.giftCardsFile = DataController.accessCSVFile(GIFT_CARD_FILE_NAME);
+      this.GIFT_CARD_FILE_NAME = giftCardsFile.getAbsolutePath();
+      
+      this.TEMP_FILE_2_NAME = tempFile2.getAbsolutePath();
+    } catch (IOException e) {e.printStackTrace();}
   }
+  // public UpdateGiftCardsScreen(HomeScreen home) {
+  //   this.home = home;
+  //   tempFile2 = DataController.accessCSVFile(TEMP_FILE_2_NAME);
+  //   giftCardsFile = DataController.accessCSVFile(GIFT_CARD_FILE_NAME);
+  //   GIFT_CARD_FILE_NAME = giftCardsFile.getAbsolutePath();
+  //   TEMP_FILE_2_NAME = tempFile2.getAbsolutePath();
 
-  public UpdateGiftCardsScreen(HomeScreen home) {
-    this.home = home;
-    tempFile2 = DataController.accessCSVFile(TEMP_FILE_2_NAME);
-    giftCardsFile = DataController.accessCSVFile(GIFT_CARD_FILE_NAME);
-    GIFT_CARD_FILE_NAME = giftCardsFile.getAbsolutePath();
-    TEMP_FILE_2_NAME = tempFile2.getAbsolutePath();
+  // }
 
+
+  @Override
+  protected void setOptions() {
+
+    if (mSystem.getUser().getUserType() == UserType.STAFF) {
+      maxInputInt = 7;
+    } else if (mSystem.getUser().getUserType() == UserType.MANAGER)  {
+      maxInputInt = 9;
+    } else {
+      throw new IllegalArgumentException("Invalid user type for this screen");
+    }
+    options.add("q"); options.add("Q");
   }
 
   public void setGiftCardsFile(File file) {
