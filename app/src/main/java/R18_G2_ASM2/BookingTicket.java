@@ -170,6 +170,8 @@ public class BookingTicket {
     }
 
     public boolean bookingTicketForSeat(char rowLetter, int col){
+        user.setPendingPaymentShow(showing);
+        user.choosingPendingSeat(String.valueOf(rowLetter)+String.valueOf(col));
         try{
         return this.showing.getMovieSeat().bookSeat(rowLetter,col);
         }
