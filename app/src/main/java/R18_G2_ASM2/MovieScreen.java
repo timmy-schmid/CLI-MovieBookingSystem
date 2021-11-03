@@ -1,5 +1,6 @@
 package R18_G2_ASM2;
 
+import java.io.IOException;
 import java.util.ArrayList;
 public class MovieScreen extends Screen {
   private ArrayList<Showing> showings = new ArrayList<>();
@@ -35,6 +36,12 @@ public class MovieScreen extends Screen {
       if (mSystem.getUser().getUserType() == UserType.CUSTOMER) {
         BookingTicket book = new BookingTicket(showings.get(intOption-1), (Customer) mSystem.getUser());
         book.run();
+
+        try {
+          Transaction t = new Transaction((Customer) mSystem.getUser());
+          t.run();
+        } catch (IOException e) {e.printStackTrace();}
+
       } else {
         throw new IllegalArgumentException("Critical error - invalid selection passed validation");
       }
