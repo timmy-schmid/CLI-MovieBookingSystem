@@ -16,11 +16,11 @@ public class StartScreenTest {
   
   private static ByteArrayInputStream mockIn;
   private static ByteArrayOutputStream actualOut;
-  private static HomeScreen mockHomeScreen;
+  private static MovieSystem mockMovieSystem;
 
 
   @BeforeAll static void setup() {
-    mockHomeScreen = mock(HomeScreen.class);
+    mockMovieSystem = mock(MovieSystem.class);
     actualOut = new ByteArrayOutputStream();
     System.setOut(new PrintStream(actualOut));
   }
@@ -38,7 +38,7 @@ public class StartScreenTest {
     mockIn = new ByteArrayInputStream("0\n-1\n4\n1234567\n".getBytes());
     System.setIn(mockIn);
 
-    StartScreen s = new StartScreen(mockHomeScreen);   
+    StartScreen s = new StartScreen(mockMovieSystem);   
 
     s.askforInput();
     assertEquals(actualOut.toString(),"User Input:" + //initial ask
@@ -56,7 +56,7 @@ public class StartScreenTest {
     mockIn = new ByteArrayInputStream("a\nb\n^\n\"\n".getBytes());
     System.setIn(mockIn);
 
-    StartScreen s = new StartScreen(mockHomeScreen);   
+    StartScreen s = new StartScreen(mockMovieSystem);   
 
     s.askforInput();
     assertEquals(actualOut.toString(),"User Input:" + //initial ask
@@ -74,7 +74,7 @@ public class StartScreenTest {
     mockIn = new ByteArrayInputStream("Quit\nquit\nQuitWithInt1\n1Quit".getBytes());
     System.setIn(mockIn);
 
-    StartScreen s = new StartScreen(mockHomeScreen);   
+    StartScreen s = new StartScreen(mockMovieSystem);   
 
     s.askforInput();
     assertEquals(actualOut.toString(),"User Input:" + //initial ask
@@ -92,7 +92,7 @@ public class StartScreenTest {
     mockIn = new ByteArrayInputStream(" q\n 1\n no new line".getBytes());
     System.setIn(mockIn);
 
-    StartScreen s = new StartScreen(mockHomeScreen);   
+    StartScreen s = new StartScreen(mockMovieSystem);   
 
     s.askforInput();
     assertEquals(actualOut.toString(),"User Input:" + //initial ask
@@ -105,7 +105,8 @@ public class StartScreenTest {
   }
 
   @Test public void testValidInputBasicCases() {
-    StartScreen s = new StartScreen(mockHomeScreen);
+    StartScreen s = new StartScreen(mockMovieSystem);
+    s.setOptions();
 
     mockIn = new ByteArrayInputStream("1\n".getBytes());
     System.setIn(mockIn);
@@ -113,7 +114,6 @@ public class StartScreenTest {
     assertEquals(actualOut.toString(),"User Input:"); 
     actualOut.reset(); 
     
-    s = new StartScreen(mockHomeScreen);
     mockIn = new ByteArrayInputStream("2\n".getBytes());
     System.setIn(mockIn);
     s.askforInput();

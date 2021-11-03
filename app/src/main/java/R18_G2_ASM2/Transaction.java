@@ -1,11 +1,6 @@
 package R18_G2_ASM2;
 
 import java.util.*;
-import java.io.*;
-
-
-import java.io.BufferedReader;
-import java.io.FileReader;
 import java.io.IOException;
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -27,7 +22,7 @@ TODO: timeout for idle activity (2 mins)
 */
 
 public class Transaction {
-  private User customer;
+  private Customer customer;
 
   private File tempFile;
   private File tempFile2;
@@ -41,19 +36,22 @@ public class Transaction {
   private static String TEMP_FILE_2_NAME = "cardTemp2.csv";
   private static String GIFT_CARD_FILE_NAME = "giftCards.csv";
 
-  public Transaction(User customer){
+  public Transaction(Customer customer){
     this.customer = customer;
 
-    this.userCsvFile = DataController.accessCSVFile(USER_FILE_NAME);
-    this.tempFile = DataController.accessCSVFile(TEMP_FILE_NAME);
-    this.tempFile2 = DataController.accessCSVFile(TEMP_FILE_2_NAME);
-    this.giftCardsFile = DataController.accessCSVFile(GIFT_CARD_FILE_NAME);
-
-    this.USER_FILE_NAME = this.userCsvFile.getAbsolutePath(); //str version
-    this.TEMP_FILE_NAME = this.tempFile.getAbsolutePath();
-    this.TEMP_FILE_2_NAME = this.tempFile2.getAbsolutePath();
-    this.GIFT_CARD_FILE_NAME = this.giftCardsFile.getAbsolutePath();
-
+    try {
+      this.userCsvFile = DataController.accessCSVFile(USER_FILE_NAME);
+      this.tempFile = DataController.accessCSVFile(TEMP_FILE_NAME);
+      this.tempFile2 = DataController.accessCSVFile(TEMP_FILE_2_NAME);
+      this.giftCardsFile = DataController.accessCSVFile(GIFT_CARD_FILE_NAME);
+  
+      //this.USER_FILE_NAME = this.userCsvFile.getAbsolutePath(); //str version
+      //this.TEMP_FILE_NAME = this.tempFile.getAbsolutePath();
+      //this.TEMP_FILE_2_NAME = this.tempFile2.getAbsolutePath();
+      //this.GIFT_CARD_FILE_NAME = this.giftCardsFile.getAbsolutePath();
+      } catch (FileNotFoundException e) {
+        System.out.println("Unable to complete transaction: " + e.getMessage());
+      }
   }
 
   public static void setUserFile(String name){
@@ -65,7 +63,7 @@ public class Transaction {
     this.GIFT_CARD_FILE_NAME = file.getAbsolutePath();
   }
 
-  public User getCustomer(){
+  public Customer getCustomer(){
     return this.customer;
   }
 
@@ -86,6 +84,7 @@ public class Transaction {
 
     //--> user's tickets details --> 
   public void run() throws IOException { //card details fill out
+      
     this.printScreen();
     this.askForUserDetails();
   }

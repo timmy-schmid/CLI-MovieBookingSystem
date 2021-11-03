@@ -28,12 +28,11 @@ public class DataController {
   private static final SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd",Locale.ENGLISH);
   private static final TimeZone AEST = TimeZone.getTimeZone("Australia/Sydney");
   
-  public static File accessCSVFile(String resource) {
+  public static File accessCSVFile(String resource) throws FileNotFoundException {
 
     //checks if resource is actually .csv
-    if (resource == null || !resource.endsWith(".csv")) { //mb throw an exception.
-      System.out.println("Invalid filename provided:" + resource);
-      return null;
+    if (resource == null || !resource.endsWith(".csv")) {
+      throw new FileNotFoundException("Invalid filename or type provided:" + resource);
     }
 
     File f = null;
@@ -123,7 +122,6 @@ public class DataController {
       System.out.format("  Line %d: %s\n",entry.getKey(),entry.getValue());
     }
   }
-
   public static HashMap<Integer, String> importMovies(Map<Integer,Movie> movies, String filename) throws FileNotFoundException, IOException {
     HashMap<Integer, String> err = new HashMap<>();
   

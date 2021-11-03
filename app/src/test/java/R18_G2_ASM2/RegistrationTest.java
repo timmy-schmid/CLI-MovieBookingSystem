@@ -8,37 +8,42 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeAll;
 
-import java.io.ByteArrayOutputStream;
-import java.io.IOException;
-
-import java.io.BufferedReader;
-import java.io.FileReader;
-
 class RegistrationTest {
   Registration reg;
   private final ByteArrayOutputStream outContent = new ByteArrayOutputStream(); //for testing printing statements
   private final PrintStream originalOutput = System.out;
-  private HomeScreen home; 
-
+  private MovieSystem mSystem;
+  private static String USER_TESTFILE = "newUserDetailsTest.csv";
+  private static File testFile;
   private File userFile;
+
   @BeforeAll static void setPath() {
     DataController.setBasePath("src/test/resources/");
+    try {
+      testFile = DataController.accessCSVFile(USER_TESTFILE);
+    } catch (FileNotFoundException e) {
+      assertEquals(true,false);
+    }
   }
 
   @BeforeEach
   public void setUp() {
-    home = new HomeScreen(null);
-    reg = new Registration(home);
-    userFile = DataController.accessCSVFile("newUserDetailsTest.csv");    
+    mSystem = new MovieSystem();
+    reg = new Registration(mSystem);
+    try {
+      userFile = DataController.accessCSVFile(USER_TESTFILE);
+    } catch (FileNotFoundException e) {
+      assertEquals(true,false);
+    }    
     
     //set up streams
-    reg.setUserFile("newUserDetailsTest.csv");
+    Registration.setUserFile(USER_TESTFILE);
     System.setOut(new PrintStream(outContent));
   }
   @AfterEach
   public void tearDown(){ 
     reg = null;
-    home = null;
+    mSystem = null;
     //restoreStreams
     System.setOut(originalOutput);
   }
@@ -49,69 +54,69 @@ class RegistrationTest {
 
   @Test void testInvalidUsername(){ //missing @ + .com
     String input = "lala@hotmail";
-    assertFalse(reg.validateUser(input));
+    assertFalse(User.validateUser(input));
   }
 
   @Test void testInvalidUsername1(){ //""- no input
     String input = "";
-    assertFalse(reg.validateUser(input));
+    assertFalse(User.validateUser(input));
   }
   @Test void testInvalidUsername2(){ //""- no letters before@
     String input = " @gmail.com";
-    assertFalse(reg.validateUser(input));
+    assertFalse(User.validateUser(input));
   }
   @Test void testInvalidUsername3(){ //""- no letters before@
     String input = " @.com";
-    assertFalse(reg.validateUser(input));
+    assertFalse(User.validateUser(input));
   }
   @Test void testInvalidUsername4(){ //""- no letters before@
     String input = "@gmail.com";
-    assertFalse(reg.validateUser(input));
+    assertFalse(User.validateUser(input));
   }
 
   @Test void testInvalidUsername5(){
     String input = "hola@bob.com";
-    assertFalse(reg.validateUser(input));
+    assertFalse(User.validateUser(input));
   }
 
   @Test void testValidUsername(){
     String input = "hola@gmail.com";
-    assertTrue(reg.validateUser(input));
+    assertTrue(User.validateUser(input));
   }
 
   @Test void testValidUsername2(){ //alpha-numeric
     String input = "hoLLie241@hotmail.com";
-    assertTrue(reg.validateUser(input));
+    assertTrue(User.validateUser(input));
   }
 
   @Test void testInvalidPassword(){ //too short
     String input = "abc234X!";
-    assertFalse(reg.isValidPassword(input));
+    assertFalse(User.isValidPassword(input));
   }
 
   @Test void testInvalidPassword2(){ //no >= 1 cap
     String input = "abc234xx#!";
-    assertFalse(reg.isValidPassword(input));
+    assertFalse(User.isValidPassword(input));
   }
 
   @Test void testInvalidPassword3(){
     String input = "";
-    assertFalse(reg.isValidPassword(input));
+    assertFalse(User.isValidPassword(input));
   }
 
   @Test void testValidPassword(){
     String input = "Abcd1244#1";
-    assertTrue(reg.isValidPassword(input));
+    assertTrue(User.isValidPassword(input));
   }
 
   @Test void testValidPhoneNumber(){
     String input = "0412279198";
-    assertTrue(reg.isValidPhoneNumber(input));
+    assertTrue(User.isValidPhoneNumber(input));
   }
 
    @Test void testValidGiftCardNumber(){
     String input = "11111111111116GC";
-    assertTrue(reg.isValidGiftCardNumber(input));
+    assertTrue(User.isValidGiftCardNumber(input));
   }
 
   // @Test void testUserFileNotFound(){
@@ -121,64 +126,83 @@ class RegistrationTest {
   //   assert(result == -2);
   // }
   //testing writing to file works
+
   @Test void testValidReadingFile(){ //user not found in csv file 
-    int result = reg.checkIfUserExists3("username@gmail.com", "04111211113");
-    assert(result == 1);
+    int result = -1;
+    try {
+      result = User.doesUserExistInCSV(USER_TESTFILE,"username@gmail.com", "04111211113");
+    } catch (FileNotFoundException e) {
+      assertEquals(true,false);
+    }
+    assert(result == 0);
   }
 
   @Test void nullUserFile(){
-    Registration reg = new Registration(home);
-    reg.setUserFile(null);
+    Registration.setUserFile(null);
     assertNull(Registration.getUserFile());
   }
+  
   @Test void testValidReadingFile2(){ //user already exists
-    int result = reg.checkIfUserExists3("anna@yahoo.com", "0412345881");
-    assert(result == -1);
+    int result = -1;
+    try {
+      result = User.doesUserExistInCSV(USER_TESTFILE,"anna@yahoo.com", "0412345881");
+    } catch (FileNotFoundException e) {
+      assertEquals(true,false);
+    }
+    assert(result == 1);
   }
 
   //testing writing to file
   @Test void testWriteToFileWorks() throws IOException{ //should still validate inside function or just outside?
+    
+    String nickname = "benji";
     String username = "benjilala@hotmail.com";
     String pwd = "Blahblahblah3";
+    String phoneNum = "0404040123";
 
-    if (reg.checkIfUserExists3(username, "0404040123") != -1){ //if user doesn't exist
-      reg.writeUserDetailsToFile3("benji", username,"0404040123", pwd);
+    int newId = User.getLastUserIDFromCSV(USER_TESTFILE);
+    Customer c = new Customer(newId, nickname, username,phoneNum, pwd);
+
+    if (User.doesUserExistInCSV(USER_TESTFILE,username, phoneNum) != 0){ //if user doesn't exist
+      c.writeNewUserToCSV(USER_TESTFILE);
 
     //retrieve last line and compare
       String currentLine = "";
       String lastLine = "";
       
       //after writing to file, read the last line and check it matches given details
-      BufferedReader myReader = new BufferedReader(new FileReader(userFile));
+      BufferedReader myReader = new BufferedReader(new FileReader(testFile));
       while ((currentLine = myReader.readLine()) != null){
         lastLine = currentLine;
       }
       myReader.close();
-      int id = id = Integer.parseInt(lastLine.split(",")[0]);
-      assertEquals(lastLine, String.valueOf(id) + ",benji,"+ username + ",0404040123,"+pwd+",F");
+      assertEquals(lastLine, String.valueOf(newId) + ",benji,"+ username + ",0404040123,"+pwd+",F" + ",CUSTOMER");
     }
   }
+
   @Test void testCreateAccountFails() throws IOException{
-    User newUser = reg.createAccount3(null, null, null, "NewPassword1");
+    Customer newUser = reg.createCustomer(null, null, null, "NewPassword1");
     assertNull(newUser);
   }
 
   @Test void testCreateAccountFails2() throws IOException{
-    User newUser = reg.createAccount3(null, "hello@gmail.com", "", "NewPassword1");
+    Customer newUser = reg.createCustomer(null, "hello@gmail.com", "", "NewPassword1");
     assertNull(newUser);
   }
 
   @Test void testCreateAccountWorks() throws IOException{
-    int result = reg.checkIfUserExists3("newUser@gmail.com", "0404189234");
+    int result = User.doesUserExistInCSV(USER_TESTFILE,"newUser@gmail.com", "0404189234");
 
-    if (result == 1){
+    if (result == 0){
       // User newUser = reg.createAccount("newUser@gmail.com", "NewPassword1");
-      User newUser = reg.createAccount3("newUser", "newUser@gmail.com", "0404189234",
+
+      int newId = Customer.getLastUserIDFromCSV(USER_TESTFILE);
+      Customer newUser = reg.createCustomer("newUser", "newUser@gmail.com", "0404189234",
       "NewPassword1");
 
       assertNotNull(newUser);
 
-      BufferedReader myReader = new BufferedReader(new FileReader(reg.getUserFile()));
+      BufferedReader myReader = new BufferedReader(new FileReader(testFile));
       String currentLine = "";
       String lastLine = "";
       while ((currentLine = myReader.readLine()) != null){
@@ -186,33 +210,31 @@ class RegistrationTest {
         // break;
       }
       myReader.close();
-        int id = id = Integer.parseInt(lastLine.split(",")[0]);
-
-      assertEquals(lastLine, String.valueOf(id) + ",newUser,newUser@gmail.com,0404189234,NewPassword1,F");
-
+      assertEquals(lastLine, String.valueOf(newId) + ",newUser,newUser@gmail.com,0404189234,NewPassword1,F");
     } else {
-      assert(result == -1);
+      assert(result == 1);
     }
   }
 
-  @Test void testCreateAccountWorks2() throws IOException{
-    reg.setUserFile("src/test/resources/newUserDetailsTest.csv");
-    int result = reg.checkIfUserExists3("newUser2@gmail.com", "0414189238");
-    if (result == -1){ //exists alrdy
+  @Test void testCreateAccountWorks2() throws IOException {
+    int result = User.doesUserExistInCSV(USER_TESTFILE,"newUser2@gmail.com", "0414189238");
+
+    if (result == 1){ //exists alrdy
       String msg = "Email is taken already/exists in system. Please re-enter your details.\n";
 
         // ByteArrayInputStream in = new ByteArrayInputStream(inputMessage.getBytes());
         // System.setIn(in);
         // reg.retrieveUserInputDetails();
-        assertEquals(outContent.toString(), msg);
+      //assertEquals(outContent.toString(), msg);
 
-      assertEquals(outContent.toString(), msg);
+      //assertEquals(outContent.toString(), msg);
     } else {
-      User newUser = reg.createAccount3("newUser2", "newUser2@gmail.com", "0414189238",
+      int lastID = User.getLastUserIDFromCSV(USER_TESTFILE);
+      User newUser = reg.createCustomer("newUser2", "newUser2@gmail.com", "0414189238",
       "NewPassword2");
       assertNotNull(newUser);
 
-      BufferedReader myReader = new BufferedReader(new FileReader(reg.getUserFile()));
+      BufferedReader myReader = new BufferedReader(new FileReader(testFile));
       String currentLine = "";
       String firstLine = "";
       while ((currentLine = myReader.readLine()) != null){
@@ -220,8 +242,7 @@ class RegistrationTest {
         // break;
       }
       myReader.close();
-      int id = id = Integer.parseInt(firstLine.split(",")[0]);
-      assertEquals(firstLine, String.valueOf(id) + ",newUser2,newUser2@gmail.com,0414189238,NewPassword2,F");
+      assertEquals(firstLine, String.valueOf(lastID) + ",newUser2,newUser2@gmail.com,0414189238,NewPassword2,F");
     }
   }
 
@@ -253,7 +274,7 @@ class RegistrationTest {
 
     ByteArrayInputStream in = new ByteArrayInputStream(inputMessage.getBytes());
     System.setIn(in);
-    reg.retrieveUserInputDetails3();
+    reg.retrieveUserInputDetails();
 
     assertEquals(outContent.toString(), expectedOut);
   }
@@ -302,8 +323,8 @@ class RegistrationTest {
 
   @Test void testNullUserFields(){
     String input = null;
-    assertFalse(reg.validateUser(input)); //--Tim: Commenting out as it fails 
-    assertFalse(reg.isValidPassword(input)); //--Tim: Commenting out as it fails
+    assertFalse(User.validateUser(input)); //--Tim: Commenting out as it fails 
+    assertFalse(User.isValidPassword(input)); //--Tim: Commenting out as it fails
   }
 
   @Test void testValidNextOption(){ //testing 1. CONTINUE LOGGIN IN
@@ -399,7 +420,7 @@ class RegistrationTest {
 
     ByteArrayInputStream in = new ByteArrayInputStream(inputMessage.getBytes());
     System.setIn(in);
-    reg.retrieveUserInputDetails3();
+    reg.retrieveUserInputDetails();
 
     assertEquals(outContent.toString(), expectedOut);
   }

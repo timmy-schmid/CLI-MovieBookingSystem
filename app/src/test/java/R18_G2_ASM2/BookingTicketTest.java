@@ -7,11 +7,9 @@ import static org.junit.jupiter.api.Assertions.*;
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
-import java.io.InputStream;
 import java.io.PrintStream;
 import java.util.ArrayList;
 import java.util.Calendar;
-import java.util.LinkedHashMap;
 import java.util.List;
 
 public class BookingTicketTest {
@@ -20,7 +18,7 @@ public class BookingTicketTest {
     private Movie testMovie;
     private Cinema testCinema;
     private BookingTicket testBookingTicket;
-    private User testUser;
+    private Customer testUser;
     private Showing aShow;
 
     @BeforeEach
@@ -31,7 +29,7 @@ public class BookingTicketTest {
         testActor.add("some name1");
         testActor.add("some name2");
         
-        testUser = new User(277, "lisa", "abcdhsa@gmail.com", "0411123432","123Qwertyui");
+        testUser = new Customer(277, "lisa", "abcdhsa@gmail.com", "0411123432","123Qwertyui");
         aShow = new Showing(1,testMovie,testCinema,testcal);
         aShow.setMovieSeat();
         testBookingTicket = new BookingTicket(aShow,testUser);
@@ -124,7 +122,7 @@ public class BookingTicketTest {
             String a = "2\n";
             ByteArrayInputStream inContent = new ByteArrayInputStream(a.getBytes());
             System.setIn(inContent);
-            testBookingTicket.cancelSeatForShow('E',0);
+            testBookingTicket.cancelSeatForShow('D',1);
             assertEquals("Invalid message cancel seat for show, please try again.\n",outContent.toString());
 
         }catch (Exception e){ e.printStackTrace();}

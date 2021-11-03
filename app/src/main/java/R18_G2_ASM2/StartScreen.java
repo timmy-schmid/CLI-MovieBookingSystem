@@ -5,19 +5,22 @@ public class StartScreen extends Screen {
   private Registration reg;
   private HomeScreen home;
 
-  public StartScreen(HomeScreen home) {
-    super();
+  public StartScreen(MovieSystem mSystem) {
+    super(mSystem);
+    this.home = new HomeScreen(mSystem);
+    this.login = new Login(mSystem);
+    this.reg = new Registration(mSystem);
+    title = "WELCOME TO FANCY CINEMAS!";
+    setOptions();
+  }
 
-    this.login = new Login(home);
-    this.reg = new Registration(home);
-    this.home = home;
-
+  @Override
+  protected void setOptions() {
     options.add("1");
     options.add("2");
     options.add("3");
-    options.add("Q"); options.add("q");
-
-    title = "WELCOME TO FANCY CINEMAS!";
+    options.add("Q");
+    options.add("q");
     maxInputInt = 3;
   }
 
@@ -52,6 +55,4 @@ public class StartScreen extends Screen {
     System.out.print(formatANSI("Q",ANSI_USER_OPTION) + " - Quit\n\n");
 
   }
-
-
 }
