@@ -13,8 +13,15 @@ public class DeleteStaffScreen {
     private static String USER_FILE_NAME = "newUserDetails.csv";
     private boolean goBack = false;
     private boolean haveAuser = false;
+    private File userCsvFile;
 
     public DeleteStaffScreen(MovieSystem movieSystem){
+        try {
+           userCsvFile = DataController.accessCSVFile(USER_FILE_NAME);
+        } catch (FileNotFoundException e) {
+            System.out.println("Unable to delete staff: " + e.getMessage());
+            return;
+        }
         this.movieSystem = movieSystem;
         this.checkinguser=movieSystem.getUser();
     }
@@ -95,9 +102,9 @@ public class DeleteStaffScreen {
 
     public void deleteUserFromFile(String username) {
         try{
-        File userCsvFile = new File(USER_FILE_NAME);
         //temp file
         File oFile = File.createTempFile("tempUserForDelete",".csv");
+
 
         //input
         FileInputStream fileInputStream = new FileInputStream(userCsvFile);
@@ -109,11 +116,10 @@ public class DeleteStaffScreen {
         String thisline;
 
         int i =0;
-
+            System.out.println("113");
         while ((thisline = inReader.readLine()) != null){
             String fields[] = thisline.split(",");
-            System.out.println(fields);
-            if (!fields[3].equals(username)){
+            if (!fields[2].equals(username)){
                 System.out.println(thisline);
                 out.println(thisline);
                 i++;
