@@ -1,5 +1,6 @@
 package R18_G2_ASM2;
 
+import java.io.IOException;
 import java.util.*;
 
 public class BookingTicket {
@@ -98,7 +99,7 @@ public class BookingTicket {
                 } else if (num.equals("4")) {
                     bookingType = Person.Senior;
                     break;
-                } else if (num.equals("C")) {
+                } else if (num.equalsIgnoreCase("c")) {
                    this.cancelBooking();
                    this.cancelBook = true;
                     break;
@@ -170,6 +171,7 @@ public class BookingTicket {
     }
 
     public boolean bookingTicketForSeat(char rowLetter, int col){
+        user.setPendingPaymentShow(showing);
         try{
         return this.showing.getMovieSeat().bookSeat(rowLetter,col);
         }
@@ -182,32 +184,22 @@ public class BookingTicket {
     public void bookingShowingSection(){
         Scanner scan = new Scanner(System.in);
         while(true){
-            System.out.println("Please choose the section --in total Left : " + this.showing.getMovieSeat().totalSeatsLeft());
-            System.out.println("1-Front        "+"Already be booked: " +Integer.toString(this.showing.getMovieSeat().frontSeatBooked()));
-            System.out.println("2-Middle       "+"Already be booked: "+Integer.toString(this.showing.getMovieSeat().middleSeatBooked()));
-            System.out.println("3-Rear         "+"Already be booked: "+Integer.toString(this.showing.getMovieSeat().rearSeatBooked()));
-            System.out.println("4-All          "+"Already be booked: "+Integer.toString(this.showing.getMovieSeat().totalSeatsBooked()));
-            System.out.println("Cancel-cancel\n");
+            // System.out.println("Please choose the section --in total Left : " + this.showing.getMovieSeat().totalSeatsLeft());
+            System.out.println("Total Left : " + this.showing.getMovieSeat().totalSeatsLeft());
+            System.out.println("Front(Red HighLighter)          "+"Already be booked: " +Integer.toString(this.showing.getMovieSeat().frontSeatBooked()));
+            System.out.println("Middle(Green HighLighter)       "+"Already be booked: "+Integer.toString(this.showing.getMovieSeat().middleSeatBooked()));
+            System.out.println("Rear(Blue HighLighter)          "+"Already be booked: "+Integer.toString(this.showing.getMovieSeat().rearSeatBooked()));
+            System.out.println("All                             "+"Already be booked: "+Integer.toString(this.showing.getMovieSeat().totalSeatsBooked()));
+            System.out.println("C-Cancel");
+            System.out.println("Anything else-Continue Choosing Seats\n");
+            this.showing.getMovieSeat().showAllSeats();
             String str = scan.next();
-            if(str.equals("1")){
-                this.showing.getMovieSeat().showFrontSeats();
-                break;
-            }else if(str.equals("2")){
-                this.showing.getMovieSeat().showMiddleSeats();
-                break;
-            }else if(str.equals("3")){
-                this.showing.getMovieSeat().showRearSeats();
-                break;
-            }else if(str.equals("4")){
-                this.showing.getMovieSeat().showAllSeats();
-                break;
-            }else if(str.equals("Cancel")){
+            if(str.equalsIgnoreCase("c")) {
                 this.cancelBooking();
                 this.cancelBook = true;
                 break;
-            }else{
-                System.out.println("Invaild input, please try again.");
             }
+            break;
 
         }
     }

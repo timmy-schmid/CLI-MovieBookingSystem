@@ -302,7 +302,7 @@ public class TransactionTest {
   //   assert(result == true);
   //   assertEquals(outContent.toString(), expectedOut);
   // }
-  @Test void testFinalMessage2(){
+  @Test void testFinalMessage2() throws NumberFormatException, IOException{
     String msg = "Select from the following: \n" +
                   "F - Finalise transaction\nC - Cancel transaction\n" +
                   "\nUser Input: ";

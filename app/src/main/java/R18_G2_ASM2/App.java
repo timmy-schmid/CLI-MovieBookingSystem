@@ -6,14 +6,13 @@ package R18_G2_ASM2;
 import java.io.IOException;
 
 public class App {
-    public static void main(String[] args) throws IOException
+    public static void main(String[] args) throws Exception
     {
         MovieSystem system = new MovieSystem();
         system.run();
-        // Customer user = new Customer(9, "Inge", "inge1@gmail.com", "0412345999", "Asdf1234!*");
-        // Transaction t = new Transaction(user);
-        // t.run();
-        // UpdateGiftCardsScreen gcs = new UpdateGiftCardsScreen(null);
-        // gcs.print();
+        // Showing show = new Showing(2, new Movie(1, null, null, null, null, null, null), new Cinema(1, MovieClass.SILVER), null);
+        // Customer user = new Customer(1,  "bob", "bobbie@gmail.com", "0412345678", "Password123");
+        // BookingTicket bt = new BookingTicket(show, user);
+        // bt.run();
     }
 }
