@@ -1,4 +1,3 @@
-
 package R18_G2_ASM2;
 
 import java.io.File;
@@ -16,50 +15,6 @@ public abstract class User extends UserValidation {
   protected String password;
   protected UserType userType;
 
-ADD user status: save card details for next time
-
-*/
-public class User extends UserFields {
-
-  private int ID;
-  private String nickname;
-  private String phoneNumber;
-  private String email; //used to represent the unique username
-  private String password;
-  private LinkedHashMap<Movie,String> filterMovie;
-  private LinkedHashMap<Person,Integer> ticket = new LinkedHashMap<>();
-  private String ticketMessage = "";
-  private double totalPriceMutiplier = 0;
-  private UserType type;
-
-  private boolean autoFill;
-  private String cardName;
-  private String cardNumber;
-  private String cvvNumber;
-
-
-  // sprint 3 adding user type
-  public User(int ID, String nickname, String email, String phoneNumber, String password,UserType type){ //extra fields added
-    this.ID = ID;
-    this.nickname = nickname;
-    this.email = email;
-    this.phoneNumber = phoneNumber;
-    this.password = password;
-    this.type = type;
-
-    ticket.put(Person.Child,0);
-    ticket.put(Person.Student,0);
-    ticket.put(Person.Senior,0);
-    ticket.put(Person.Adult,0);
-
-    this.cardName = null;
-    this.cardNumber = null;
-    this.cvvNumber = null;
-    this.autoFill = false; //default, then prompt user during transaction stage to update
-  }
-
-
-  //current new version - sprint 2
   //current new version - sprint 3
   public User(int ID, String nickname, String email, String phoneNumber, String password){ //extra fields added
 
@@ -74,16 +29,6 @@ public class User extends UserFields {
     this.email = email;
     this.phoneNumber = phoneNumber;
     this.password = password;
-
-    ticket.put(Person.Child,0);
-    ticket.put(Person.Student,0);
-    ticket.put(Person.Senior,0);
-    ticket.put(Person.Adult,0);
-
-    this.cardName = null;
-    this.cardNumber = null;
-    this.cvvNumber = null;
-    this.autoFill = false; //default, then prompt user during transaction stage to update
   }
 
   //getter methods below ~
@@ -100,7 +45,6 @@ public class User extends UserFields {
   public String getPassword(){
     return this.password;
   }
-
   public String getPhoneNumber(){
     return this.phoneNumber;
   }
@@ -115,7 +59,6 @@ public class User extends UserFields {
       this.ID = ID;
     }
   }
-
   public void setNickname(String nickname){
     if (nickname != null && !nickname.equals("")) {
       this.nickname = nickname;
@@ -127,7 +70,6 @@ public class User extends UserFields {
       this.email = email;
     }
   }
-
   public void setPhoneNumber(String phoneNumber){
     if (User.isValidPhoneNumber(phoneNumber)){
       this.phoneNumber = phoneNumber;
@@ -149,37 +91,37 @@ public class User extends UserFields {
     userFile = DataController.accessCSVFile(fileName); //throws exception if fileName is not of form *.csv
 
     //check file follows right format...
-      Scanner myReader = new Scanner(userFile);
-      while (myReader.hasNextLine()) { //as long as you can keep reading the file, grab the details
-        String line = myReader.nextLine();
-        String[] detailsArray = line.split(",");
+    Scanner myReader = new Scanner(userFile);
+    while (myReader.hasNextLine()) { //as long as you can keep reading the file, grab the details
+      String line = myReader.nextLine();
+      String[] detailsArray = line.split(",");
 
-        //TODO more checks on bool? Maybe a validate file fntion.
+      //TODO more checks on bool? Maybe a validate file fntion.
 
-        //checks valid amount of fields otherwise movies to next line
-        if (detailsArray.length < 7) {
-          continue;
-        }
-
-        //checks if valid ID, if not it will continue to next line
-        try{
-          Integer.parseInt(detailsArray[0]);
-        } catch(NumberFormatException e){
-          continue;
-        }
-
-        String email = detailsArray[2];
-        if(userEmail.equals(email)){
-          myReader.close();
-          return 1;
-        }
-
-        String phoneNumber = detailsArray[3];
-        if(userPhoneNumber.equals(phoneNumber)){
-          myReader.close();
-          return 2;
-        }
+      //checks valid amount of fields otherwise movies to next line
+      if (detailsArray.length < 7) {
+        continue;
       }
+
+      //checks if valid ID, if not it will continue to next line
+      try{
+        Integer.parseInt(detailsArray[0]);
+      } catch(NumberFormatException e){
+        continue;
+      }
+
+      String email = detailsArray[2];
+      if(userEmail.equals(email)){
+        myReader.close();
+        return 1;
+      }
+
+      String phoneNumber = detailsArray[3];
+      if(userPhoneNumber.equals(phoneNumber)){
+        myReader.close();
+        return 2;
+      }
+    }
     myReader.close();
     return 0;
   }
