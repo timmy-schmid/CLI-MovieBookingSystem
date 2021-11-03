@@ -1,6 +1,7 @@
 package R18_G2_ASM2;
 
 import java.io.File;
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.Arrays;
 import java.util.List;
@@ -13,6 +14,7 @@ public class MovieSeat{
     private Showing showing;
     private DataFrame<String> seatMap;
     private File movieSeat;
+    private File tempMovieSeat;
     private int frontRowNum;
 
     private int totalFrontSeat;
@@ -21,21 +23,30 @@ public class MovieSeat{
     public MovieSeat(Showing showing) throws IOException{
         this.showing = showing;
         movieSeat = DataController.accessCSVFile("movieSeatsMap/"+ String.valueOf(showing.getMovie().getId())+"-"+ String.valueOf(showing.getCinema().getId())+"-"+String.valueOf(showing.getShowingId())+".csv");
+
         //create dir first if does not exist!
         if (!movieSeat.getParentFile().exists()) {
           movieSeat.getParentFile().mkdirs();
+        }
+
+        tempMovieSeat = DataController.accessCSVFile("movieSeatsMap/"+ String.valueOf(showing.getMovie().getId())+"-"+ String.valueOf(showing.getCinema().getId())+"-"+String.valueOf(showing.getShowingId())+"-temp"+".csv");
+        if (tempMovieSeat.exists()){
+            tempMovieSeat.renameTo(movieSeat);
         }
         
         if (!movieSeat.exists()){
             try {
                 movieSeat.createNewFile();
                 seatMap = FileTools.readFromCsv(DataController.accessCSVFile("movieSeatsMap/"+showing.getCinema().cinemaScreen.toString()+".csv"));
-                writeToDatabase();
+                writeToDatabase(movieSeat);
             } catch (IOException e) {
                 e.printStackTrace();
             }
         }
-        seatMap = readFromDatabase();
+
+
+
+        seatMap = readFromDatabase(movieSeat);
         frontRowNum = seatMap.getRowCount()/3;
 
         totalFrontSeat = frontRowNum*seatMap.getColumnCount();
@@ -48,7 +59,7 @@ public class MovieSeat{
         movieSeat = DataController.accessCSVFile("movieSeatsMap/"+ String.valueOf(showing.getMovie().getId())+"-"+ String.valueOf(showing.getCinema().getId())+"-"+String.valueOf(showing.getShowingId())+".csv");
         movieSeat = new File("src/test/resources/"+ "SeatMapTest.csv");
 
-        seatMap = readFromDatabase();
+        seatMap = readFromDatabase(movieSeat);
         frontRowNum = seatMap.getRowCount()/3;
 
         totalFrontSeat = frontRowNum*seatMap.getColumnCount();
@@ -56,12 +67,12 @@ public class MovieSeat{
         totalMiddleSeat = seatMap.getRowCount()*seatMap.getColumnCount()-totalFrontSeat-totalRearSeat;
     }
 
-    public void writeToDatabase() throws IOException{
-        FileTools.writeToCsv(seatMap, movieSeat);
+    public void writeToDatabase(File csvFile) throws IOException{
+        FileTools.writeToCsv(seatMap, csvFile);
     }
 
-    public DataFrame<String> readFromDatabase() throws IOException{
-        return FileTools.readFromCsv(movieSeat);
+    public DataFrame<String> readFromDatabase(File csvFile) throws IOException{
+        return FileTools.readFromCsv(csvFile);
     }
 
     public DataFrame<String> getSeatMap(){
@@ -76,7 +87,7 @@ public class MovieSeat{
             return false;
         }
         seatMap.setValue(Character.getNumericValue(rowLetter)-10, String.valueOf(colNum), "Reserved");
-        writeToDatabase();
+        writeToDatabase(movieSeat);
         return true;
     }
 
@@ -88,18 +99,38 @@ public class MovieSeat{
             return false;
         }
         seatMap.setValue(Character.getNumericValue(rowLetter)-10, String.valueOf(colNum), "Available");
-        writeToDatabase();
+        writeToDatabase(movieSeat);
         return true;
     }
 
 
     public void showAllSeats(){
+        DataFrame<String> tempSeatMap;
+        File tempMovieSeat;
+        try {
+            tempMovieSeat = DataController.accessCSVFile("movieSeatsMap/"+ String.valueOf(showing.getMovie().getId())+"-"+ String.valueOf(showing.getCinema().getId())+"-"+String.valueOf(showing.getShowingId())+"-temp"+".csv");
+        
+        if (!tempMovieSeat.exists()){
+
+            tempMovieSeat.createNewFile();
+            tempSeatMap = FileTools.readFromCsv(DataController.accessCSVFile("movieSeatsMap/"+ String.valueOf(showing.getMovie().getId())+"-"+ String.valueOf(showing.getCinema().getId())+"-"+String.valueOf(showing.getShowingId())+".csv"));
+            writeToDatabase(tempMovieSeat);
+
+        }
+        tempSeatMap = readFromDatabase(tempMovieSeat);
+
+
+        } catch (IOException e1) {
+            // TODO Auto-generated catch block
+            e1.printStackTrace();
+        }
         seatMap.print(frontRowNum-1, seatMap.getRowCount()-frontRowNum-1, seatMap.getRowCount()-1);
         // seatMap.print(0, seatMap.getRowCount()-1);
     }
 
     public void showFrontSeats(){
-        // seatMap.print(0, frontRowNum-1);
+
+
         seatMap.print(frontRowNum-1, seatMap.getRowCount()-frontRowNum-1, seatMap.getRowCount()-1);
     }
 
@@ -158,6 +189,10 @@ public class MovieSeat{
     
     public int totalSeatsLeft() {
         return totalFrontSeat+totalMiddleSeat+totalRearSeat-totalSeatsBooked();
+    }
+
+    public void completeTransaction(){
+        tempMovieSeat.delete();
     }
 
 

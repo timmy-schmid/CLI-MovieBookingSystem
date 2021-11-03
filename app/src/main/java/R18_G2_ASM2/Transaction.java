@@ -458,7 +458,7 @@ public class Transaction {
     return textInput;
   }
 
-  public boolean getFinalMsg(){
+  public boolean getFinalMsg() {
     Scanner scan = new Scanner(System.in);
     System.out.println("Select from the following: ");
     System.out.println("F - Finalise transaction\nC - Cancel transaction");
@@ -481,6 +481,8 @@ public class Transaction {
             this.setUserCardDetails(this.getCustomer(), null, null, false); //revert back to og
           }
         }
+        this.getCustomer().completeTransaction();
+        // this.getCustomer().cancelTransaction();
         System.out.println("\nTransaction Successful!");
         System.out.println("Please see your receipt below to present at the cinema: \n\n\n");
         // this.printReceipt();

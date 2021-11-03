@@ -27,7 +27,7 @@ public class MovieSystem {
     this(System.in, System.out);
   }
 
-  public void run() {
+  public void run() throws IOException {
     StartScreen startScreen = new StartScreen(this);
     startScreen.run();
   }
