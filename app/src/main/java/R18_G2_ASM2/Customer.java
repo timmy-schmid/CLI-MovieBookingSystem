@@ -109,16 +109,20 @@ public class Customer extends User {
     this.pendingPaymentShow = showing;
   }
 
+  public Showing getPendingPaymentShow(){
+    return pendingPaymentShow;
+  }
+
   public void choosingPendingSeat(String seatNum){
     pendingPaymentSeats.add(seatNum);
   }
 
-  public void completeTransaction(){
+  // public void completeTransaction(){
 
-    pendingPaymentSeats = new ArrayList<>();
-  }
+  //   pendingPaymentSeats = new ArrayList<>();
+  // }
 
-  public void cancelTransaction() throws NumberFormatException, IOException{
+  public void completeTransaction() throws NumberFormatException, IOException{
     for (String s : pendingPaymentSeats){
       String colNum = "";
       if (s != null) {
