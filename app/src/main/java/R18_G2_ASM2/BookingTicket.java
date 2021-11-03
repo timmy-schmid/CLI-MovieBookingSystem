@@ -183,31 +183,19 @@ public class BookingTicket {
         Scanner scan = new Scanner(System.in);
         while(true){
             System.out.println("Please choose the section --in total Left : " + this.showing.getMovieSeat().totalSeatsLeft());
-            System.out.println("1-Front        "+"Already be booked: " +Integer.toString(this.showing.getMovieSeat().frontSeatBooked()));
-            System.out.println("2-Middle       "+"Already be booked: "+Integer.toString(this.showing.getMovieSeat().middleSeatBooked()));
-            System.out.println("3-Rear         "+"Already be booked: "+Integer.toString(this.showing.getMovieSeat().rearSeatBooked()));
-            System.out.println("4-All          "+"Already be booked: "+Integer.toString(this.showing.getMovieSeat().totalSeatsBooked()));
+            System.out.println("Front(Red HighLighter)          "+"Already be booked: " +Integer.toString(this.showing.getMovieSeat().frontSeatBooked()));
+            System.out.println("Middle(Green HighLighter)       "+"Already be booked: "+Integer.toString(this.showing.getMovieSeat().middleSeatBooked()));
+            System.out.println("Rear(Blue HighLighter)          "+"Already be booked: "+Integer.toString(this.showing.getMovieSeat().rearSeatBooked()));
+            System.out.println("All          "+"Already be booked: "+Integer.toString(this.showing.getMovieSeat().totalSeatsBooked()));
             System.out.println("Cancel-cancel\n");
+            this.showing.getMovieSeat().showAllSeats();
             String str = scan.next();
-            if(str.equals("1")){
-                this.showing.getMovieSeat().showFrontSeats();
-                break;
-            }else if(str.equals("2")){
-                this.showing.getMovieSeat().showMiddleSeats();
-                break;
-            }else if(str.equals("3")){
-                this.showing.getMovieSeat().showRearSeats();
-                break;
-            }else if(str.equals("4")){
-                this.showing.getMovieSeat().showAllSeats();
-                break;
-            }else if(str.equals("Cancel")){
-                this.cancelBooking();
-                this.cancelBook = true;
-                break;
-            }else{
-                System.out.println("Invaild input, please try again.");
-            }
+            if(str.equals("Cancel")) {
+            this.cancelBooking();
+            this.cancelBook = true;
+            break;
+        }
+            break;
 
         }
     }
