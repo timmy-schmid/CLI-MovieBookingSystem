@@ -187,6 +187,7 @@ public class StaffAddMovieScreen {
     } catch (IOException e) {
       outt.println("Error reading file: " + MOVIES_FILE_NAME);
     }
+
   }
 
 
