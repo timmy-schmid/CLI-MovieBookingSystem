@@ -32,13 +32,16 @@ public class DeleteStaffScreen {
             haveAuser = false;
             askForemail();
             if(haveAuser){
-                deleteUserFromFile(nameToDelete);
+                this.deleteUserFromFile(nameToDelete);
                 System.out.println("Successfully delete. Returning to the Edit Staff page ...");
                     goBack = true;
             }
         }
     };
 
+    public String getUserFileName(){
+        return this.USER_FILE_NAME;
+    }
 
     // message method
     public void  EmailnotExist(){
@@ -64,6 +67,7 @@ public class DeleteStaffScreen {
                     throw new Exception("3");
                 }if (doesStaffExistInCSV(USER_FILE_NAME,inputString) == -2){
                     throw new Exception("4");}
+
                 // if not correct format ask again;
             }catch (Exception e){
                 if(e.getMessage().equals("1")){
@@ -82,7 +86,6 @@ public class DeleteStaffScreen {
             }
 
             nameToDelete = inputString;
-            haveAuser = true;
             break;
         }
         //scan.close();
@@ -116,9 +119,9 @@ public class DeleteStaffScreen {
 
     public void deleteUserFromFile(String username) {
         try{
-        //temp file
-        File oFile = File.createTempFile("tempUserForDelete",".csv");
 
+        //temp file
+        File oFile = File.createTempFile("tempUserFileForDelete",".csv");
 
         //input
         FileInputStream fileInputStream = new FileInputStream(userCsvFile);
@@ -128,7 +131,6 @@ public class DeleteStaffScreen {
         FileOutputStream fos = new FileOutputStream(oFile);
         PrintWriter out = new PrintWriter(fos);
         String thisline;
-
         int i =0;
         while ((thisline = inReader.readLine()) != null){
             String fields[] = thisline.split(",");
@@ -146,12 +148,18 @@ public class DeleteStaffScreen {
         out.flush();
         out.close();
         inReader.close();
+            System.out.println(userCsvFile.getName()+"before");
         userCsvFile.delete();
+        System.out.println(userCsvFile.getName());
+        System.out.println(oFile.getName());
         oFile.renameTo(userCsvFile);
+            System.out.println(userCsvFile.getName()+"final");
+            System.out.println(oFile.getName());
 
 
 
     }catch (Exception e){
+            System.out.println("exception!!!1");
         e.printStackTrace();}
     }
 
@@ -186,6 +194,7 @@ public class DeleteStaffScreen {
                 String email = detailsArray[2];
                 if(userEmail.equals(email) && detailsArray[6].equals("STAFF")){
                     myReader.close();
+                    haveAuser = true;
                     return 1;
                 }
 
