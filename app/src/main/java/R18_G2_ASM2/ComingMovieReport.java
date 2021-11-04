@@ -24,6 +24,19 @@ public class ComingMovieReport extends Screen {
             throw new IllegalArgumentException("Invalid user type for this screen");
         }
         title = "Coming Movie Report";
+
+    }
+
+    @Override
+    public void run(){
+        while (!goBack) {
+            clearScreen();
+            printHeader();
+            print();
+            setOptions();
+            askforInput();
+            chooseOption();
+        }
     }
 
     @Override
@@ -54,16 +67,15 @@ public class ComingMovieReport extends Screen {
 
     @Override
     public void print() {
-        clearScreen();
         //System.out.print("Current Date & Time: OCT 27 - THU 9:57PM\n");  // TODO make dynamic time
         moviesSorted = Movie.printAllShowings(mSystem.getMovies(),Calendar.getInstance(AEST,Locale.ENGLISH), Movie.getWeekEnd(2),true, DateSize.MED);
 
-        printHeader();
 
-        System.out.printf("Welcome %s,\n\n", mSystem.getUser().getNickname());
+        System.out.printf("\nWelcome %s,\n\n", mSystem.getUser().getNickname());
 
         printOptionsText();
 
         System.out.print(formatANSI("R",ANSI_USER_OPTION) + " - To go back to the staff Home Page\n\n");
+
     }
 }
