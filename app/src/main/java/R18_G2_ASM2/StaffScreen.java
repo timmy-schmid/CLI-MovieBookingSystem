@@ -5,6 +5,8 @@ public class StaffScreen extends Screen{
   private StaffAddMovieScreen addMovieScreen;
   private StaffDeleteMovieScreen deleteMovieScreen;
   private AddShowing addShowing;
+  private StaffBookingSummaryScreen bookingSummaryScreen =  new StaffBookingSummaryScreen();
+  private UpdateGiftCardsScreen gcs = new UpdateGiftCardsScreen(mSystem);
 
   public StaffScreen(MovieSystem mSystem) {
     super(mSystem);
@@ -19,29 +21,26 @@ public class StaffScreen extends Screen{
   @Override
   protected void chooseOption() {
     switch (selectedOption) {
-      case "1": //TODO add functionality
-                //to update gift card status
-                UpdateGiftCardsScreen gcs = new UpdateGiftCardsScreen(mSystem);
-                gcs.print();
-                break;
+      case "1":
+        //to update gift card status
+        gcs.print();
+        break;
       case "2": //TODO add functionality
-        addMovieScreen = new StaffAddMovieScreen();
         try{
           addMovieScreen.retriveMoiveInfo();
 
         }catch (Exception e){
           e.printStackTrace();
         }
-                break;
+        break;
       case "3": //TODO add functionality
-        deleteMovieScreen = new StaffDeleteMovieScreen();
         try{
           deleteMovieScreen.retriveMoiveInfo();
 
         }catch (Exception e){
           e.printStackTrace();
         }
-                break;
+        break;
       case "4"://TODO add functionality
       break;
       case "5": //TODO add functionality
@@ -51,6 +50,12 @@ public class StaffScreen extends Screen{
       case "6"://TODO add functionality
       break;
       case "7": //TODO add functionality
+      try{
+        bookingSummaryScreen.run();
+
+      }catch (Exception e){
+        e.printStackTrace();
+      }
       break;
       case "8": //TODO add functionality
 
