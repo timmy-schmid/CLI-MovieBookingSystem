@@ -56,7 +56,7 @@ public class UpdateGiftCardsScreen extends Screen{
 
   @Override
   public void print() {
-    this.clearScreen();
+    // this.clearScreen();
     this.title = "Welcome to the update gift cards screen page~";
     this.printHeader();
     this.printOptions();
@@ -71,11 +71,11 @@ public class UpdateGiftCardsScreen extends Screen{
     System.out.println("GIFTCARDSFILE = " + GIFT_CARD_FILE_NAME);
     System.out.println("GIFTCARDSFILENAME = " + giftCardsFile);
 
-
     Scanner scan = new Scanner(System.in);
-    String res = scan.nextLine();
-    switch(res){ //selectedOption
-      case "1":
+
+    while (true){
+      String res = scan.nextLine();
+      if (res.equals("1")){
         System.out.printf("Please enter the gift card number to add: ");
         while (true) {
           String gNum = scan.nextLine();
@@ -93,36 +93,85 @@ public class UpdateGiftCardsScreen extends Screen{
           }
         }
         break;
-      case "2": //loop later
-        System.out.printf("Please enter the gift card number to update status of: ");
-        while (true) {
-          String gNum2 = scan.nextLine();
-          int num2 = this.updateGiftCardStatus(gNum2);
-          if (num2 == 1){
-            while (true){
-              this.nextOption();
-              String nextOption = scan.nextLine();
-              if(nextOption.equals("2")){
-                this.title = "REDIRECTING YOU BACK TO HOME PAGE~ in 3..2..1..";
-                this.printHeader();
-                return;
-              } else if (nextOption.equals("1")){
-                System.out.printf("Please enter the gift card number to update status of: ");
-                break;
-              } else {
-                System.out.println("Please enter a valid command.");
-              } 
+      } else if (res.equals("2")){
+          System.out.printf("Please enter the gift card number to update status of: ");
+          while (true) {
+            String gNum2 = scan.nextLine();
+            int num2 = this.updateGiftCardStatus(gNum2);
+            if (num2 == 1){
+              while (true){
+                this.nextOption();
+                String nextOption = scan.nextLine();
+                if (nextOption.equals("2")){
+                  this.title = "REDIRECTING YOU BACK TO HOME PAGE~ in 3..2..1..";
+                  this.printHeader();
+                  return;
+                } else if (nextOption.equals("1")){
+                  System.out.printf("Please enter the gift card number to update status of: ");
+                  break;
+                } else {
+                  System.out.println("Please enter a valid command.");
+                } 
+              }
             }
           }
-        }
-      case "3":
+        } else if (res.equals("3")){
         this.title = "REDIRECTING YOU BACK TO HOME PAGE~ in 3..2..1..";
         this.printHeader();
         break;
-      
-      default: throw new IllegalArgumentException("Critical error - invalid selection passed validation");
+      } else {
+        System.out.printf("Please select a valid command: ");
+      }
     }
   }
+
+    // switch(res){ //selectedOption
+    //   case "1":
+    //     System.out.printf("Please enter the gift card number to add: ");
+    //     while (true) {
+    //       String gNum = scan.nextLine();
+    //       int num = this.addNewGiftCard(gNum);
+    //       if (num == 1){
+    //         this.nextOption();
+    //         String nextOption = scan.nextLine();
+    //         if(nextOption.equals("2")){
+    //           this.title = "REDIRECTING YOU BACK TO HOME PAGE~ in 3..2..1..";
+    //           this.printHeader();
+    //           break;
+    //         } else {
+    //           System.out.printf("Please enter the gift card number to add: ");
+    //         }
+    //       }
+    //     }
+    //     break;
+    //   case "2": //loop later
+    //     System.out.printf("Please enter the gift card number to update status of: ");
+    //     while (true) {
+    //       String gNum2 = scan.nextLine();
+    //       int num2 = this.updateGiftCardStatus(gNum2);
+    //       if (num2 == 1){
+    //         while (true){
+    //           this.nextOption();
+    //           String nextOption = scan.nextLine();
+    //           if(nextOption.equals("2")){
+    //             this.title = "REDIRECTING YOU BACK TO HOME PAGE~ in 3..2..1..";
+    //             this.printHeader();
+    //             return;
+    //           } else if (nextOption.equals("1")){
+    //             System.out.printf("Please enter the gift card number to update status of: ");
+    //             break;
+    //           } else {
+    //             System.out.println("Please enter a valid command.");
+    //           } 
+    //         }
+    //       }
+    //     }
+    //   case "3":
+    //     this.title = "REDIRECTING YOU BACK TO HOME PAGE~ in 3..2..1..";
+    //     this.printHeader();
+    //     break;
+      
+      // default: throw new IllegalArgumentException("Critical error - invalid selection passed validation");
 
   public void printOptions(){
    
