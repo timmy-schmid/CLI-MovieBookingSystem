@@ -176,8 +176,31 @@ public abstract class User extends UserValidation {
     return id;
   }
 
-
-  // public static int doesUserExistInCSV(String fileName, String userEmail, String userPhoneNumber) throws FileNotFoundException {    
+  //code used in transaction + updateGiftCardDetailsScreen class 
+  public static String checkIfGiftCardExists(File file, String userInputGNumber){ //overwrites existing gift cards in file by changing the reedemble status of the gift card so it can no longer be used for next time
+    String msg = "invalid number";
+    try {
+      File f = file; //this.giftCardsFile;
+      Scanner myReader = new Scanner(f);
+      //find matching customer result
+      while (myReader.hasNextLine()){
+        String line = myReader.nextLine();
+        String[] detailsArray = line.split(",");
+        //change reedemable to not reedemable
+        if (userInputGNumber.equals(detailsArray[0])){  //match found
+          if (detailsArray[1].equals("T")){
+            msg = "found true"; //if can be used (check if tickets amount <= 100)
+          } else {
+            msg = "found false"; 
+          }
+          break;
+        }
+      }
+    } catch (IOException e) {
+      e.printStackTrace();
+    }
+    return msg;
+  }
 
   public static int updateGiftCardStatus(String fileName, File tempFile, String userInputGNumber){ //overwrites existing gift cards in file by changing the reedemble status of the gift card so it can no longer be used for next time    
     if (User.isValidGiftCardNumber(userInputGNumber) == false) {

@@ -40,7 +40,6 @@ public class TransactionTest {
   public void setUp() {
 
     userA = new Customer(6, "Anna", "anna@yahoo.com","0412345881", "Lalala1234");
-  
     userB = new Customer(7, "helen", "hhh@gmail.com", "0423456719", "Asdf1234!*");
 
     userB.setAutoFillStatus(true);
@@ -175,54 +174,7 @@ public class TransactionTest {
     assertNotNull(t2.getCustomer());
     assertNotNull(t);
     assertNotNull(t2);
-    // assertNotNull(t2.getUserCsvFile());
-    // assertNotNull(t2.getTempFile());
-    // assertNotNull(t2.getTempFileName());
-    // assertNotNull(t2.getTempFile2Name());
-    // assertNotNull(t.getGiftCardFileName());
-    // assertNotNull(t.getGiftCardsFile());
-    // assertNotNull(t.getTempFile2());
-    // assertNotNull(t.getUserFileName());
   }
-
-  @Test void testValidGiftCard(){
-    String result = t.checkIfGiftCardExists("11111111111116GC");
-    assertEquals(result, "found false");
-  }
-
-  @Test void testInvalidGiftCard(){
-    String result = t.checkIfGiftCardExists("11342416GC");
-    assertEquals(result, "invalid number");
-  }
-
-  //DELETE LATER PROBABLY!!!!
-
-  // @Test void validGiftCardStatusUpdate() throws IOException{
-  //   //assert reading file (T --> F for specific number)
-  //   String status = "";    
-  //   String currentLine = "";
-  //   String lastLine = "";
-  //   BufferedReader myReader = new BufferedReader(new FileReader(t.getGiftCardsFile()));
-  //   //read file before overwriting
-  //   while ((currentLine = myReader.readLine()) != null){
-  //     lastLine = currentLine;
-  //     if (lastLine.split(",")[0].equals("11111111111115GC")){
-  //       status = lastLine.split(",")[1];
-  //       break;
-  //     }
-  //   }
-  //   myReader.close();
-
-  //   String message = t.updateGiftCardStatus("11111111111115GC");
-
-  //   if (status.equals("T")){
-  //     assertEquals(message, "first time ok"); //first time run (T-->F)
-  //   } else {
-
-  //     assertEquals(message, "not redeemable"); //next time read, already changed
-  //   }
-  // }
-
 
   @Test void giftCardNotRedeemable(){ //valid card number in system
     String msg = "Please enter your gift card number: "+
@@ -402,12 +354,12 @@ public class TransactionTest {
 
   }
 
-  // @Test void validCreditCardInput(){ //cant pass :(
-  //   userB.setCardName("Debbie");
-  //   userB.setCardNumber("92090");
-  //   boolean result = t2.checkCreditCardInfo(userB.getCardName(), userB.getCardNumber());
-  //   assert(result == true);
-  // }
+  @Test void validCreditCardInput(){ //cant pass :(
+    userB.setCardName("Debbie");
+    userB.setCardNumber("92090");
+    boolean result = t2.checkCreditCardInfo(userB.getCardName(), userB.getCardNumber());
+    assert(result == true);
+  }
 
   @Test void invalidCreditCardInput(){
     userB.setCardName("Casey");
@@ -488,4 +440,30 @@ public class TransactionTest {
   //   t2.askForUserDetails();
   //   assertEquals(outContent.toString(), expectedOut);
   // }
+
+  @Test
+  public void testCanUpdateAutofillStatus() throws IOException {
+    t.updateAutoFillStatus();
+    BufferedReader myReader = new BufferedReader(new FileReader(t.getUserCsvFile()));
+    String currentLine = "";
+    while ((currentLine = myReader.readLine()) != null){
+      if (currentLine.split(",")[2].equals(t.getCustomer().getEmail())){
+        assertEquals(currentLine.split(",")[5], "T");
+      }
+    }
+    myReader.close();
+  }
+  
+  @Test
+  public void canSetUserCardDetails(){
+    String cardName = "newUsername";
+    String cardNumber = "12345";
+    boolean newStatus = false;
+
+    t2.setUserCardDetails(userB, cardName,cardNumber, newStatus);
+
+    assertEquals(userB.getCardName(), cardName);
+    assertEquals(userB.getCardNumber(), cardNumber);
+    assertEquals(userB.getAutoFillStatus(), newStatus);
+  }
 }
