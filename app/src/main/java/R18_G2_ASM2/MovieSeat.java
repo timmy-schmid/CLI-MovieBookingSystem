@@ -195,6 +195,18 @@ public class MovieSeat{
         tempMovieSeat.delete();
     }
 
+    public void resetSeatMap(){
+        try {
+            tempMovieSeat = DataController.accessCSVFile("movieSeatsMap/"+ String.valueOf(showing.getMovie().getId())+"-"+ String.valueOf(showing.getCinema().getId())+"-"+String.valueOf(showing.getShowingId())+"-temp"+".csv");
+        } catch (FileNotFoundException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        }
+        if (tempMovieSeat.exists()){
+            tempMovieSeat.renameTo(movieSeat);
+        }
+    }
+
 
     // public static void main(String[] args) throws IOException{
     //     List<String> colNames;

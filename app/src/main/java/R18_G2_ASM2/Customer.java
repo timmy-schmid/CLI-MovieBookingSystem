@@ -110,7 +110,9 @@ public class Customer extends User {
     return pendingPaymentShow;
   }
 
-
+  public void resetSeatMap(){
+    pendingPaymentShow.resetSeatMap();
+  }
 
 
   public void completeTransaction(){
