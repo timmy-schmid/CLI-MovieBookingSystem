@@ -30,7 +30,7 @@ public class MovieSystem {
   public void run() throws IOException {
     StartScreen startScreen = new StartScreen(this);
     startScreen.run();
-  }
+    }
 
   public HashMap<Integer,Movie> getMovies() {
     return movies;

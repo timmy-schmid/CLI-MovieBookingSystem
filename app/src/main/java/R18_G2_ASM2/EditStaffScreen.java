@@ -7,8 +7,8 @@ public class EditStaffScreen extends Screen{
 
     private static User manager;
     private final static UserType type = UserType.STAFF;
-    private AddingStaffScreen addingStaffScreen;
-    private DeleteStaffScreen deleteStaffScreen;
+    private AddingStaffScreen addingStaffScreen = new AddingStaffScreen(mSystem);;
+    private DeleteStaffScreen deleteStaffScreen = new DeleteStaffScreen(mSystem);;
 
     // this should be the home page for manager screen
     private Screen superiorScreen;
@@ -26,12 +26,10 @@ public class EditStaffScreen extends Screen{
         switch (selectedOption) {
             case "1":
                 //AddingStaffScreen;
-                this.addingStaffScreen = new AddingStaffScreen(mSystem);
                 this.addingStaffScreen.run();
                 break;
             case "2":
                 //deleteStaffScreen;
-                this.deleteStaffScreen = new DeleteStaffScreen(mSystem);
                 this.deleteStaffScreen.run();
                 break;
             case "Q": case "q":
