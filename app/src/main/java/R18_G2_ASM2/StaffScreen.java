@@ -1,10 +1,11 @@
 package R18_G2_ASM2;
 
 public class StaffScreen extends Screen{
-  private EditStaffScreen editStaffScreen;
-  private StaffAddMovieScreen addMovieScreen;
-  private StaffDeleteMovieScreen deleteMovieScreen;
-  private StaffBookingSummaryScreen bookingSummaryScreen;
+  private EditStaffScreen editStaffScreen = new EditStaffScreen(mSystem);
+  private StaffAddMovieScreen addMovieScreen = new StaffAddMovieScreen();
+  private StaffDeleteMovieScreen deleteMovieScreen = new StaffDeleteMovieScreen();
+  private StaffBookingSummaryScreen bookingSummaryScreen =  new StaffBookingSummaryScreen();
+  private UpdateGiftCardsScreen gcs = new UpdateGiftCardsScreen(mSystem);
 
   public StaffScreen(MovieSystem mSystem) {
     super(mSystem);
@@ -21,11 +22,9 @@ public class StaffScreen extends Screen{
     switch (selectedOption) {
       case "1":
         //to update gift card status
-        UpdateGiftCardsScreen gcs = new UpdateGiftCardsScreen(mSystem);
         gcs.print();
         break;
       case "2": //TODO add functionality
-        addMovieScreen = new StaffAddMovieScreen();
         try{
           addMovieScreen.retriveMoiveInfo();
 
@@ -34,7 +33,6 @@ public class StaffScreen extends Screen{
         }
         break;
       case "3": //TODO add functionality
-        deleteMovieScreen = new StaffDeleteMovieScreen();
         try{
           deleteMovieScreen.retriveMoiveInfo();
 
@@ -45,7 +43,6 @@ public class StaffScreen extends Screen{
       case "4"://TODO add functionality
       break;
       case "5": //TODO add functionality
-        bookingSummaryScreen = new StaffBookingSummaryScreen();
         try{
           bookingSummaryScreen.run();
 
@@ -58,7 +55,6 @@ public class StaffScreen extends Screen{
       case "7": //TODO add functionality
       break;
       case "8": //TODO add functionality
-        editStaffScreen = new EditStaffScreen(mSystem);
         editStaffScreen.run();
       break;
       case "Q": case "q":
@@ -100,7 +96,6 @@ public class StaffScreen extends Screen{
     if (mSystem.getUser().getUserType() == UserType.MANAGER) {
       System.out.print(formatANSI("7",ANSI_USER_OPTION) + " - Generate a cancelled transactions report\n");  
       System.out.print(formatANSI("8",ANSI_USER_OPTION) + " - Edit staff member\n");
-//      System.out.print(formatANSI("9",ANSI_USER_OPTION) + " - Remove an existing staff member\n");
     }
     System.out.print(formatANSI("Q",ANSI_USER_OPTION) + " - Quit and logout.\n\n");
     
