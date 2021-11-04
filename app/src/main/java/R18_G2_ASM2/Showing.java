@@ -168,6 +168,10 @@ public int middleSeatBooked(){
   public void completeTransaction(){
     movieSeat.completeTransaction();
   }
+
+  public void resetSeatMap(){
+    movieSeat.resetSeatMap();
+  }
   
   @Override
   public int compareTo(Showing b) {

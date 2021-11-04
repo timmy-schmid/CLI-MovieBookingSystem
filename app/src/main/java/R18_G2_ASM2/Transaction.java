@@ -154,6 +154,8 @@ public class Transaction {
 
       } else if (option.toLowerCase().equals("c")){ //go back to booking page or home page??
         returnMsg = "cancel";
+        this.getCustomer().resetSeatMap();
+        TransactionSummary.writeToTransactionSummaryReport(customer, TransactionType.CANCEL);
         break;
       } else {
         System.out.printf("Please enter a valid command: ");
@@ -372,6 +374,7 @@ public class Transaction {
         } else if (option == 2){
           return 2;
         } else if (option == 3){
+          TransactionSummary.writeToTransactionSummaryReport(customer, TransactionType.CANCEL);
           return 3;
         } else {
           System.out.println("Line 149: please re-enter a valid option: ");
@@ -505,6 +508,9 @@ public class Transaction {
         } else if (cardType.equals("gift")){
           this.updateGiftCardStatus(userInputNumber);
         }
+        this.getCustomer().completeTransaction();
+        TransactionSummary.writeToTransactionSummaryReport(customer, TransactionType.SUCCESS);
+        // this.getCustomer().cancelTransaction();
         System.out.println("\nTransaction Successful!");
         System.out.println("Please see your receipt below to present at the cinema: \n\n\n");
         // this.printReceipt();
@@ -512,6 +518,7 @@ public class Transaction {
         this.getCustomer().completeTransaction();
         return true;
       } else if (option.toLowerCase().equals("c")){
+        TransactionSummary.writeToTransactionSummaryReport(customer, TransactionType.CANCEL);
         System.out.println("\nLINE 455: Transaction cancelled!");
         return false;
       } else {
