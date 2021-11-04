@@ -71,7 +71,7 @@ public class DeleteStaffScreen {
             haveAuser = true;
             break;
         }
-        scan.close();
+        //scan.close();
     }
 
 
@@ -93,7 +93,7 @@ public class DeleteStaffScreen {
                 continue;
                 }
             }
-        scan.close();
+        //scan.close();
     }
 
     public void InvaLidEmail(){
@@ -116,11 +116,15 @@ public class DeleteStaffScreen {
         String thisline;
 
         int i =0;
-            System.out.println("113");
         while ((thisline = inReader.readLine()) != null){
             String fields[] = thisline.split(",");
+
+            //skips row if invalid amount of fields
+            if (fields.length < 7 ) {
+              continue;
+            }
+
             if (!fields[2].equals(username)){
-                System.out.println(thisline);
                 out.println(thisline);
                 i++;
             }

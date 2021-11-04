@@ -22,7 +22,6 @@ public class StaffScreen extends Screen{
                 //to update gift card status
                 UpdateGiftCardsScreen gcs = new UpdateGiftCardsScreen(mSystem);
                 gcs.print();
-
                 break;
       case "2": //TODO add functionality
         addMovieScreen = new StaffAddMovieScreen();

@@ -1,6 +1,11 @@
 package R18_G2_ASM2;
 
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.LinkedHashMap;
+import java.util.List;
+import java.util.Map;
 
 public class Customer extends User {
   private LinkedHashMap<Person,Integer> ticket = new LinkedHashMap<>();
@@ -11,6 +16,8 @@ public class Customer extends User {
   private String cardName;
   private String cardNumber;
   private String cvvNumber;
+  private Showing pendingPaymentShow;
+
 
   public Customer(int ID, String nickname, String email, String phoneNumber, String password) {
     super(ID, nickname, email, phoneNumber, password);
@@ -93,5 +100,20 @@ public class Customer extends User {
 
   public String getTicketMessage(){
     return this.ticketMessage;
+  }
+
+  public void setPendingPaymentShow(Showing showing){
+    this.pendingPaymentShow = showing;
+  }
+
+  public Showing getPendingPaymentShow(){
+    return pendingPaymentShow;
+  }
+
+
+
+
+  public void completeTransaction(){
+    pendingPaymentShow.completeTransaction();
   }
 }
