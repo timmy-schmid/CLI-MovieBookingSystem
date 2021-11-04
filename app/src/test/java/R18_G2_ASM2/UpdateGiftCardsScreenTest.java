@@ -55,35 +55,28 @@ public class UpdateGiftCardsScreenTest {
 
   //ASSERTION ERROR!!!
   
-  // @Test 
-  // public void canPrintOptions(){
-  //   String msg = "1. Add a new gift card number\n" +
-  //                "2. Update existing gift card status\n" + 
-  //                "3. Cancel and go back to home page\n";
-  //   String msg2 = "User input:";
-  //   String expectedOut = msg + msg2;   
-  //   // ByteArrayOutputStream outContent = new ByteArrayOutputStream();
-  //   // System.setOut(new PrintStream(outContent));
+  @Test 
+  public void canPrintOptions(){
+    String msg = "Please choose from the following options:\n\n" + 
+                 "1. Add a new gift card number\n" +
+                 "2. Update existing gift card status\n" + 
+                 "3. Cancel and go back to home page\n\n";
+    String msg2 = "User Input:";
+    String expectedOut = msg + msg2;   
+    gcs.printOptions();
+    assertEquals(outContent.toString(), expectedOut);
+  }
 
-  //   // ByteArrayInputStream in = new ByteArrayInputStream(inputMessage.getBytes());
-
-  //   // System.setIn(in);
-  //   gcs.printOptions();
-  //   assertEquals(outContent.toString(), expectedOut);
-  // }
-
-  // @Test 
-  // public void canPrintNextOption(){
-  //   String msg = "1. Add a new gift card number\n" +
-  //   "2. Update existing gift card status\n" + 
-  //   "3. Cancel and go back to home page\n";
+  @Test 
+  public void canPrintNextOption(){
+    String msg = "Please choose from the following options:\n\n";
     
-  //   String msg2 = "User input:";
-  //   String expectedOut = "\n"+msg+msg2+
-  //                       "1. Continue\n" +
-  //                       "2. End and go back to home page\n" +
-  //                       msg2;
-  //   gcs.nextOption();
-  //   assertEquals(outContent.toString(), expectedOut);
-  // }
+    String msg2 = "User Input:";
+    String expectedOut = "\n"+msg+
+                        "1. Continue\n" +
+                        "2. End and go back to home page\n\n" +
+                        msg2;
+    gcs.nextOption();
+    assertEquals(outContent.toString(), expectedOut);
+  }
 }
