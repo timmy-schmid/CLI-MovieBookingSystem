@@ -67,7 +67,7 @@ public class Transaction {
   }
 
   public void printScreen(){
-    System.out.print("\033[H\033[2J"); // clears screen
+    // System.out.print("\033[H\033[2J"); // clears screen
     System.out.println("\n*******************************************************");
     System.out.println("            Welcome to the payment page :)            ");
     System.out.println("               Movie to book details               ");
@@ -103,8 +103,6 @@ public class Transaction {
     }
     return autoFill;
   }
-
-  //return a user object??
 
   public String printOptions(int num){ //print prompt to save if user hasn't changed status yet else don't show
     String returnMsg = "";
@@ -146,20 +144,21 @@ public class Transaction {
    Scanner scan = new Scanner(System.in);
    if (msg.equals("1")){ //credit card
      // if autofill option of user isn't true, prompt user to enter card details otherwise prints the details 
-    this.askForCreditCardDetails(this.getCustomer().getAutoFillStatus());
+      this.askForCreditCardDetails(this.getCustomer().getAutoFillStatus());
    } else if (msg.equals("2")){ //gift card
      while (true){
        int returnResult = this.askForGiftCardDetails();
        if (returnResult == 0){
-         this.getFinalMsg("gift", this.userGiftNumber);
-         break;
+          // System.out.println("LINE 152::::::::: TRANSACTION@");
+          this.getFinalMsg("gift", this.userGiftNumber);
+          break;
        } else if (returnResult == 2){
-         System.out.println("LINE 157: pay remaining amount with credit card");
-         this.askForCreditCardDetails(this.getCustomer().getAutoFillStatus());
-         break;
+          System.out.println("LINE 157: pay remaining amount with credit card");
+          this.askForCreditCardDetails(this.getCustomer().getAutoFillStatus());
+          break;
        } else if (returnResult == 3){
-         this.printOptions(0);
-         break;
+          this.printOptions(0);
+          break;
        }
      }
    }
