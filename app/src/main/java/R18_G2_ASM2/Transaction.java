@@ -33,9 +33,12 @@ public class Transaction {
   private static String TEMP_FILE_2_NAME = "cardTemp2.csv";
   private static String GIFT_CARD_FILE_NAME = "giftCards.csv";
 
+  long startTime = System.currentTimeMillis();
+  long elapsedTime = 0L;
+  int TWO_MINUTES = 2*60*1000;
+
   public Transaction(Customer customer){
     this.customer = customer;
-
     try {
       this.userCsvFile = DataController.accessCSVFile(USER_FILE_NAME);
       this.tempFile = DataController.accessCSVFile(TEMP_FILE_NAME);
@@ -81,10 +84,19 @@ public class Transaction {
   // TODO: autogenerate a unique transaction ID for each user
 
     //--> user's tickets details --> 
+
   public void run() throws IOException { //card details fill out
-      
     this.printScreen();
     this.askForUserDetails();
+  }
+
+  public boolean isElapsed() {
+    elapsedTime = (new Date()).getTime() - startTime;
+    if (elapsedTime > TWO_MINUTES) {
+      return true;
+    } else {
+      return false;
+    }
   }
 
   //if user decides to select 1. <Remember my card details> 2. <Dont remember card details>. 
@@ -121,7 +133,6 @@ public class Transaction {
     String option = null;
     while (true){
       option = scan.nextLine();
-      
       if (option.equals("1")){
         returnMsg = "1";
         break;
