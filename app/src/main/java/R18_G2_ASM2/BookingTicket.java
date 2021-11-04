@@ -191,14 +191,14 @@ public class BookingTicket {
             System.out.println("Rear(Blue HighLighter)          "+"Already be booked: "+Integer.toString(this.showing.getMovieSeat().rearSeatBooked()));
             System.out.println("All                             "+"Already be booked: "+Integer.toString(this.showing.getMovieSeat().totalSeatsBooked()));
             System.out.println("C-Cancel");
-            System.out.println("Anything else-Continue Choosing Seats\n");
+            // System.out.println("Anything else-Continue Choosing Seats\n");
             this.showing.getMovieSeat().showAllSeats();
-            String str = scan.next();
-            if(str.equalsIgnoreCase("c")) {
-                this.cancelBooking();
-                this.cancelBook = true;
-                break;
-            }
+            // String str = scan.next();
+            // if(str.equalsIgnoreCase("c")) {
+            //     this.cancelBooking();
+            //     this.cancelBook = true;
+            //     break;
+            // }
             break;
 
         }
@@ -274,12 +274,12 @@ public class BookingTicket {
             this.cancellingBookingForPerson(key, bookPerson.get(key));
             bookPerson.replace(key,0);
         }
-        if(indexofarray != 0){
-            for(int i = 0; i<indexofarray+1;i++){
-                this.cancelSeatForShow(rowLetters[i],colNum[i]);
-                rowLetters[i] = 'z';
-                colNum[i] = 0; }
-        }
+        // if(indexofarray != 0){
+        //     for(int i = 0; i<indexofarray+1;i++){
+        //         this.cancelSeatForShow(rowLetters[i],colNum[i]);
+        //         rowLetters[i] = 'z';
+        //         colNum[i] = 0; }
+        // }
         count = 0;
         indexofarray = 0;
         System.out.println("Successfully cancel.");
