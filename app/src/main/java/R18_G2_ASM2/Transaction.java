@@ -88,10 +88,16 @@ public class Transaction {
   public void run() throws IOException { //card details fill out
     this.printScreen();
     this.askForUserDetails();
+
+    if(isElapsed()) {
+      TransactionSummary.writeToTransactionSummaryReport(customer, TransactionType.TIMEOUT);
+      System.out.println("The transaction has expired. If you would like to rebook, please try again.");
+    }
   }
 
   public boolean isElapsed() {
     elapsedTime = (new Date()).getTime() - startTime;
+    System.out.println("Current Elapsed Time:" + elapsedTime / 1000);
     if (elapsedTime > TWO_MINUTES) {
       return true;
     } else {
@@ -131,7 +137,13 @@ public class Transaction {
 
     Scanner scan = new Scanner(System.in);
     String option = null;
+
     while (true){
+
+      if (isElapsed()) {
+        returnMsg = "cancel";
+        break;
+      }
       option = scan.nextLine();
       if (option.equals("1")){
         returnMsg = "1";
@@ -158,6 +170,9 @@ public class Transaction {
     this.askForCreditCardDetails(this.getCustomer().getAutoFillStatus());
    } else if (msg.equals("2")){ //gift card
      while (true){
+      if(isElapsed()) {
+        return;
+      }
        int returnResult = this.askForGiftCardDetails();
        if (returnResult == 0){
          this.getFinalMsg();
@@ -319,6 +334,10 @@ public class Transaction {
   public int askForGiftCardDetails(){
 
     Scanner scan = new Scanner(System.in);
+
+    if(isElapsed()) {
+      return -1;
+    }
     System.out.printf("Please enter your gift card number: ");
     String num = scan.nextLine();
 
@@ -342,6 +361,9 @@ public class Transaction {
       System.out.printf("\n1. Enter another gift card\n2. Go back to pay with credit card"+
       "\n3. Cancel payment\n"+"\nEnter option: ");
       while (true) {
+        if(isElapsed()) {
+          return -1;
+        }
         int option = scan.nextInt();
         if (option == 1){
           return 1;
@@ -376,6 +398,10 @@ public class Transaction {
       String number = null;
       Scanner sc = new Scanner(System.in);
       while (true) {
+
+        if (isElapsed()) {
+          return 0;
+        }
         System.out.printf("Please enter your credit card name: ");
         name = sc.nextLine();
         Console con = System.console();
@@ -384,6 +410,9 @@ public class Transaction {
           number = new String(num);
           // System.out.printf("NUMBER LINE 100: [%s]\n", number);
         } else {
+          if (isElapsed()) {
+            return 0;
+          }
           System.out.printf("Please enter your credit card number: ");
           number = sc.nextLine();
         }
@@ -445,11 +474,19 @@ public class Transaction {
     System.out.printf("\nUser Input: ");
 
     while (true) {
+
+      if (isElapsed()) {
+        return false;
+      }
+
       String option = scan.nextLine();
       if (option.toLowerCase().equals("f")){
         if (this.getCustomer().getAutoFillStatus() == false){
           System.out.printf("\nDo you want to save your card details to your account for next time? (Y/N): ");
-          
+
+          if (isElapsed()) {
+            return false;
+          }
           String option2 = scan.nextLine();
           String result = this.checkAutoFillOption(option2);
           if (result.equals("yes")){
