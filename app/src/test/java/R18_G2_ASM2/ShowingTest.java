@@ -50,8 +50,8 @@ class ShowingTest{
        assertNotNull(show.getCinema());
        assertNotNull(show.getMovie());
     //    assertNull(show.getMovieSeat());
-       assertEquals("MON 07 AUG - 11:11AM", show.getShowingTimeFormatted());
-       assertEquals("MON 11:11AM",show.getShowingTimeShort());
+       assertEquals("MON 07 AUG - 11:11AM", show.getShowingTime(DateSize.LONG));
+       assertEquals("MON 11:11AM",show.getShowingTime(DateSize.SHORT));
     }
 
     @Test 

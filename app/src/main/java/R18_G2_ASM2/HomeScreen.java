@@ -2,6 +2,9 @@ package R18_G2_ASM2;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Locale;
+import java.util.TimeZone;
 public class HomeScreen extends Screen {
 
   private ArrayList<Movie> moviesSorted;
@@ -9,18 +12,19 @@ public class HomeScreen extends Screen {
   private Registration reg;
   private MovieScreen movScreen;
   private EditInformation edit;
+  private static final TimeZone AEST = TimeZone.getTimeZone("Australia/Sydney");
 
   public HomeScreen(MovieSystem mSystem) {
     super(mSystem);
     this.login = new Login(mSystem);
     this.reg = new Registration(mSystem);
-    title = "CURRENT SHOWINGS (25 OCT - 31 OCT)"; //TODO create variable date
+    title = "CURRENT SHOWINGS (1 NOV - 7 NOV)"; //TODO create variable date
   }
 
   @Override
   protected void setOptions() {
+    options = new ArrayList<>();
     if (mSystem.getUser().getUserType() == UserType.GUEST) {
-      options = new ArrayList<>();
       options.add("L"); options.add("l");
       options.add("R"); options.add("r");
     } else {
@@ -77,7 +81,7 @@ public class HomeScreen extends Screen {
   public void print() {
     clearScreen();
     //System.out.print("Current Date & Time: OCT 27 - THU 9:57PM\n");  // TODO make dynamic time
-    moviesSorted = Movie.printAllShowings(mSystem.getMovies());
+    moviesSorted = Movie.printAllShowings(mSystem.getMovies(),Calendar.getInstance(AEST,Locale.ENGLISH), Movie.getWeekEnd(1), DateSize.SHORT);
     maxInputInt = moviesSorted.size();
 
     printHeader();
@@ -103,7 +107,6 @@ public class HomeScreen extends Screen {
     } else {
       System.out.print(formatANSI("E",ANSI_USER_OPTION) + " - To edit your account details\n");
       System.out.print(formatANSI("Q",ANSI_USER_OPTION) + " - Log out and Quit\n\n");
-
     }
   
   }

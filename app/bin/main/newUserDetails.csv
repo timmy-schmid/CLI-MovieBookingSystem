@@ -5,7 +5,9 @@
 5,lilly,lilyjones@gmail.com,0422345678,Lalala1234,F,CUSTOMER
 6,Anna,anna@yahoo.com,0412345881,Lalala1234,F,CUSTOMER
 7,helen,hhh@gmail.com,0423456719,Asdf1234!*,T,CUSTOMER
-8,Anna,anna@gmail.com,0411111111,Asdf1234!*,F ,CUSTOMER
+8,Anna,anna@gmail.com,0411111111,Asdf1234!*,F,CUSTOMER
+9,Inge,inge1@gmail.com,0412345999,Asdf1234!*,F,STAFF
+10,timmy,staff@gmail.com,0498999161,Testone1234!,T,STAFF
 11,Tim,manager@gmail.com,0412266666,Testone1234!,F,MANAGER
 12,Basil,basilLeaves@gmail.com,0412278120,Asdf1234!*,T,CUSTOMER
 13,kexu,kexu4389@gmail.com,0422392204,Testone1234!,F,STAFF

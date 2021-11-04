@@ -16,6 +16,7 @@ public class Showing implements Comparable<Showing> {
   private Movie movie;
   private Cinema cinema;
   private Calendar showingTime;
+  private static int maxShowing = -1; //NO INDEX TO BEGIN WITH
 
   private static final TimeZone AEST = TimeZone.getTimeZone("Australia/Sydney");
 
@@ -35,8 +36,12 @@ public class Showing implements Comparable<Showing> {
     seatsBooked.put(SeatLocation.MIDDLE,0);
     seatsBooked.put(SeatLocation.FRONT,0);
     this.movieSeat = new MovieSeat(this); //handle Io-Exception
+    maxShowing++;
   }
 
+  public static int getLastShowingIndex() {
+    return maxShowing;
+  }
   public int getShowingId() {
     return showingId;
   }
@@ -58,14 +63,17 @@ public class Showing implements Comparable<Showing> {
     return showingTime;
   }
 
-  public String getShowingTimeFormatted() {
-    SimpleDateFormat formatter = new SimpleDateFormat("EEE dd MMM - K:mma",Locale.ENGLISH);
-    formatter.setTimeZone(AEST);
-    return formatter.format(showingTime.getTime()).toUpperCase();
-  }
-
-  public String getShowingTimeShort() {
-    SimpleDateFormat formatter = new SimpleDateFormat("EEE K:mma",Locale.ENGLISH);
+  public String getShowingTime(DateSize size) {
+    SimpleDateFormat formatter;
+    if (size == DateSize.SHORT) {
+      formatter = new SimpleDateFormat("EEE K:mma",Locale.ENGLISH);
+    } else if (size == DateSize.MED) {
+      formatter = new SimpleDateFormat("EE dd/MM K:mma",Locale.ENGLISH);
+    } else if (size == DateSize.LONG) {
+      formatter = new SimpleDateFormat("EEE dd MMM - K:mma",Locale.ENGLISH);
+    } else {
+      return "";
+    }
     formatter.setTimeZone(AEST);
     return formatter.format(showingTime.getTime()).toUpperCase();
   }
@@ -112,7 +120,7 @@ public int middleSeatBooked(){
 
   @Override
   public String toString() {
-    return cinema.getId() + ":" + getShowingTimeFormatted() + ":" + movie.getName();
+    return cinema.getId() + ":" + getShowingTime(DateSize.LONG) + ":" + movie.getName();
   }
 
   static class SortMovieByShowingTime implements Comparator<Showing> {
@@ -159,6 +167,10 @@ public int middleSeatBooked(){
 
   public void completeTransaction(){
     movieSeat.completeTransaction();
+  }
+
+  public void resetSeatMap(){
+    movieSeat.resetSeatMap();
   }
   
   @Override
