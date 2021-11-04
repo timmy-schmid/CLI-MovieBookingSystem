@@ -16,6 +16,8 @@ public class App {
         // bt.run();
 
 //        DeleteStaffScreen dx = new DeleteStaffScreen(system);
-//        dx.deleteUserFromFile("kexu4389@gmail.com");
+////        System.out.println(dx.doesStaffExistInCSV(dx.getUserFileName(),"kexu4389@gmail.com"));
+//        dx.run();
+
     }
 }
