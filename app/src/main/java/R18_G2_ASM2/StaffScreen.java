@@ -62,9 +62,6 @@ public class StaffScreen extends Screen{
       break;
 
       case "7": //TODO add functionality
-<<<<<<< HEAD
-        TransactionSummary.printTransactionSummary();
-=======
         bookingSummaryScreen =  new StaffBookingSummaryScreen();
       try{
         bookingSummaryScreen.run();
@@ -72,10 +69,10 @@ public class StaffScreen extends Screen{
       }catch (Exception e){
         e.printStackTrace();
       }
->>>>>>> f198c60d6bbc1416037ce93db2b1f3b12ed2918a
       break;
 
       case "8": //TODO add functionality
+        TransactionSummary.printTransactionSummary();
       break;
 
       case "9": ///TODO check it works
