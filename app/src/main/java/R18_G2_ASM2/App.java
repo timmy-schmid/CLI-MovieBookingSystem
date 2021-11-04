@@ -14,5 +14,8 @@ public class App {
         // Customer user = new Customer(1,  "bob", "bobbie@gmail.com", "0412345678", "Password123");
         // BookingTicket bt = new BookingTicket(show, user);
         // bt.run();
+
+//        DeleteStaffScreen dx = new DeleteStaffScreen(system);
+//        dx.deleteUserFromFile("kexu4389@gmail.com");
     }
 }
