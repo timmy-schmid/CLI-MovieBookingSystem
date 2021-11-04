@@ -49,6 +49,7 @@ public class StaffScreen extends Screen{
       case "6"://TODO add functionality
       break;
       case "7": //TODO add functionality
+        TransactionSummary.printTransactionSummary();
       break;
       case "8": //TODO add functionality
         editStaffScreen = new EditStaffScreen(mSystem);
