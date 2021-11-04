@@ -66,10 +66,10 @@ public class UpdateGiftCardsScreen extends Screen{
   @Override
   public void chooseOption(){
 
-    System.out.println("LINE 69 :::::::: IN CHOOSEOPTIONS()");
-    System.out.println("TEMPFILE2 = " + tempFile2);
-    System.out.println("GIFTCARDSFILE = " + GIFT_CARD_FILE_NAME);
-    System.out.println("GIFTCARDSFILENAME = " + giftCardsFile);
+    // System.out.println("LINE 69 :::::::: IN CHOOSEOPTIONS()");
+    // System.out.println("TEMPFILE2 = " + tempFile2);
+    // System.out.println("GIFTCARDSFILE = " + GIFT_CARD_FILE_NAME);
+    // System.out.println("GIFTCARDSFILENAME = " + giftCardsFile);
 
     Scanner scan = new Scanner(System.in);
 
@@ -238,7 +238,7 @@ public class UpdateGiftCardsScreen extends Screen{
       // //find matching customer result
       Scanner scan = new Scanner(System.in);
 
-      System.out.println("LINE 187: GIFT CARDS FILE = " + giftCardsFile.getAbsolutePath());
+      // System.out.println("LINE 187: GIFT CARDS FILE = " + giftCardsFile.getAbsolutePath());
       BufferedReader in = new BufferedReader(new FileReader(GIFT_CARD_FILE_NAME)); //giftCardsFile
       String currentLine = "";
       String lastLine = "";
