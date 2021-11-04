@@ -5,9 +5,9 @@ public class StaffScreen extends Screen{
   private StaffAddMovieScreen addMovieScreen;
   private StaffDeleteMovieScreen deleteMovieScreen;
   private AddShowing addShowing;
-  private StaffBookingSummaryScreen bookingSummaryScreen =  new StaffBookingSummaryScreen();
-  private UpdateGiftCardsScreen gcs = new UpdateGiftCardsScreen(mSystem);
-  private ComingMovieReport cmr = new ComingMovieReport(mSystem);
+  private StaffBookingSummaryScreen bookingSummaryScreen ;
+  private UpdateGiftCardsScreen gcs;
+  private ComingMovieReport cmr;
 
   public StaffScreen(MovieSystem mSystem) {
     super(mSystem);
@@ -57,11 +57,11 @@ public class StaffScreen extends Screen{
         break;
 
       case "6"://TODO check it works
-        cmr =  new ComingMovieReport(mSystem);
+        cmr = new ComingMovieReport(mSystem);
         cmr.run();
       break;
 
-      case "7": //TODO add functionality
+      case "7": //TODO check it works
         bookingSummaryScreen =  new StaffBookingSummaryScreen();
       try{
         bookingSummaryScreen.run();
