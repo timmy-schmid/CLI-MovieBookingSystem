@@ -99,7 +99,7 @@ public class Transaction {
 
   public boolean isElapsed() {
     elapsedTime = (new Date()).getTime() - startTime;
-    System.out.println("Current Elapsed Time:" + elapsedTime / 1000);
+    //System.out.println("Current Elapsed Time:" + elapsedTime / 1000);
     if (elapsedTime > TWO_MINUTES) {
       return true;
     } else {
