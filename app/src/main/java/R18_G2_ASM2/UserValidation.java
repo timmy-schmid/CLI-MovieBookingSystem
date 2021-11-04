@@ -15,7 +15,7 @@ public abstract class UserValidation {
     if (pattern.matcher(email).matches()){
       return true;
     } else {
-      System.out.println("Your email did not satisfy acceptance criteria.");
+      System.out.println("Please enter an email that contains a recipient name, @ symbol and valid domain.");
       return false;
     }
   }
@@ -30,7 +30,8 @@ public abstract class UserValidation {
     if (pattern.matcher(password).matches()){
       return true;
     } else {
-      System.out.println("Your password did not satisfy acceptance criteria.");
+      //Your password did not satisfy acceptance criteria. 
+      System.out.println("Please enter a 10-digit password containing at least 1 capital letter and 1 number.");
       return false;
     }
   }
@@ -45,7 +46,7 @@ public abstract class UserValidation {
     if (pattern.matcher(phoneNumber).matches()){
       return true;
     } else {
-      System.out.println("Your phone number did not satisfy acceptance criteria.");
+      System.out.println("Please enter a 10 digit phone number.");
       return false;
     }
   }
@@ -59,7 +60,7 @@ public abstract class UserValidation {
     if (pattern.matcher(number).matches()){
       return true;
     } else {
-      System.out.println("Your card number did not satisfy acceptance criteria.");
+      System.out.println("Please enter a 5 digit card number.");
       return false;
     }
   }
@@ -74,7 +75,7 @@ public abstract class UserValidation {
     if (pattern.matcher(number).matches()){
       return true;
     } else {
-      System.out.println("Your gift card number did not satisfy acceptance criteria.");
+      System.out.printf("Please enter a 14 digit number followed by GC suffix: ");
       return false;
     }
   }

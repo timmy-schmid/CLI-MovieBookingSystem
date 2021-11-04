@@ -4,6 +4,7 @@ import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
+import java.io.FileWriter;
 import java.io.IOException;
 import java.io.InputStream;
 import java.net.URISyntaxException;
@@ -16,6 +17,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
+import java.util.Scanner;
 import java.util.TimeZone;
 
 import javax.naming.directory.InvalidAttributeValueException;
@@ -39,9 +41,13 @@ public class DataController {
     String path = "";
 
     if (Files.exists(Paths.get(basepath))) { // checks gradle dir v1
-      path = basepath + resource;
+      if (resource.contains(basepath)){ //check to prevent re-appending prev part
+        path = resource;
+      } else {
+        path = basepath + resource;
+      }
       f = new File(path);
-      //System.out.println("src: ABS PATH to copy to: "+ f.getAbsoluteFile().toPath());
+      // System.out.println("LINE 44 in datacontroller: src: ABS PATH to copy to: "+ f.getAbsoluteFile().toPath());
     } else if (Files.exists(Paths.get("app/" + basepath))) { // checks gradle dir v2
       path = "app/" + basepath + resource;
       f = new File(path);
@@ -323,4 +329,16 @@ public class DataController {
     br.close();
     return err;
   }
+
+  public static void writeShowingToFile(String fileName, int movieId,int CinemaID, Long timeCode) throws IOException {
+
+    File userFile;
+    userFile = DataController.accessCSVFile(fileName); //throws exception if fileName is not of form *.csv
+
+    FileWriter myWriter = new FileWriter(userFile, true); //for appending to existing file
+    myWriter.write("\n"+String.valueOf(movieId)+","+String.valueOf(CinemaID)+","+String.valueOf(timeCode));
+    myWriter.close();
+  }
+
+
 }

@@ -106,6 +106,12 @@ public class Login {
         String line = myReader.nextLine();
 
         String[] detailsArray = line.split(",");
+
+        //skips line if not enough fields
+        if (detailsArray.length < 7) {
+          continue;
+        }
+
         try{
           userID = Integer.parseInt(detailsArray[0]);
         } catch(NumberFormatException e){

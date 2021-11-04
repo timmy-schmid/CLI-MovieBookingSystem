@@ -62,39 +62,36 @@ public class Registration {
         String email = null;
         String nickname = null;
         String password = null;
-
         String phoneNumber = null;
-        boolean returnResult = false;
-        boolean returnResult2 = false;
-      
+
         while (true) { 
           System.out.printf("Please enter a nickname: "); //[re-enter]
           nickname = scan.nextLine();
 
           System.out.printf("\nPlease enter your email: "); 
           email = scan.nextLine();
+          if (User.validateUser(email) == true){
+            System.out.printf("\nPlease enter your phone number: "); 
+            phoneNumber = scan.nextLine();
+            if (User.isValidPhoneNumber(phoneNumber) == true){
+              //Validates if user exists and correct email + phone format.
+              int exists = User.doesUserExistInCSV(USER_FILE_NAME, email, phoneNumber);
 
-          System.out.printf("\nPlease enter your phone number: "); 
-          phoneNumber = scan.nextLine();
-
-          //Validates if user exists and correct email + phone format.
-          int exists = User.doesUserExistInCSV(USER_FILE_NAME, email, phoneNumber);
-
-          if (exists == 1) {
-            System.out.println("email is taken already/exists in system.");
-          } else if (exists == 2) {
-            System.out.println("phone# is taken already/exists in system.");
-          } else if (exists == 0) {
-
-            if (User.validateUser(email) && User.isValidPhoneNumber(phoneNumber)) {
-              break;
-            } 
-          } else {
-            System.out.printf("Critical Error: could not check if user exists in the system. Aborting.\n");  
-            return;      
+              if (exists == 1) {
+                System.out.println("email is taken already/exists in system.");
+              } else if (exists == 2) {
+                System.out.println("phone# is taken already/exists in system.");
+              } else if (exists == 0) {
+                // if (User.validateUser(email) && User.isValidPhoneNumber(phoneNumber)) {
+                  break;
+                // } 
+              } else {
+                System.out.printf("Critical Error: could not check if user exists in the system. Aborting.\n");  
+                return;      
+              }
+            }
           }
-          System.out.println();
-          System.out.println("Please re-enter your details again.\n");
+          System.out.println("\nPlease re-enter your details again.\n");
         }
 
         while (true) {
@@ -113,7 +110,6 @@ public class Registration {
             break;
           }
         }
-
         //user doesn't exist in system and creates a new acc
         mSystem.setUser(this.createCustomer(nickname, email, phoneNumber, password));
         HomeScreen home = new HomeScreen(mSystem);
@@ -175,11 +171,9 @@ public class Registration {
       System.out.println("       THANK YOU FOR SIGNING IN :)       ");
       System.out.println("*****************************************");
      
-      //acts like what happens after you login successfully~
       System.out.println("PLEASE ENTER 1 TO GO TO DEFAULT HOME PAGE");
       String res = "CONTINUE";
 
-      // int option = -1;
       String option = null;
       while (true){
         option = scan.nextLine();
