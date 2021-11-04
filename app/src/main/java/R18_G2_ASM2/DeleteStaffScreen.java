@@ -25,21 +25,27 @@ public class DeleteStaffScreen {
         this.movieSystem = movieSystem;
         this.checkinguser=movieSystem.getUser();
     }
+
+
     public void run() {
         while(!goBack){
             haveAuser = false;
             askForemail();
             if(haveAuser){
-                    deleteUserFromFile(nameToDelete);
+                deleteUserFromFile(nameToDelete);
+                System.out.println("Successfully delete. Returning to the Edit Staff page ...");
                     goBack = true;
-                    break;
             }
         }
     };
 
+
+    // message method
     public void  EmailnotExist(){
-        System.out.println("User don't exist\n");
+        System.out.println("User don't exist\n Please try again.\n");
     }
+
+    public void EmailExistAsAClient(){System.out.println("The user input is not a staff\nPlease try again.\n");}
 
 
     public void askForemail(){
@@ -54,7 +60,10 @@ public class DeleteStaffScreen {
                     throw new Exception("1");
                 }if(checkinguser.doesUserExistInCSV(USER_FILE_NAME,inputString,"9000010000") != 1){
                     throw new Exception("2");
-                }
+                }if (doesStaffExistInCSV(USER_FILE_NAME,inputString) == 0){
+                    throw new Exception("3");
+                }if (doesStaffExistInCSV(USER_FILE_NAME,inputString) == -2){
+                    throw new Exception("4");}
                 // if not correct format ask again;
             }catch (Exception e){
                 if(e.getMessage().equals("1")){
@@ -63,7 +72,12 @@ public class DeleteStaffScreen {
                 }else if(e.getMessage().equals("2")){
                     EmailnotExist();
                     continue;
-                }
+                }else if(e.getMessage().equals("3")){
+                    EmailExistAsAClient();
+                    continue;}
+                else if(e.getMessage().equals("4")){
+                    System.out.println("4");
+                    continue;}
                 continue;
             }
 
@@ -139,6 +153,50 @@ public class DeleteStaffScreen {
 
     }catch (Exception e){
         e.printStackTrace();}
+    }
+
+
+    // check the username is a staff or not
+    // if the username is a staff return 1
+    // else return 0
+    // -2 for the file not found exception
+    public int doesStaffExistInCSV(String fileName, String userEmail){
+
+
+        //check file follows right format...
+        try{ Scanner myReader = new Scanner(this.userCsvFile);
+            while (myReader.hasNextLine()) { //as long as you can keep reading the file, grab the details
+                String line = myReader.nextLine();
+                String[] detailsArray = line.split(",");
+
+                //TODO more checks on bool? Maybe a validate file fntion.
+
+                //checks valid amount of fields otherwise movies to next line
+                if (detailsArray.length < 7) {
+                    continue;
+                }
+
+                //checks if valid ID, if not it will continue to next line
+                try{
+                    Integer.parseInt(detailsArray[0]);
+                } catch(NumberFormatException e){
+                    continue;
+                }
+
+                String email = detailsArray[2];
+                if(userEmail.equals(email) && detailsArray[6].equals("STAFF")){
+                    myReader.close();
+                    return 1;
+                }
+
+            }
+            myReader.close();
+            return 0;
+        }catch (FileNotFoundException e){
+            e.printStackTrace();
+        }
+
+        return -2;
     }
 
 }
