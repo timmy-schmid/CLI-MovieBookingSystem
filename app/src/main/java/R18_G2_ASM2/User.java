@@ -3,6 +3,8 @@ package R18_G2_ASM2;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileWriter;
+import java.io.FileReader;
+import java.io.BufferedReader;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -174,4 +176,72 @@ public abstract class User extends UserValidation {
     return id;
   }
 
+
+  // public static int doesUserExistInCSV(String fileName, String userEmail, String userPhoneNumber) throws FileNotFoundException {    
+
+  public static int updateGiftCardStatus(String fileName, File tempFile, String userInputGNumber){ //overwrites existing gift cards in file by changing the reedemble status of the gift card so it can no longer be used for next time    
+    if (User.isValidGiftCardNumber(userInputGNumber) == false) {
+      return -1;
+    }
+    try {
+      File userFile = DataController.accessCSVFile(fileName);
+      Scanner myReader = new Scanner(userFile);
+      FileWriter myWriter = new FileWriter(tempFile);
+      // //find matching customer result
+      Scanner scan = new Scanner(System.in);
+      
+      BufferedReader in = new BufferedReader(new FileReader(DataController.accessCSVFile(fileName))); //giftCardsFile
+
+      String currentLine = "";
+      String lastLine = "";
+      String line1 = null;
+      while ((line1 = in.readLine()) != null) {
+        lastLine = line1;
+      }
+      while (myReader.hasNextLine()){
+        String line = myReader.nextLine();
+        String[] detailsArray = line.split(",");
+        //change reedemable to not reedemable
+        if (userInputGNumber.equals(detailsArray[0])){  //match found
+          if (detailsArray[1].equals("T")){
+            if (lastLine.equals(line)){ //set as no longer reedemable
+              myWriter.write(line.substring(0, line.length()-1) +"F");
+            } else { 
+              myWriter.write(line.substring(0, line.length()-1) +"F\n");
+            }
+          } else if (detailsArray[1].equals("F")){ //check if last line??????
+            System.out.printf("The number you have entered is already not redeemable, do you want to make it reedemable again? (Y/N): ");
+            String input = scan.nextLine();
+            if(input.toLowerCase().equals("y")){
+              if (lastLine.equals(line)){
+                myWriter.write(line.substring(0, line.length()-1) +"T");
+              } else {
+                myWriter.write(line.substring(0, line.length()-1) +"T\n");
+              }
+            } else { //no change
+              if (lastLine.equals(line)){
+                myWriter.write(line);
+              } else {
+                myWriter.write(line+"\n");
+              }
+            }
+          }
+        } else {
+          if (lastLine.equals(line)){
+            myWriter.write(line);
+          } else {
+            myWriter.write(line+"\n");
+          }
+        }
+      }
+      myReader.close();
+      myWriter.close();
+
+      tempFile.renameTo(userFile); //replace temp file with og file
+
+    } catch (IOException e) {
+      e.printStackTrace();
+    }
+    return 1;
+  }
 }

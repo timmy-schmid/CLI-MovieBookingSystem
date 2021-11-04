@@ -16,4 +16,8 @@
 16,2021-11-04 16:55:10,bobbie@gmail.com,CANCEL
 17,2021-11-04 16:57:59,bobbie@gmail.com,CANCEL
 18,2021-11-04 16:58:33,bobbie@gmail.com,CANCEL
+<<<<<<< HEAD
 19,2021-11-04 17:33:20,bobbie@gmail.com,TIMEOUT
+=======
+19,2021-11-04 17:33:20,bobbie@gmail.com,TIMEOUT20,2021-11-05 01:56:45,inge1@gmail.com,SUCCESS
+>>>>>>> updateGiftCardDetailsScreen
