@@ -32,6 +32,7 @@ public class MovieTest {
   public static final String ANSI_SILVER = "\033[38;2;170;169;173;m";
   public static final String ANSI_GOLD = "\033[38;2;212;175;55;m";
   public static final String ANSI_RESET = "\u001B[0m";
+  final TimeZone AEST = TimeZone.getTimeZone("Australia/Sydney");
 
   private static ByteArrayOutputStream actualOut;
   ArrayList<Calendar> showingTime;
@@ -47,7 +48,6 @@ public class MovieTest {
     cinemas = new HashMap<>();
     showings = new ArrayList<>();
 
-    final TimeZone AEST = TimeZone.getTimeZone("Australia/Sydney");
     df.setTimeZone(AEST); df2.setTimeZone(AEST); df3.setTimeZone(AEST);
     
     String[] cast1Array = {"actor 1", "actor 2"};
@@ -176,7 +176,7 @@ public class MovieTest {
     movies.get(2).addShowing(showings.get(4));
     movies.get(3).addShowing(showings.get(5));
 
-    Movie.printAllShowings(movies);
+    Movie.printAllShowings(movies, Calendar.getInstance(AEST, Locale.ENGLISH), Movie.getWeekEnd(1), DateSize.SHORT);
 
     String screen = "------------------------------------------------------------------------------------------\n" +
                     "ID  MOVIE                                              TIMES\n" +

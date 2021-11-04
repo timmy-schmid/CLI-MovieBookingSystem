@@ -23,7 +23,6 @@ public class Movie {
   public static final String ANSI_BRONZE = "\033[38;2;176;141;87;m";
   public static final String ANSI_SILVER = "\033[38;2;170;169;173;m";
   public static final String ANSI_GOLD = "\033[38;2;212;175;55;m";
-
   public static final String ANSI_RESET = "\u001B[0m";
 
 
@@ -87,12 +86,25 @@ public class Movie {
     ArrayList<Showing> filtered = new ArrayList<>();
     for(Showing showing: showings) {
       if (showing.getShowingTime().after(Calendar.getInstance(AEST,Locale.ENGLISH)) &&
-          showing.getShowingTime().before(getNextMonday(showing.getShowingTime()))) {
+          showing.getShowingTime().before(getWeekEnd(1))) {
         filtered.add(showing);
       }
     }
     return filtered;
   }
+
+  public ArrayList<Showing> getShowingsBetween(Calendar a, Calendar b) {
+    ArrayList<Showing> filtered = new ArrayList<>();
+    for(Showing showing: showings) {
+      if (showing.getShowingTime().after(a) &&
+          showing.getShowingTime().before(b)) {
+        filtered.add(showing);
+      }
+    }
+    return filtered;
+  }
+
+  
 
   public ArrayList<Showing> getShowings() {
     return showings;
@@ -163,7 +175,12 @@ public class Movie {
         return a.getName().compareTo(b.getName());
     }
   }
-  public static ArrayList<Movie> printAllShowings(HashMap<Integer,Movie> movies) {
+  public static ArrayList<Movie> printAllShowings(HashMap<Integer,Movie> movies, Calendar a, Calendar b, DateSize dateSize) {
+    return printAllShowings(movies, a, b, false,dateSize);
+  }
+
+
+  public static ArrayList<Movie> printAllShowings(HashMap<Integer,Movie> movies, Calendar a, Calendar b, boolean noShow, DateSize dateSize) {
     
     StringBuilder s = new StringBuilder();
     s.append("------------------------------------------------------------------------------------------\n");
@@ -178,7 +195,18 @@ public class Movie {
 
     for (Movie movie : sortedMovies) {      
       int showCounter = 1;
-      for (Showing showing: movie.getShowingsBeforeNextMonday()) {
+
+      if (movie.getShowingsBetween(a, b).size() == 0 && noShow == true) {
+        filteredMovies.add(movie);
+        s.append(String.format("\n%-4s",count));
+        String truncatedName = movie.getName();
+        if (truncatedName.length() > 47) {
+          truncatedName = truncatedName.substring(0,47) + "...";
+        }
+        s.append(String.format("%-51s", truncatedName));
+        count++;
+      }
+      for (Showing showing: movie.getShowingsBetween(a, b)) {
         //prints title on 1st showing
         if (showCounter == 1) {
           filteredMovies.add(movie);
@@ -190,15 +218,15 @@ public class Movie {
             truncatedName = truncatedName.substring(0,47) + "...";
           }
           s.append(String.format("%-51s", truncatedName));
-          s.append(String.format("%s",formatByClass(showing,showing.getShowingTimeShort())));
+          s.append(String.format("%s",formatByClass(showing,showing.getShowingTime(dateSize))));
           count++;
         } else {
           // wraps the showing time to next row  if more than 3 long.
           if (Math.floorMod(showCounter,3) == 0) { //TODO get rid of these magic number 3
             s.append(String.format(",\n%" + padding + "s", " "));
-            s.append(String.format("%s",formatByClass(showing,showing.getShowingTimeShort())));
+            s.append(String.format("%s",formatByClass(showing,showing.getShowingTime(dateSize))));
           } else {
-            s.append(String.format(", %s",formatByClass(showing,showing.getShowingTimeShort())));
+            s.append(String.format(", %s",formatByClass(showing,showing.getShowingTime(dateSize))));
           }
         }
         showCounter++; 
@@ -223,7 +251,7 @@ public class Movie {
     int count = 0;
     for (Showing currShowing : getShowingsBeforeNextMonday()) {
       s.append(String.format("%-4s",count+1));
-      s.append(String.format("%-21s",currShowing.getShowingTimeFormatted()));
+      s.append(String.format("%-21s",currShowing.getShowingTime(DateSize.LONG)));
       s.append(String.format("%s - %s CLASS\n",currShowing.getCinema().getId(),currShowing.getCinema().getScreen().name()));
       count++;
     }
@@ -242,10 +270,15 @@ public class Movie {
     return s;
   }
 
-  public static Calendar getNextMonday (Calendar c) {
+  public static Calendar getWeekEnd (int i) {
+
+    if (i < 1) {
+      throw new IllegalArgumentException("Not a valid Monday");
+    }
+
     Calendar nextMon = Calendar.getInstance(AEST, Locale.ENGLISH);
     nextMon.set(Calendar.DAY_OF_WEEK, Calendar.MONDAY);
-    nextMon.add(Calendar.DATE,6);
+    nextMon.add(Calendar.DATE,7*i);
     return nextMon;
   }
 }
