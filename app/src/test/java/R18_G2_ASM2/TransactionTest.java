@@ -90,19 +90,18 @@ public class TransactionTest {
     assertNotNull(t);
     assertNotNull(t2);
   }
-  //TODO comment out for demo
-  /*
-  @Test void canPrintScreen(){
-    String screenMsg = "\033[H\033[2J" + "*******************************************************\n" +
-    "            Welcome to the payment page :)            \n" +
-    "               Movie to book details               \n"+
-    "*******************************************************\n\n" +
-    "Number of tickets:";
-    // "Total Amount: \n\n";
 
-    t.printScreen();
-    assertEquals(outContent.toString(), screenMsg);
-  }*/
+  // @Test void canPrintScreen(){
+  //   String screenMsg = "\033[H\033[2J" + "\n*******************************************************\n" +
+  //   "            Welcome to the payment page :)            \n" +
+  //   "               Movie to book details               \n"+
+  //   "*******************************************************\n\n" +
+  //   "Number of tickets:";
+  //   // "Total Amount: \n\n";
+
+  //   t.printScreen();
+  //   assertEquals(outContent.toString(), screenMsg);
+  // }
 
   @Test void correctAutoFillOption(){
     String autoFillMsg = t.checkAutoFillOption("YES");
@@ -304,29 +303,28 @@ public class TransactionTest {
   //   assertEquals(outContent.toString(), expectedOut);
   // }
 
-  //TODO commenting out for the demo/
-  /* 
-  @Test void testFinalMessage2() throws NumberFormatException, IOException{
-    String msg = "Select from the following: \n" +
-                  "F - Finalise transaction\nC - Cancel transaction\n" +
-                  "\nUser Input: ";
+  // NEED FIXING!!!! --> getfinalmsg() + params
+  // @Test void testFinalMessage2() throws NumberFormatException, IOException{
+  //   String msg = "Select from the following: \n" +
+  //                 "F - Finalise transaction\nC - Cancel transaction\n" +
+  //                 "\nUser Input: ";
     
-    String inputMessage = "lala\nC";
-    String msg2 = "Please enter a valid input: " +
-                  "\nLINE 455: Transaction cancelled!\n";
+  //   String inputMessage = "lala\nC";
+  //   String msg2 = "Please enter a valid input: " +
+  //                 "\nLINE 455: Transaction cancelled!\n";
 
-    String expectedOut = msg+msg2;
-    ByteArrayOutputStream outContent = new ByteArrayOutputStream();
-    System.setOut(new PrintStream(outContent));
+  //   String expectedOut = msg+msg2;
+  //   ByteArrayOutputStream outContent = new ByteArrayOutputStream();
+  //   System.setOut(new PrintStream(outContent));
 
-    ByteArrayInputStream in = new ByteArrayInputStream(inputMessage.getBytes());
+  //   ByteArrayInputStream in = new ByteArrayInputStream(inputMessage.getBytes());
 
-    System.setIn(in);
+  //   System.setIn(in);
     
-    boolean result = t2.getFinalMsg();
-    assert(result == false);
-    assertEquals(outContent.toString(), expectedOut);
-  }*/
+  //   boolean result = t2.getFinalMsg();
+  //   assert(result == false);
+  //   assertEquals(outContent.toString(), expectedOut);
+  // }
 
   @Test void printNextOptionWorks() throws IOException {
     String expectedOut = "\nInvalid credit name or number, please select from the following:\n" + 
