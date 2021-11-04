@@ -30,7 +30,7 @@ public class EditStaffScreen extends Screen{
                 this.addingStaffScreen.run();
                 break;
             case "2":
-                //AddingStaffScreen;
+                //deleteStaffScreen;
                 this.deleteStaffScreen = new DeleteStaffScreen(mSystem);
                 this.deleteStaffScreen.run();
                 break;
