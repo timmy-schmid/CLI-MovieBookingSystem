@@ -11,6 +11,5 @@ public class App {
        
         MovieSystem system = new MovieSystem();
         system.run();
-
     }
 }

@@ -3,12 +3,10 @@ package R18_G2_ASM2;
 import java.util.*;
 import java.io.*;
 
-import java.io.BufferedReader;
-import java.io.FileReader;
+
 import java.io.IOException;
 import java.io.File;
 import java.io.FileNotFoundException;
-import java.io.FileWriter;
 
 public class UpdateGiftCardsScreen extends Screen{
   private static User user; //staff or manager
@@ -20,22 +18,24 @@ public class UpdateGiftCardsScreen extends Screen{
   private static File tempFile2;
   private static String TEMP_FILE_2_NAME = "cardTemp2.csv";
 
-
   //when staff functions page shows up and option 1 inputted --> direct to this page 
   public UpdateGiftCardsScreen (MovieSystem mSystem){
     super(mSystem);
     user = user;
-    // this.home = home;
     try {
       tempFile2 = DataController.accessCSVFile(TEMP_FILE_2_NAME);
       giftCardsFile = DataController.accessCSVFile(GIFT_CARD_FILE_NAME);
-      GIFT_CARD_FILE_NAME = giftCardsFile.getAbsolutePath();
-      
-      TEMP_FILE_2_NAME = tempFile2.getAbsolutePath();
-
+      // GIFT_CARD_FILE_NAME = giftCardsFile.getAbsolutePath();
+      // TEMP_FILE_2_NAME = tempFile2.getAbsolutePath();
     } catch (IOException e) {e.printStackTrace();}
   }
 
+  public User getUser(){
+    return user;
+  }
+  public File getGiftCardFile(){
+    return giftCardsFile;
+  }
   @Override
   protected void setOptions() {
 
@@ -51,7 +51,7 @@ public class UpdateGiftCardsScreen extends Screen{
 
   public void setGiftCardsFile(File file) {
     giftCardsFile = file;
-    GIFT_CARD_FILE_NAME = file.getAbsolutePath();
+    // GIFT_CARD_FILE_NAME = file.getAbsolutePath();
   }
 
   @Override
@@ -65,12 +65,10 @@ public class UpdateGiftCardsScreen extends Screen{
 
   @Override
   public void chooseOption(){
-
     // System.out.println("LINE 69 :::::::: IN CHOOSEOPTIONS()");
     // System.out.println("TEMPFILE2 = " + tempFile2);
     // System.out.println("GIFTCARDSFILE = " + GIFT_CARD_FILE_NAME);
     // System.out.println("GIFTCARDSFILENAME = " + giftCardsFile);
-
     Scanner scan = new Scanner(System.in);
 
     while (true){
@@ -97,7 +95,9 @@ public class UpdateGiftCardsScreen extends Screen{
           System.out.printf("Please enter the gift card number to update status of: ");
           while (true) {
             String gNum2 = scan.nextLine();
-            int num2 = this.updateGiftCardStatus(gNum2);
+            int num2 = User.updateGiftCardStatus(GIFT_CARD_FILE_NAME, tempFile2, gNum2);
+            // int num2 = this.updateGiftCardStatus(GIFT_CARD_FILE_NAME, tempFile2, gNum2);
+            
             if (num2 == 1){
               while (true){
                 this.nextOption();
@@ -124,55 +124,6 @@ public class UpdateGiftCardsScreen extends Screen{
       }
     }
   }
-
-    // switch(res){ //selectedOption
-    //   case "1":
-    //     System.out.printf("Please enter the gift card number to add: ");
-    //     while (true) {
-    //       String gNum = scan.nextLine();
-    //       int num = this.addNewGiftCard(gNum);
-    //       if (num == 1){
-    //         this.nextOption();
-    //         String nextOption = scan.nextLine();
-    //         if(nextOption.equals("2")){
-    //           this.title = "REDIRECTING YOU BACK TO HOME PAGE~ in 3..2..1..";
-    //           this.printHeader();
-    //           break;
-    //         } else {
-    //           System.out.printf("Please enter the gift card number to add: ");
-    //         }
-    //       }
-    //     }
-    //     break;
-    //   case "2": //loop later
-    //     System.out.printf("Please enter the gift card number to update status of: ");
-    //     while (true) {
-    //       String gNum2 = scan.nextLine();
-    //       int num2 = this.updateGiftCardStatus(gNum2);
-    //       if (num2 == 1){
-    //         while (true){
-    //           this.nextOption();
-    //           String nextOption = scan.nextLine();
-    //           if(nextOption.equals("2")){
-    //             this.title = "REDIRECTING YOU BACK TO HOME PAGE~ in 3..2..1..";
-    //             this.printHeader();
-    //             return;
-    //           } else if (nextOption.equals("1")){
-    //             System.out.printf("Please enter the gift card number to update status of: ");
-    //             break;
-    //           } else {
-    //             System.out.println("Please enter a valid command.");
-    //           } 
-    //         }
-    //       }
-    //     }
-    //   case "3":
-    //     this.title = "REDIRECTING YOU BACK TO HOME PAGE~ in 3..2..1..";
-    //     this.printHeader();
-    //     break;
-      
-      // default: throw new IllegalArgumentException("Critical error - invalid selection passed validation");
-
   public void printOptions(){
    
     this.printOptionsText();
@@ -224,22 +175,19 @@ public class UpdateGiftCardsScreen extends Screen{
     return 1;
   }
 
-  //same function from transaction class
-
-  // TODO: check if number entered doesn't exist in file!!!!!!----->>>>
-
-  public  int updateGiftCardStatus(String userInputGNumber){ //overwrites existing gift cards in file by changing the reedemble status of the gift card so it can no longer be used for next time    
+   public int updateGiftCardStatus(String fileName, File tempFile, String userInputGNumber){ //overwrites existing gift cards in file by changing the reedemble status of the gift card so it can no longer be used for next time    
     if (User.isValidGiftCardNumber(userInputGNumber) == false) {
       return -1;
     }
     try {
-      Scanner myReader = new Scanner(giftCardsFile);
-      FileWriter myWriter = new FileWriter(tempFile2);
+      File userFile = DataController.accessCSVFile(fileName);
+      Scanner myReader = new Scanner(userFile);
+      FileWriter myWriter = new FileWriter(tempFile);
       // //find matching customer result
       Scanner scan = new Scanner(System.in);
+      
+      BufferedReader in = new BufferedReader(new FileReader(DataController.accessCSVFile(fileName))); //giftCardsFile
 
-      // System.out.println("LINE 187: GIFT CARDS FILE = " + giftCardsFile.getAbsolutePath());
-      BufferedReader in = new BufferedReader(new FileReader(GIFT_CARD_FILE_NAME)); //giftCardsFile
       String currentLine = "";
       String lastLine = "";
       String line1 = null;
@@ -285,7 +233,7 @@ public class UpdateGiftCardsScreen extends Screen{
       myReader.close();
       myWriter.close();
 
-      tempFile2.renameTo(giftCardsFile); //replace temp file with og file
+      tempFile.renameTo(userFile); //replace temp file with og file
 
     } catch (IOException e) {
       e.printStackTrace();

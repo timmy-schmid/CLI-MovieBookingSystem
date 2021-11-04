@@ -12,11 +12,7 @@ import org.junit.jupiter.api.BeforeAll;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 
-import java.io.BufferedReader;
-import java.io.FileReader;
-
 public class UpdateGiftCardsScreenTest {
-  private HomeScreen home; 
   private UpdateGiftCardsScreen gcs;
   private File giftCardsFile;
 
@@ -31,7 +27,6 @@ public class UpdateGiftCardsScreenTest {
   @BeforeEach
   public void setUp() throws IOException {
     system = new MovieSystem();
-    // home = new HomeScreen(null);
     gcs = new UpdateGiftCardsScreen(system);
     giftCardsFile = DataController.accessCSVFile("giftCardsTest.csv");    
     
@@ -53,8 +48,6 @@ public class UpdateGiftCardsScreenTest {
     assertNotNull(gcs);
   }
 
-  //ASSERTION ERROR!!!
-  
   @Test 
   public void canPrintOptions(){
     String msg = "Please choose from the following options:\n\n" + 
@@ -78,5 +71,80 @@ public class UpdateGiftCardsScreenTest {
                         msg2;
     gcs.nextOption();
     assertEquals(outContent.toString(), expectedOut);
+  }
+
+
+  @Test 
+  public void canChooseValidOption(){ //go back to home page
+    String printHeader = "*********************************************"+ "*********************************************\n" +
+    "                      Welcome to the update gift cards screen page~\n" +
+    "*********************************************"+ "*********************************************\n";
+    
+    String options = "Please choose from the following options:\n\n" +  //printOptions()
+                    "1. Add a new gift card number\n" +
+                    "2. Update existing gift card status\n" + 
+                    "3. Cancel and go back to home page\n\n";
+    
+    // String choseOption = "\nPlease choose from the following options:\n\n" + //nextOption()
+    //                      "1. Continue\n" +
+    //                      "2. End and go back to home page\n\n" +
+    //                      "User Input:";
+    
+    String inputMessage = "3";
+    
+    String endMsg = "*********************************************"+
+    "*********************************************\n" +
+    "                     REDIRECTING YOU BACK TO HOME PAGE~ in 3..2..1..\n" +
+    "************************************************"+ "******************************************\n";
+    
+    String expectedOut = printHeader + options + "User Input:" + endMsg;
+  
+    ByteArrayOutputStream outContent = new ByteArrayOutputStream();
+    System.setOut(new PrintStream(outContent));
+
+    ByteArrayInputStream in = new ByteArrayInputStream(inputMessage.getBytes());
+
+    System.setIn(in);
+
+    gcs.print();
+
+    assertEquals(outContent.toString(), expectedOut);
+
+  }
+
+  @Test 
+  public void cantAddNewGiftCard(){
+    String userInputGNumber = "041256lala"; //invalid
+    int result = gcs.addNewGiftCard(userInputGNumber);
+    assert(result  == -1);
+
+    assertEquals(outContent.toString(), "Please enter a 14 digit number followed by GC suffix: ");
+  }
+
+  @Test 
+  public void cantAddNewGiftCard2(){
+    String userInputGNumber = "11111111111111GC"; //already exists
+    int result = gcs.addNewGiftCard(userInputGNumber);
+    assert(result  == -1);
+
+    assertEquals(outContent.toString(), "The number you have entered already exists. Please enter another valid gift card number: ");
+  }
+
+  @Test 
+  public void canAddNewGiftCard() throws IOException {
+    String userInputGNumber = "11111111111119GC"; //already exists
+    int result = gcs.addNewGiftCard(userInputGNumber);
+    // assertEquals(outContent.toString(), "The number you have entered already exists. Please enter another valid gift card number: ");
+
+    BufferedReader myReader = new BufferedReader(new FileReader(gcs.getGiftCardFile()));
+    int result2 = 1; 
+    String currentLine = "";
+    while ((currentLine = myReader.readLine()) != null){
+      if (currentLine.split(",")[0].equals(userInputGNumber)){
+        result2 = -1; //number already exists
+      }
+    }
+    myReader.close();
+    assertEquals(result, result2);
   }
 }
