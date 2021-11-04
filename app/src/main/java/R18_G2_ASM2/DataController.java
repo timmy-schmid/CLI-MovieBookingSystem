@@ -39,9 +39,13 @@ public class DataController {
     String path = "";
 
     if (Files.exists(Paths.get(basepath))) { // checks gradle dir v1
-      path = basepath + resource;
+      if (resource.contains(basepath)){ //check to prevent re-appending prev part
+        path = resource;
+      } else {
+        path = basepath + resource;
+      }
       f = new File(path);
-      //System.out.println("src: ABS PATH to copy to: "+ f.getAbsoluteFile().toPath());
+      // System.out.println("LINE 44 in datacontroller: src: ABS PATH to copy to: "+ f.getAbsoluteFile().toPath());
     } else if (Files.exists(Paths.get("app/" + basepath))) { // checks gradle dir v2
       path = "app/" + basepath + resource;
       f = new File(path);
