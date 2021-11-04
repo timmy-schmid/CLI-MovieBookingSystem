@@ -7,6 +7,7 @@ public class StaffScreen extends Screen{
   private AddShowing addShowing;
   private StaffBookingSummaryScreen bookingSummaryScreen =  new StaffBookingSummaryScreen();
   private UpdateGiftCardsScreen gcs = new UpdateGiftCardsScreen(mSystem);
+  private ComingMovieReport cmr = new ComingMovieReport(mSystem);
 
   public StaffScreen(MovieSystem mSystem) {
     super(mSystem);
@@ -21,11 +22,14 @@ public class StaffScreen extends Screen{
   @Override
   protected void chooseOption() {
     switch (selectedOption) {
-      case "1":
+      case "1"://TODO check it works
         //to update gift card status
+        gcs = new UpdateGiftCardsScreen(mSystem);
         gcs.print();
         break;
-      case "2": //TODO add functionality
+
+      case "2": //TODO check it works
+        addMovieScreen = new StaffAddMovieScreen();
         try{
           addMovieScreen.retriveMoiveInfo();
 
@@ -33,7 +37,9 @@ public class StaffScreen extends Screen{
           e.printStackTrace();
         }
         break;
-      case "3": //TODO add functionality
+
+      case "3": //TODO check it works
+        deleteMovieScreen = new StaffDeleteMovieScreen();
         try{
           deleteMovieScreen.retriveMoiveInfo();
 
@@ -41,15 +47,22 @@ public class StaffScreen extends Screen{
           e.printStackTrace();
         }
         break;
+
       case "4"://TODO add functionality
       break;
-      case "5": //TODO add functionality
+
+      case "5": //TODO check it works
         addShowing = new AddShowing(mSystem);
         addShowing.run();
         break;
-      case "6"://TODO add functionality
+
+      case "6"://TODO check it works
+        cmr =  new ComingMovieReport(mSystem);
+        cmr.run();
       break;
+
       case "7": //TODO add functionality
+        bookingSummaryScreen =  new StaffBookingSummaryScreen();
       try{
         bookingSummaryScreen.run();
 
@@ -57,13 +70,16 @@ public class StaffScreen extends Screen{
         e.printStackTrace();
       }
       break;
-      case "8": //TODO add functionality
 
+      case "8": //TODO add functionality
+        TransactionSummary.printTransactionSummary();
       break;
-      case "9": //TODO add functionality
+
+      case "9": ///TODO check it works
         editStaffScreen = new EditStaffScreen(mSystem);
         editStaffScreen.run();
        break;
+
       case "Q": case "q":
         System.out.print("SEE YOU NEXT TIME! :)\n");
         System.exit(0);
