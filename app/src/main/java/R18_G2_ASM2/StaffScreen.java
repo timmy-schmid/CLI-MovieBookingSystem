@@ -4,6 +4,7 @@ public class StaffScreen extends Screen{
   private EditStaffScreen editStaffScreen;
   private StaffAddMovieScreen addMovieScreen;
   private StaffDeleteMovieScreen deleteMovieScreen;
+  private StaffBookingSummaryScreen bookingSummaryScreen;
 
   public StaffScreen(MovieSystem mSystem) {
     super(mSystem);
@@ -31,7 +32,7 @@ public class StaffScreen extends Screen{
         }catch (Exception e){
           e.printStackTrace();
         }
-                break;
+        break;
       case "3": //TODO add functionality
         deleteMovieScreen = new StaffDeleteMovieScreen();
         try{
@@ -40,11 +41,18 @@ public class StaffScreen extends Screen{
         }catch (Exception e){
           e.printStackTrace();
         }
-                break;
+        break;
       case "4"://TODO add functionality
       break;
       case "5": //TODO add functionality
-      break;
+        bookingSummaryScreen = new StaffBookingSummaryScreen();
+        try{
+          bookingSummaryScreen.run();
+
+        }catch (Exception e){
+          e.printStackTrace();
+        }
+        break;
       case "6"://TODO add functionality
       break;
       case "7": //TODO add functionality
@@ -53,9 +61,6 @@ public class StaffScreen extends Screen{
         editStaffScreen = new EditStaffScreen(mSystem);
         editStaffScreen.run();
       break;
-      // not sure about the editing user page;
-//      case "9": //TODO add functionality
-//      break;
       case "Q": case "q":
         System.out.print("SEE YOU NEXT TIME! :)\n");
         System.exit(0);
@@ -94,7 +99,7 @@ public class StaffScreen extends Screen{
 
     if (mSystem.getUser().getUserType() == UserType.MANAGER) {
       System.out.print(formatANSI("7",ANSI_USER_OPTION) + " - Generate a cancelled transactions report\n");  
-      System.out.print(formatANSI("8",ANSI_USER_OPTION) + " - Edit a new staff member\n");
+      System.out.print(formatANSI("8",ANSI_USER_OPTION) + " - Edit staff member\n");
 //      System.out.print(formatANSI("9",ANSI_USER_OPTION) + " - Remove an existing staff member\n");
     }
     System.out.print(formatANSI("Q",ANSI_USER_OPTION) + " - Quit and logout.\n\n");

@@ -1,6 +1,7 @@
 package R18_G2_ASM2;
 
 import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.rmi.server.ExportException;
 import java.util.ArrayList;
 import java.util.Scanner;
@@ -15,6 +16,7 @@ public class AddingStaffScreen{
 //    private String password;
 //    private int ID;
 //    private String phoneNum;
+    private Scanner scan;
     private ArrayList<String> option = new ArrayList<>();
     private int step_num = 0;
     private String input;
@@ -42,21 +44,24 @@ public class AddingStaffScreen{
     }
 
     public void run(){
+
         while(!goBack){
+            scan =  new Scanner(System.in);
+            checkinguser = new Staff (999,"check","checkingEmailcannotmTach@gmail.com","91654391234","checking1234!*");
             askForemail();
             askForName();
             askForPassWord();
             askForPhone();
+           // scan.close();
             changeCheckingUserId();
             try {
                 checkinguser.writeNewUserToCSV(USER_FILE_NAME);
             }catch (Exception e){
                 e.printStackTrace();
-            };
-            printUserMessage();
-            SuccessfulAdd();
-
+            }
+            goBack = true;
         }
+
     }
 
     public void printUserMessage(){
@@ -65,7 +70,6 @@ public class AddingStaffScreen{
 
     public void SuccessfulAdd(){
         System.out.println("Staff successfully entered!");
-        goBack = true;
 
     }
 
@@ -85,7 +89,6 @@ public class AddingStaffScreen{
 
     public void askForemail(){
         System.out.println("Please enter a staff email: ");
-        Scanner scan =  new Scanner(System.in);
         while(scan.hasNextLine()){
             String inputString = scan.nextLine();
 
@@ -111,7 +114,6 @@ public class AddingStaffScreen{
             checkinguser.setEmail(inputString);
             break;
         }
-        scan.close();
     }
 
     public void askForName(){
@@ -122,7 +124,7 @@ public class AddingStaffScreen{
             checkinguser.setNickname(inputString);
             break;
         }
-        scan.close();
+//        scan.close();
     }
 
     public void askForPassWord(){
@@ -148,7 +150,7 @@ public class AddingStaffScreen{
             checkinguser.setPassword(inputString);
             break;
         }
-        scan.close();
+//        scan.close();
     }
 
 
@@ -180,12 +182,11 @@ public class AddingStaffScreen{
             checkinguser.setPhoneNumber(inputString);
             break;
         }
-        scan.close();
     }
 
     public void changeCheckingUserId(){
         try{
-            checkinguser.setID(User.getLastUserIDFromCSV(USER_FILE_NAME)+1);}
+            checkinguser.setID(User.getLastUserIDFromCSV(USER_FILE_NAME));}
         catch (Exception e){
             e.printStackTrace();
         }
