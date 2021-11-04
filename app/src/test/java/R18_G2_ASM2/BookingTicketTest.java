@@ -122,7 +122,7 @@ public class BookingTicketTest {
             String a = "2\n";
             ByteArrayInputStream inContent = new ByteArrayInputStream(a.getBytes());
             System.setIn(inContent);
-            testBookingTicket.cancelSeatForShow('D',1);
+            testBookingTicket.cancelSeatForShow('D',999);
             assertEquals("Invalid message cancel seat for show, please try again.\n",outContent.toString());
 
         }catch (Exception e){ e.printStackTrace();}
