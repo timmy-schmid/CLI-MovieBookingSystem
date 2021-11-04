@@ -43,14 +43,14 @@ public class StaffScreen extends Screen{
       case "4"://TODO add functionality
       break;
       case "5": //TODO add functionality
+        break;
+      case "6"://TODO add functionality
         try{
           bookingSummaryScreen.run();
 
         }catch (Exception e){
           e.printStackTrace();
         }
-        break;
-      case "6"://TODO add functionality
       break;
       case "7": //TODO add functionality
       break;
