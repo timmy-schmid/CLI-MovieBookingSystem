@@ -122,8 +122,7 @@ public class StaffScreen extends Screen{
       System.out.print(formatANSI("9",ANSI_USER_OPTION) + " - Edit staff member\n");
 //      System.out.print(formatANSI("9",ANSI_USER_OPTION) + " - Remove an existing staff member\n");
     }
-    System.out.print(formatANSI("Q",ANSI_USER_OPTION) + " - Quit and logout.\n\n");
-    
+    System.out.print(formatANSI("Q",ANSI_USER_OPTION) + " - Quit and logout.\n\n");  
   }
 
 
