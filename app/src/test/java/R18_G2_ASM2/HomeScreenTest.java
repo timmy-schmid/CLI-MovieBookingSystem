@@ -43,6 +43,8 @@ public class HomeScreenTest {
         HomeScreen s =  new HomeScreen(mockMovieSystem);
 
         s.askforInput();
-        Assertions.assertEquals(actualOut.toString(),"SEE YOU NEXT TIME! :)\n");
+        Assertions.assertEquals(actualOut.toString(),"User Input:Invalid selection. Please try again.\n" +
+                "\n" +
+                "User Input:");
     }
 }
