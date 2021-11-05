@@ -148,10 +148,7 @@ public class DeleteStaffScreen {
         out.flush();
         out.close();
         inReader.close();
-            System.out.println(userCsvFile.getName()+"before");
         userCsvFile.delete();
-        System.out.println(userCsvFile.getName());
-        System.out.println(oFile.getName());
         oFile.renameTo(userCsvFile);
             System.out.println(userCsvFile.getName()+"final");
             System.out.println(oFile.getName());
