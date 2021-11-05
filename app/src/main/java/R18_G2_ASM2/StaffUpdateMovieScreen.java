@@ -17,7 +17,7 @@ public class StaffUpdateMovieScreen {
   private HashMap<Integer,Movie> movies = new HashMap<>();
   private PrintStream outt;
   private File movieCsvFile;
-  private static String MOVIES_FILE_NAME = "movie1.csv";
+  private static String MOVIES_FILE_NAME = "movie2.csv";
   private static final SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd",Locale.ENGLISH);
   private static final TimeZone AEST = TimeZone.getTimeZone("Australia/Sydney");
 
