@@ -8,7 +8,15 @@ import java.io.IOException;
 public class App {
     public static void main(String[] args) throws Exception
     {
-        MovieSystem system = new MovieSystem();
-        system.run();
+        // MovieSystem system = new MovieSystem();
+        // system.run();
+
+        Showing show = new Showing(2, new Movie(1, null, null, null, null, null, null), new Cinema(1, MovieClass.SILVER), null);
+        Customer user = new Customer(1,  "bob", "bobbie@gmail.com", "0412345678", "Password123");
+        BookingTicket bt = new BookingTicket(show, user);
+        // bt.run();
+        // bt.bookingShowingSection();
+        bt.bookingASeat();
+
     }
 }
