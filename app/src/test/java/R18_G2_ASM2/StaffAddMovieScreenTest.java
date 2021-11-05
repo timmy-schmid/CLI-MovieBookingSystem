@@ -38,6 +38,22 @@ public class StaffAddMovieScreenTest {
         assertEquals("Email address already exists\nPlease try againom\n",actualOut.toString());
     }
 
+    void testAskForPhone(){
+        mockIn = new ByteArrayInputStream("9027438625347652\n".getBytes());
+        System.setIn(mockIn);
+        AddingStaffScreen addingStaffScreen =  new AddingStaffScreen(mockMovieSystem);
+        addingStaffScreen.askForPhone();
+        assertEquals("Phone number need to match the format\nPlease try again\n",actualOut.toString());
+    }
+
+    void testAskForPw(){
+        mockIn = new ByteArrayInputStream("dsaiew1223\n".getBytes());
+        System.setIn(mockIn);
+        AddingStaffScreen addingStaffScreen =  new AddingStaffScreen(mockMovieSystem);
+        addingStaffScreen.askForPhone();
+        assertEquals("Please enter a 10-digit password containing at least 1 capital letter and 1 number.\n",actualOut.toString());
+    }
+
     void testAskForEmailInvalid(){
         mockIn = new ByteArrayInputStream("hpgmail.com\n".getBytes());
         System.setIn(mockIn);
