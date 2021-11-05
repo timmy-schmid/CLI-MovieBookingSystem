@@ -190,7 +190,7 @@ public class BookingTicket {
             System.out.println("Middle(Green HighLighter)       "+"Already be booked: "+Integer.toString(this.showing.getMovieSeat().middleSeatBooked()));
             System.out.println("Rear(Blue HighLighter)          "+"Already be booked: "+Integer.toString(this.showing.getMovieSeat().rearSeatBooked()));
             System.out.println("All                             "+"Already be booked: "+Integer.toString(this.showing.getMovieSeat().totalSeatsBooked()));
-            System.out.println("C-Cancel");
+            // System.out.println("C-Cancel");
             // System.out.println("Anything else-Continue Choosing Seats\n");
             this.showing.getMovieSeat().showAllSeats();
             // String str = scan.next();
@@ -261,7 +261,9 @@ public class BookingTicket {
 
     public void cancelSeatForShow(char row, int col){
         try{
-        this.showing.getMovieSeat().cancelReservation(row,col);}
+            this.showing.getMovieSeat().cancelReservation(row,col);
+            showing.resetSeatMap();
+        }
         catch (Exception e){
             System.out.println("Invalid message cancel seat for show, please try again.");
             e.printStackTrace();

@@ -17,18 +17,21 @@ public class StaffUpdateMovieScreen {
   private HashMap<Integer,Movie> movies = new HashMap<>();
   private PrintStream outt;
   private File movieCsvFile;
-  private static String MOVIES_FILE_NAME = "movie.csv";
+  private static String MOVIES_FILE_NAME = "movie2.csv";
   private static final SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd",Locale.ENGLISH);
   private static final TimeZone AEST = TimeZone.getTimeZone("Australia/Sydney");
 
   public StaffUpdateMovieScreen() {
     try {
       movieCsvFile = DataController.accessCSVFile(MOVIES_FILE_NAME);
-      importMovieData();
     } catch (FileNotFoundException e) {
       System.out.println("Unable to edit User: " + e.getMessage());
       return;
     }
+  }
+
+  public static void setMoviesFileName(String moviesFileName) {
+    MOVIES_FILE_NAME = moviesFileName;
   }
 
   public void run() throws Exception {
@@ -252,14 +255,14 @@ public class StaffUpdateMovieScreen {
     outFile.renameTo(inFile);
   }
 
-  public void importMovieData() {
-    try {
-      DataController.importMovies(movies,MOVIES_FILE_NAME);
-    } catch (IOException e) {
-      outt.println("Error reading file: " + MOVIES_FILE_NAME);
-    }
-
-  }
+//  public void importMovieData() {
+//    try {
+//      DataController.importMovies(movies,MOVIES_FILE_NAME);
+//    } catch (IOException e) {
+//      outt.println("Error reading file: " + MOVIES_FILE_NAME);
+//    }
+//
+//  }
 
 
 }
