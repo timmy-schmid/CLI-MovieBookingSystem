@@ -42,7 +42,7 @@ public class EditStaffScreenTest {
         EditStaffScreen testEd = new EditStaffScreen(mockMovieSystem);
         testEd.printHeader();
         assertEquals(actualOut.toString(),("******************************************************************************************\n" +
-                                           "                                      Editing Staff                                      \n" +
+                                           "                                      Editing Staff                                       \n" +
                                            "******************************************************************************************\n"));
     }
 
