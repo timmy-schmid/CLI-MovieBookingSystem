@@ -60,28 +60,28 @@ class StaffAddMovieScreenTest {
     assertNotNull(outContent.toString());
   }
 
-  @Test
-  public void retriveMoiveInfoTest() throws Exception {
-    StaffAddMovieScreen staffAddMovieScreen = new StaffAddMovieScreen();
-    String inputMessage = null;
-    inputMessage = "hello\nhello\nG\n2021-11-03\ngg\nn\nzz\nn";
-    ByteArrayInputStream in = new ByteArrayInputStream(inputMessage.getBytes());
-    System.setIn(in);
-    String expected = "*************************************************************************\n" +
-        "                                ADD    MOVIE                             \n" +
-        "*************************************************************************\n" +
-        "Please enter a movie title: " +
-        "Please enter a movie synopsis: " +
-        "Please enter a classification (G,PG,M,MA,R): " +
-        "Please enter a release date <yy-mm-dd>: " +
-        "Please enter an actor: " +
-        "Do you want to enter another actor? y/n " +
-        "Please enter an director: " +
-        "Do you want to enter another director? y/n " +
-        "Movie successfully entered!\n";
-    staffAddMovieScreen.retriveMoiveInfo();
-    assertEquals(outContent.toString(), expected);
-  }
+//  @Test
+//  public void retriveMoiveInfoTest() throws Exception {
+//    StaffAddMovieScreen staffAddMovieScreen = new StaffAddMovieScreen();
+//    String inputMessage = null;
+//    inputMessage = "hello\nhello\nG\n2021-11-03\ngg\nn\nzz\nn";
+//    ByteArrayInputStream in = new ByteArrayInputStream(inputMessage.getBytes());
+//    System.setIn(in);
+//    String expected = "*************************************************************************\n" +
+//        "                                ADD    MOVIE                             \n" +
+//        "*************************************************************************\n" +
+//        "Please enter a movie title: " +
+//        "Please enter a movie synopsis: " +
+//        "Please enter a classification (G,PG,M,MA,R): " +
+//        "Please enter a release date <yy-mm-dd>: " +
+//        "Please enter an actor: " +
+//        "Do you want to enter another actor? y/n " +
+//        "Please enter an director: " +
+//        "Do you want to enter another director? y/n " +
+//        "Movie successfully entered!\n";
+//    staffAddMovieScreen.retriveMoiveInfo();
+//    assertEquals(outContent.toString(), expected);
+//  }
 
 
 }
