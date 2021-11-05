@@ -104,20 +104,19 @@ public class OverallTest{
        String inputMessage = "2\n";
        setInput(inputMessage);
        sfc.askforInput();
-       sfc.setOptions();
        sfc.chooseOption();
 
-       // inputMessage = "1\n";
-       // setInput(inputMessage);
-       // sfc.askforInput();
-       // sfc.setOptions();
+       inputMessage = "1\n";
+       setInput(inputMessage);
+       sfc.askforInput();
+       sfc.setOptions();
        // sfc.chooseOption();
 
        inputMessage = "3\n";
        setInput(inputMessage);
        sfc.askforInput();
        sfc.setOptions();
-    //    sfc.chooseOption();
+       sfc.chooseOption();
 
        inputMessage = "4\n";
        setInput(inputMessage);
@@ -137,16 +136,16 @@ public class OverallTest{
        sfc.setOptions();
        // sfc.chooseOption();
 
-       inputMessage = "7\n";
-       setInput(inputMessage);
-       sfc.askforInput();
-       sfc.setOptions();
+    //    inputMessage = "7\n";
+    //    setInput(inputMessage);
+    //    sfc.askforInput();
+    //    sfc.setOptions();
     //    sfc.chooseOption();
 
-       inputMessage = "8\n";
-       setInput(inputMessage);
-       sfc.askforInput();
-       sfc.setOptions();
+    //    inputMessage = "8\n";
+    //    setInput(inputMessage);
+    //    sfc.askforInput();
+    //    sfc.setOptions();
     //    sfc.chooseOption();
 
        inputMessage = "9\n";
@@ -161,6 +160,63 @@ public class OverallTest{
        sfc.setOptions();
        // sfc.chooseOption();
 
+   }
+
+   @Test
+   public void testStaffScreenOption3(){
+    MovieSystem system = new MovieSystem();
+    Manager staff = new Manager(500, "nickname", "email", "phoneNumber", "password");
+    system.setUser(staff);
+    StaffScreen sfc = new StaffScreen(system);
+
+    String inputMessage = "3\n";
+    setInput(inputMessage);
+    sfc.setOptions();
+    sfc.askforInput();
+    sfc.chooseOption();
+   }
+
+   @Test
+   public void testStaffScreenOption4(){
+    MovieSystem system = new MovieSystem();
+    Manager staff = new Manager(500, "nickname", "email", "phoneNumber", "password");
+    system.setUser(staff);
+    StaffScreen sfc = new StaffScreen(system);
+
+    String inputMessage = "4\n";
+    setInput(inputMessage);
+    sfc.setOptions();
+    sfc.askforInput();
+    sfc.chooseOption();
+   }
+
+   
+   @Test
+   public void testStaffScreenOption7(){
+    MovieSystem system = new MovieSystem();
+    Manager staff = new Manager(500, "nickname", "email", "phoneNumber", "password");
+    system.setUser(staff);
+    StaffScreen sfc = new StaffScreen(system);
+
+    String inputMessage = "7\n";
+    setInput(inputMessage);
+    sfc.setOptions();
+    sfc.askforInput();
+    sfc.chooseOption();
+   }
+   
+   @Test
+   public void testStaffScreenOption8(){
+    MovieSystem system = new MovieSystem();
+    Manager staff = new Manager(500, "nickname", "email", "phoneNumber", "password");
+    system.setUser(staff);
+    StaffScreen sfc = new StaffScreen(system);
+
+    String inputMessage = "8\n";
+    setInput(inputMessage);
+    sfc.setOptions();
+    sfc.askforInput();
+    sfc.chooseOption();
    }
 
 }
