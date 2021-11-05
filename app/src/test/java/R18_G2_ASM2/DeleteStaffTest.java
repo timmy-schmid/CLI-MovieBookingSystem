@@ -38,7 +38,7 @@ public class DeleteStaffTest {
         ds.askForemail();
         assertEquals("Please enter a staff email: \n" +
                 "  The user input is not a staff\n" +
-                "  Please try again.\n",actualOut.toString());
+                "  Please try again.\n\n",actualOut.toString());
     }
 
     @Test
@@ -51,7 +51,7 @@ public class DeleteStaffTest {
                 "  Please enter an email that contains a recipient name, @ symbol and valid domain.\n" +
                 "  Email address need to match the format\n" +
                 "  Please try again\n" +
-                "\n\n",actualOut.toString());
+                "\n",actualOut.toString());
     }
 
     @Test
@@ -60,7 +60,7 @@ public class DeleteStaffTest {
         System.setIn(mockIn);
         DeleteStaffScreen ds =  new DeleteStaffScreen(mockMovieSystem);
         ds.askForContinue();
-        assertEquals("Do you want to continue?(Y/N)",actualOut.toString());
+        assertEquals("Do you want to continue?(Y/N)\n",actualOut.toString());
     }
 
     @Test
