@@ -58,24 +58,4 @@ id,name,cast,classification,director,synopsis,release date
 57,hello,gg:gg2,M,zz:zz2,hello,2021-11-03
 58,hello,gg:gg2,M,zz:zz2,hello,2021-11-03
 59,hello,gg:gg2,M,zz:zz2,hello,2021-11-03
-60,hello,gg:gg2,M,zz:zz2,hello,2021-11-03
-<<<<<<< HEAD
-61,hello,gg:gg2,M,zz:zz2,hello,2021-11-03
-62,hello,gg:gg2,M,zz:zz2,hello,2021-11-03
-63,hello,gg:gg2,M,zz:zz2,hello,2021-11-03
-64,hello,gg:gg2,M,zz:zz2,hello,2021-11-03
-65,hello,gg:gg2,M,zz:zz2,hello,2021-11-03
-66,hello,gg:gg2,M,zz:zz2,hello,2021-11-03
-67,hello,gg:gg2,M,zz:zz2,hello,2021-11-03
-68,hello,gg:gg2,M,zz:zz2,hello,2021-11-03
-69,hello,gg:gg2,M,zz:zz2,hello,2021-11-03
-70,hello,gg:gg2,M,zz:zz2,hello,2021-11-03
-71,hello,gg:gg2,M,zz:zz2,hello,2021-11-03
-72,hello,gg:gg2,M,zz:zz2,hello,2021-11-03
-73,hello,gg:gg2,M,zz:zz2,hello,2021-11-03
-74,hello,gg:gg2,M,zz:zz2,hello,2021-11-03
-75,hello,gg:gg2,M,zz:zz2,hello,2021-11-03
-=======
-61,hello,gg:gg2,M,zz:zz2,hello,2021-11-03
->>>>>>> 1c22824c3adf5f8b3f7224793f5a1f01ba38d8f5
-80,hello,gg:gg2,M,zz:zz2,hello,2021-11-03
+
