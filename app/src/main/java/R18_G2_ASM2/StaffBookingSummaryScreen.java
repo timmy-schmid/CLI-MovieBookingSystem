@@ -19,12 +19,8 @@ public class StaffBookingSummaryScreen {
   private HashMap<Integer,Cinema> cinemas = new HashMap<>();
   private PrintStream out;
 
-//  private Showing showing;
-//  private ArrayList<Showing> showings = new ArrayList<>();
-
   public StaffBookingSummaryScreen() {
     importMovieData();
-//    this.showings = movie.getShowingsBeforeNextMonday();
   }
 
   public void run() {
@@ -33,10 +29,16 @@ public class StaffBookingSummaryScreen {
   }
 
   public int seatsBooked(Showing showing) {
+    if (showing == null) {
+      return 0;
+    }
     return showing.getMovieSeat().totalSeatsBooked();
   }
 
   public int seatsLeft(Showing showing) {
+    if (showing == null) {
+      return 0;
+    }
     return showing.getMovieSeat().totalSeatsLeft();
   }
 
@@ -69,6 +71,9 @@ public class StaffBookingSummaryScreen {
     }
   }
 
+  public String getMovieDataFile(){
+    return MOVIES_FILE_NAME;
+  }
   public void setMovieDataFile(String name) {
     MOVIES_FILE_NAME = name;
   }
