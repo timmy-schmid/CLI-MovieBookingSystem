@@ -117,7 +117,7 @@ public class OverallTest{
        setInput(inputMessage);
        sfc.askforInput();
        sfc.setOptions();
-       sfc.chooseOption();
+    //    sfc.chooseOption();
 
        inputMessage = "4\n";
        setInput(inputMessage);
