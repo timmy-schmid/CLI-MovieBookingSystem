@@ -21,6 +21,7 @@ public class StaffAddMovieScreenTest {
     static void setup() {
         mockMovieSystem = mock(MovieSystem.class);
         actualOut = new ByteArrayOutputStream();
+        System.setOut(new PrintStream(actualOut));
     }
 
 
