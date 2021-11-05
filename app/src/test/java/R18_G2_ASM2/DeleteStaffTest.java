@@ -30,13 +30,13 @@ public class DeleteStaffTest {
         actualOut.reset();
     }
 
-    @Test
-    void testAskForEmailExist(){
-        mockIn = new ByteArrayInputStream("hp@gmail.com\n".getBytes());
-        System.setIn(mockIn);
-        DeleteStaffScreen ds =  new DeleteStaffScreen(mockMovieSystem);
-        ds.run();
-        assertEquals("The user input is not a staff\nPlease try again.\n",actualOut.toString());
-    }
+//    @Test
+//    void testAskForEmailExist(){
+//        mockIn = new ByteArrayInputStream("hp@gmail.com\n".getBytes());
+//        System.setIn(mockIn);
+//        DeleteStaffScreen ds =  new DeleteStaffScreen(mockMovieSystem);
+//        ds.run();
+//        assertEquals("The user input is not a staff\nPlease try again.\n",actualOut.toString());
+//    }
 
 }
