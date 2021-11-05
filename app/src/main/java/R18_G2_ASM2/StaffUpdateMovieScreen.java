@@ -24,7 +24,6 @@ public class StaffUpdateMovieScreen {
   public StaffUpdateMovieScreen() {
     try {
       movieCsvFile = DataController.accessCSVFile(MOVIES_FILE_NAME);
-      importMovieData();
     } catch (FileNotFoundException e) {
       System.out.println("Unable to edit User: " + e.getMessage());
       return;
