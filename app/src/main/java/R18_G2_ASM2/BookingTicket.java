@@ -280,6 +280,7 @@ public class BookingTicket {
         //         rowLetters[i] = 'z';
         //         colNum[i] = 0; }
         // }
+        showing.resetSeatMap();
         count = 0;
         indexofarray = 0;
         System.out.println("Successfully cancel.");

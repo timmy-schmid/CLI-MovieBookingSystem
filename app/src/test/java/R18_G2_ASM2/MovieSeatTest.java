@@ -1,12 +1,14 @@
 package R18_G2_ASM2;
 
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.TestFactory;
 
 import R18_G2_ASM2.SeatDataTools.DataFrame;
 import R18_G2_ASM2.SeatDataTools.MovieDataFrame;
 
 import static org.junit.jupiter.api.Assertions.*;
 
+import java.io.File;
 import java.io.IOException;
 import java.text.DateFormat;
 import java.text.ParseException;
@@ -131,4 +133,21 @@ class MovieSeatTest{
 
     }
 
+    @Test
+    public void movieTempFileTest() throws IOException{
+        Showing show = new Showing(2, new Movie(1, null, null, null, null, null, null), new Cinema(1, MovieClass.SILVER), null);
+        show.getMovieSeat().showAllSeats();
+        File testFile = DataController.accessCSVFile("movieSeatsMap/"+ "1-1-2" +"-temp"+".csv");
+        assertTrue(testFile.exists());
+        show.resetSeatMap();
+        assertFalse(testFile.exists());
+    }
+
+    @Test
+    public void notExistSeatMap() throws IOException{
+        Showing show = new Showing(100, new Movie(1, null, null, null, null, null, null), new Cinema(1, MovieClass.SILVER), null);
+        File testFile = DataController.accessCSVFile("movieSeatsMap/"+ "1-1-100" +".csv");
+        assertTrue(testFile.exists());
+        assertTrue(testFile.delete());
+    }
 }

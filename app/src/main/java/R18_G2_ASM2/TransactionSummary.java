@@ -18,12 +18,6 @@ import java.util.TimeZone;
 
 public class TransactionSummary {
 
-    
-    public TransactionSummary() throws FileNotFoundException{
-        File summaryReport = DataController.accessCSVFile("transactionSummaryReport"+".csv");
-    }
-
-
 
     public static void printTransactionSummaryTitle() {
         System.out.println("**************************************************************************************************************************");
