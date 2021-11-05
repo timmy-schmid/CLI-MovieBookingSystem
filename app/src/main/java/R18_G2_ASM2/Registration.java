@@ -8,19 +8,16 @@ import java.io.*;
 public class Registration {
   /*
   This class: prints screen for when user clicks: 'To Register'
-  and creates a new user account for them
-  - a validation of email/password is done
-
-  This class registers a new user to become a customer by creating a new account for them.
-
-  1. when a user first registers, they are prompted to enter their email, password + phone number
+  and registers a new user to become a customer by creating a new account for them.
+  
+  - a validation of all user fields is done
   */
+
   private static String USER_FILE_NAME = "newUserDetails.csv";
   private MovieSystem mSystem;
 
   public Registration(MovieSystem mSystem) {
     this.mSystem = mSystem;
-    //this.userCsvFile = DataController.accessCSVFile(USER_FILE_NAME);
   }
   
   public static String getUserFile(){
@@ -39,7 +36,6 @@ public class Registration {
     }
   }
 
-  //sprint 3 --> refactored to new User System.
   public void retrieveUserInputDetails() throws IOException {
     this.printWelcome();  
     System.out.println("1. ENTER Y TO CONTINUE REGISTERING\n"+
@@ -80,11 +76,9 @@ public class Registration {
               if (exists == 1) {
                 System.out.println("email is taken already/exists in system.");
               } else if (exists == 2) {
-                System.out.println("phone# is taken already/exists in system.");
+                System.out.println("phone number is taken already/exists in system.");
               } else if (exists == 0) {
-                // if (User.validateUser(email) && User.isValidPhoneNumber(phoneNumber)) {
-                  break;
-                // } 
+                break;
               } else {
                 System.out.printf("Critical Error: could not check if user exists in the system. Aborting.\n");  
                 return;      
@@ -99,13 +93,13 @@ public class Registration {
           if (con != null) { //Password masking
             char[] pwd = con.readPassword("\nPlease enter your password: ");
             password = new String(pwd);
-          } else { //No- masking if console not avaliable
+          } else { //No masking if console not avaliable
             System.out.print("\nPlease enter your password: ");
             if (scan.hasNextLine()) {
               password = scan.nextLine();
             }
           }
-          //validate pw
+          //validate pwd
           if (User.isValidPassword(password)) {
             break;
           }
@@ -155,15 +149,13 @@ public class Registration {
     }
     return newCustomer;
   }
-  //remove option of saving details...
-  // edit: consider representing options with colour in terminal?
+
   public String nextOption(){
     System.out.printf("\nPlease select from the following: \n");
     System.out.println("1. CONTINUE LOGGING IN");
     System.out.println("2. CANCEL");
     Scanner scan = new Scanner(System.in);
     
-    // int result = scan.nextInt();
     String result = scan.nextLine();
 
     if (result.equals("1")){

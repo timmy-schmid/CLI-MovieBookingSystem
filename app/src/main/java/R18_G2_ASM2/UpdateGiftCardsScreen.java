@@ -8,25 +8,28 @@ import java.io.IOException;
 import java.io.File;
 import java.io.FileNotFoundException;
 
+
 public class UpdateGiftCardsScreen extends Screen{
-  private static User user; //staff or manager
+
+  /*
+  When a staff or manager selects option '1' on Staff Page, there will be redirected here.
+  The user can choose to add new gift cards into the system or update the status of existing cards.
+  */
+
+  private static User user; //only staff or manager
   
-  // HomeScreen home;
   private static File giftCardsFile;
   private static String GIFT_CARD_FILE_NAME = "giftCards.csv";
 
   private static File tempFile2;
   private static String TEMP_FILE_2_NAME = "cardTemp2.csv";
 
-  //when staff functions page shows up and option 1 inputted --> direct to this page 
   public UpdateGiftCardsScreen (MovieSystem mSystem){
     super(mSystem);
     user = user;
     try {
       tempFile2 = DataController.accessCSVFile(TEMP_FILE_2_NAME);
       giftCardsFile = DataController.accessCSVFile(GIFT_CARD_FILE_NAME);
-      // GIFT_CARD_FILE_NAME = giftCardsFile.getAbsolutePath();
-      // TEMP_FILE_2_NAME = tempFile2.getAbsolutePath();
     } catch (IOException e) {e.printStackTrace();}
   }
 
@@ -51,7 +54,6 @@ public class UpdateGiftCardsScreen extends Screen{
 
   public void setGiftCardsFile (File file) {
     giftCardsFile = file;
-    // GIFT_CARD_FILE_NAME = file.getAbsolutePath();
   }
 
   public void setGiftCardsFileName (String filename) {
@@ -60,7 +62,6 @@ public class UpdateGiftCardsScreen extends Screen{
 
   @Override
   public void print() {
-    // this.clearScreen();
     this.title = "Welcome to the update gift cards screen page~";
     this.printHeader();
     this.printOptions();
