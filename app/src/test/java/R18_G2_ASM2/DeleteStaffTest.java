@@ -42,7 +42,7 @@ public class DeleteStaffTest {
     }
 
     @Test
-    void testAskForEmailInvaild(){
+    void testAskForEmailInvalid(){
         mockIn = new ByteArrayInputStream("hdsahdnsagmail.com\n".getBytes());
         System.setIn(mockIn);
         DeleteStaffScreen ds =  new DeleteStaffScreen(mockMovieSystem);

@@ -23,33 +23,33 @@ public class StaffScreen extends Screen{
   @Override
   protected void chooseOption() {
     switch (selectedOption) {
-      case "1"://TODO check it works
+      case "1":
         //to update gift card status
         gcs = new UpdateGiftCardsScreen(mSystem);
         gcs.print();
         break;
 
-      case "2": //TODO check it works
+      case "2": 
         addMovieScreen = new StaffAddMovieScreen();
         try{
-          addMovieScreen.retriveMoiveInfo();
+          addMovieScreen.retrieveMovieInfo();
 
         }catch (Exception e){
           e.printStackTrace();
         }
         break;
 
-      case "3": //TODO check it works
+      case "3": 
         deleteMovieScreen = new StaffDeleteMovieScreen();
         try{
-          deleteMovieScreen.retriveMoiveInfo();
+          deleteMovieScreen.retrieveMovieInfo();
 
         }catch (Exception e){
           e.printStackTrace();
         }
         break;
 
-      case "4"://TODO add functionality
+      case "4":
         staffUpdateMovieScreen = new StaffUpdateMovieScreen();
         try{
           staffUpdateMovieScreen.run();

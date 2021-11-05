@@ -47,11 +47,9 @@ public class DataController {
         path = basepath + resource;
       }
       f = new File(path);
-      // System.out.println("LINE 44 in datacontroller: src: ABS PATH to copy to: "+ f.getAbsoluteFile().toPath());
     } else if (Files.exists(Paths.get("app/" + basepath))) { // checks gradle dir v2
       path = "app/" + basepath + resource;
       f = new File(path);
-      //System.out.println("app: ABS PATH to copy to: "+ f.getAbsoluteFile().toPath());
 
     } else {
       // if not Gradle, must be .jar. Check to to see if db files exist.
@@ -59,7 +57,6 @@ public class DataController {
       try {
         String parentPath = new File(DataController.class.getProtectionDomain().getCodeSource().getLocation().toURI().getPath()).getParent();
         f = new File(parentPath + "/" + resource);
-        //System.out.println(".JAR ABS PATH to copy to: "+ f.getAbsoluteFile().toPath());
       } catch (URISyntaxException e) {
         e.printStackTrace();
       }
@@ -339,6 +336,4 @@ public class DataController {
     myWriter.write("\n"+String.valueOf(movieId)+","+String.valueOf(CinemaID)+","+String.valueOf(timeCode));
     myWriter.close();
   }
-
-
 }

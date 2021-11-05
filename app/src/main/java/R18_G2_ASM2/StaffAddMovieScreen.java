@@ -30,7 +30,7 @@ public class StaffAddMovieScreen {
     }
   }
 
-  public void retriveMoiveInfo() throws Exception {
+  public void retrieveMovieInfo() throws Exception {
     int count = 1;
     String title = null;
     String synopsis = null;

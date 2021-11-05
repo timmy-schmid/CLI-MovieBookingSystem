@@ -24,7 +24,7 @@ public class StaffDeleteMovieScreen {
     }
   }
 
-  public void retriveMoiveInfo() throws Exception {
+  public void retrieveMovieInfo() throws Exception {
     System.out.println("*************************************************************************");
     System.out.println("                             DELETE    MOVIE                             ");
     System.out.println("*************************************************************************");

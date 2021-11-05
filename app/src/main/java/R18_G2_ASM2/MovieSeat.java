@@ -184,7 +184,7 @@ public class MovieSeat{
     }
 
     public int totalSeatsBooked() {
-        return middleSeatBooked()+frontSeatBooked()+rearSeatBooked();
+        return middleSeatBooked()+frontSeatBooked()+ rearSeatBooked();
     }
     
     public int totalSeatsLeft() {
