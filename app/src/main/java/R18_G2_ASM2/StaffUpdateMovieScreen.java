@@ -30,6 +30,10 @@ public class StaffUpdateMovieScreen {
     }
   }
 
+  public static void setMoviesFileName(String moviesFileName) {
+    MOVIES_FILE_NAME = moviesFileName;
+  }
+
   public void run() throws Exception {
     int count = 1;
     String title = null;
