@@ -34,7 +34,7 @@ public class StaffAddMovieScreenTest {
         mockIn = new ByteArrayInputStream("hp@gmail.com\n".getBytes());
         System.setIn(mockIn);
         AddingStaffScreen addingStaffScreen =  new AddingStaffScreen(mockMovieSystem);
-        addingStaffScreen.askForemail();
+        addingStaffScreen.run();
         assertEquals("Email address already exists\nPlease try againom\n",actualOut.toString());
     }
 
@@ -42,8 +42,16 @@ public class StaffAddMovieScreenTest {
         mockIn = new ByteArrayInputStream("hpgmail.com\n".getBytes());
         System.setIn(mockIn);
         AddingStaffScreen addingStaffScreen =  new AddingStaffScreen(mockMovieSystem);
-        addingStaffScreen.askForemail();
+        addingStaffScreen.run();
         assertEquals("Please enter an email that contains a recipient name, @ symbol and valid domain.\nEmail address need to match the format\nPlease try againom\n",actualOut.toString());
+    }
+
+    void testPrintUMessage(){
+        AddingStaffScreen addingStaffScreen =  new AddingStaffScreen(mockMovieSystem);
+        actualOut = new ByteArrayOutputStream();
+        addingStaffScreen.SuccessfulAdd();
+        assertEquals("Staff successfully entered!",actualOut.toString());
+
     }
 
 
