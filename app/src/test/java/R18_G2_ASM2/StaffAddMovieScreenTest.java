@@ -1,99 +1,51 @@
 package R18_G2_ASM2;
 
-import org.junit.jupiter.api.BeforeAll;
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import static org.junit.jupiter.api.Assertions.*;
 
-import java.io.ByteArrayInputStream;
+import java.io.*;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeAll;
+
 import java.io.ByteArrayOutputStream;
-import java.io.PrintStream;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.mockito.Mockito.mock;
+class StaffAddMovieScreenTest {
+  private final ByteArrayOutputStream outContent = new ByteArrayOutputStream();
+  private final PrintStream originalOutput = System.out;
 
-public class StaffAddMovieScreenTest {
-    private static ByteArrayInputStream mockIn;
-    private static ByteArrayOutputStream actualOut;
-    private static MovieSystem mockMovieSystem;
+  @BeforeEach
+  public void setUp() {
+    System.setOut(new PrintStream(outContent));
+  }
 
+  @AfterEach
+  public void tearDown(){
+    System.setOut(originalOutput);
+  }
 
-    @BeforeAll
-    static void setup() {
-        mockMovieSystem = mock(MovieSystem.class);
-        actualOut = new ByteArrayOutputStream();
-        System.setOut(new PrintStream(actualOut));
-    }
-
-
-    @BeforeEach
-    void resetSystem() {
-        actualOut.reset();
-    }
-
-    @Test
-    void testAskForEmailExist(){
-        mockIn = new ByteArrayInputStream("hp@gmail.com\n".getBytes());
-        System.setIn(mockIn);
-        AddingStaffScreen addingStaffScreen =  new AddingStaffScreen(mockMovieSystem);
-        addingStaffScreen.askForemail();
-        assertEquals("Please enter a staff email\nEmail address already exists\nPlease try againom\n",actualOut.toString());
-    }
-
-    @Test
-    void testAskForEmailRun(){
-        mockIn = new ByteArrayInputStream("hp@gmail.com\n".getBytes());
-        System.setIn(mockIn);
-        AddingStaffScreen addingStaffScreen =  new AddingStaffScreen(mockMovieSystem);
-        addingStaffScreen.run();
-        assertEquals("Please enter a staff email: \n" +
-                "Email address already exists\n" +
-                "Please try again\n" +
-                "\n" +
-                "Please enter a staff name: \n" +
-                "Please enter a password: \n" +
-                "Please enter a staff phone number:\n",actualOut.toString());
-    }
-
-    @Test
-    void testAskForPhone(){
-        mockIn = new ByteArrayInputStream("9027438625347652\n".getBytes());
-        System.setIn(mockIn);
-        AddingStaffScreen addingStaffScreen =  new AddingStaffScreen(mockMovieSystem);
-        addingStaffScreen.askForPhone();
-        assertEquals("Please enter a staff phone number: \n" +
-                "Please enter a 10 digit phone number.\n" +
-                "Phone number need to match the format\n" +
-                "Please try again\n\n",actualOut.toString());
-    }
-
-    @Test
-    void testAskForPw(){
-        mockIn = new ByteArrayInputStream("dsaiew1223\n".getBytes());
-        System.setIn(mockIn);
-        AddingStaffScreen addingStaffScreen =  new AddingStaffScreen(mockMovieSystem);
-        addingStaffScreen.askForPassWord();
-        assertEquals("Please enter a staff phone number: \n" +
-                "Please enter a 10 digit phone number.\n" +
-                "Phone number need to match the format\n" +
-                "Please try again\n\n\n",actualOut.toString());
-    }
-
-    @Test
-    void testAskForEmailInvalid(){
-        mockIn = new ByteArrayInputStream("hpgmail.com\n".getBytes());
-        System.setIn(mockIn);
-        AddingStaffScreen addingStaffScreen =  new AddingStaffScreen(mockMovieSystem);
-        addingStaffScreen.run();
-        assertEquals("Please enter an email that contains a recipient name, @ symbol and valid domain.\nEmail address need to match the format\nPlease try againom\n",actualOut.toString());
-    }
-    @Test
-    void testPrintUMessage(){
-        AddingStaffScreen addingStaffScreen =  new AddingStaffScreen(mockMovieSystem);
-        addingStaffScreen.SuccessfulAdd();
-
-        assertEquals("Staff successfully entered!",actualOut.toString());
-
-    }
+  @Test
+  public void retriveMoiveInfoTest() throws Exception {
+    StaffAddMovieScreen staffAddMovieScreen = new StaffAddMovieScreen();
+    String inputMessage = null;
+    inputMessage = "hello\nhello\nG\n2021-11-03\ngg\nn\nzz\nn";
+    ByteArrayInputStream in = new ByteArrayInputStream(inputMessage.getBytes());
+    System.setIn(in);
+    String expected = "*************************************************************************\n" +
+        "                                ADD    MOVIE                             \n" +
+        "*************************************************************************\n" +
+        "Please enter a movie title: " +
+        "Please enter a movie synopsis: " +
+        "Please enter a classification (G,PG,M,MA,R): " +
+        "Please enter a release date <yy-mm-dd>: " +
+        "Please enter an actor: " +
+        "Do you want to enter another actor? y/n " +
+        "Please enter an director: " +
+        "Do you want to enter another director? y/n " +
+        "Movie successfully entered!\n";
+    staffAddMovieScreen.retriveMoiveInfo();
+    assertEquals(outContent.toString(), expected);
+  }
 
 
 }
