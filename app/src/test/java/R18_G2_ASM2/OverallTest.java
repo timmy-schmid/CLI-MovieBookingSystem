@@ -112,17 +112,17 @@ public class OverallTest{
        sfc.setOptions();
        // sfc.chooseOption();
 
-       inputMessage = "3\n";
-       setInput(inputMessage);
-       sfc.askforInput();
-       sfc.setOptions();
-       sfc.chooseOption();
+    //    inputMessage = "3\n";
+    //    setInput(inputMessage);
+    //    sfc.askforInput();
+    //    sfc.setOptions();
+    //    sfc.chooseOption();
 
-       inputMessage = "4\n";
-       setInput(inputMessage);
-       sfc.askforInput();
-       sfc.setOptions();
-       sfc.chooseOption();
+    //    inputMessage = "4\n";
+    //    setInput(inputMessage);
+    //    sfc.askforInput();
+    //    sfc.setOptions();
+    //    sfc.chooseOption();
 
        inputMessage = "5\n";
        setInput(inputMessage);
