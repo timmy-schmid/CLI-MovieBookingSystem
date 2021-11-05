@@ -252,14 +252,14 @@ public class StaffUpdateMovieScreen {
     outFile.renameTo(inFile);
   }
 
-  public void importMovieData() {
-    try {
-      DataController.importMovies(movies,MOVIES_FILE_NAME);
-    } catch (IOException e) {
-      outt.println("Error reading file: " + MOVIES_FILE_NAME);
-    }
-
-  }
+//  public void importMovieData() {
+//    try {
+//      DataController.importMovies(movies,MOVIES_FILE_NAME);
+//    } catch (IOException e) {
+//      outt.println("Error reading file: " + MOVIES_FILE_NAME);
+//    }
+//
+//  }
 
 
 }
