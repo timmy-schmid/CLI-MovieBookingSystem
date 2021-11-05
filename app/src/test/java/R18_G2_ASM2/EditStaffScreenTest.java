@@ -42,8 +42,31 @@ public class EditStaffScreenTest {
         EditStaffScreen testEd = new EditStaffScreen(mockMovieSystem);
         testEd.printHeader();
         assertEquals(actualOut.toString(),("******************************************************************************************\n" +
-                                           "                                       Editing Staff                                      \n" +
+                                           "                                      Editing Staff                                      \n" +
                                            "******************************************************************************************\n"));
+    }
+
+    @Test public void testValidInputBasicCases() {
+        EditStaffScreen s = new EditStaffScreen(mockMovieSystem);
+        s.setOptions();
+
+        mockIn = new ByteArrayInputStream("1\n".getBytes());
+        System.setIn(mockIn);
+        s.askforInput();
+        assertEquals(actualOut.toString(),"User Input:");
+        actualOut.reset();
+
+        mockIn = new ByteArrayInputStream("2\n".getBytes());
+        System.setIn(mockIn);
+        s.askforInput();
+        assertEquals(actualOut.toString(),"User Input:");
+        actualOut.reset();
+
+        mockIn = new ByteArrayInputStream("q\n".getBytes());
+        System.setIn(mockIn);
+        s.askforInput();
+        assertEquals(actualOut.toString(),"User Input:");
+        actualOut.reset();
     }
 
 
