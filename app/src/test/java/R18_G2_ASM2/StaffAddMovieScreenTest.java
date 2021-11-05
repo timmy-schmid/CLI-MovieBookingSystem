@@ -25,7 +25,7 @@ class StaffAddMovieScreenTest {
   }
 
   @Test
-  public void retriveInvalidMoiveInfoTest() throws Exception {
+  public void retriveInvalidMovieInfoTest() throws Exception {
     StaffAddMovieScreen staffAddMovieScreen = new StaffAddMovieScreen();
     String inputMessage = null;
     inputMessage = "hello\nhello\nM\nG\n20211103\n2021-11-03\ngg\ny\ngg2\ns\nn\nzz\ny\nzz2\ns\nn";
@@ -55,13 +55,13 @@ class StaffAddMovieScreenTest {
         "Invalid input, please try again!" +
         "Do you want to enter another director? y/n " +
         "Movie successfully entered!\n";
-    staffAddMovieScreen.retriveMoiveInfo();
+    staffAddMovieScreen.retrieveMovieInfo();
 //    assertEquals(outContent.toString(), expected);
     assertNotNull(outContent.toString());
   }
 
 //  @Test
-//  public void retriveMoiveInfoTest() throws Exception {
+//  public void retrieveMovieInfoTest() throws Exception {
 //    StaffAddMovieScreen staffAddMovieScreen = new StaffAddMovieScreen();
 //    String inputMessage = null;
 //    inputMessage = "hello\nhello\nG\n2021-11-03\ngg\nn\nzz\nn";
@@ -79,7 +79,7 @@ class StaffAddMovieScreenTest {
 //        "Please enter an director: " +
 //        "Do you want to enter another director? y/n " +
 //        "Movie successfully entered!\n";
-//    staffAddMovieScreen.retriveMoiveInfo();
+//    staffAddMovieScreen.retrieveMovieInfo();
 //    assertEquals(outContent.toString(), expected);
 //  }
 
