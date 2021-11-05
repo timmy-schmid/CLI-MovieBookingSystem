@@ -21,7 +21,6 @@ public class StaffAddMovieScreenTest {
     static void setup() {
         mockMovieSystem = mock(MovieSystem.class);
         actualOut = new ByteArrayOutputStream();
-        System.setOut(new PrintStream(actualOut));
     }
 
 
@@ -36,6 +35,7 @@ public class StaffAddMovieScreenTest {
         System.setIn(mockIn);
         AddingStaffScreen addingStaffScreen =  new AddingStaffScreen(mockMovieSystem);
         addingStaffScreen.run();
+        System.setOut(new PrintStream(actualOut));
         assertEquals("Email address already exists\nPlease try againom\n",actualOut.toString());
     }
 
@@ -45,6 +45,7 @@ public class StaffAddMovieScreenTest {
         System.setIn(mockIn);
         AddingStaffScreen addingStaffScreen =  new AddingStaffScreen(mockMovieSystem);
         addingStaffScreen.askForPhone();
+        System.setOut(new PrintStream(actualOut));
         assertEquals("Phone number need to match the format\nPlease try again\n",actualOut.toString());
     }
 
@@ -54,6 +55,7 @@ public class StaffAddMovieScreenTest {
         System.setIn(mockIn);
         AddingStaffScreen addingStaffScreen =  new AddingStaffScreen(mockMovieSystem);
         addingStaffScreen.askForPhone();
+        System.setOut(new PrintStream(actualOut));
         assertEquals("Please enter a 10-digit password containing at least 1 capital letter and 1 number.\n",actualOut.toString());
     }
 
@@ -63,6 +65,7 @@ public class StaffAddMovieScreenTest {
         System.setIn(mockIn);
         AddingStaffScreen addingStaffScreen =  new AddingStaffScreen(mockMovieSystem);
         addingStaffScreen.run();
+        System.setOut(new PrintStream(actualOut));
         assertEquals("Please enter an email that contains a recipient name, @ symbol and valid domain.\nEmail address need to match the format\nPlease try againom\n",actualOut.toString());
     }
     @Test
@@ -70,6 +73,7 @@ public class StaffAddMovieScreenTest {
         AddingStaffScreen addingStaffScreen =  new AddingStaffScreen(mockMovieSystem);
         actualOut = new ByteArrayOutputStream();
         addingStaffScreen.SuccessfulAdd();
+        System.setOut(new PrintStream(actualOut));
         assertEquals("Staff successfully entered!",actualOut.toString());
 
     }
