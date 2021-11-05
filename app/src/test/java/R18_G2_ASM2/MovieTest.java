@@ -139,7 +139,7 @@ public class MovieTest {
     movies.get(1).printMovieDetails();
     String screen = "SYNOPSIS: synop 1\n\n" +
                     "CLASSIFICATION: G\n" +
-                    "RELEASE DATE: 01/10/21\n" +
+                    "RELEASE DATE: 02/10/21\n" +
                     "DIRECTORS: director 1, director 2\n" +
                     "CAST: actor 1, actor 2\n\n";
 
