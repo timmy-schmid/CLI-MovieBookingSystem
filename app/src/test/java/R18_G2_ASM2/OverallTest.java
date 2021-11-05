@@ -219,4 +219,15 @@ public class OverallTest{
     sfc.chooseOption();
    }
 
+   @Test
+   public void testAddShowing(){
+    MovieSystem system = new MovieSystem();
+    Manager staff = new Manager(500, "nickname", "email", "phoneNumber", "password");
+    system.setUser(staff);
+    StaffScreen sfc = new StaffScreen(system);
+
+    AddShowing addShowing = new AddShowing(system);
+    addShowing.print();
+   }
+
 }
