@@ -107,7 +107,7 @@ public class StaffDeleteMovieScreen {
     try {
       DataController.importMovies(movies,MOVIES_FILE_NAME);
     } catch (IOException e) {
-      outt.println("Error reading file: " + MOVIES_FILE_NAME);
+      System.out.println("Error reading file: " + MOVIES_FILE_NAME);
     }
 
   }

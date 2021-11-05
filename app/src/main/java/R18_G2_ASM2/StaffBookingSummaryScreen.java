@@ -55,13 +55,13 @@ public class StaffBookingSummaryScreen {
     try {
       DataController.importMovies(movies,MOVIES_FILE_NAME);
     } catch (IOException e) {
-      out.println("Error reading file: " + MOVIES_FILE_NAME);
+      System.out.println("Error reading file: " + MOVIES_FILE_NAME);
     }
 
     try {
       DataController.importCinemas(cinemas,CINEMAS_FILE_NAME);
     } catch (IOException e) {
-      out.println("Error reading file: " + CINEMAS_FILE_NAME);
+      System.out.println("Error reading file: " + CINEMAS_FILE_NAME);
     }
 
     try {
