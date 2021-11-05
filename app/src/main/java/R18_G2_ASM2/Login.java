@@ -39,7 +39,6 @@ public class Login {
     }
   }
   public void retrieveUserInputDetails() throws IOException{
-  // public void retrieveUserInputDetails() throws IOException{
     this.printScreen();
 
     //validate user details after retrieving input!!!
@@ -48,7 +47,6 @@ public class Login {
     Scanner sc = new Scanner(System.in);
     while (true) {
       System.out.printf("Please enter your username: ");
-//      username = consoleReader.readLine();
       username = sc.nextLine();
       Console con = System.console();
       if (con != null) {
