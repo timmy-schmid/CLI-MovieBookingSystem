@@ -27,8 +27,6 @@ public class TransactionTest {
   private File tFile;
   private File tFile2;
 
-  // private File cFile;
-
   private final ByteArrayOutputStream outContent = new ByteArrayOutputStream(); //for testing printing statements
   private final PrintStream originalOutput = System.out;    
 
@@ -56,9 +54,7 @@ public class TransactionTest {
       tFile = DataController.accessCSVFile("cardTemp.csv");    
       tFile2 = DataController.accessCSVFile("cardTemp2.csv");   
     } catch (FileNotFoundException e) {
-      // assertEquals(true,false);
     }
-    // cFile = DataController.accessCSVFile("credit_cards.json");
 
     t.setUserFile("newUserDetailsTest.csv");
     t2.setUserFile("newUserDetailsTest.csv");
@@ -94,7 +90,8 @@ public class TransactionTest {
 
   @Test void canPrintScreen(){
    
-    String screenMsg = "\033[H\033[2J" + "\n*******************************************************\n" +
+    // String screenMsg = "\033[H\033[2J" + 
+    String screenMsg = "\n*******************************************************\n" +
     "            Welcome to the payment page :)            \n" +
     "               Movie to book details               \n"+
     "*******************************************************\n\n";
@@ -205,7 +202,7 @@ public class TransactionTest {
                   "\n3. Cancel payment\n" +
                   "\nEnter option: "; 
 
-    String expectedOut = msg + msg2 + "Line 149: please re-enter a valid option: \n";
+    String expectedOut = msg + msg2 + "Please re-enter a valid option: ";
     String inputMessage = "11111111111116GC\n8\n2";
 
     ByteArrayOutputStream outContent = new ByteArrayOutputStream();
@@ -266,7 +263,7 @@ public class TransactionTest {
     
     String inputMessage = "lala\nC";
     String msg2 = "Please enter a valid input: " +
-                  "\nLINE 455: Transaction cancelled!\n";
+                  "\nTransaction cancelled!\n";
 
     String expectedOut = msg+msg2;
     ByteArrayOutputStream outContent = new ByteArrayOutputStream();
@@ -334,7 +331,7 @@ public class TransactionTest {
     "\nUser Input: ";
 
     String msg2 = "Please enter a valid input: " +
-                     "\nLINE 455: Transaction cancelled!\n";
+                     "\nTransaction cancelled!\n";
     
     String inputMessage = "lala\nC";
 

@@ -2,6 +2,7 @@ package R18_G2_ASM2;
 
 import java.util.*;
 import java.io.*;
+import java.rmi.server.UID;
 
 /*
 CSV FORMAT: <userID, nickname, email, phoneNumber, password, giftCard, reedemableStatus, autoFillStatus,userType>
@@ -18,7 +19,7 @@ public class Transaction {
   private File giftCardsFile;
 
   private final double price = 50;
-  private final double giftCardTotalAmount = 50; //100?
+  private final double giftCardTotalAmount = 50;
 
   private static String USER_FILE_NAME = "newUserDetails.csv";
   private static String TEMP_FILE_NAME = "cardTemp.csv";
@@ -28,6 +29,9 @@ public class Transaction {
   long startTime = System.currentTimeMillis();
   long elapsedTime = 0L;
   int TWO_MINUTES = 2*60*1000;
+
+  // private static String UID = "1";
+  private int UID = 1;
 
   private String userGiftNumber;
 
@@ -39,11 +43,6 @@ public class Transaction {
       this.tempFile = DataController.accessCSVFile(TEMP_FILE_NAME);
       this.tempFile2 = DataController.accessCSVFile(TEMP_FILE_2_NAME);
       this.giftCardsFile = DataController.accessCSVFile(GIFT_CARD_FILE_NAME);
-  
-      //this.USER_FILE_NAME = this.userCsvFile.getAbsolutePath(); //str version
-      //this.TEMP_FILE_NAME = this.tempFile.getAbsolutePath();
-      //this.TEMP_FILE_2_NAME = this.tempFile2.getAbsolutePath();
-      //this.GIFT_CARD_FILE_NAME = this.giftCardsFile.getAbsolutePath();
       } catch (FileNotFoundException e) {
         System.out.println("Unable to complete transaction: " + e.getMessage());
       }
@@ -63,15 +62,13 @@ public class Transaction {
   }
 
   public void printScreen(){
-    System.out.print("\033[H\033[2J"); // clears screen
+    // System.out.print("\033[H\033[2J"); // clears screen
     System.out.println("\n*******************************************************");
     System.out.println("            Welcome to the payment page :)            ");
     System.out.println("               Movie to book details               ");
     System.out.println("*******************************************************\n");
   }
   
-  // get total amount of all tickets from booking ticket/list of tickets? to compare against gift card num/credit card
-
   // TODO: autogenerate a unique transaction ID for each user
 
   public void run() throws IOException { //card details fill out
@@ -167,7 +164,7 @@ public class Transaction {
           this.getFinalMsg("gift", this.userGiftNumber);
           break;
        } else if (returnResult == 2){
-          // System.out.println("LINE 157: pay remaining amount with credit card");
+          // pay remaining amount with credit card
           this.askForCreditCardDetails(this.getCustomer().getAutoFillStatus());
           break;
        } else if (returnResult == 3){
@@ -258,7 +255,7 @@ public class Transaction {
           TransactionSummary.writeToTransactionSummaryReport(customer, TransactionType.CANCEL);
           return 3;
         } else {
-          System.out.println("Line 149: please re-enter a valid option: ");
+          System.out.printf("Please re-enter a valid option: ");
         }
       }
     } 
@@ -325,8 +322,10 @@ public class Transaction {
           }
         }
       }
-      this.setUserCardDetails(this.getCustomer(), name, number, true);
-      this.getFinalMsg("credit", this.userGiftNumber);
+      if (temp != 2){ //dont display final msg if user decides to cancel transaction
+        this.setUserCardDetails(this.getCustomer(), name, number, true);
+        this.getFinalMsg("credit", this.userGiftNumber);
+      }
     }
     return 0;
   }
@@ -356,7 +355,6 @@ public class Transaction {
     System.out.printf("\nUser Input: ");
 
     while (true) {
-
       if (isElapsed()) {
         return false;
       }
@@ -381,17 +379,20 @@ public class Transaction {
         } else if (cardType.equals("gift")){
           User.updateGiftCardStatus(GIFT_CARD_FILE_NAME, tempFile2, userInputNumber);
         }
-        //generate report for staff/manager
+        // generate report for staff/manager
         this.getCustomer().completeTransaction();
         TransactionSummary.writeToTransactionSummaryReport(customer, TransactionType.SUCCESS);
+
         System.out.println("\nTransaction Successful!");
-        System.out.println("Please see your receipt below to present at the cinema.\n\n");
-        System.out.println(this.getCustomer().getTicketMessage()+"\n");
-        //movie name, time, cinema + seats
+        System.out.println("Please see your receipt below to present at the cinema.\n");
+        System.out.printf("YOUR TRANSACTION UID IS: %d\n\n", UID);
+        System.out.println(this.getCustomer().getTicketMessage());
+        UID+=1;
         return true;
+
       } else if (option.toLowerCase().equals("c")){
         TransactionSummary.writeToTransactionSummaryReport(customer, TransactionType.CANCEL);
-        System.out.println("\nLINE 455: Transaction cancelled!");
+        System.out.println("\nTransaction cancelled!");
         return false;
       } else {
         System.out.printf("Please enter a valid input: ");
