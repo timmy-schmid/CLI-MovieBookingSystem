@@ -101,6 +101,20 @@ class UserTest {
     assertEquals(5, userB.getID());
   }
 
+  @Test void testCanGetUserInformation(){
+    String expected = "User ID: 1\n" + 
+                      "User type: CUSTOMER\n" + 
+                      "User nickname: bob\n" + 
+                      "User email: bob@gmail.com\n" + 
+                      "User phone number: 0488881188\n";
+    assertEquals(expected, userA.getUserInformation());
+  }
+
+  @Test void testCantSetInvalidId(){
+    userB.setID(-2);
+    assertEquals(5, userB.getID()); //no chaneg
+  }
+
   // // test failed: IllegalFormatConversionException
 
   @Test void testBookingTicket(){

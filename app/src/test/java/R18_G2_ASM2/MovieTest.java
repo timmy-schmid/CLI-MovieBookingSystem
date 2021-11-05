@@ -12,6 +12,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Calendar;
 import java.util.HashMap;
+import java.util.Map;
 import java.util.List;
 import java.util.Locale;
 import java.util.TimeZone;
@@ -108,12 +109,17 @@ public class MovieTest {
     assertEquals("director 1",movies.get(1).getDirectors().get(0));
     assertEquals("director 2",movies.get(1).getDirectors().get(1));
     assertEquals("synop 1",movies.get(1).getSynopsis()); 
-    assertEquals("2021-10-01",df.format(movies.get(1).getReleaseDate().getTime()));
+    assertEquals("2021-10-01",df.format(movies.get(1).getReleaseDate().getTime())); //assertion failed, expected: 2021-10-02
   }
 
   //TODO test null behavior.
   @Test void testConstructor() {
-
+    for (int j = 0; j < 6; j++){
+      assertNotNull(showings.get(j));
+    }
+    for (Map.Entry<Integer, Movie> entry: movies.entrySet()){
+      assertNotNull(entry.getValue());
+    }
   }
 
   @Test void testPrintMovieDetails() {

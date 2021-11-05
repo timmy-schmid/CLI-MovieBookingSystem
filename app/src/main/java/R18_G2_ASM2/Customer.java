@@ -70,7 +70,6 @@ public class Customer extends User {
     this.cvvNumber = cvvNumber;
   }
 
-  //rename maybe bookingTicket --> bookTicket? OR nahh
   public void bookingTicket(Person person, int num){
     ticket.replace(person,ticket.get(person)+num);
     this.totalPrice();

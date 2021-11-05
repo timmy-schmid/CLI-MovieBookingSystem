@@ -22,14 +22,7 @@ public abstract class User extends UserValidation {
   protected UserType userType;
 
   //current new version - sprint 3
-  public User(int ID, String nickname, String email, String phoneNumber, String password){ //extra fields added
-
-    //TODO add null checks for args?
-    /*
-    if (nickname == null || email == null || phoneNumber == null || phoneNumber.equals("") || password == null || password .equals("")){
-      throw new IllegalArgumentException("user cannot have missing fields");
-    }*/
-
+  public User(int ID, String nickname, String email, String phoneNumber, String password){ 
     this.ID = ID;
     this.nickname = nickname;
     this.email = email;
@@ -58,9 +51,9 @@ public abstract class User extends UserValidation {
     return this.userType;
   }
 
-
   public String getUserInformation(){
-    return(this.getID()+this.getEmail()+this.getNickname()+this.getPhoneNumber()+this.getUserType());
+    String details = String.format("User ID: %s\nUser type: %s\nUser nickname: %s\nUser email: %s\nUser phone number: %s\n", this.getID(), this.getUserType(), this.getNickname(), this.getEmail(), this.getPhoneNumber());
+    return details;
   }
 
   //setter methods: e.g. for changing login details ...
@@ -180,7 +173,7 @@ public abstract class User extends UserValidation {
   public static String checkIfGiftCardExists(File file, String userInputGNumber){ //overwrites existing gift cards in file by changing the reedemble status of the gift card so it can no longer be used for next time
     String msg = "invalid number";
     try {
-      File f = file; //this.giftCardsFile;
+      File f = file;
       Scanner myReader = new Scanner(f);
       //find matching customer result
       while (myReader.hasNextLine()){
@@ -202,7 +195,8 @@ public abstract class User extends UserValidation {
     return msg;
   }
 
-  public static int updateGiftCardStatus(String fileName, File tempFile, String userInputGNumber){ //overwrites existing gift cards in file by changing the reedemble status of the gift card so it can no longer be used for next time    
+   //overwrites existing gift cards in file by changing the reedemble status of the gift card so it can no longer be used for next time
+  public static int updateGiftCardStatus(String fileName, File tempFile, String userInputGNumber){
     if (User.isValidGiftCardNumber(userInputGNumber) == false) {
       return -1;
     }
