@@ -11,11 +11,6 @@ public class AddingStaffScreen{
     private MovieSystem movieSystem;
     private User usertobeAdd;
     private boolean goBack = false;
-//    private String userEmail;
-//    private String username;
-//    private String password;
-//    private int ID;
-//    private String phoneNum;
     private Scanner scan;
     private ArrayList<String> option = new ArrayList<>();
     private int step_num = 0;
@@ -39,7 +34,6 @@ public class AddingStaffScreen{
         option.add("Please enter a staff name: ");
         option.add("Please enter a staff password: ");
         option.add("Please enter a staff phone: ");
-
          */
     }
 

@@ -371,78 +371,6 @@ public class TransactionTest {
     assert(result == false);
   }
 
-
-  //no line found exception :(((
-  // @Test void cancelPayGiftCard() throws IOException{
-  //     String optionMsg = "Please select a payment method:\n" +
-  //                       "\n1 - Credit Card\n"+ "2 - Gift Card\n" + 
-  //                       "C - Cancel Transaction\n" +
-  //                       "\nUser Input: ";
-  
-  //     String msg = "Please enter your gift card number: ";
-  //     String msg2 = "The number you have entered is no longer available.\n\n"+
-  //                   "Please select from the following: \n" +
-  //                   "\n1. Enter another gift card\n2. Go back to pay with credit card" +
-  //                   "\n3. Cancel payment\n" +
-  //                   "\nEnter option: "; 
-  //     String msg3 = "\n*******************************************************\n"+
-  //     "     CANCELLING TRANSACTION + REDIRECTING YOU BACK\n               TO HOME PAGE~ in 3..2..1..\n"+
-  //     "*******************************************************\n\n";
-
-  //     String expectedOut = optionMsg + msg + msg2  + msg3;
-  //     String inputMessage = "2\n11111111111115GC\n3";
-    
-
-  //     ByteArrayOutputStream outContent = new ByteArrayOutputStream();
-  //     System.setOut(new PrintStream(outContent));
-  
-  //     ByteArrayInputStream in = new ByteArrayInputStream(inputMessage.getBytes());
-  
-  //     System.setIn(in);
-  
-  //     t2.askForUserDetails();
-  //     assertEquals(outContent.toString(), expectedOut);
-  
-  // }
-
-
-  //no line found exception :(((
-  // @Test void testPayCreditCard() throws IOException{
-  //   userB.setCardName("Kasey");
-  //   userB.setCardNumber("60146");
-  //   userB.setCvvNumber("123");
-
-  //   String optionMsg = "Please select a payment method:\n" +
-  //   "\n1 - Credit Card\n"+ "2 - Gift Card\n" + 
-  //   "C - Cancel Transaction\n" +
-  //   "\nUser Input: ";
-  
-  //   String msg = "\nPrinting user's card details below (saved before)!\n" +
-  //   "Name: Kasey" + 
-  //   "\nCard number provided: 60146" +
-  //   "\n\nAre the details above correct? OR would you like to update your card details? (Y/N): \n";
-    
-  //   String msg2 = "Select from the following: \n" +
-  //   "F - Finalise transaction\nC - Cancel transaction\n" +
-  //   "\nUser Input: ";
-    
-  //   String msg3 = "\nTransaction Successful!\n" +
-  //   "Please see your receipt below to present at the cinema: \n\n\n\n";
-
-  //   String expectedOut = optionMsg + msg + msg2 + msg3;
-  //   String inputMessage = "1\nf";
-  
-  //   ByteArrayOutputStream outContent = new ByteArrayOutputStream();
-  //   System.setOut(new PrintStream(outContent));
-
-  //   ByteArrayInputStream in = new ByteArrayInputStream(inputMessage.getBytes());
-
-  //   System.setIn(in);
-
-  //   t2.askForUserDetails();
-  //   assertEquals(outContent.toString(), expectedOut);
-  // }
-
   @Test
   public void testCanUpdateAutofillStatus() throws IOException {
     t.updateAutoFillStatus();
@@ -496,13 +424,6 @@ public class TransactionTest {
     "\nYOUR TRANSACTION UID IS: " + 1 +"\n\n" +
     userA.getTicketMessage() + "\n" +
     "Total amount: $"+ String.format("%.2f", 25*userA.getTotalPrice()) + "\n";
-
-    // ByteArrayOutputStream outContent = new ByteArrayOutputStream();
-    // System.setOut(new PrintStream(outContent));
-
-    // ByteArrayInputStream in = new ByteArrayInputStream(inputMessage.getBytes());
-
-    // System.setIn(in);
     t.printReceipt();
 
     assertEquals(outContent.toString(), msg);
