@@ -92,75 +92,75 @@ public class OverallTest{
         }
     }
 
-//    @Test
-//    public void testStaffScreen(){
-//        MovieSystem system = new MovieSystem();
-//        Manager staff = new Manager(500, "nickname", "email", "phoneNumber", "password");
-//        system.setUser(staff);
-//        StaffScreen sfc = new StaffScreen(system);
-//        sfc.setOptions();
-//        sfc.print();
-//
-//        String inputMessage = "2\n";
-//        setInput(inputMessage);
-//        sfc.askforInput();
-//        sfc.setOptions();
-//        sfc.chooseOption();
-//
-//        // inputMessage = "1\n";
-//        // setInput(inputMessage);
-//        // sfc.askforInput();
-//        // sfc.setOptions();
-//        // sfc.chooseOption();
-//
-//        inputMessage = "3\n";
-//        setInput(inputMessage);
-//        sfc.askforInput();
-//        sfc.setOptions();
-//        sfc.chooseOption();
-//
-//        inputMessage = "4\n";
-//        setInput(inputMessage);
-//        sfc.askforInput();
-//        sfc.setOptions();
-//        sfc.chooseOption();
-//
-//        inputMessage = "5\n";
-//        setInput(inputMessage);
-//        sfc.askforInput();
-//        sfc.setOptions();
-//        // sfc.chooseOption();
-//
-//        inputMessage = "6\n";
-//        setInput(inputMessage);
-//        sfc.askforInput();
-//        sfc.setOptions();
-//        // sfc.chooseOption();
-//
-//        inputMessage = "7\n";
-//        setInput(inputMessage);
-//        sfc.askforInput();
-//        sfc.setOptions();
-//        sfc.chooseOption();
-//
-//        inputMessage = "8\n";
-//        setInput(inputMessage);
-//        sfc.askforInput();
-//        sfc.setOptions();
-//        sfc.chooseOption();
-//
-//        inputMessage = "9\n";
-//        setInput(inputMessage);
-//        sfc.askforInput();
-//        sfc.setOptions();
-//        // sfc.chooseOption();
-//
-//        inputMessage = "q\n";
-//        setInput(inputMessage);
-//        sfc.askforInput();
-//        sfc.setOptions();
-//        // sfc.chooseOption();
-//
-//    }
+   @Test
+   public void testStaffScreen(){
+       MovieSystem system = new MovieSystem();
+       Manager staff = new Manager(500, "nickname", "email", "phoneNumber", "password");
+       system.setUser(staff);
+       StaffScreen sfc = new StaffScreen(system);
+       sfc.setOptions();
+       sfc.print();
+
+       String inputMessage = "2\n";
+       setInput(inputMessage);
+       sfc.askforInput();
+       sfc.setOptions();
+       sfc.chooseOption();
+
+       // inputMessage = "1\n";
+       // setInput(inputMessage);
+       // sfc.askforInput();
+       // sfc.setOptions();
+       // sfc.chooseOption();
+
+       inputMessage = "3\n";
+       setInput(inputMessage);
+       sfc.askforInput();
+       sfc.setOptions();
+       sfc.chooseOption();
+
+       inputMessage = "4\n";
+       setInput(inputMessage);
+       sfc.askforInput();
+       sfc.setOptions();
+       sfc.chooseOption();
+
+       inputMessage = "5\n";
+       setInput(inputMessage);
+       sfc.askforInput();
+       sfc.setOptions();
+       // sfc.chooseOption();
+
+       inputMessage = "6\n";
+       setInput(inputMessage);
+       sfc.askforInput();
+       sfc.setOptions();
+       // sfc.chooseOption();
+
+       inputMessage = "7\n";
+       setInput(inputMessage);
+       sfc.askforInput();
+       sfc.setOptions();
+       sfc.chooseOption();
+
+       inputMessage = "8\n";
+       setInput(inputMessage);
+       sfc.askforInput();
+       sfc.setOptions();
+       sfc.chooseOption();
+
+       inputMessage = "9\n";
+       setInput(inputMessage);
+       sfc.askforInput();
+       sfc.setOptions();
+       // sfc.chooseOption();
+
+       inputMessage = "q\n";
+       setInput(inputMessage);
+       sfc.askforInput();
+       sfc.setOptions();
+       // sfc.chooseOption();
+
+   }
 
 }
