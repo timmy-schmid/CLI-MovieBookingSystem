@@ -27,6 +27,7 @@ class StaffUpdateMovieScreenTest {
   @Test
   public void retriveInvalidMoiveInfoTest() throws Exception {
     StaffUpdateMovieScreen staffUpdateMovieScreen = new StaffUpdateMovieScreen();
+    staffUpdateMovieScreen.setMoviesFileName("movie1.csv");
     String inputMessage = null;
     inputMessage = "Minions\nhello\nM\nG\n20211103\n2021-11-03\ngg\ny\ngg2\ns\nn\nzz\ny\nzz2\ns\nn";
     ByteArrayInputStream in = new ByteArrayInputStream(inputMessage.getBytes());
