@@ -5,9 +5,17 @@ import java.io.*;
 import java.rmi.server.UID;
 
 /*
-CSV FORMAT: <userID, nickname, email, phoneNumber, password, giftCard, reedemableStatus, autoFillStatus,userType>
+CSV FORMAT: <userID, nickname, email, phoneNumber, password, autoFillStatus, userType>
+
+CSV FORMAT: <giftCardNumber, reedemableStatus>
+
+JSON FORMAT: <cardName, cardNumber>
 
 read newUserDetails.csv
+read credit_cards.json
+read giftCards.csv
+
+This class proceeds transaction using gift card or credit card or both when a customer has booked seats for a movie. Any cancellation of transaction would be written to report for the manager.
 */
 
 public class Transaction {
@@ -30,7 +38,6 @@ public class Transaction {
   long elapsedTime = 0L;
   int TWO_MINUTES = 2*60*1000;
 
-  // private static String UID = "1";
   private int UID = 1;
 
   private String userGiftNumber;
@@ -365,30 +372,6 @@ public class Transaction {
     return textInput;
   }
 
-  //get no line found in transactionTest when I use this... :(
-
-  // public int getOptions(){
-  //   Scanner scan = new Scanner(System.in);
-  //   System.out.println("Please select from the following: ");
-  //   System.out.printf("\n1. Enter another gift card\n2. Go back to pay with credit card"+
-  //   "\n3. Cancel payment\n"+"\nEnter option: ");
-  //   while (true) {
-  //     if(isElapsed()) {
-  //       return -1;
-  //     }
-  //     String option = scan.nextLine();
-  //     if (option.equals("1")){
-  //       return 1;
-  //     } else if (option.equals("2")){
-  //       return 2;
-  //     } else if (option.equals("3")){
-  //       TransactionSummary.writeToTransactionSummaryReport(customer, TransactionType.CANCEL);
-  //       return 3;
-  //     } else {
-  //       System.out.printf("Please re-enter a valid option: ");
-  //     }
-  //   }
-  // }
   public boolean getFinalMsg(String cardType, String userInputNumber) {
 
     Scanner scan = new Scanner(System.in);
