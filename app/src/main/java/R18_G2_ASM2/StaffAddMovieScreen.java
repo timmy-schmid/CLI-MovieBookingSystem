@@ -162,7 +162,7 @@ public class StaffAddMovieScreen {
 
 //    movieinfo = (movies.size() + 1) + "," + title + "," + actor + "," + classification + "," + director + "," + synopsis + "," + releaseDateInput;
     movieinfo = title + "," + actor + "," + classification + "," + director + "," + synopsis + "," + releaseDateInput;
-    System.out.println(movieinfo);
+//    System.out.println(movieinfo);
 //    writeToCsv(movieinfo, movieCsvFile);
     insertStringInFile(movieCsvFile, movies.size()+2, movieinfo);
     System.out.println("Movie successfully entered!");
