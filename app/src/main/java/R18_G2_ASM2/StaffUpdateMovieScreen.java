@@ -17,16 +17,14 @@ public class StaffUpdateMovieScreen {
   private HashMap<Integer,Movie> movies = new HashMap<>();
   private PrintStream outt;
   private File movieCsvFile;
-  private static String MOVIES_FILE_NAME;
+  private static String MOVIES_FILE_NAME = "movie1.csv";
   private static final SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd",Locale.ENGLISH);
   private static final TimeZone AEST = TimeZone.getTimeZone("Australia/Sydney");
 
   public StaffUpdateMovieScreen() {
     try {
-      this.setMoviesFileName("movie.csv");
       movieCsvFile = DataController.accessCSVFile(MOVIES_FILE_NAME);
     } catch (FileNotFoundException e) {
-      this.setMoviesFileName("movie1.csv");
       System.out.println("Unable to edit User: " + e.getMessage());
       return;
     }
