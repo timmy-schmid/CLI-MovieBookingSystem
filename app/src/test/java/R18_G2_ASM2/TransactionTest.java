@@ -44,6 +44,10 @@ public class TransactionTest {
     userB.setCardName("Kasey");
     userB.setCardNumber("60146");
 
+    userA.bookingTicket(Person.Child, 1);
+    userA.bookingTicket(Person.Adult, 2); //1--> 37.5
+    userA.AddTicketMessage();
+
     t = new Transaction(userA); //no autofill option
     t2 = new Transaction(userB); //autofill option
     System.setOut(new PrintStream(outContent));
@@ -89,12 +93,11 @@ public class TransactionTest {
   }
 
   @Test void canPrintScreen(){
-   
     // String screenMsg = "\033[H\033[2J" + 
     String screenMsg = "\n*******************************************************\n" +
     "            Welcome to the payment page :)            \n" +
-    "               Movie to book details               \n"+
-    "*******************************************************\n\n";
+    "*******************************************************\n\n" +
+    "Total amount: $62.50\n";
     t.printScreen();
     assertEquals(outContent.toString(), screenMsg);
   }
@@ -173,28 +176,30 @@ public class TransactionTest {
     assertNotNull(t2);
   }
 
+  //test failed: no line found 
   @Test void giftCardNotRedeemable(){ //valid card number in system
-    String msg = "Please enter your gift card number: "+
-                 "The number you have entered is no longer available.\n\n";
-    String msg2 = "Please select from the following: \n" +
-                  "\n1. Enter another gift card\n2. Go back to pay with credit card" +
-                  "\n3. Cancel payment\n" +
-                  "\nEnter option: "; 
+      String msg = "Please enter your gift card number: "+
+                   "The number you have entered is no longer available.\n\n";
+      String msg2 = "Please select from the following: \n" +
+                    "\n1. Enter another gift card\n2. Go back to pay with credit card" +
+                    "\n3. Cancel payment\n" +
+                    "\nEnter option: "; 
+  
+      String expectedOut = msg + msg2;
+      String inputMessage = "11111111111115GC\n3";
+  
+      ByteArrayOutputStream outContent = new ByteArrayOutputStream();
+      System.setOut(new PrintStream(outContent));
+  
+      ByteArrayInputStream in = new ByteArrayInputStream(inputMessage.getBytes());
+  
+      System.setIn(in);
+  
+      int returnNumber = t.askForGiftCardDetails();
+      assert(returnNumber == 3); //cancel transaction
+    }
 
-    String expectedOut = msg + msg2;
-    String inputMessage = "11111111111115GC\n3";
-
-    ByteArrayOutputStream outContent = new ByteArrayOutputStream();
-    System.setOut(new PrintStream(outContent));
-
-    ByteArrayInputStream in = new ByteArrayInputStream(inputMessage.getBytes());
-
-    System.setIn(in);
-
-    int returnNumber = t.askForGiftCardDetails();
-    assert(returnNumber == 3); //cancel transaction
-  }
-
+   // test failed: no line found 
   @Test void giftCardNotRedeemable2(){ 
     String msg = "Please enter your gift card number: "+"The number you have entered is no longer available.\n\n";
     String msg2 = "Please select from the following: \n" +
@@ -462,5 +467,44 @@ public class TransactionTest {
     assertEquals(userB.getCardName(), cardName);
     assertEquals(userB.getCardNumber(), cardNumber);
     assertEquals(userB.getAutoFillStatus(), newStatus);
+  }
+
+  @Test 
+  public void testExceedGiftCardAmount(){
+    
+    String msg = "Please enter your gift card number: " + "The price of the tickets exceed amount stored in gift card.\n\n" + 
+    "Please select from the following: \n" + 
+    "\n1. Enter another gift card\n2. Go back to pay with credit card" + 
+    "\n3. Cancel payment\n"+"\nEnter option: ";
+
+    String inputMessage = "11111111111118GC\n1"; //valid num (T)
+     
+    ByteArrayOutputStream outContent = new ByteArrayOutputStream();
+    System.setOut(new PrintStream(outContent));
+
+    ByteArrayInputStream in = new ByteArrayInputStream(inputMessage.getBytes());
+
+    System.setIn(in);
+    int result = t.askForGiftCardDetails();
+    assertEquals(msg, outContent.toString());
+    assertEquals(1, result);
+  }
+
+  @Test 
+  public void canGetReceipt(){
+    String msg = "Please see your receipt below to present at the cinema.\n" +
+    "\nYOUR TRANSACTION UID IS: " + 1 +"\n\n" +
+    userA.getTicketMessage() + "\n" +
+    "Total amount: $"+ String.format("%.2f", 25*userA.getTotalPrice()) + "\n";
+
+    // ByteArrayOutputStream outContent = new ByteArrayOutputStream();
+    // System.setOut(new PrintStream(outContent));
+
+    // ByteArrayInputStream in = new ByteArrayInputStream(inputMessage.getBytes());
+
+    // System.setIn(in);
+    t.printReceipt();
+
+    assertEquals(outContent.toString(), msg);
   }
 }

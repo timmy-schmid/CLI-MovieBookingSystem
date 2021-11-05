@@ -18,7 +18,7 @@ public class Transaction {
   private File userCsvFile;
   private File giftCardsFile;
 
-  private final double price = 50;
+  private final double price = 25;
   private final double giftCardTotalAmount = 50;
 
   private static String USER_FILE_NAME = "newUserDetails.csv";
@@ -65,13 +65,11 @@ public class Transaction {
     // System.out.print("\033[H\033[2J"); // clears screen
     System.out.println("\n*******************************************************");
     System.out.println("            Welcome to the payment page :)            ");
-    System.out.println("               Movie to book details               ");
     System.out.println("*******************************************************\n");
+    System.out.println("Total amount: $"+ String.format("%.2f", price*this.getCustomer().getTotalPrice()));
   }
   
-  // TODO: autogenerate a unique transaction ID for each user
-
-  public void run() throws IOException { //card details fill out
+  public void run() throws IOException { 
     this.printScreen();
     this.askForUserDetails();
 
@@ -231,11 +229,31 @@ public class Transaction {
     String msg = User.checkIfGiftCardExists(giftCardsFile, num);
     if (msg.equals("found true")){
       //if it is redeemable but not enough money ask to pay with credit card remaining
-      if (this.getCustomer().getTotalPrice() <= this.giftCardTotalAmount){
-        //continue to pay with gift card 
+      if ((price*this.getCustomer().getTotalPrice()) <= this.giftCardTotalAmount){
         return 0;
-      } else {
-        return 2;
+        
+      } else {       
+        System.out.println("The price of the tickets exceed amount stored in gift card.\n");
+        System.out.println("Please select from the following: ");
+        System.out.printf("\n1. Enter another gift card\n2. Go back to pay with credit card"+
+        "\n3. Cancel payment\n"+"\nEnter option: ");
+        while (true) {
+          if(isElapsed()) {
+            return -1;
+          }
+          String option = scan.nextLine();
+          if (option.equals("1")){
+            return 1;
+          } else if (option.equals("2")){
+            return 2;
+          } else if (option.equals("3")){
+            TransactionSummary.writeToTransactionSummaryReport(customer, TransactionType.CANCEL);
+            return 3;
+          } else {
+            System.out.printf("Please re-enter a valid option: ");
+          }
+        }
+        // return 2;
       }
     } else if (msg.equals("found false")){
       System.out.println("The number you have entered is no longer available.\n");
@@ -347,6 +365,30 @@ public class Transaction {
     return textInput;
   }
 
+  //get no line found in transactionTest when I use this... :(
+
+  // public int getOptions(){
+  //   Scanner scan = new Scanner(System.in);
+  //   System.out.println("Please select from the following: ");
+  //   System.out.printf("\n1. Enter another gift card\n2. Go back to pay with credit card"+
+  //   "\n3. Cancel payment\n"+"\nEnter option: ");
+  //   while (true) {
+  //     if(isElapsed()) {
+  //       return -1;
+  //     }
+  //     String option = scan.nextLine();
+  //     if (option.equals("1")){
+  //       return 1;
+  //     } else if (option.equals("2")){
+  //       return 2;
+  //     } else if (option.equals("3")){
+  //       TransactionSummary.writeToTransactionSummaryReport(customer, TransactionType.CANCEL);
+  //       return 3;
+  //     } else {
+  //       System.out.printf("Please re-enter a valid option: ");
+  //     }
+  //   }
+  // }
   public boolean getFinalMsg(String cardType, String userInputNumber) {
 
     Scanner scan = new Scanner(System.in);
@@ -384,9 +426,7 @@ public class Transaction {
         TransactionSummary.writeToTransactionSummaryReport(customer, TransactionType.SUCCESS);
 
         System.out.println("\nTransaction Successful!");
-        System.out.println("Please see your receipt below to present at the cinema.\n");
-        System.out.printf("YOUR TRANSACTION UID IS: %d\n\n", UID);
-        System.out.println(this.getCustomer().getTicketMessage());
+        this.printReceipt();
         UID+=1;
         return true;
 
@@ -410,5 +450,12 @@ public class Transaction {
     } else {
       return false;
     }
+  }
+
+  public void printReceipt(){
+    System.out.println("Please see your receipt below to present at the cinema.\n");
+    System.out.printf("YOUR TRANSACTION UID IS: %d\n\n", UID);
+    System.out.println(this.getCustomer().getTicketMessage());
+    System.out.println("Total amount: $"+ String.format("%.2f", price*this.getCustomer().getTotalPrice()));
   }
 }
